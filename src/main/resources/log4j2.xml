@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- log4j2使用说明（create By SeanXiao    ）：
+使用方式如下：
+private static final Logger logger = LogManager.getLogger(实际类名.class.getName());
+trace<debug<info<warn<error<fatal
+ -->
+<!-- 自动从新配置monitorInterval 最小5秒 -->
+<configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <!-- 开发环境在jvm里面配置-Dlog4j2.path=E:\home\mavenDemo\logs，Linux在catalina.sh里面配置-->
+        <!--<Property name="backupFilePatch">${sys:log4j2.path}</Property>-->
+        <!--<Property name="backupFilePatch">E:\home</Property>-->
+        <Property name="backupFilePatch">/usr/local/tomcat/apache-tomcat-8.0.30/logs/87c6</Property>
+    </Properties>
+    <!--先定义所有的appender-->
+    <appenders>
+        <!--这个输出控制台的配置-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
+        </Console>
+
+        <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，
+        适合上线后临时测试用，比如为我要调试的类或包建一个Logger，由它输出-->
+        <!--<File name="testlog" fileName="${backupFilePatch}/test.log" append="false">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
+        </File>-->
+
+        <!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFileInfo" fileName="${backupFilePatch}/info.log"
+                     filePattern="${backupFilePatch}/$${date:yyyy-MM}-info-%d{yyyyMMddHHmmssSSS}.log">
+            <Filters>
+                <ThresholdFilter level="trace"/>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <!-- 日志文件大小 -->
+            <SizeBasedTriggeringPolicy size="1MB"/>
+            <!-- 最多保留文件数 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <RollingFile name="RollingFileWarn" fileName="${backupFilePatch}/warn.log"
+                     filePattern="${backupFilePatch}/$${date:yyyy-MM}-warn-%d{yyyyMMddHHmmssSSS}.log">
+            <Filters>
+                <ThresholdFilter level="WARN"/>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <!-- 日志文件大小 -->
+            <SizeBasedTriggeringPolicy size="1MB"/>
+            <!-- 最多保留文件数 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <RollingFile name="RollingFileError" fileName="${backupFilePatch}/error.log"
+                     filePattern="${backupFilePatch}/$${date:yyyy-MM}-error-%d{yyyyMMddHHmmssSSS}.log">
+            <ThresholdFilter level="Error"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <!-- 日志文件大小 -->
+            <SizeBasedTriggeringPolicy size="1MB"/>
+            <!-- 最多保留文件数 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </appenders>
+
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <loggers>
+        <!--过滤掉spring和hibernate的一些无用的debug信息-->
+        <logger name="org.springframework" level="INFO">
+        </logger>
+        <logger name="org.hibernate" level="INFO">
+        </logger>
+        <!--上线调试时可以使用这种log-->
+        <!--<Logger name="com.bqcl.gasinternet.controller.SysController" level="trace" additivity="true">
+            <AppenderRef ref="testlog"/>
+        </Logger>-->
+        <!-- root相当于所有的logger类都继承于它，上面的com.bqcl.gasinternet.LogbackTest，也可以写成com.bqcl.gasinternet包名这种形式，
+         那么所有这个包下面的logger都继承与它，他们又同时继承于root这个logger，additivity默认等于true，这个时候日志会重复打印
+         改为false就不会重复打印了-->
+        <Root level="debug">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileWarn"/>
+            <appender-ref ref="RollingFileError"/>
+        </Root>
+    </loggers>
+</configuration>

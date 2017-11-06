@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/cache
+http://www.springframework.org/schema/cache/spring-cache.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/task
+http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!-- 自动扫描包 ,将带有注解的类 纳入spring容器管理 -->
+    <context:component-scan base-package="com.wangsd"/>
+
+    <!-- <context:component-scan base-package="com.bqcl">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Component" />
+    </context:component-scan> -->
+
+    <!-- 引入属性文件 -->
+    <!--<context:property-placeholder location="classpath*:config.properties" />-->
+    <!--
+        使用这种方式引入属性文件，可以在catalina.sh里面配置环境变量：
+        JAVA_OPTS="$JAVA_OPTS -Djsuws.config.path=/home/app/jsuws/application.properties -Dlogback.configurationFile=/home/app/jsuws/logback.xm"
+        可以使用工程以外的properties
+     -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="1"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath*:config.properties</value>
+                <!--<value>file:${jsuws.config.path}</value>-->
+            </list>
+        </property>
+    </bean>
+
+    <!-- 设置启用定时任务 -->
+    <task:annotation-driven/>
+
+    <!-- 配置使Spring采用CGLIB代理 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!-- Cache配置 -->
+    <cache:annotation-driven cache-manager="cacheManager"/>
+
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehcache"></property>
+    </bean>
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"></property>
+    </bean>
+
+</beans>
