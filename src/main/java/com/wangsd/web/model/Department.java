@@ -15,6 +15,8 @@ public class Department {
 
     private String contactPeople;
 
+    private Integer type;
+
     private Integer parentId;
 
     private Date createTime;
@@ -65,6 +67,14 @@ public class Department {
 
     public void setContactPeople(String contactPeople) {
         this.contactPeople = contactPeople == null ? null : contactPeople.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getParentId() {

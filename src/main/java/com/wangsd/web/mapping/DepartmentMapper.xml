@@ -8,6 +8,7 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="contact_people" property="contactPeople" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dept_id, code, dept_name, address, phone, contact_people, parent_id, create_time
+    dept_id, code, dept_name, address, phone, contact_people, type, parent_id, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.DepartmentExample" >
     select
@@ -105,10 +106,12 @@
   <insert id="insert" parameterType="com.wangsd.web.model.Department" >
     insert into department (dept_id, code, dept_name, 
       address, phone, contact_people, 
-      parent_id, create_time)
+      type, parent_id, create_time
+      )
     values (#{deptId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{contactPeople,jdbcType=VARCHAR}, 
-      #{parentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+      #{type,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Department" >
     insert into department
@@ -130,6 +133,9 @@
       </if>
       <if test="contactPeople != null" >
         contact_people,
+      </if>
+      <if test="type != null" >
+        type,
       </if>
       <if test="parentId != null" >
         parent_id,
@@ -156,6 +162,9 @@
       </if>
       <if test="contactPeople != null" >
         #{contactPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="parentId != null" >
         #{parentId,jdbcType=INTEGER},
@@ -192,6 +201,9 @@
       <if test="record.contactPeople != null" >
         contact_people = #{record.contactPeople,jdbcType=VARCHAR},
       </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
       <if test="record.parentId != null" >
         parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
@@ -211,6 +223,7 @@
       address = #{record.address,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       contact_people = #{record.contactPeople,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
       parent_id = #{record.parentId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -235,6 +248,9 @@
       <if test="contactPeople != null" >
         contact_people = #{contactPeople,jdbcType=VARCHAR},
       </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
       <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
@@ -251,6 +267,7 @@
       address = #{address,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       contact_people = #{contactPeople,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
       parent_id = #{parentId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where dept_id = #{deptId,jdbcType=INTEGER}

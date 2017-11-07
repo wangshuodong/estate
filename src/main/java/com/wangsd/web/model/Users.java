@@ -21,6 +21,8 @@ public class Users {
 
     private String email;
 
+    private Integer type;
+
     private Byte enable;
 
     private Date createTime;
@@ -95,6 +97,14 @@ public class Users {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Byte getEnable() {
