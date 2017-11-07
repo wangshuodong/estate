@@ -57,13 +57,13 @@
     </settings>
 
     <typeAliases>
-        <package name="com.bqcl.gasinternet.model"/>
-        <package name="com.bqcl.gasinternet.modelCustom"/>
+        <package name="com.wangsd.web.model"/>
+        <package name="com.wangsd.web.modelCustom"/>
     </typeAliases>
 
     <plugins>
-        <plugin interceptor="com.bqcl.core.feature.orm.mybatis.PaginationResultSetHandlerInterceptor"/>
-        <plugin interceptor="com.bqcl.core.feature.orm.mybatis.PaginationStatementHandlerInterceptor"/>
+        <plugin interceptor="com.wangsd.core.feature.orm.mybatis.PaginationResultSetHandlerInterceptor"/>
+        <plugin interceptor="com.wangsd.core.feature.orm.mybatis.PaginationStatementHandlerInterceptor"/>
     </plugins>
 
 </configuration>

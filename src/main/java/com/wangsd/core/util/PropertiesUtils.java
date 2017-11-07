@@ -1,6 +1,7 @@
 package com.wangsd.core.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -10,7 +11,7 @@ import java.util.Properties;
 
 public abstract class PropertiesUtils {
 
-	private static final Logger logger = Logger.getLogger(PropertiesUtils.class);
+	private static final Logger logger = LogManager.getLogger(PropertiesUtils.class.getName());
 
 	private static Properties props;
 
@@ -23,7 +24,7 @@ public abstract class PropertiesUtils {
 				PropertiesLoaderUtils.fillProperties(props, resource);
 			}
 		} catch (IOException e) {
-			logger.error("加载配置文件出错", e);
+			//logger.error("加载配置文件出错", e);
 		}
 	}
 
