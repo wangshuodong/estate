@@ -1,5 +1,7 @@
 package com.wangsd.web.security;
 
+import com.wangsd.web.model.Users;
+import com.wangsd.web.service.UsersService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
@@ -10,6 +12,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,6 +24,8 @@ public class SecurityRealm extends AuthorizingRealm {
 
     private static final Logger logger = LogManager.getLogger(SecurityRealm.class.getName());
 
+    @Autowired
+    UsersService usersService;
 
     /**
      * 权限检查
@@ -54,14 +59,14 @@ public class SecurityRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = String.valueOf(token.getPrincipal());
         String password = new String((char[]) token.getCredentials());
-//        Account user = new Account();
-//        user.setUsername(username);
-//        user.setPassword(password);
-//        // 通过数据库进行验证
-//        final Account authentication = usersService.authentication(user);
-//        if (authentication == null) {
-//            throw new AuthenticationException("用户名或密码错误.");
-//        }
+        Users user = new Users();
+        user.setUsername(username);
+        user.setPassword(password);
+        // 通过数据库进行验证
+        final Users authentication = usersService.authentication(user);
+        if (authentication == null) {
+            throw new AuthenticationException("用户名或密码错误.");
+        }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, password, getName());
         return authenticationInfo;
     }

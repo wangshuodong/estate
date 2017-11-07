@@ -16,8 +16,8 @@
         <property name="filterChainDefinitions">
             <value>
                 <!-- 静态资源允许访问 -->
-                /static/** = anon
-                /lib/** = anon
+                /h-ui/** = anon
+
                 <!-- 登录页允许访问 -->
                 /rest/user/login = anon
                 /rest/page/** = anon

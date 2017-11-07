@@ -2,8 +2,10 @@ package com.wangsd.web.dao;
 
 import com.wangsd.web.model.Users;
 import com.wangsd.web.model.UsersExample;
-import java.util.List;
+import com.wangsd.web.modelCustom.UserCustom;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UsersMapper {
     int countByExample(UsersExample example);
@@ -27,4 +29,8 @@ public interface UsersMapper {
     int updateByPrimaryKeySelective(Users record);
 
     int updateByPrimaryKey(Users record);
+
+    UserCustom selectByUsername(String username);
+
+
 }

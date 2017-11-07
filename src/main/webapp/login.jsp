@@ -28,12 +28,11 @@
 </head>
 <body>
 <input type="hidden" id="TenantId" name="TenantId" value=""/>
-<div class="header"><span
-        style="font-weight: bold;font-size: 30px; position:absolute; left:210px; top:5px; color: white;font-family: cursive;">后台登录</span>
+<div class="header">
 </div>
 <div class="loginWraper">
     <div id="loginform" class="loginBox">
-        <form class="form form-horizontal" action="${pageContext.request.contextPath}/rest/account/login" method="post">
+        <form class="form form-horizontal" action="${pageContext.request.contextPath}/rest/user/login" method="post">
             <div class="row cl">
                 <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
                 <div class="formControls col-xs-8">

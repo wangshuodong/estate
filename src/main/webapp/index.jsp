@@ -5,7 +5,7 @@
 <html>
 <head>
     <%@ include file="share/_meta.jsp" %>
-    <title>霸气测漏管理系统</title>
+    <title>管理系统</title>
 </head>
 <body>
 <%@ include file="share/_header.jsp" %>
