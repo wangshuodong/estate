@@ -19,7 +19,7 @@
                 /static/** = anon
                 /lib/** = anon
                 <!-- 登录页允许访问 -->
-                /rest/account/login = anon
+                /rest/user/login = anon
                 /rest/page/** = anon
 
                 <!-- 其他资源需要认证 -->
