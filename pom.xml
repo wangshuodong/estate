@@ -440,7 +440,7 @@
         </dependency>
 
         <!-- 支付宝的jar包 -->
-        <!-- mvn install:install-file -Dfile=E:/IdeaProjects_wsd/gasinternet/src/main/webapp/WEB-INF/lib/alipay-sdk-java20161213173952.jar -DgroupId=com.alipay -DartifactId=alipay-java-all -Dversion=1.0.0 -Dpackaging=jar -DgeneratePom=true -->
+        <!-- mvn install:install-file -Dfile=E:/IdeaProjects_wsd/estate/src/main/webapp/WEB-INF/lib/alipay-sdk-java-ALL20171027103034.jar -DgroupId=com.alipay -DartifactId=alipay-java-all -Dversion=1.0.0 -Dpackaging=jar -DgeneratePom=true -->
         <dependency>
             <groupId>com.alipay</groupId>
             <artifactId>alipay-java-all</artifactId>

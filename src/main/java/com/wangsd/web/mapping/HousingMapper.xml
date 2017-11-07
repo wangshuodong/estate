@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangsd.web.dao.HousingMapper" >
+  <resultMap id="BaseResultMap" type="com.wangsd.web.model.Housing" >
+    <id column="hous_id" property="housId" jdbcType="INTEGER" />
+    <result column="hous_name" property="housName" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="department_code" property="departmentCode" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="district_code" property="districtCode" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="community_locations" property="communityLocations" jdbcType="VARCHAR" />
+    <result column="associated_pois" property="associatedPois" jdbcType="VARCHAR" />
+    <result column="hotline" property="hotline" jdbcType="VARCHAR" />
+    <result column="init" property="init" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    hous_id, hous_name, address, department_id, department_code, community_id, district_code, 
+    city_code, province_code, community_locations, associated_pois, hotline, init, status, 
+    create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.HousingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from housing
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from housing
+    where hous_id = #{housId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from housing
+    where hous_id = #{housId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wangsd.web.model.HousingExample" >
+    delete from housing
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wangsd.web.model.Housing" >
+    insert into housing (hous_id, hous_name, address, 
+      department_id, department_code, community_id, 
+      district_code, city_code, province_code, 
+      community_locations, associated_pois, hotline, 
+      init, status, create_time
+      )
+    values (#{housId,jdbcType=INTEGER}, #{housName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{departmentId,jdbcType=INTEGER}, #{departmentCode,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, 
+      #{districtCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, 
+      #{communityLocations,jdbcType=VARCHAR}, #{associatedPois,jdbcType=VARCHAR}, #{hotline,jdbcType=VARCHAR}, 
+      #{init,jdbcType=TINYINT}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangsd.web.model.Housing" >
+    insert into housing
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="housId != null" >
+        hous_id,
+      </if>
+      <if test="housName != null" >
+        hous_name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="departmentCode != null" >
+        department_code,
+      </if>
+      <if test="communityId != null" >
+        community_id,
+      </if>
+      <if test="districtCode != null" >
+        district_code,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="provinceCode != null" >
+        province_code,
+      </if>
+      <if test="communityLocations != null" >
+        community_locations,
+      </if>
+      <if test="associatedPois != null" >
+        associated_pois,
+      </if>
+      <if test="hotline != null" >
+        hotline,
+      </if>
+      <if test="init != null" >
+        init,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="housId != null" >
+        #{housId,jdbcType=INTEGER},
+      </if>
+      <if test="housName != null" >
+        #{housName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentCode != null" >
+        #{departmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null" >
+        #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="communityLocations != null" >
+        #{communityLocations,jdbcType=VARCHAR},
+      </if>
+      <if test="associatedPois != null" >
+        #{associatedPois,jdbcType=VARCHAR},
+      </if>
+      <if test="hotline != null" >
+        #{hotline,jdbcType=VARCHAR},
+      </if>
+      <if test="init != null" >
+        #{init,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wangsd.web.model.HousingExample" resultType="java.lang.Integer" >
+    select count(*) from housing
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update housing
+    <set >
+      <if test="record.housId != null" >
+        hous_id = #{record.housId,jdbcType=INTEGER},
+      </if>
+      <if test="record.housName != null" >
+        hous_name = #{record.housName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentId != null" >
+        department_id = #{record.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentCode != null" >
+        department_code = #{record.departmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.communityId != null" >
+        community_id = #{record.communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.districtCode != null" >
+        district_code = #{record.districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityCode != null" >
+        city_code = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceCode != null" >
+        province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.communityLocations != null" >
+        community_locations = #{record.communityLocations,jdbcType=VARCHAR},
+      </if>
+      <if test="record.associatedPois != null" >
+        associated_pois = #{record.associatedPois,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hotline != null" >
+        hotline = #{record.hotline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.init != null" >
+        init = #{record.init,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update housing
+    set hous_id = #{record.housId,jdbcType=INTEGER},
+      hous_name = #{record.housName,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      department_id = #{record.departmentId,jdbcType=INTEGER},
+      department_code = #{record.departmentCode,jdbcType=VARCHAR},
+      community_id = #{record.communityId,jdbcType=VARCHAR},
+      district_code = #{record.districtCode,jdbcType=VARCHAR},
+      city_code = #{record.cityCode,jdbcType=VARCHAR},
+      province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      community_locations = #{record.communityLocations,jdbcType=VARCHAR},
+      associated_pois = #{record.associatedPois,jdbcType=VARCHAR},
+      hotline = #{record.hotline,jdbcType=VARCHAR},
+      init = #{record.init,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Housing" >
+    update housing
+    <set >
+      <if test="housName != null" >
+        hous_name = #{housName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentCode != null" >
+        department_code = #{departmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null" >
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null" >
+        district_code = #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="communityLocations != null" >
+        community_locations = #{communityLocations,jdbcType=VARCHAR},
+      </if>
+      <if test="associatedPois != null" >
+        associated_pois = #{associatedPois,jdbcType=VARCHAR},
+      </if>
+      <if test="hotline != null" >
+        hotline = #{hotline,jdbcType=VARCHAR},
+      </if>
+      <if test="init != null" >
+        init = #{init,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where hous_id = #{housId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Housing" >
+    update housing
+    set hous_name = #{housName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      department_code = #{departmentCode,jdbcType=VARCHAR},
+      community_id = #{communityId,jdbcType=VARCHAR},
+      district_code = #{districtCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      community_locations = #{communityLocations,jdbcType=VARCHAR},
+      associated_pois = #{associatedPois,jdbcType=VARCHAR},
+      hotline = #{hotline,jdbcType=VARCHAR},
+      init = #{init,jdbcType=TINYINT},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where hous_id = #{housId,jdbcType=INTEGER}
+  </update>
+</mapper>
