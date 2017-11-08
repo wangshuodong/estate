@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangsd.web.dao.UsersMapper">
-    <resultMap id="userCustomReturn" type="com.wangsd.web.modelCustom.UserCustom"
+    <!--<resultMap id="userCustomReturn" type="com.wangsd.web.modelCustom.UserCustom"
                extends="com.bqcl.gasinternet.dao.AccountMapper.BaseResultMap">
         <result column="roleName" property="roleName"/>
         <association property="company" javaType="com.bqcl.gasinternet.model.Company">
@@ -23,10 +23,10 @@
             <result column="deletestatus" property="deletestatus"/>
         </association>
 
-    </resultMap>
+    </resultMap>-->
 
     <!-- 用户登录成功，根据用户名查询信息 -->
-    <select id="selectByUsername" parameterType="String" resultMap="accountCustomReturn">
+    <select id="selectByUsername" parameterType="String" resultType="UserCustom">
         select a.*, c.*
         from account a left join company c on a.companyId = c.id
         where a.username=#{username}

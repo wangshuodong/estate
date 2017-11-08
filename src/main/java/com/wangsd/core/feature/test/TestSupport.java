@@ -6,7 +6,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 /**
  * TestSupport : Spring测试支持,用于测试由Spring 管理的bean,编写测试类时,继承该类
  */
-@ContextConfiguration(locations = {"classpath*:spring/applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath*:spring/applicationContext.xml","classpath*:spring/spring-mybatis.xml"})
 public class TestSupport extends AbstractJUnit4SpringContextTests {
     protected long startTime;
     protected long endTime;
