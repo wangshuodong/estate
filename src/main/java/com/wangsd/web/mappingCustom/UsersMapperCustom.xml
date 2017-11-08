@@ -27,8 +27,8 @@
 
     <!-- 用户登录成功，根据用户名查询信息 -->
     <select id="selectByUsername" parameterType="String" resultType="UserCustom">
-        select a.*, c.*
-        from account a left join company c on a.companyId = c.id
-        where a.username=#{username}
+        select u.*, d.type as deptType, d.dept_name as deptName
+        from users u left join department d on u.department_id = d.dept_id
+        where u.username=#{username}
     </select>
 </mapper>

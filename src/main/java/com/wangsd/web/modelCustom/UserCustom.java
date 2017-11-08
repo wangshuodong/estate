@@ -1,19 +1,29 @@
 package com.wangsd.web.modelCustom;
 
-import com.wangsd.web.model.Department;
 import com.wangsd.web.model.Users;
 
 /**
  * Created by Administrator on 2017/11/7.
  */
-public class UserCustom extends Users{
-    private Department department;
+public class UserCustom extends Users {
 
-    public Department getDepartment() {
-        return department;
+    private String deptName;
+
+    private Integer deptType;
+
+    public String getDeptName() {
+        return deptName;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public Integer getDeptType() {
+        return deptType;
+    }
+
+    public void setDeptType(Integer deptType) {
+        this.deptType = deptType;
     }
 }

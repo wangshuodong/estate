@@ -25,11 +25,15 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	public Users authentication(Users user) {
+		Users retobj = null;
 		UsersExample example = new UsersExample();
 		example.createCriteria().andUsernameEqualTo(user.getUsername());
 		example.createCriteria().andPasswordEqualTo(user.getPassword());
 		List<Users> list = usersMapper.selectByExample(example);
-		return list.get(0);
+		if (list.size() > 0) {
+			retobj = list.get(0);
+		}
+		return retobj;
 	}
 
 }
