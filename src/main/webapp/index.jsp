@@ -14,13 +14,13 @@
     <div class="menu_dropdown bk_2">
         <c:forEach items="${menuList}" var="item">
             <dl id="menu-product">
-                <dt><img style="margin-top: -4px" src="${pageContext.request.contextPath}/images/${ item.iconcls }">&nbsp;&nbsp;${ item.name }<i
+                <dt><img style="margin-top: -4px" src="${pageContext.request.contextPath}/images/${ item.iconCls }">&nbsp;&nbsp;${ item.menuName }<i
                         class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                 <dd>
                     <ul>
                         <c:forEach items="${item.sonMenu}" var="sonItem">
                             <li><a data-href="${pageContext.request.contextPath}${ sonItem.url }"
-                                   data-title="${ sonItem.name }" href="javascript:;void(0)">${ sonItem.name }</a></li>
+                                   data-title="${ sonItem.menuName }" href="javascript:;void(0)">${ sonItem.menuName }</a></li>
                         </c:forEach>
                     </ul>
                 </dd>

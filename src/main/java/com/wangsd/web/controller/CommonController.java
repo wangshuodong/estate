@@ -1,12 +1,15 @@
 package com.wangsd.web.controller;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.wangsd.web.modelCustom.MenuCustom;
+import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.service.MenuService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 公共视图控制器
@@ -15,12 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class CommonController {
 
-    private static final Logger logger = LogManager.getLogger(CommonController.class.getName());
-
-//    @Autowired
-//    UsersService usersService;
-//    @Autowired
-//    RoleService roleService;
+    @Autowired
+    MenuService menuService;
     
     /**
      * 进入首页
@@ -30,15 +29,10 @@ public class CommonController {
      */
     @RequestMapping("/index")
     public String index(HttpServletRequest request, Model model) {
-//        AccountCustom obj = (AccountCustom) request.getSession().getAttribute("userInfo");
-//        Integer roleid = obj.getRoleid();
-//        List<MenuCustom> list = roleService.queryMenuListByRoleId(obj.getRoleid());
-//        model.addAttribute("menuList", list);
-//        model.addAttribute("name", obj.getName());
-//        model.addAttribute("loginType", 111);//系统个人信息
-//        int no=usersService.getSysMessage(roleid);
-//        model.addAttribute("sys_recordRoleId", roleid);
-//        model.addAttribute("sys_recordNum", no);//系统消息记录数目
+        UserCustom obj = (UserCustom) request.getSession().getAttribute("userInfo");
+        Integer roleId = obj.getRoleId();
+        List<MenuCustom> list = menuService.queryMenuByRoleId(roleId);
+        model.addAttribute("menuList", list);
         return "/index";
     }
 
