@@ -17,7 +17,7 @@
             <value>
                 <!-- 静态资源允许访问 -->
                 /h-ui/** = anon
-
+                /layui/** = anon
                 <!-- 登录页允许访问 -->
                 /rest/user/login = anon
                 /rest/page/** = anon
