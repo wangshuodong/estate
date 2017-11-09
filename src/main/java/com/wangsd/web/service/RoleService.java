@@ -1,13 +1,17 @@
 package com.wangsd.web.service;
 
+import com.wangsd.web.model.Role;
+
+import java.util.List;
+
 public interface RoleService {
 
-//	/**
-//	 * 如果companyid查询所有角色，否则按条件查询
-//	 * @param companyid
-//	 * @return
-//	 */
-//	public List<Role> queryAllRoleList(String companyid);
+    /**
+     * 查询所有角色，过滤掉最大权限的角色
+     * @param roleId
+     * @return
+     */
+	public List<Role> queryAllRoleList(Integer roleId);
 //
 //	/**
 //	 * 根据id查询角色

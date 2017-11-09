@@ -1,15 +1,21 @@
 package com.wangsd.web.service.impl;
 
+import com.wangsd.web.dao.RoleMapper;
+import com.wangsd.web.model.Role;
+import com.wangsd.web.model.RoleExample;
 import com.wangsd.web.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RoleServiceImpl implements RoleService {
 	
 //	@Autowired
 //	AccountMapper accountMapper;
-//	@Autowired
-//	RoleMapper roleMapper;
+	@Autowired
+    RoleMapper roleMapper;
 //	@Autowired
 //	MenuMapper menuMapper;
 //	@Autowired
@@ -21,15 +27,15 @@ public class RoleServiceImpl implements RoleService {
 //		return list;
 //	}
 //
-//    @Override
-//	public List<Role> queryAllRoleList(String companyid) {
-//    	RoleExample example = new RoleExample();
-//    	if (companyid != null) {
-//    		example.createCriteria().andCompanyidLike(companyid);
-//    	}
-//		List<Role> list = roleMapper.selectByExample(example);
-//		return list;
-//	}
+    @Override
+	public List<Role> queryAllRoleList(Integer roleId) {
+    	RoleExample example = new RoleExample();
+    	if (roleId != null) {
+            example.createCriteria().andRoleIdNotEqualTo(roleId);
+        }
+		List<Role> list = roleMapper.selectByExample(example);
+		return list;
+	}
 //
 //    @Override
 //	public Role findRoleById(int id) {
