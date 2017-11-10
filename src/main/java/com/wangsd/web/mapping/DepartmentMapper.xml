@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangsd.web.dao.DepartmentMapper" >
   <resultMap id="BaseResultMap" type="com.wangsd.web.model.Department" >
-    <id column="dept_id" property="deptId" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="code" property="code" jdbcType="VARCHAR" />
-    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="contact_people" property="contactPeople" jdbcType="VARCHAR" />
@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    dept_id, code, dept_name, address, phone, contact_people, type, parent_id, create_time
+    id, code, name, address, phone, contact_people, type, parent_id, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.DepartmentExample" >
     select
@@ -91,11 +91,11 @@
     select 
     <include refid="Base_Column_List" />
     from department
-    where dept_id = #{deptId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from department
-    where dept_id = #{deptId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.wangsd.web.model.DepartmentExample" >
     delete from department
@@ -104,11 +104,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.wangsd.web.model.Department" >
-    insert into department (dept_id, code, dept_name, 
+    insert into department (id, code, name, 
       address, phone, contact_people, 
       type, parent_id, create_time
       )
-    values (#{deptId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{contactPeople,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
       )
@@ -116,14 +116,14 @@
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Department" >
     insert into department
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="deptId != null" >
-        dept_id,
+      <if test="id != null" >
+        id,
       </if>
       <if test="code != null" >
         code,
       </if>
-      <if test="deptName != null" >
-        dept_name,
+      <if test="name != null" >
+        name,
       </if>
       <if test="address != null" >
         address,
@@ -145,14 +145,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="deptId != null" >
-        #{deptId,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="code != null" >
         #{code,jdbcType=VARCHAR},
       </if>
-      <if test="deptName != null" >
-        #{deptName,jdbcType=VARCHAR},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
@@ -183,14 +183,14 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update department
     <set >
-      <if test="record.deptId != null" >
-        dept_id = #{record.deptId,jdbcType=INTEGER},
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.code != null" >
         code = #{record.code,jdbcType=VARCHAR},
       </if>
-      <if test="record.deptName != null" >
-        dept_name = #{record.deptName,jdbcType=VARCHAR},
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.address != null" >
         address = #{record.address,jdbcType=VARCHAR},
@@ -217,9 +217,9 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update department
-    set dept_id = #{record.deptId,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=INTEGER},
       code = #{record.code,jdbcType=VARCHAR},
-      dept_name = #{record.deptName,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       contact_people = #{record.contactPeople,jdbcType=VARCHAR},
@@ -236,8 +236,8 @@
       <if test="code != null" >
         code = #{code,jdbcType=VARCHAR},
       </if>
-      <if test="deptName != null" >
-        dept_name = #{deptName,jdbcType=VARCHAR},
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="address != null" >
         address = #{address,jdbcType=VARCHAR},
@@ -258,18 +258,18 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where dept_id = #{deptId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Department" >
     update department
     set code = #{code,jdbcType=VARCHAR},
-      dept_name = #{deptName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       contact_people = #{contactPeople,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       parent_id = #{parentId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
-    where dept_id = #{deptId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

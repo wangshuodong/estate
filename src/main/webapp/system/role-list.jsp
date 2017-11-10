@@ -41,13 +41,13 @@
 				<tbody>
 				<c:forEach items="${roleList}" var="item">
 					<tr class="text-c">
-						<td>${ item.roleId }</td>
-						<td>${ item.roleName }</td>
+						<td>${ item.id }</td>
+						<td>${ item.name }</td>
 						<td>${ item.description }</td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td>
-							<a title="编辑" style="text-decoration:none" onClick="role_edit(${item.roleId })" href="javascript:;" class="c-success">编辑</a><span class="pipe"> |</span>
-							<a title="删除" style="text-decoration:none" onclick="role_del(this, ${item.roleId })" href="javascript:;" class="c-success">删除</a>
+							<a title="编辑" style="text-decoration:none" onClick="role_edit(${item.id })" href="javascript:;" class="c-success">编辑</a><span class="pipe"> |</span>
+							<a title="删除" style="text-decoration:none" onclick="role_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
 						</td>
 					</tr>
 				</c:forEach>

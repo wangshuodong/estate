@@ -3,11 +3,11 @@ package com.wangsd.web.model;
 import java.util.Date;
 
 public class Department {
-    private Integer deptId;
+    private Integer id;
 
     private String code;
 
-    private String deptName;
+    private String name;
 
     private String address;
 
@@ -21,12 +21,12 @@ public class Department {
 
     private Date createTime;
 
-    public Integer getDeptId() {
-        return deptId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setDeptId(Integer deptId) {
-        this.deptId = deptId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCode() {
@@ -37,12 +37,12 @@ public class Department {
         this.code = code == null ? null : code.trim();
     }
 
-    public String getDeptName() {
-        return deptName;
+    public String getName() {
+        return name;
     }
 
-    public void setDeptName(String deptName) {
-        this.deptName = deptName == null ? null : deptName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getAddress() {

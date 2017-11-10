@@ -3,11 +3,7 @@ package com.wangsd.web.model;
 import java.util.Date;
 
 public class Housing {
-    private Integer housId;
-
-    private String housName;
-
-    private String address;
+    private Integer id;
 
     private Integer departmentId;
 
@@ -33,28 +29,12 @@ public class Housing {
 
     private Date createTime;
 
-    public Integer getHousId() {
-        return housId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setHousId(Integer housId) {
-        this.housId = housId;
-    }
-
-    public String getHousName() {
-        return housName;
-    }
-
-    public void setHousName(String housName) {
-        this.housName = housName == null ? null : housName.trim();
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getDepartmentId() {

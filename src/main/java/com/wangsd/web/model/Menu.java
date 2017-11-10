@@ -1,9 +1,9 @@
 package com.wangsd.web.model;
 
 public class Menu {
-    private Integer menuId;
+    private Integer id;
 
-    private String menuName;
+    private String name;
 
     private String url;
 
@@ -15,20 +15,20 @@ public class Menu {
 
     private Byte enable;
 
-    public Integer getMenuId() {
-        return menuId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMenuId(Integer menuId) {
-        this.menuId = menuId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getMenuName() {
-        return menuName;
+    public String getName() {
+        return name;
     }
 
-    public void setMenuName(String menuName) {
-        this.menuName = menuName == null ? null : menuName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getUrl() {

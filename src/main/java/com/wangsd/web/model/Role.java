@@ -3,28 +3,28 @@ package com.wangsd.web.model;
 import java.util.Date;
 
 public class Role {
-    private Integer roleId;
+    private Integer id;
 
-    private String roleName;
+    private String name;
 
     private String description;
 
     private Date createTime;
 
-    public Integer getRoleId() {
-        return roleId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return name;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName == null ? null : roleName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getDescription() {

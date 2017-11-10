@@ -1,20 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../share/_meta.jsp" %>
 <%@ include file="../share/_footer.jsp" %>
-
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/h-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css">
 
 <div class="page-container">
-    <form class="form form-horizontal" id="form-article-add">
+    <form class="form form-horizontal" id="form-role-add" action="">
+        <input type="hidden" value="${role.id}" name="id" id="id">
+        <input type="hidden" name="menuIds" id="menuIds">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>角色名：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="" placeholder="角色名" name="roleName">
+                <input type="text" class="input-text radius size-L" value="${role.name}" placeholder="角色名" id="name" name="name" required>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">角色描述：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="" placeholder="角色描述" name="">
+                <input type="text" class="input-text radius size-L" value="${role.description}" placeholder="角色描述" id="description" name="description">
             </div>
         </div>
         <div class="row cl">
@@ -31,6 +33,8 @@
         </div>
     </form>
 </div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript">
     var setting = {
@@ -43,15 +47,23 @@
         data: {
             simpleData: {
                 enable: true,
-                pIdKey: "parentid"
+                pIdKey: "parentId"
             }
         }
     };
     var treeObj;
     var zNodes = ${menuList};
-    console.info(zNodes);
+    //console.info(zNodes);
     $(document).ready(function(){
         treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    });
+
+    $("#form-role-add").validate({
+        submitHandler:function(form){
+            //form.submit();
+            //saveOrUpdate();
+            $(form).ajaxSubmit();
+        }
     });
 
     function saveOrUpdate() {
@@ -73,7 +85,6 @@
                 'description': $('#description').val(),
                 'menuIds' : menuIds
             },
-            async: false,
             success : function() {
                 window.parent.location.reload();
             }

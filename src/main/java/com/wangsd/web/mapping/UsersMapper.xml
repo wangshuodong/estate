@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangsd.web.dao.UsersMapper" >
   <resultMap id="BaseResultMap" type="com.wangsd.web.model.Users" >
-    <id column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
@@ -74,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, nick, username, password, department_id, department_code, role_id, phone, 
-    email, type, enable, create_time
+    id, name, username, password, department_id, department_code, role_id, phone, email, 
+    type, enable, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.UsersExample" >
     select
@@ -95,11 +95,11 @@
     select 
     <include refid="Base_Column_List" />
     from users
-    where user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from users
-    where user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.wangsd.web.model.UsersExample" >
     delete from users
@@ -108,12 +108,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.wangsd.web.model.Users" >
-    insert into users (user_id, nick, username, 
+    insert into users (id, name, username, 
       password, department_id, department_code, 
       role_id, phone, email, 
       type, enable, create_time
       )
-    values (#{userId,jdbcType=INTEGER}, #{nick,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{departmentCode,jdbcType=VARCHAR}, 
       #{roleId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{enable,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}
@@ -122,11 +122,11 @@
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Users" >
     insert into users
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        user_id,
+      <if test="id != null" >
+        id,
       </if>
-      <if test="nick != null" >
-        nick,
+      <if test="name != null" >
+        name,
       </if>
       <if test="username != null" >
         username,
@@ -160,11 +160,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="nick != null" >
-        #{nick,jdbcType=VARCHAR},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
@@ -207,11 +207,11 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update users
     <set >
-      <if test="record.userId != null" >
-        user_id = #{record.userId,jdbcType=INTEGER},
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.nick != null" >
-        nick = #{record.nick,jdbcType=VARCHAR},
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.username != null" >
         username = #{record.username,jdbcType=VARCHAR},
@@ -250,8 +250,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update users
-    set user_id = #{record.userId,jdbcType=INTEGER},
-      nick = #{record.nick,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       department_id = #{record.departmentId,jdbcType=INTEGER},
@@ -269,8 +269,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Users" >
     update users
     <set >
-      <if test="nick != null" >
-        nick = #{nick,jdbcType=VARCHAR},
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
@@ -303,11 +303,11 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Users" >
     update users
-    set nick = #{nick,jdbcType=VARCHAR},
+    set name = #{name,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       department_id = #{departmentId,jdbcType=INTEGER},
@@ -318,6 +318,6 @@
       type = #{type,jdbcType=INTEGER},
       enable = #{enable,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
-    where user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

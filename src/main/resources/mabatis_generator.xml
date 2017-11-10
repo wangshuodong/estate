@@ -32,11 +32,12 @@
         <table tableName="account" domainObjectName="Account">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        -->
         <table tableName="role" domainObjectName="Role"/>
         <table tableName="menu" domainObjectName="Menu"/>
         <table tableName="users" domainObjectName="Users"/>
         <table tableName="department" domainObjectName="Department"/>
         <table tableName="housing" domainObjectName="Housing"/>
+        -->
+        <table tableName="role_menu" domainObjectName="RoleMenu"/>
     </context>
 </generatorConfiguration>

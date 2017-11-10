@@ -2,9 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangsd.web.dao.HousingMapper" >
   <resultMap id="BaseResultMap" type="com.wangsd.web.model.Housing" >
-    <id column="hous_id" property="housId" jdbcType="INTEGER" />
-    <result column="hous_name" property="housName" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
     <result column="department_code" property="departmentCode" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
@@ -77,9 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    hous_id, hous_name, address, department_id, department_code, community_id, district_code, 
-    city_code, province_code, community_locations, associated_pois, hotline, init, status, 
-    create_time
+    id, department_id, department_code, community_id, district_code, city_code, province_code, 
+    community_locations, associated_pois, hotline, init, status, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.HousingExample" >
     select
@@ -99,11 +96,11 @@
     select 
     <include refid="Base_Column_List" />
     from housing
-    where hous_id = #{housId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from housing
-    where hous_id = #{housId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.wangsd.web.model.HousingExample" >
     delete from housing
@@ -112,30 +109,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.wangsd.web.model.Housing" >
-    insert into housing (hous_id, hous_name, address, 
-      department_id, department_code, community_id, 
-      district_code, city_code, province_code, 
-      community_locations, associated_pois, hotline, 
-      init, status, create_time
-      )
-    values (#{housId,jdbcType=INTEGER}, #{housName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{departmentId,jdbcType=INTEGER}, #{departmentCode,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, 
-      #{districtCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, 
-      #{communityLocations,jdbcType=VARCHAR}, #{associatedPois,jdbcType=VARCHAR}, #{hotline,jdbcType=VARCHAR}, 
-      #{init,jdbcType=TINYINT}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+    insert into housing (id, department_id, department_code, 
+      community_id, district_code, city_code, 
+      province_code, community_locations, associated_pois, 
+      hotline, init, status, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{departmentCode,jdbcType=VARCHAR}, 
+      #{communityId,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{provinceCode,jdbcType=VARCHAR}, #{communityLocations,jdbcType=VARCHAR}, #{associatedPois,jdbcType=VARCHAR}, 
+      #{hotline,jdbcType=VARCHAR}, #{init,jdbcType=TINYINT}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Housing" >
     insert into housing
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="housId != null" >
-        hous_id,
-      </if>
-      <if test="housName != null" >
-        hous_name,
-      </if>
-      <if test="address != null" >
-        address,
+      <if test="id != null" >
+        id,
       </if>
       <if test="departmentId != null" >
         department_id,
@@ -175,14 +164,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="housId != null" >
-        #{housId,jdbcType=INTEGER},
-      </if>
-      <if test="housName != null" >
-        #{housName,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="departmentId != null" >
         #{departmentId,jdbcType=INTEGER},
@@ -231,14 +214,8 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update housing
     <set >
-      <if test="record.housId != null" >
-        hous_id = #{record.housId,jdbcType=INTEGER},
-      </if>
-      <if test="record.housName != null" >
-        hous_name = #{record.housName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.address != null" >
-        address = #{record.address,jdbcType=VARCHAR},
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.departmentId != null" >
         department_id = #{record.departmentId,jdbcType=INTEGER},
@@ -283,9 +260,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update housing
-    set hous_id = #{record.housId,jdbcType=INTEGER},
-      hous_name = #{record.housName,jdbcType=VARCHAR},
-      address = #{record.address,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=INTEGER},
       department_id = #{record.departmentId,jdbcType=INTEGER},
       department_code = #{record.departmentCode,jdbcType=VARCHAR},
       community_id = #{record.communityId,jdbcType=VARCHAR},
@@ -305,12 +280,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Housing" >
     update housing
     <set >
-      <if test="housName != null" >
-        hous_name = #{housName,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
       <if test="departmentId != null" >
         department_id = #{departmentId,jdbcType=INTEGER},
       </if>
@@ -348,13 +317,11 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where hous_id = #{housId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Housing" >
     update housing
-    set hous_name = #{housName,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      department_id = #{departmentId,jdbcType=INTEGER},
+    set department_id = #{departmentId,jdbcType=INTEGER},
       department_code = #{departmentCode,jdbcType=VARCHAR},
       community_id = #{communityId,jdbcType=VARCHAR},
       district_code = #{districtCode,jdbcType=VARCHAR},
@@ -366,6 +333,6 @@
       init = #{init,jdbcType=TINYINT},
       status = #{status,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
-    where hous_id = #{housId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

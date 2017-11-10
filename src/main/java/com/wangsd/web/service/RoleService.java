@@ -1,6 +1,7 @@
 package com.wangsd.web.service;
 
 import com.wangsd.web.model.Role;
+import com.wangsd.web.modelCustom.RoleCustom;
 
 import java.util.List;
 
@@ -27,11 +28,11 @@ public interface RoleService {
 //     */
 //    public List<Integer> queryMenuIdByRoleid(Integer roleid);
 //
-//    /**
-//     * 保存权限和角色
-//     * @param roleCustom
-//     */
-//	public void saveOrUpdateRole(RoleCustom roleCustom);
+    /**
+     * 保存权限和角色
+     * @param roleCustom
+     */
+	public boolean saveOrUpdateRole(RoleCustom roleCustom);
 //
 //	/**
 //	 * 删除角色

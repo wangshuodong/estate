@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangsd.web.dao.MenuMapper" >
   <resultMap id="BaseResultMap" type="com.wangsd.web.model.Menu" >
-    <id column="menu_id" property="menuId" jdbcType="INTEGER" />
-    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="icon_Cls" property="iconCls" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
@@ -69,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    menu_id, menu_name, url, icon_Cls, parent_id, sort, enable
+    id, name, url, icon_Cls, parent_id, sort, enable
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.MenuExample" >
     select
@@ -89,11 +89,11 @@
     select 
     <include refid="Base_Column_List" />
     from menu
-    where menu_id = #{menuId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from menu
-    where menu_id = #{menuId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.wangsd.web.model.MenuExample" >
     delete from menu
@@ -102,21 +102,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.wangsd.web.model.Menu" >
-    insert into menu (menu_id, menu_name, url, 
+    insert into menu (id, name, url, 
       icon_Cls, parent_id, sort, 
       enable)
-    values (#{menuId,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
       #{iconCls,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
       #{enable,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Menu" >
     insert into menu
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="menuId != null" >
-        menu_id,
+      <if test="id != null" >
+        id,
       </if>
-      <if test="menuName != null" >
-        menu_name,
+      <if test="name != null" >
+        name,
       </if>
       <if test="url != null" >
         url,
@@ -135,11 +135,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="menuId != null" >
-        #{menuId,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="menuName != null" >
-        #{menuName,jdbcType=VARCHAR},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
@@ -167,11 +167,11 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update menu
     <set >
-      <if test="record.menuId != null" >
-        menu_id = #{record.menuId,jdbcType=INTEGER},
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.menuName != null" >
-        menu_name = #{record.menuName,jdbcType=VARCHAR},
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.url != null" >
         url = #{record.url,jdbcType=VARCHAR},
@@ -195,8 +195,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update menu
-    set menu_id = #{record.menuId,jdbcType=INTEGER},
-      menu_name = #{record.menuName,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       icon_Cls = #{record.iconCls,jdbcType=VARCHAR},
       parent_id = #{record.parentId,jdbcType=INTEGER},
@@ -209,8 +209,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Menu" >
     update menu
     <set >
-      <if test="menuName != null" >
-        menu_name = #{menuName,jdbcType=VARCHAR},
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
@@ -228,16 +228,16 @@
         enable = #{enable,jdbcType=TINYINT},
       </if>
     </set>
-    where menu_id = #{menuId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Menu" >
     update menu
-    set menu_name = #{menuName,jdbcType=VARCHAR},
+    set name = #{name,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       icon_Cls = #{iconCls,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER},
       sort = #{sort,jdbcType=INTEGER},
       enable = #{enable,jdbcType=TINYINT}
-    where menu_id = #{menuId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -3,9 +3,9 @@ package com.wangsd.web.model;
 import java.util.Date;
 
 public class Users {
-    private Integer userId;
+    private Integer id;
 
-    private String nick;
+    private String name;
 
     private String username;
 
@@ -27,20 +27,20 @@ public class Users {
 
     private Date createTime;
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getNick() {
-        return nick;
+    public String getName() {
+        return name;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick == null ? null : nick.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getUsername() {
