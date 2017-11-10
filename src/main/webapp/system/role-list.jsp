@@ -1,11 +1,9 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="../share/_meta.jsp" %>
 <%@ include file="../share/_footer.jsp" %>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/h-ui/common/jquery.editable-select.min.css" />
 
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>用户中心 <span class="c-gray en">&gt;</span> 用户管理
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>系统管理中心 <span class="c-gray en">&gt;</span> 角色管理
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
@@ -21,8 +19,8 @@
 				<option value="13">├行业新闻</option>
 			</select>
 		</div>
-		<button type="submit" class="btn btn-secondary radius size-L">查询</button>
-		<button type="button" class="btn btn-secondary radius size-L" onclick="addRole();">新增</button>
+		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
+		<button type="button" class="btn btn-secondary radius size-L" onclick="addRole();">新&nbsp;增</button>
 	</form>
 
 	<div class="panel panel-default mt-20">
@@ -46,7 +44,7 @@
 						<td>${ item.roleId }</td>
 						<td>${ item.roleName }</td>
 						<td>${ item.description }</td>
-						<td>${ item.createTime }</td>
+						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td>
 							<a title="编辑" style="text-decoration:none" onClick="role_edit(${item.roleId })" href="javascript:;" class="c-success">编辑</a><span class="pipe"> |</span>
 							<a title="删除" style="text-decoration:none" onclick="role_del(this, ${item.roleId })" href="javascript:;" class="c-success">删除</a>
@@ -64,31 +62,26 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/common/jquery.editable-select.min.js"></script>
 <script type="text/javascript">
-$(function(){
 	$('.table-sort').dataTable({
-        scrollX: true,
-        ordering: false,
-        searching: 200
+		scrollX: true,
+		ordering: false
 	});
 
-    $('#selects1').editableSelect({
-        effects: 'slide',
-        onSelect: function (element) {
-            $('.shift-info').attr('data-val', element.val());
-            //getCompanyAdress()
-        }
-    }).prop('placeholder', '请选择或输入筛选...');
+	$('#selects1').editableSelect({
+		effects: 'slide',
+		onSelect: function (element) {
+			$('.shift-info').attr('data-val', element.val());
+			//getCompanyAdress()
+		}
+	}).prop('placeholder', '请选择或输入筛选...');
 
-    function addRole(){
-        var index = layer.open({
-            type: 2,
-            title: "添加角色",
-            content: "${pageContext.request.contextPath }/rest/role/addRole"
-        });
-        layer.full(index);
-        //var url="${pageContext.request.contextPath }/rest/role/addRole";
-        //layer_show("添加角色",url,700,500);
-    }
-});
+	function addRole(){
+		var index = layer.open({
+			type: 2,
+			title: "添加角色",
+			content: "${pageContext.request.contextPath }/rest/role/addRole"
+		});
+		layer.full(index);
+	}
 </script>
 
