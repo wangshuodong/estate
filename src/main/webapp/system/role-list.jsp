@@ -83,5 +83,36 @@
 		});
 		layer.full(index);
 	}
+
+    function addRole(){
+        var index = layer.open({
+            type: 2,
+            title: "添加角色",
+            content: "${pageContext.request.contextPath }/rest/role/updateRole?roleId=" + id
+        });
+        layer.full(index);
+    }
+
+    function role_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                type: 'POST',
+                url: '${pageContext.request.contextPath }/rest/role/deleteRole',
+                dataType: 'json',
+                data:{
+                    roleId : id
+                },
+                success: function(data){
+                    if (data.success) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!',{icon:1,time:1000});
+                    }
+                },
+                error:function(data) {
+                    console.log(data.msg);
+                },
+            });
+        });
+    }
 </script>
 

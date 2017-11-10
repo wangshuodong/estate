@@ -33,11 +33,11 @@ public interface RoleService {
      * @param roleCustom
      */
 	public boolean saveOrUpdateRole(RoleCustom roleCustom);
-//
-//	/**
-//	 * 删除角色
-//	 * @param roleId
-//	 * @return
-//	 */
-//	public int deleteRoleInfo(Integer roleId);
+
+	/**
+	 * 删除角色
+	 * @param roleId
+	 * @return
+	 */
+	public int deleteRoleInfo(Integer roleId);
 }

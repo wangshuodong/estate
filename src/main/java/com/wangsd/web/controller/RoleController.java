@@ -1,6 +1,7 @@
 package com.wangsd.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.wangsd.core.entity.JSONResult;
 import com.wangsd.web.model.Role;
 import com.wangsd.web.modelCustom.MenuCustom;
 import com.wangsd.web.modelCustom.RoleCustom;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -51,17 +53,49 @@ public class RoleController {
     }
 
     /**
+     * 新增角色
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/updateRole")
+    public String updateRole(Model model) {
+        List<MenuCustom> list = menuService.queryAllMenuTreeList();
+        model.addAttribute("menuList", JSON.toJSON(list));
+        return "/system/role-info";
+    }
+
+    /**
      * 保存权限和角色
      * @param roleCustom
      */
     @RequestMapping(path = "/saveOrUpdateRole", method = RequestMethod.POST)
-    //@ResponseBody
-    public String saveOrUpdateRole(RoleCustom roleCustom, Model model) {
+    @ResponseBody
+    public JSONResult saveOrUpdateRole(RoleCustom roleCustom, Model model) {
+        JSONResult obj = new JSONResult();
         boolean bl = roleService.saveOrUpdateRole(roleCustom);
         if (bl) {
-            return roleList(model);
+            obj.setSuccess(true);
         }else {
-            return "/system/role-info";
+            obj.setSuccess(false);
         }
+        return obj;
+    }
+
+    /**
+     * 删除角色
+     * @param roleId
+     * @return
+     */
+    @RequestMapping("/deleteRole")
+    @ResponseBody
+    public JSONResult deleteRoleInfo(Integer roleId) {
+        JSONResult obj = new JSONResult();
+        int delStatus = roleService.deleteRoleInfo(roleId);
+        if (delStatus > 0) {
+            obj.setSuccess(true);
+        }else {
+            obj.setSuccess(false);
+        }
+        return obj;
     }
 }

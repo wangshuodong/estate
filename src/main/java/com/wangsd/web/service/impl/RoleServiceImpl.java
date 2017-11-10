@@ -80,17 +80,18 @@ public class RoleServiceImpl implements RoleService {
 			}
 			bl = true;
 		} catch (Exception e) {
-			logger.info(e);
+			e.printStackTrace();
+			throw e;
 		}
 		return bl;
 	}
-//
-//    @Override
-//	public int deleteRoleInfo(Integer roleId) {
-//    	RoleMenuExample example = new RoleMenuExample();
-//    	example.createCriteria().andRoleidEqualTo(roleId);
-//    	roleMenuMapper.deleteByExample(example);
-//		return roleMapper.deleteByPrimaryKey(roleId);
-//	}
+
+    @Override
+	public int deleteRoleInfo(Integer roleId) {
+    	RoleMenuExample example = new RoleMenuExample();
+		example.createCriteria().andRoleIdEqualTo(roleId);
+		roleMenuMapper.deleteByExample(example);
+		return roleMapper.deleteByPrimaryKey(roleId);
+	}
 	
 }
