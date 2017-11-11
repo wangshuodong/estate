@@ -7,8 +7,6 @@ public class Housing {
 
     private Integer departmentId;
 
-    private String departmentCode;
-
     private String communityId;
 
     private String districtCode;
@@ -43,14 +41,6 @@ public class Housing {
 
     public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
-    }
-
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode == null ? null : departmentCode.trim();
     }
 
     public String getCommunityId() {

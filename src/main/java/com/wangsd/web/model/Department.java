@@ -9,6 +9,8 @@ public class Department {
 
     private String name;
 
+    private String region;
+
     private String address;
 
     private String phone;
@@ -43,6 +45,14 @@ public class Department {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region == null ? null : region.trim();
     }
 
     public String getAddress() {

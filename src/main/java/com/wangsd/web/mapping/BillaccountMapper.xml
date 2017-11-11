@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangsd.web.dao.BillaccountMapper" >
+  <resultMap id="BaseResultMap" type="com.wangsd.web.model.Billaccount" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="bill_entry_id" property="billEntryId" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="department_code" property="departmentCode" jdbcType="VARCHAR" />
+    <result column="cost_type" property="costType" jdbcType="VARCHAR" />
+    <result column="bill_entry_amount" property="billEntryAmount" jdbcType="DOUBLE" />
+    <result column="acct_period" property="acctPeriod" jdbcType="VARCHAR" />
+    <result column="release_day" property="releaseDay" jdbcType="VARCHAR" />
+    <result column="deadline" property="deadline" jdbcType="VARCHAR" />
+    <result column="relate_id" property="relateId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="payDate" property="paydate" jdbcType="TIMESTAMP" />
+    <result column="payType" property="paytype" jdbcType="INTEGER" />
+    <result column="payStatus" property="paystatus" jdbcType="INTEGER" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="TINYINT" />
+    <result column="alipay_trade_no" property="alipayTradeNo" jdbcType="VARCHAR" />
+    <result column="weixin_trade_no" property="weixinTradeNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, bill_entry_id, department_id, department_code, cost_type, bill_entry_amount, 
+    acct_period, release_day, deadline, relate_id, status, payDate, payType, payStatus, 
+    deleteStatus, alipay_trade_no, weixin_trade_no
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.BillaccountExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from billaccount
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from billaccount
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from billaccount
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wangsd.web.model.BillaccountExample" >
+    delete from billaccount
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wangsd.web.model.Billaccount" >
+    insert into billaccount (id, bill_entry_id, department_id, 
+      department_code, cost_type, bill_entry_amount, 
+      acct_period, release_day, deadline, 
+      relate_id, status, payDate, 
+      payType, payStatus, deleteStatus, 
+      alipay_trade_no, weixin_trade_no)
+    values (#{id,jdbcType=INTEGER}, #{billEntryId,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, 
+      #{departmentCode,jdbcType=VARCHAR}, #{costType,jdbcType=VARCHAR}, #{billEntryAmount,jdbcType=DOUBLE}, 
+      #{acctPeriod,jdbcType=VARCHAR}, #{releaseDay,jdbcType=VARCHAR}, #{deadline,jdbcType=VARCHAR}, 
+      #{relateId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{paydate,jdbcType=TIMESTAMP}, 
+      #{paytype,jdbcType=INTEGER}, #{paystatus,jdbcType=INTEGER}, #{deletestatus,jdbcType=TINYINT}, 
+      #{alipayTradeNo,jdbcType=VARCHAR}, #{weixinTradeNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangsd.web.model.Billaccount" >
+    insert into billaccount
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="billEntryId != null" >
+        bill_entry_id,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="departmentCode != null" >
+        department_code,
+      </if>
+      <if test="costType != null" >
+        cost_type,
+      </if>
+      <if test="billEntryAmount != null" >
+        bill_entry_amount,
+      </if>
+      <if test="acctPeriod != null" >
+        acct_period,
+      </if>
+      <if test="releaseDay != null" >
+        release_day,
+      </if>
+      <if test="deadline != null" >
+        deadline,
+      </if>
+      <if test="relateId != null" >
+        relate_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="paydate != null" >
+        payDate,
+      </if>
+      <if test="paytype != null" >
+        payType,
+      </if>
+      <if test="paystatus != null" >
+        payStatus,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="alipayTradeNo != null" >
+        alipay_trade_no,
+      </if>
+      <if test="weixinTradeNo != null" >
+        weixin_trade_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="billEntryId != null" >
+        #{billEntryId,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentCode != null" >
+        #{departmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="costType != null" >
+        #{costType,jdbcType=VARCHAR},
+      </if>
+      <if test="billEntryAmount != null" >
+        #{billEntryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="acctPeriod != null" >
+        #{acctPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseDay != null" >
+        #{releaseDay,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null" >
+        #{deadline,jdbcType=VARCHAR},
+      </if>
+      <if test="relateId != null" >
+        #{relateId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="paydate != null" >
+        #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paytype != null" >
+        #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="paystatus != null" >
+        #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=TINYINT},
+      </if>
+      <if test="alipayTradeNo != null" >
+        #{alipayTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinTradeNo != null" >
+        #{weixinTradeNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wangsd.web.model.BillaccountExample" resultType="java.lang.Integer" >
+    select count(*) from billaccount
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update billaccount
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.billEntryId != null" >
+        bill_entry_id = #{record.billEntryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentId != null" >
+        department_id = #{record.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentCode != null" >
+        department_code = #{record.departmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.costType != null" >
+        cost_type = #{record.costType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billEntryAmount != null" >
+        bill_entry_amount = #{record.billEntryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.acctPeriod != null" >
+        acct_period = #{record.acctPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.releaseDay != null" >
+        release_day = #{record.releaseDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deadline != null" >
+        deadline = #{record.deadline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relateId != null" >
+        relate_id = #{record.relateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.paydate != null" >
+        payDate = #{record.paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paytype != null" >
+        payType = #{record.paytype,jdbcType=INTEGER},
+      </if>
+      <if test="record.paystatus != null" >
+        payStatus = #{record.paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.alipayTradeNo != null" >
+        alipay_trade_no = #{record.alipayTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinTradeNo != null" >
+        weixin_trade_no = #{record.weixinTradeNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update billaccount
+    set id = #{record.id,jdbcType=INTEGER},
+      bill_entry_id = #{record.billEntryId,jdbcType=VARCHAR},
+      department_id = #{record.departmentId,jdbcType=INTEGER},
+      department_code = #{record.departmentCode,jdbcType=VARCHAR},
+      cost_type = #{record.costType,jdbcType=VARCHAR},
+      bill_entry_amount = #{record.billEntryAmount,jdbcType=DOUBLE},
+      acct_period = #{record.acctPeriod,jdbcType=VARCHAR},
+      release_day = #{record.releaseDay,jdbcType=VARCHAR},
+      deadline = #{record.deadline,jdbcType=VARCHAR},
+      relate_id = #{record.relateId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      payDate = #{record.paydate,jdbcType=TIMESTAMP},
+      payType = #{record.paytype,jdbcType=INTEGER},
+      payStatus = #{record.paystatus,jdbcType=INTEGER},
+      deleteStatus = #{record.deletestatus,jdbcType=TINYINT},
+      alipay_trade_no = #{record.alipayTradeNo,jdbcType=VARCHAR},
+      weixin_trade_no = #{record.weixinTradeNo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Billaccount" >
+    update billaccount
+    <set >
+      <if test="billEntryId != null" >
+        bill_entry_id = #{billEntryId,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentCode != null" >
+        department_code = #{departmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="costType != null" >
+        cost_type = #{costType,jdbcType=VARCHAR},
+      </if>
+      <if test="billEntryAmount != null" >
+        bill_entry_amount = #{billEntryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="acctPeriod != null" >
+        acct_period = #{acctPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseDay != null" >
+        release_day = #{releaseDay,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null" >
+        deadline = #{deadline,jdbcType=VARCHAR},
+      </if>
+      <if test="relateId != null" >
+        relate_id = #{relateId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="paydate != null" >
+        payDate = #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paytype != null" >
+        payType = #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="paystatus != null" >
+        payStatus = #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=TINYINT},
+      </if>
+      <if test="alipayTradeNo != null" >
+        alipay_trade_no = #{alipayTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinTradeNo != null" >
+        weixin_trade_no = #{weixinTradeNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Billaccount" >
+    update billaccount
+    set bill_entry_id = #{billEntryId,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      department_code = #{departmentCode,jdbcType=VARCHAR},
+      cost_type = #{costType,jdbcType=VARCHAR},
+      bill_entry_amount = #{billEntryAmount,jdbcType=DOUBLE},
+      acct_period = #{acctPeriod,jdbcType=VARCHAR},
+      release_day = #{releaseDay,jdbcType=VARCHAR},
+      deadline = #{deadline,jdbcType=VARCHAR},
+      relate_id = #{relateId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      payDate = #{paydate,jdbcType=TIMESTAMP},
+      payType = #{paytype,jdbcType=INTEGER},
+      payStatus = #{paystatus,jdbcType=INTEGER},
+      deleteStatus = #{deletestatus,jdbcType=TINYINT},
+      alipay_trade_no = #{alipayTradeNo,jdbcType=VARCHAR},
+      weixin_trade_no = #{weixinTradeNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

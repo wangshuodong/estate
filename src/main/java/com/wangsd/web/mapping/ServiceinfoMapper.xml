@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangsd.web.dao.ServiceinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wangsd.web.model.Serviceinfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="merchant_private_key" property="merchantPrivateKey" jdbcType="VARCHAR" />
+    <result column="alipay_public_key" property="alipayPublicKey" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, department_id, app_id, merchant_private_key, alipay_public_key, sign_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.ServiceinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from serviceinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from serviceinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from serviceinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wangsd.web.model.ServiceinfoExample" >
+    delete from serviceinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wangsd.web.model.Serviceinfo" >
+    insert into serviceinfo (id, department_id, app_id, 
+      merchant_private_key, alipay_public_key, sign_type
+      )
+    values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, 
+      #{merchantPrivateKey,jdbcType=VARCHAR}, #{alipayPublicKey,jdbcType=VARCHAR}, #{signType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangsd.web.model.Serviceinfo" >
+    insert into serviceinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="merchantPrivateKey != null" >
+        merchant_private_key,
+      </if>
+      <if test="alipayPublicKey != null" >
+        alipay_public_key,
+      </if>
+      <if test="signType != null" >
+        sign_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPrivateKey != null" >
+        #{merchantPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayPublicKey != null" >
+        #{alipayPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        #{signType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wangsd.web.model.ServiceinfoExample" resultType="java.lang.Integer" >
+    select count(*) from serviceinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update serviceinfo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentId != null" >
+        department_id = #{record.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.appId != null" >
+        app_id = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantPrivateKey != null" >
+        merchant_private_key = #{record.merchantPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayPublicKey != null" >
+        alipay_public_key = #{record.alipayPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signType != null" >
+        sign_type = #{record.signType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update serviceinfo
+    set id = #{record.id,jdbcType=INTEGER},
+      department_id = #{record.departmentId,jdbcType=INTEGER},
+      app_id = #{record.appId,jdbcType=VARCHAR},
+      merchant_private_key = #{record.merchantPrivateKey,jdbcType=VARCHAR},
+      alipay_public_key = #{record.alipayPublicKey,jdbcType=VARCHAR},
+      sign_type = #{record.signType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Serviceinfo" >
+    update serviceinfo
+    <set >
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPrivateKey != null" >
+        merchant_private_key = #{merchantPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayPublicKey != null" >
+        alipay_public_key = #{alipayPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        sign_type = #{signType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Serviceinfo" >
+    update serviceinfo
+    set department_id = #{departmentId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=VARCHAR},
+      merchant_private_key = #{merchantPrivateKey,jdbcType=VARCHAR},
+      alipay_public_key = #{alipayPublicKey,jdbcType=VARCHAR},
+      sign_type = #{signType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
