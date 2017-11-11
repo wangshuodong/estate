@@ -68,7 +68,7 @@
 </div>
 <div class="footer">©2017 霸气测漏 气体检测的互联网+平台</div>
 
-<%@ include file="share/_footer.jsp" %>
+<%@ include file="/share/_footer.jsp" %>
 
 <script type="text/javascript">
 

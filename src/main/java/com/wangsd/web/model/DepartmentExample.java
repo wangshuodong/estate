@@ -705,6 +705,76 @@ public class DepartmentExample {
             return (Criteria) this;
         }
 
+        public Criteria andDeletestatusIsNull() {
+            addCriterion("deleteStatus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusIsNotNull() {
+            addCriterion("deleteStatus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusEqualTo(String value) {
+            addCriterion("deleteStatus =", value, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusNotEqualTo(String value) {
+            addCriterion("deleteStatus <>", value, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusGreaterThan(String value) {
+            addCriterion("deleteStatus >", value, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusGreaterThanOrEqualTo(String value) {
+            addCriterion("deleteStatus >=", value, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusLessThan(String value) {
+            addCriterion("deleteStatus <", value, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusLessThanOrEqualTo(String value) {
+            addCriterion("deleteStatus <=", value, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusLike(String value) {
+            addCriterion("deleteStatus like", value, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusNotLike(String value) {
+            addCriterion("deleteStatus not like", value, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusIn(List<String> values) {
+            addCriterion("deleteStatus in", values, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusNotIn(List<String> values) {
+            addCriterion("deleteStatus not in", values, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusBetween(String value1, String value2) {
+            addCriterion("deleteStatus between", value1, value2, "deletestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletestatusNotBetween(String value1, String value2) {
+            addCriterion("deleteStatus not between", value1, value2, "deletestatus");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

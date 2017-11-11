@@ -2,8 +2,10 @@ package com.wangsd.web.dao;
 
 import com.wangsd.web.model.Department;
 import com.wangsd.web.model.DepartmentExample;
-import java.util.List;
+import com.wangsd.web.modelCustom.DepartmentCustom;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface DepartmentMapper {
     int countByExample(DepartmentExample example);
@@ -27,4 +29,11 @@ public interface DepartmentMapper {
     int updateByPrimaryKeySelective(Department record);
 
     int updateByPrimaryKey(Department record);
+
+    /**
+     * 根据部门code查询所有公司
+     * @param department
+     * @return
+     */
+    List<DepartmentCustom> queryDepartmentListByCode(Department department);
 }

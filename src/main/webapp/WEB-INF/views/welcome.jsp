@@ -1,5 +1,5 @@
-﻿<%@ include file="share/_meta.jsp" %>
-<%@ include file="share/_footer.jsp" %>
+﻿<%@ include file="/share/_meta.jsp" %>
+<%@ include file="/share/_footer.jsp" %>
 <div class="page-container">
 	<p class="f-20 text-success">欢迎使用H-ui.admin <span class="f-14">v3.1</span>后台模版！</p>
 	<p>登录次数：18 </p>

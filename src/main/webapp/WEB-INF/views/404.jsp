@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<%@ include file="share/_meta.jsp" %>
+	<%@ include file="../../share/_meta.jsp" %>
 	<title>404页面</title>
 </head>
 <body>

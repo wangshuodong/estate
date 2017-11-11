@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="../share/_meta.jsp" %>
-<%@ include file="../share/_footer.jsp" %>
+<%@ include file="/share/_meta.jsp" %>
+<%@ include file="/share/_footer.jsp" %>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/h-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css">
 
 <div class="page-container">

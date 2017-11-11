@@ -2,11 +2,11 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <%@ include file="share/_meta.jsp" %>
+    <%@ include file="/share/_meta.jsp" %>
     <title>管理系统</title>
 </head>
 <body>
-<%@ include file="share/_header.jsp" %>
+<%@ include file="/share/_header.jsp" %>
 <!-- 菜单 -->
 <aside class="Hui-aside">
     <div class="menu_dropdown bk_2">
@@ -48,7 +48,7 @@
     <div id="iframe_box" class="Hui-article">
         <div class="show_iframe">
             <div style="display:none" class="loading"></div>
-            <iframe scrolling="yes" frameborder="0" src="${pageContext.request.contextPath}/welcome.jsp"></iframe>
+            <iframe scrolling="yes" frameborder="0" src="${pageContext.request.contextPath}/rest/page/welcome"></iframe>
         </div>
     </div>
 </section>
@@ -59,7 +59,7 @@
         <li id="closeall">关闭全部</li>
     </ul>
 </div>
-<%@ include file="share/_footer.jsp" %>
+<%@ include file="../../share/_footer.jsp" %>
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript"

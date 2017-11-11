@@ -43,4 +43,13 @@ public class PageController {
         return "500";
     }
 
+    /**
+     * welcome页面
+     * @return
+     */
+    @RequestMapping("/welcome")
+    public String welcome() {
+        return "welcome";
+    }
+
 }

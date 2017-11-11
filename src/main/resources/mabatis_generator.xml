@@ -29,12 +29,8 @@
         </javaClientGenerator>
         <!-- 要生成那些表(更改tableName和domainObjectName就可以)-->
         <!--
-        -->
         <table tableName="menu" domainObjectName="Menu"/>
         <table tableName="users" domainObjectName="Users"/>
-        <table tableName="department" domainObjectName="Department">
-        	<generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
         <table tableName="housing" domainObjectName="Housing"/>
         <table tableName="role_menu" domainObjectName="RoleMenu"/>
         <table tableName="role" domainObjectName="Role">
@@ -45,6 +41,9 @@
         <table tableName="property" domainObjectName="Property"/>
         <table tableName="roominfo" domainObjectName="Roominfo"/>
         <table tableName="serviceinfo" domainObjectName="Serviceinfo"/>
-        
+        -->
+        <table tableName="department" domainObjectName="Department">
+        	<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>
