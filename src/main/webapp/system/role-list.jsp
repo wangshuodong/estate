@@ -84,10 +84,10 @@
 		layer.full(index);
 	}
 
-    function addRole(){
+    function role_edit(id){
         var index = layer.open({
             type: 2,
-            title: "添加角色",
+            title: "修改角色",
             content: "${pageContext.request.contextPath }/rest/role/updateRole?roleId=" + id
         });
         layer.full(index);

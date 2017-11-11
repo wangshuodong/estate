@@ -29,6 +29,7 @@
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
                 <button type="submit" class="btn btn-secondary radius size-L">保&nbsp;存</button>
+                <button type="button" class="btn btn-secondary radius size-L" onclick="layer_close();">取&nbsp;消</button>
             </div>
         </div>
     </form>
@@ -121,9 +122,10 @@
                 'description': $('#description').val(),
                 'menuIds' : menuIds
             },
-            success : function(jsonData) {
-                console.info(jsonData);
-                //window.parent.location.reload();
+            success : function(data) {
+                if (data.success) {
+                    window.parent.location.reload();
+                }
             }
         });
     }

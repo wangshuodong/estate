@@ -53,13 +53,25 @@ public class RoleController {
     }
 
     /**
-     * 新增角色
+     * 更新角色
      * @param model
      * @return
      */
     @RequestMapping(value = "/updateRole")
-    public String updateRole(Model model) {
+    public String updateRole(Integer roleId, Model model) {
+        Role role = roleService.findRoleById(roleId);
         List<MenuCustom> list = menuService.queryAllMenuTreeList();
+        List<Integer> menuIds = roleService.queryMenuIdByRoleid(roleId);
+        for (int i=0; i<list.size(); i++) {
+            MenuCustom menuTree = list.get(i);
+//            	if (i==0 && menuTree.getParentid() == null) {
+//            		menuTree.setOpen(true);
+//            	}
+            if (menuIds.contains(menuTree.getId())) {
+                menuTree.setChecked(true);
+            }
+        }
+        model.addAttribute("role", role);
         model.addAttribute("menuList", JSON.toJSON(list));
         return "/system/role-info";
     }

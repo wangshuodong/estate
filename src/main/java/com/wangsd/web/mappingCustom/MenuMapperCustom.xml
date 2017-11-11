@@ -57,10 +57,10 @@
 	</select>
 	
 	<select id="queryMenuIdByRoleid" parameterType="java.lang.Integer" resultType="int">
-        select menuId from role_menu
+        select menu_id from role_menu
         <where>
             <if test="_parameter != null">
-                AND id = #{roleId}
+                AND role_id = #{roleId}
             </if>
         </where>
     </select>

@@ -43,4 +43,11 @@ public interface MenuMapper {
      * @return
      */
     List<MenuCustom> queryMenuByRoleId(Integer roleId);
+
+    /**
+     * 根据角色id查询菜单id
+     * @param roleid
+     * @return
+     */
+    public List<Integer> queryMenuIdByRoleid(Integer roleid);
 }

@@ -1,6 +1,7 @@
 package com.wangsd.web.service.impl;
 
 import com.wangsd.web.controller.UserController;
+import com.wangsd.web.dao.MenuMapper;
 import com.wangsd.web.dao.RoleMapper;
 import com.wangsd.web.dao.RoleMenuMapper;
 import com.wangsd.web.model.Role;
@@ -26,8 +27,8 @@ public class RoleServiceImpl implements RoleService {
 //	AccountMapper accountMapper;
 	@Autowired
     RoleMapper roleMapper;
-//	@Autowired
-//	MenuMapper menuMapper;
+	@Autowired
+	MenuMapper menuMapper;
 	@Autowired
 	RoleMenuMapper roleMenuMapper;
 //
@@ -46,18 +47,18 @@ public class RoleServiceImpl implements RoleService {
 		List<Role> list = roleMapper.selectByExample(example);
 		return list;
 	}
-//
-//    @Override
-//	public Role findRoleById(int id) {
-//		Role role = roleMapper.selectByPrimaryKey(id);
-//		return role;
-//	}
-//
-//    @Override
-//    public List<Integer> queryMenuIdByRoleid(Integer roleid) {
-//    	return menuMapper.queryMenuIdByRoleid(roleid);
-//    }
-//
+
+    @Override
+	public Role findRoleById(int id) {
+		Role role = roleMapper.selectByPrimaryKey(id);
+		return role;
+	}
+
+    @Override
+    public List<Integer> queryMenuIdByRoleid(Integer roleid) {
+    	return menuMapper.queryMenuIdByRoleid(roleid);
+    }
+
     @Override
 	public boolean saveOrUpdateRole(RoleCustom roleCustom) {
     	boolean bl = false;

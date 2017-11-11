@@ -30,6 +30,11 @@ public interface UsersMapper {
 
     int updateByPrimaryKey(Users record);
 
+    /**
+     * 更加登录名查询用户信息
+     * @param username
+     * @return
+     */
     UserCustom selectByUsername(String username);
 
 

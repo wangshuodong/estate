@@ -13,21 +13,21 @@ public interface RoleService {
      * @return
      */
 	public List<Role> queryAllRoleList(Integer roleId);
-//
-//	/**
-//	 * 根据id查询角色
-//	 * @param id
-//	 * @return
-//	 */
-//	public Role findRoleById(int id);
-//
-//	/**
-//     * 根据角色id查询菜单id
-//     * @param roleid
-//     * @return
-//     */
-//    public List<Integer> queryMenuIdByRoleid(Integer roleid);
-//
+
+	/**
+	 * 根据id查询角色
+	 * @param id
+	 * @return
+	 */
+	public Role findRoleById(int id);
+
+	/**
+     * 根据角色id查询菜单id
+     * @param roleid
+     * @return
+     */
+    public List<Integer> queryMenuIdByRoleid(Integer roleid);
+
     /**
      * 保存权限和角色
      * @param roleCustom
