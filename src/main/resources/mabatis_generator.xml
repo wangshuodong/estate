@@ -44,12 +44,12 @@
         </table>
         <table tableName="permission" domainObjectName="Permission"/>
         <table tableName="role_permission" domainObjectName="RolePermission"/>
-        -->
         <table tableName="billaccount" domainObjectName="Billaccount"/>
         <table tableName="roominfo" domainObjectName="Roominfo"/>
         <table tableName="department" domainObjectName="Department">
         	<generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+        -->
         <table tableName="users" domainObjectName="Users"/>
     </context>
 </generatorConfiguration>
