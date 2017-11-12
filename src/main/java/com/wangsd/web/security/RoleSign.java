@@ -21,19 +21,19 @@ public class RoleSign {
     public static final String ADMIN = "admin";
 
     /**
-     * 客户经理 标识
+     * 服务商 标识
      */
-    public static final String CONSULTANT = "consultant";
+    public static final String SERVICE = "service";
 
     /**
-     * VIP客户 标识
+     * 业务员 标识
      */
-    public static final String VIP_USER = "vip_user";
+    public static final String salesman = "salesman";
 
     /**
-     * 商家 标识
+     * 物业 标识
      */
-    public static final String MERCHANT = "merchant";
+    public static final String PROPERTY = "property";
 
     /**
      * 添加更多...

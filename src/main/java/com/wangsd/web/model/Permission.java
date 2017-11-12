@@ -1,23 +1,19 @@
 package com.wangsd.web.model;
 
-import java.util.Date;
-
-public class Role {
-    private Integer id;
+public class Permission {
+    private Long id;
 
     private String name;
 
-    private String roleSign;
+    private String permissionSign;
 
     private String description;
 
-    private Date createTime;
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -29,12 +25,12 @@ public class Role {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getRoleSign() {
-        return roleSign;
+    public String getPermissionSign() {
+        return permissionSign;
     }
 
-    public void setRoleSign(String roleSign) {
-        this.roleSign = roleSign == null ? null : roleSign.trim();
+    public void setPermissionSign(String permissionSign) {
+        this.permissionSign = permissionSign == null ? null : permissionSign.trim();
     }
 
     public String getDescription() {
@@ -43,13 +39,5 @@ public class Role {
 
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 }

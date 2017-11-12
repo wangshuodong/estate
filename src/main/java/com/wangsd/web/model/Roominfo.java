@@ -19,7 +19,7 @@ public class Roominfo {
 
     private String address;
 
-    private Byte deletestatus;
+    private Boolean deletestatus;
 
     private Date createTime;
 
@@ -87,11 +87,11 @@ public class Roominfo {
         this.address = address == null ? null : address.trim();
     }
 
-    public Byte getDeletestatus() {
+    public Boolean getDeletestatus() {
         return deletestatus;
     }
 
-    public void setDeletestatus(Byte deletestatus) {
+    public void setDeletestatus(Boolean deletestatus) {
         this.deletestatus = deletestatus;
     }
 

@@ -8,10 +8,37 @@ import java.util.List;
 public interface DepartmentService {
 
 	/**
-	 * 根据部门code查询所有公司
+	 * 根据部门code查询所有Department
 	 * @param department
 	 * @return
 	 */
 	public List<DepartmentCustom> queryDepartmentListByCode(Department department);
 
+	/**
+	 * 根据id查询Department
+	 * @param id
+	 * @return
+	 */
+	public Department findDepartmentById(int id);
+
+	/**
+	 * 新增或修改Department
+	 * @param department
+	 * @return
+	 */
+	public boolean saveOrUpdateDepartment(Department department);
+
+	/**
+	 * 根据id删除Department
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteDepartmentById(Integer id);
+
+	/**
+	 * 查询parent下面的最大code
+	 * @param parentId
+	 * @return
+	 */
+	public String selectMaxByParentCode(Integer parentId);
 }

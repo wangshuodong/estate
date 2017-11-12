@@ -36,8 +36,8 @@ public class RadomUtil {
 	}
 	
 	public static void main(String[] args) {
-		for (int i=0; i<7; i++) {
-			System.out.println(getFlowId());
-		}		
+		String code = "00100010002";
+		System.out.println(code.substring(0, code.length()-4));
+		System.out.println(code.substring(code.length()-4, code.length()));
 	}
 }

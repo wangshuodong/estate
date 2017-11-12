@@ -11,7 +11,7 @@
     <result column="contact_people" property="contactPeople" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
-    <result column="deleteStatus" property="deletestatus" jdbcType="VARCHAR" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -116,7 +116,7 @@
       create_time)
     values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{contactPeople,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{deletestatus,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{deletestatus,jdbcType=BIT}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Department" >
@@ -182,7 +182,7 @@
         #{parentId,jdbcType=INTEGER},
       </if>
       <if test="deletestatus != null" >
-        #{deletestatus,jdbcType=VARCHAR},
+        #{deletestatus,jdbcType=BIT},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -226,7 +226,7 @@
         parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
       <if test="record.deletestatus != null" >
-        deleteStatus = #{record.deletestatus,jdbcType=VARCHAR},
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
       </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -247,7 +247,7 @@
       contact_people = #{record.contactPeople,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       parent_id = #{record.parentId,jdbcType=INTEGER},
-      deleteStatus = #{record.deletestatus,jdbcType=VARCHAR},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -281,7 +281,7 @@
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
       <if test="deletestatus != null" >
-        deleteStatus = #{deletestatus,jdbcType=VARCHAR},
+        deleteStatus = #{deletestatus,jdbcType=BIT},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -299,7 +299,7 @@
       contact_people = #{contactPeople,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       parent_id = #{parentId,jdbcType=INTEGER},
-      deleteStatus = #{deletestatus,jdbcType=VARCHAR},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -36,4 +36,11 @@ public interface DepartmentMapper {
      * @return
      */
     List<DepartmentCustom> queryDepartmentListByCode(Department department);
+
+    /**
+     * 查询parent下面的最大code
+     * @param parentId
+     * @return
+     */
+    String selectMaxByParentCode(Integer parentId);
 }

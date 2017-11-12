@@ -1,5 +1,6 @@
 package com.wangsd.web.service;
 
+import com.wangsd.web.model.Permission;
 import com.wangsd.web.model.Role;
 import com.wangsd.web.modelCustom.RoleCustom;
 
@@ -39,5 +40,12 @@ public interface RoleService {
 	 * @param roleId
 	 * @return
 	 */
-	public int deleteRoleInfo(Integer roleId);
+	public boolean deleteRoleInfo(Integer roleId);
+
+	/**
+	 * 根据角色id查询所有权限
+	 * @param roleId
+	 * @return
+	 */
+	public List<Permission> selectPermissionsByRoleId(Integer roleId);
 }

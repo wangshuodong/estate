@@ -23,7 +23,7 @@ public class Users {
 
     private Integer type;
 
-    private Byte enable;
+    private Boolean enable;
 
     private Date createTime;
 
@@ -107,11 +107,11 @@ public class Users {
         this.type = type;
     }
 
-    public Byte getEnable() {
+    public Boolean getEnable() {
         return enable;
     }
 
-    public void setEnable(Byte enable) {
+    public void setEnable(Boolean enable) {
         this.enable = enable;
     }
 

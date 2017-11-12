@@ -22,6 +22,16 @@ public class ApplicationUtils {
         return UUID.randomUUID().toString();
     }
 
+	/**
+	 * 生成组织机构代码
+	 */
+	public static String getOrgCode(String maxCode) {
+		String code = maxCode.substring(0, maxCode.length()-4);
+		Long max = Long.parseLong(maxCode.substring(maxCode.length()-4, maxCode.length())) +1;
+		String end = DecimalFormatUtils.format("0000", max);
+		return code + end;
+	}
+
     /**
      * md5加密
      *
@@ -139,7 +149,7 @@ public class ApplicationUtils {
 	
 	public static void main(String[] args) {
 		
-		System.out.println(Long.parseLong("01360009000200030001"));
+		System.out.println(getOrgCode("00100010002"));
 	}
     
 }

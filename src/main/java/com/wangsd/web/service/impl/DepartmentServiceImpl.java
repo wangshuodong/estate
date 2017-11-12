@@ -14,12 +14,50 @@ import java.util.List;
 public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
-	DepartmentMapper departmentMapper;
+    DepartmentMapper departmentMapper;
 
     @Override
-	public List<DepartmentCustom> queryDepartmentListByCode(Department department) {
-		List<DepartmentCustom> list = departmentMapper.queryDepartmentListByCode(department);
-		return list;
-	}
+    public List<DepartmentCustom> queryDepartmentListByCode(Department department) {
+        List<DepartmentCustom> list = departmentMapper.queryDepartmentListByCode(department);
+        return list;
+    }
 
+    @Override
+    public Department findDepartmentById(int id) {
+        Department dep = departmentMapper.selectByPrimaryKey(id);
+        return dep;
+    }
+
+    @Override
+    public boolean deleteDepartmentById(Integer id) {
+        Department department = new Department();
+        department.setId(id);
+        department.setDeletestatus(true);
+        int ret = departmentMapper.updateByPrimaryKeySelective(department);
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean saveOrUpdateDepartment(Department department) {
+        int ret = 0;
+        if (department.getId() != null) {
+            ret = departmentMapper.updateByPrimaryKeySelective(department);
+        } else {
+            ret = departmentMapper.insertSelective(department);
+        }
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String selectMaxByParentCode(Integer parentId) {
+        return departmentMapper.selectMaxByParentCode(parentId);
+    }
 }

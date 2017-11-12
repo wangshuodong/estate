@@ -5,14 +5,18 @@
     <!-- 根据部门code查询所有公司 -->
     <select id="queryDepartmentListByCode" parameterType="Department" resultType="DepartmentCustom">
         SELECT
-            d.*, parent.`name`
+            d.*, parent.`name` as parentName
         FROM
             department d
         LEFT JOIN department parent ON d.parent_id = parent.id
         WHERE
             d.deleteStatus = FALSE
         AND d.type = #{type}
-        AND d. CODE LIKE '001%'
         AND d. CODE LIKE CONCAT(#{code},'%')
+    </select>
+
+    <!-- 查询parent下面的最大code -->
+    <select id="selectMaxByParentCode" parameterType="int" resultType="string">
+        select max(code) from department d where d.parent_id = #{parentId}
     </select>
 </mapper>

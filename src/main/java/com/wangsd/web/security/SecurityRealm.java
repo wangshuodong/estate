@@ -1,6 +1,11 @@
 package com.wangsd.web.security;
 
+import com.alibaba.fastjson.JSON;
+import com.wangsd.web.model.Permission;
+import com.wangsd.web.model.Role;
 import com.wangsd.web.model.Users;
+import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.service.RoleService;
 import com.wangsd.web.service.UsersService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +20,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * 用户身份验证,授权 Realm 组件
  *
@@ -26,6 +33,8 @@ public class SecurityRealm extends AuthorizingRealm {
 
     @Autowired
     UsersService usersService;
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 权限检查
@@ -35,20 +44,16 @@ public class SecurityRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         String username = String.valueOf(principals.getPrimaryPrincipal());
 
-//        final Account user = usersService.selectByUsername(username);
-//        final List<Role> roleInfos = roleService.selectRolesByUserId(user.getId());
-//        for (Role role : roleInfos) {
-//            // 添加角色
-//            System.err.println(role);
-//            authorizationInfo.addRole(role.getRoleSign());
-//
-//            final List<Permission> permissions = permissionService.selectPermissionsByRoleId(role.getId());
-//            for (Permission permission : permissions) {
-//                // 添加权限
-//                System.err.println(permission);
-//                authorizationInfo.addStringPermission(permission.getPermissionSign());
-//            }
-//        }
+        UserCustom userCustom = usersService.selectByUsername(username);
+        Role role = roleService.findRoleById(userCustom.getRoleId());
+        logger.debug("----role----=" + JSON.toJSONString(role));
+        authorizationInfo.addRole(role.getRoleSign());
+        final List<Permission> permissions = roleService.selectPermissionsByRoleId(role.getId());
+        for (Permission permission : permissions) {
+            // 添加权限
+            logger.debug("----permission----=" + JSON.toJSONString(permission));
+            authorizationInfo.addStringPermission(permission.getPermissionSign());
+        }
         return authorizationInfo;
     }
 

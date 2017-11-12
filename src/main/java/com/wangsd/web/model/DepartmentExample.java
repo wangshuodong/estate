@@ -715,62 +715,52 @@ public class DepartmentExample {
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusEqualTo(String value) {
+        public Criteria andDeletestatusEqualTo(Boolean value) {
             addCriterion("deleteStatus =", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusNotEqualTo(String value) {
+        public Criteria andDeletestatusNotEqualTo(Boolean value) {
             addCriterion("deleteStatus <>", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusGreaterThan(String value) {
+        public Criteria andDeletestatusGreaterThan(Boolean value) {
             addCriterion("deleteStatus >", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusGreaterThanOrEqualTo(String value) {
+        public Criteria andDeletestatusGreaterThanOrEqualTo(Boolean value) {
             addCriterion("deleteStatus >=", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusLessThan(String value) {
+        public Criteria andDeletestatusLessThan(Boolean value) {
             addCriterion("deleteStatus <", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusLessThanOrEqualTo(String value) {
+        public Criteria andDeletestatusLessThanOrEqualTo(Boolean value) {
             addCriterion("deleteStatus <=", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusLike(String value) {
-            addCriterion("deleteStatus like", value, "deletestatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andDeletestatusNotLike(String value) {
-            addCriterion("deleteStatus not like", value, "deletestatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andDeletestatusIn(List<String> values) {
+        public Criteria andDeletestatusIn(List<Boolean> values) {
             addCriterion("deleteStatus in", values, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusNotIn(List<String> values) {
+        public Criteria andDeletestatusNotIn(List<Boolean> values) {
             addCriterion("deleteStatus not in", values, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusBetween(String value1, String value2) {
+        public Criteria andDeletestatusBetween(Boolean value1, Boolean value2) {
             addCriterion("deleteStatus between", value1, value2, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusNotBetween(String value1, String value2) {
+        public Criteria andDeletestatusNotBetween(Boolean value1, Boolean value2) {
             addCriterion("deleteStatus not between", value1, value2, "deletestatus");
             return (Criteria) this;
         }

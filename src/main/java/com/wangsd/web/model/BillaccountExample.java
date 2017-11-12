@@ -1025,52 +1025,52 @@ public class BillaccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusEqualTo(Byte value) {
+        public Criteria andDeletestatusEqualTo(Boolean value) {
             addCriterion("deleteStatus =", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusNotEqualTo(Byte value) {
+        public Criteria andDeletestatusNotEqualTo(Boolean value) {
             addCriterion("deleteStatus <>", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusGreaterThan(Byte value) {
+        public Criteria andDeletestatusGreaterThan(Boolean value) {
             addCriterion("deleteStatus >", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusGreaterThanOrEqualTo(Byte value) {
+        public Criteria andDeletestatusGreaterThanOrEqualTo(Boolean value) {
             addCriterion("deleteStatus >=", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusLessThan(Byte value) {
+        public Criteria andDeletestatusLessThan(Boolean value) {
             addCriterion("deleteStatus <", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusLessThanOrEqualTo(Byte value) {
+        public Criteria andDeletestatusLessThanOrEqualTo(Boolean value) {
             addCriterion("deleteStatus <=", value, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusIn(List<Byte> values) {
+        public Criteria andDeletestatusIn(List<Boolean> values) {
             addCriterion("deleteStatus in", values, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusNotIn(List<Byte> values) {
+        public Criteria andDeletestatusNotIn(List<Boolean> values) {
             addCriterion("deleteStatus not in", values, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusBetween(Byte value1, Byte value2) {
+        public Criteria andDeletestatusBetween(Boolean value1, Boolean value2) {
             addCriterion("deleteStatus between", value1, value2, "deletestatus");
             return (Criteria) this;
         }
 
-        public Criteria andDeletestatusNotBetween(Byte value1, Byte value2) {
+        public Criteria andDeletestatusNotBetween(Boolean value1, Boolean value2) {
             addCriterion("deleteStatus not between", value1, value2, "deletestatus");
             return (Criteria) this;
         }

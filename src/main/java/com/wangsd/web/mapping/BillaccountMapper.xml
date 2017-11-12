@@ -16,7 +16,7 @@
     <result column="payDate" property="paydate" jdbcType="TIMESTAMP" />
     <result column="payType" property="paytype" jdbcType="INTEGER" />
     <result column="payStatus" property="paystatus" jdbcType="INTEGER" />
-    <result column="deleteStatus" property="deletestatus" jdbcType="TINYINT" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
     <result column="alipay_trade_no" property="alipayTradeNo" jdbcType="VARCHAR" />
     <result column="weixin_trade_no" property="weixinTradeNo" jdbcType="VARCHAR" />
   </resultMap>
@@ -124,7 +124,7 @@
       #{departmentCode,jdbcType=VARCHAR}, #{costType,jdbcType=VARCHAR}, #{billEntryAmount,jdbcType=DOUBLE}, 
       #{acctPeriod,jdbcType=VARCHAR}, #{releaseDay,jdbcType=VARCHAR}, #{deadline,jdbcType=VARCHAR}, 
       #{relateId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{paydate,jdbcType=TIMESTAMP}, 
-      #{paytype,jdbcType=INTEGER}, #{paystatus,jdbcType=INTEGER}, #{deletestatus,jdbcType=TINYINT}, 
+      #{paytype,jdbcType=INTEGER}, #{paystatus,jdbcType=INTEGER}, #{deletestatus,jdbcType=BIT}, 
       #{alipayTradeNo,jdbcType=VARCHAR}, #{weixinTradeNo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Billaccount" >
@@ -226,7 +226,7 @@
         #{paystatus,jdbcType=INTEGER},
       </if>
       <if test="deletestatus != null" >
-        #{deletestatus,jdbcType=TINYINT},
+        #{deletestatus,jdbcType=BIT},
       </if>
       <if test="alipayTradeNo != null" >
         #{alipayTradeNo,jdbcType=VARCHAR},
@@ -288,7 +288,7 @@
         payStatus = #{record.paystatus,jdbcType=INTEGER},
       </if>
       <if test="record.deletestatus != null" >
-        deleteStatus = #{record.deletestatus,jdbcType=TINYINT},
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
       </if>
       <if test="record.alipayTradeNo != null" >
         alipay_trade_no = #{record.alipayTradeNo,jdbcType=VARCHAR},
@@ -317,7 +317,7 @@
       payDate = #{record.paydate,jdbcType=TIMESTAMP},
       payType = #{record.paytype,jdbcType=INTEGER},
       payStatus = #{record.paystatus,jdbcType=INTEGER},
-      deleteStatus = #{record.deletestatus,jdbcType=TINYINT},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
       alipay_trade_no = #{record.alipayTradeNo,jdbcType=VARCHAR},
       weixin_trade_no = #{record.weixinTradeNo,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -367,7 +367,7 @@
         payStatus = #{paystatus,jdbcType=INTEGER},
       </if>
       <if test="deletestatus != null" >
-        deleteStatus = #{deletestatus,jdbcType=TINYINT},
+        deleteStatus = #{deletestatus,jdbcType=BIT},
       </if>
       <if test="alipayTradeNo != null" >
         alipay_trade_no = #{alipayTradeNo,jdbcType=VARCHAR},
@@ -393,7 +393,7 @@
       payDate = #{paydate,jdbcType=TIMESTAMP},
       payType = #{paytype,jdbcType=INTEGER},
       payStatus = #{paystatus,jdbcType=INTEGER},
-      deleteStatus = #{deletestatus,jdbcType=TINYINT},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
       alipay_trade_no = #{alipayTradeNo,jdbcType=VARCHAR},
       weixin_trade_no = #{weixinTradeNo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

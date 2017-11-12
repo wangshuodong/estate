@@ -2,12 +2,10 @@ package com.wangsd.web.service.impl;
 
 import com.wangsd.web.controller.UserController;
 import com.wangsd.web.dao.MenuMapper;
+import com.wangsd.web.dao.PermissionMapper;
 import com.wangsd.web.dao.RoleMapper;
 import com.wangsd.web.dao.RoleMenuMapper;
-import com.wangsd.web.model.Role;
-import com.wangsd.web.model.RoleExample;
-import com.wangsd.web.model.RoleMenu;
-import com.wangsd.web.model.RoleMenuExample;
+import com.wangsd.web.model.*;
 import com.wangsd.web.modelCustom.RoleCustom;
 import com.wangsd.web.service.RoleService;
 import org.apache.logging.log4j.LogManager;
@@ -23,21 +21,15 @@ public class RoleServiceImpl implements RoleService {
 
 	private static final Logger logger = LogManager.getLogger(UserController.class.getName());
 	
-//	@Autowired
-//	AccountMapper accountMapper;
+	@Autowired
+	PermissionMapper permissionMapper;
 	@Autowired
     RoleMapper roleMapper;
 	@Autowired
 	MenuMapper menuMapper;
 	@Autowired
 	RoleMenuMapper roleMenuMapper;
-//
-//    @Override
-//    public List<MenuCustom> queryMenuListByRoleId(Integer roleIds) {
-//		List<MenuCustom> list = menuMapper.queryMenuListByRoleId(roleIds);
-//		return list;
-//	}
-//
+
     @Override
 	public List<Role> queryAllRoleList(Integer roleId) {
     	RoleExample example = new RoleExample();
@@ -88,11 +80,22 @@ public class RoleServiceImpl implements RoleService {
 	}
 
     @Override
-	public int deleteRoleInfo(Integer roleId) {
+	public boolean deleteRoleInfo(Integer roleId) {
     	RoleMenuExample example = new RoleMenuExample();
 		example.createCriteria().andRoleIdEqualTo(roleId);
 		roleMenuMapper.deleteByExample(example);
-		return roleMapper.deleteByPrimaryKey(roleId);
+		int delStatus = roleMapper.deleteByPrimaryKey(roleId);
+		if (delStatus > 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	@Override
+	public List<Permission> selectPermissionsByRoleId(Integer roleId) {
+		List<Permission> list = permissionMapper.selectPermissionsByRoleId(roleId);
+		return list;
 	}
 	
 }

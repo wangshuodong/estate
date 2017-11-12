@@ -85,11 +85,7 @@ public class RoleController {
     public JSONResult saveOrUpdateRole(RoleCustom roleCustom, Model model) {
         JSONResult obj = new JSONResult();
         boolean bl = roleService.saveOrUpdateRole(roleCustom);
-        if (bl) {
-            obj.setSuccess(true);
-        }else {
-            obj.setSuccess(false);
-        }
+        obj.setSuccess(bl);
         return obj;
     }
 
@@ -102,12 +98,8 @@ public class RoleController {
     @ResponseBody
     public JSONResult deleteRoleInfo(Integer roleId) {
         JSONResult obj = new JSONResult();
-        int delStatus = roleService.deleteRoleInfo(roleId);
-        if (delStatus > 0) {
-            obj.setSuccess(true);
-        }else {
-            obj.setSuccess(false);
-        }
+        boolean delStatus = roleService.deleteRoleInfo(roleId);
+        obj.setSuccess(delStatus);
         return obj;
     }
 }

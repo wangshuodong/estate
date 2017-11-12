@@ -9,4 +9,9 @@ public class Resource {
      * 用户资源
      */
     public static final String USER = "user:";
+
+    /**
+     * 服务商资源
+     */
+    public static final String SERVICE = "service:";
 }

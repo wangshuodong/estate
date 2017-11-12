@@ -26,7 +26,8 @@ public class PermissionSign {
     public static final String USER_DELETE = "user:delete";
 
     /**
-     * 添加更多...
+     * 我的服务商所有权限 标识
      */
+    public static final String SERVICE_ALL = "service:*";
 
 }

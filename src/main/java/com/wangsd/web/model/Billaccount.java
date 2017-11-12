@@ -31,7 +31,7 @@ public class Billaccount {
 
     private Integer paystatus;
 
-    private Byte deletestatus;
+    private Boolean deletestatus;
 
     private String alipayTradeNo;
 
@@ -149,11 +149,11 @@ public class Billaccount {
         this.paystatus = paystatus;
     }
 
-    public Byte getDeletestatus() {
+    public Boolean getDeletestatus() {
         return deletestatus;
     }
 
-    public void setDeletestatus(Byte deletestatus) {
+    public void setDeletestatus(Boolean deletestatus) {
         this.deletestatus = deletestatus;
     }
 

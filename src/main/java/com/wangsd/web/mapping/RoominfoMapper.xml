@@ -10,7 +10,7 @@
     <result column="unit" property="unit" jdbcType="VARCHAR" />
     <result column="room" property="room" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="deleteStatus" property="deletestatus" jdbcType="TINYINT" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -111,7 +111,7 @@
       create_time)
     values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{roomId,jdbcType=VARCHAR}, 
       #{group,jdbcType=VARCHAR}, #{building,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
-      #{room,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{deletestatus,jdbcType=TINYINT}, 
+      #{room,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{deletestatus,jdbcType=BIT}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Roominfo" >
@@ -174,7 +174,7 @@
         #{address,jdbcType=VARCHAR},
       </if>
       <if test="deletestatus != null" >
-        #{deletestatus,jdbcType=TINYINT},
+        #{deletestatus,jdbcType=BIT},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -215,7 +215,7 @@
         address = #{record.address,jdbcType=VARCHAR},
       </if>
       <if test="record.deletestatus != null" >
-        deleteStatus = #{record.deletestatus,jdbcType=TINYINT},
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
       </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -235,7 +235,7 @@
       unit = #{record.unit,jdbcType=VARCHAR},
       room = #{record.room,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
-      deleteStatus = #{record.deletestatus,jdbcType=TINYINT},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -266,7 +266,7 @@
         address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="deletestatus != null" >
-        deleteStatus = #{deletestatus,jdbcType=TINYINT},
+        deleteStatus = #{deletestatus,jdbcType=BIT},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -283,7 +283,7 @@
       unit = #{unit,jdbcType=VARCHAR},
       room = #{room,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
-      deleteStatus = #{deletestatus,jdbcType=TINYINT},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

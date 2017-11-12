@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wangsd.web.dao.RoleMapper" >
-  <resultMap id="BaseResultMap" type="com.wangsd.web.model.Role" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+<mapper namespace="com.wangsd.web.dao.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.wangsd.web.model.Permission" >
+    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="role_sign" property="roleSign" jdbcType="VARCHAR" />
+    <result column="permission_sign" property="permissionSign" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, role_sign, description, create_time
+    id, name, permission_sign, description
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.RoleExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.PermissionExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from role
+    from permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -83,88 +82,79 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from role
-    where id = #{id,jdbcType=INTEGER}
+    from permission
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from role
-    where id = #{id,jdbcType=INTEGER}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from permission
+    where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.wangsd.web.model.RoleExample" >
-    delete from role
+  <delete id="deleteByExample" parameterType="com.wangsd.web.model.PermissionExample" >
+    delete from permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wangsd.web.model.Role" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into role (name, role_sign, description, 
-      create_time)
-    values (#{name,jdbcType=VARCHAR}, #{roleSign,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.wangsd.web.model.Permission" >
+    insert into permission (id, name, permission_sign, 
+      description)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{permissionSign,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wangsd.web.model.Role" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into role
+  <insert id="insertSelective" parameterType="com.wangsd.web.model.Permission" >
+    insert into permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
       <if test="name != null" >
         name,
       </if>
-      <if test="roleSign != null" >
-        role_sign,
+      <if test="permissionSign != null" >
+        permission_sign,
       </if>
       <if test="description != null" >
         description,
       </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="roleSign != null" >
-        #{roleSign,jdbcType=VARCHAR},
+      <if test="permissionSign != null" >
+        #{permissionSign,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.wangsd.web.model.RoleExample" resultType="java.lang.Integer" >
-    select count(*) from role
+  <select id="countByExample" parameterType="com.wangsd.web.model.PermissionExample" resultType="java.lang.Integer" >
+    select count(*) from permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update role
+    update permission
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.roleSign != null" >
-        role_sign = #{record.roleSign,jdbcType=VARCHAR},
+      <if test="record.permissionSign != null" >
+        permission_sign = #{record.permissionSign,jdbcType=VARCHAR},
       </if>
       <if test="record.description != null" >
         description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createTime != null" >
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -172,40 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update role
-    set id = #{record.id,jdbcType=INTEGER},
+    update permission
+    set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
-      role_sign = #{record.roleSign,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      permission_sign = #{record.permissionSign,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Role" >
-    update role
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Permission" >
+    update permission
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="roleSign != null" >
-        role_sign = #{roleSign,jdbcType=VARCHAR},
+      <if test="permissionSign != null" >
+        permission_sign = #{permissionSign,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Role" >
-    update role
+  <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Permission" >
+    update permission
     set name = #{name,jdbcType=VARCHAR},
-      role_sign = #{roleSign,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+      permission_sign = #{permissionSign,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

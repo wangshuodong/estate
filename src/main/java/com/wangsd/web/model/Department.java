@@ -21,7 +21,7 @@ public class Department {
 
     private Integer parentId;
 
-    private String deletestatus;
+    private Boolean deletestatus;
 
     private Date createTime;
 
@@ -97,12 +97,12 @@ public class Department {
         this.parentId = parentId;
     }
 
-    public String getDeletestatus() {
+    public Boolean getDeletestatus() {
         return deletestatus;
     }
 
-    public void setDeletestatus(String deletestatus) {
-        this.deletestatus = deletestatus == null ? null : deletestatus.trim();
+    public void setDeletestatus(Boolean deletestatus) {
+        this.deletestatus = deletestatus;
     }
 
     public Date getCreateTime() {
