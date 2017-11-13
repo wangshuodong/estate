@@ -19,6 +19,14 @@ public class Roominfo {
 
     private String address;
 
+    private String ownerName;
+
+    private String ownerCard;
+
+    private String ownerPhone;
+
+    private Date entrydate;
+
     private Boolean deletestatus;
 
     private Date createTime;
@@ -85,6 +93,38 @@ public class Roominfo {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName == null ? null : ownerName.trim();
+    }
+
+    public String getOwnerCard() {
+        return ownerCard;
+    }
+
+    public void setOwnerCard(String ownerCard) {
+        this.ownerCard = ownerCard == null ? null : ownerCard.trim();
+    }
+
+    public String getOwnerPhone() {
+        return ownerPhone;
+    }
+
+    public void setOwnerPhone(String ownerPhone) {
+        this.ownerPhone = ownerPhone == null ? null : ownerPhone.trim();
+    }
+
+    public Date getEntrydate() {
+        return entrydate;
+    }
+
+    public void setEntrydate(Date entrydate) {
+        this.entrydate = entrydate;
     }
 
     public Boolean getDeletestatus() {

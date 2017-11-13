@@ -10,6 +10,10 @@
     <result column="unit" property="unit" jdbcType="VARCHAR" />
     <result column="room" property="room" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="owner_card" property="ownerCard" jdbcType="VARCHAR" />
+    <result column="owner_phone" property="ownerPhone" jdbcType="VARCHAR" />
+    <result column="entryDate" property="entrydate" jdbcType="TIMESTAMP" />
     <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -72,7 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, department_id, room_id, group, building, unit, room, address, deleteStatus, create_time
+    id, department_id, room_id, group, building, unit, room, address, owner_name, owner_card, 
+    owner_phone, entryDate, deleteStatus, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.RoominfoExample" >
     select
@@ -107,12 +112,14 @@
   <insert id="insert" parameterType="com.wangsd.web.model.Roominfo" >
     insert into roominfo (id, department_id, room_id, 
       group, building, unit, 
-      room, address, deleteStatus, 
-      create_time)
+      room, address, owner_name, 
+      owner_card, owner_phone, entryDate, 
+      deleteStatus, create_time)
     values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{roomId,jdbcType=VARCHAR}, 
       #{group,jdbcType=VARCHAR}, #{building,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
-      #{room,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{deletestatus,jdbcType=BIT}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{room,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{ownerName,jdbcType=VARCHAR}, 
+      #{ownerCard,jdbcType=VARCHAR}, #{ownerPhone,jdbcType=VARCHAR}, #{entrydate,jdbcType=TIMESTAMP}, 
+      #{deletestatus,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Roominfo" >
     insert into roominfo
@@ -140,6 +147,18 @@
       </if>
       <if test="address != null" >
         address,
+      </if>
+      <if test="ownerName != null" >
+        owner_name,
+      </if>
+      <if test="ownerCard != null" >
+        owner_card,
+      </if>
+      <if test="ownerPhone != null" >
+        owner_phone,
+      </if>
+      <if test="entrydate != null" >
+        entryDate,
       </if>
       <if test="deletestatus != null" >
         deleteStatus,
@@ -172,6 +191,18 @@
       </if>
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null" >
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerCard != null" >
+        #{ownerCard,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerPhone != null" >
+        #{ownerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="entrydate != null" >
+        #{entrydate,jdbcType=TIMESTAMP},
       </if>
       <if test="deletestatus != null" >
         #{deletestatus,jdbcType=BIT},
@@ -214,6 +245,18 @@
       <if test="record.address != null" >
         address = #{record.address,jdbcType=VARCHAR},
       </if>
+      <if test="record.ownerName != null" >
+        owner_name = #{record.ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownerCard != null" >
+        owner_card = #{record.ownerCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownerPhone != null" >
+        owner_phone = #{record.ownerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entrydate != null" >
+        entryDate = #{record.entrydate,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.deletestatus != null" >
         deleteStatus = #{record.deletestatus,jdbcType=BIT},
       </if>
@@ -235,6 +278,10 @@
       unit = #{record.unit,jdbcType=VARCHAR},
       room = #{record.room,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
+      owner_name = #{record.ownerName,jdbcType=VARCHAR},
+      owner_card = #{record.ownerCard,jdbcType=VARCHAR},
+      owner_phone = #{record.ownerPhone,jdbcType=VARCHAR},
+      entryDate = #{record.entrydate,jdbcType=TIMESTAMP},
       deleteStatus = #{record.deletestatus,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -265,6 +312,18 @@
       <if test="address != null" >
         address = #{address,jdbcType=VARCHAR},
       </if>
+      <if test="ownerName != null" >
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerCard != null" >
+        owner_card = #{ownerCard,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerPhone != null" >
+        owner_phone = #{ownerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="entrydate != null" >
+        entryDate = #{entrydate,jdbcType=TIMESTAMP},
+      </if>
       <if test="deletestatus != null" >
         deleteStatus = #{deletestatus,jdbcType=BIT},
       </if>
@@ -283,6 +342,10 @@
       unit = #{unit,jdbcType=VARCHAR},
       room = #{room,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      owner_card = #{ownerCard,jdbcType=VARCHAR},
+      owner_phone = #{ownerPhone,jdbcType=VARCHAR},
+      entryDate = #{entrydate,jdbcType=TIMESTAMP},
       deleteStatus = #{deletestatus,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

@@ -2,6 +2,7 @@ package com.wangsd.web.dao;
 
 import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.model.RoominfoExample;
+import com.wangsd.web.modelCustom.RoominfoCustom;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,11 @@ public interface RoominfoMapper {
     int updateByPrimaryKeySelective(Roominfo record);
 
     int updateByPrimaryKey(Roominfo record);
+
+    /**
+     * 查询所有房屋信息
+     * @param roominfo
+     * @return
+     */
+    List<RoominfoCustom> queryRoominfoList(Roominfo roominfo);
 }
