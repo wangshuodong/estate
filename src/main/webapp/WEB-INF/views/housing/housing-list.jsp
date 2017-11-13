@@ -1,20 +1,21 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/share/_meta.jsp" %>
 <%@ include file="/share/_footer.jsp" %>
-
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>系统管理中心 <span class="c-gray en">&gt;</span> 角色管理
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-	<form class="codeView docs-example">
+	<form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/department/housingList" method="post">
 		<div class="form-group">
 			<select class="form-control" name="parentId" id="parentId" style="width:250px">
 				<option value="0">请选择所属物业</option>
-				<c:forEach items="${parentDepartment}" var="item">
-					<option value="${item.id}">${item.name}</option>
+				<c:forEach items="${parentList}" var="item">
+					<option value="${item.id}" <c:if test="${query.parentId==item.id }">selected</c:if>>${item.name}</option>
 				</c:forEach>
 			</select>
 		</div>
+		<input type="text" class="layui-input input-text radius size-L" id="test1" style="width:250px">
+		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="info_add();">新&nbsp;增</button>
 	</form>
 
@@ -58,11 +59,15 @@
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/common/laydate.js"></script>
 <script type="text/javascript">
 	$('.table-sort').dataTable({
 		scrollX: true,
 		ordering: false
 	});
+    laydate.render({
+        elem: '#test1' //指定元素
+    });
 
 	function info_add(){
 		var index = layer.open({

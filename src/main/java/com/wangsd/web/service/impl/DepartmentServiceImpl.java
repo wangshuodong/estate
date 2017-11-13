@@ -26,9 +26,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Department> queryDepartmentList(String code, Integer type) {
         DepartmentExample example = new DepartmentExample();
-        example.createCriteria().andCodeLike(code+"%");
+        DepartmentExample.Criteria criteria = example.createCriteria();
+        criteria.andCodeLike(code+"%");
         if (type != null) {
-            example.createCriteria().andTypeEqualTo(type);
+            criteria.andTypeEqualTo(type);
         }
         List<Department> list = departmentMapper.selectByExample(example);
         return list;

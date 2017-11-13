@@ -12,7 +12,8 @@
         <where>
             AND d.deleteStatus = FALSE
             AND d.type = #{type}
-            AND d. CODE LIKE CONCAT(#{code},'%')
+            AND d.CODE LIKE CONCAT(#{code},'%')
+            AND d.CODE != '001'
             ORDER BY d.code
         </where>
     </select>

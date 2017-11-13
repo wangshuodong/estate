@@ -28,37 +28,81 @@ public class DepartmentController {
     DepartmentService departmentService;
 
     /**
-     * 查询所有Department
-     *
-     * @param type    1查询服务商，2查询物业，3查询小区
+     * 物业查询
+     * @param dep
      * @param request
      * @param model
      * @return
      */
-    @RequestMapping("/departmentList")
-    public String departmentList(Integer type, HttpServletRequest request, Model model) {
-        String returnUrl = null;
-        if (type == 1) {
-            returnUrl = "/service/service-list";
-        } else if (type == 2) {
-            returnUrl = "/property/property-list";
-        } else if (type == 3) {
-            returnUrl = "/housing/housing-list";
+    @RequestMapping("/serviceList")
+    public String serviceList(Department dep, HttpServletRequest request, Model model) {
+        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
+        String departmentCode;
+        if (dep.getParentId() != null) {
+            Department parent = departmentService.findDepartmentById(dep.getParentId());
+            departmentCode = parent.getCode();
+        }else {
+            departmentCode = user.getDepartmentCode();
         }
-        UserCustom obj = (UserCustom) request.getSession().getAttribute("userInfo");
-        String departmentCode = obj.getDepartmentCode();
-        Department department = new Department();
-        department.setCode(departmentCode);
-        department.setType(type);
-        List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(department);
-        if (list.size() > 0) {
-            DepartmentCustom test = list.get(0);
-            if (test.getCode().equals("001")) {
-                list.remove(test);
-            }
-        }
+        Department query = new Department();
+        query.setCode(departmentCode);
+        query.setType(1);
+        List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(query);
         model.addAttribute("departmentList", list);
-        return returnUrl;
+        return "/service/service-list";
+    }
+
+    /**
+     * 服务商查询
+     * @param dep
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("/propertyList")
+    public String propertyList(Department dep, HttpServletRequest request, Model model) {
+        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
+        String departmentCode;
+        if (dep.getParentId() != null) {
+            Department parent = departmentService.findDepartmentById(dep.getParentId());
+            departmentCode = parent.getCode();
+        }else {
+            departmentCode = user.getDepartmentCode();
+        }
+        Department query = new Department();
+        query.setCode(departmentCode);
+        query.setType(2);
+        List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(query);
+        model.addAttribute("departmentList", list);
+        return "/property/property-list";
+    }
+
+    /**
+     * 小区查询
+     * @param dep
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("/housingList")
+    public String housingList(Department dep, HttpServletRequest request, Model model) {
+        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
+        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 2);
+        model.addAttribute("parentList", parentList);
+        String departmentCode;
+        if (dep.getParentId() != null && dep.getParentId() != 0) {
+            Department parent = departmentService.findDepartmentById(dep.getParentId());
+            departmentCode = parent.getCode();
+        }else {
+            departmentCode = user.getDepartmentCode();
+        }
+        Department query = new Department();
+        query.setCode(departmentCode);
+        query.setType(3);
+        List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(query);
+        model.addAttribute("departmentList", list);
+        model.addAttribute("query", dep);
+        return "/housing/housing-list";
     }
 
     /**
