@@ -71,25 +71,23 @@ public class DepartmentController {
      */
     @RequestMapping(value = "addDepartment")
     public String addDepartment(Integer type, HttpServletRequest request, Model model) {
+        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
         String returnUrl = null;
         if (type == 1) {
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 1);
+            model.addAttribute("parentDepartment", list);
             returnUrl = "/service/service-info";
         } else if (type == 2) {
             //新增物业的时候需要查询上级服务商
-            type = 1;
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 1);
+            model.addAttribute("parentDepartment", list);
             returnUrl = "/property/property-info";
         } else if (type == 3) {
             //新增小区的时候需要查询上级物业
-            type = 2;
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 2);
+            model.addAttribute("parentDepartment", list);
             returnUrl = "/housing/housing-info";
         }
-        UserCustom obj = (UserCustom) request.getSession().getAttribute("userInfo");
-        String departmentCode = obj.getDepartmentCode();
-        Department department = new Department();
-        department.setCode(departmentCode);
-        department.setType(type);
-        List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(department);
-        model.addAttribute("parentDepartment", list);
         return returnUrl;
     }
 
@@ -102,27 +100,24 @@ public class DepartmentController {
      */
     @RequestMapping(value = "/updateDepartment")
     public String updateDepartment(Department dep, HttpServletRequest request, Model model) {
+        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
         String returnUrl = null;
         int type = 1;
         if (dep.getType() == 1) {
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 1);
+            model.addAttribute("parentDepartment", list);
             returnUrl = "/service/service-info";
-            type = 1;
         } else if (dep.getType() == 2) {
             //新增物业的时候需要查询上级服务商
-            type = 1;
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 1);
+            model.addAttribute("parentDepartment", list);
             returnUrl = "/property/property-info";
         } else if (dep.getType() == 3) {
             //新增小区的时候需要查询上级物业
-            type = 2;
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 2);
+            model.addAttribute("parentDepartment", list);
             returnUrl = "/housing/housing-info";
         }
-        UserCustom userInfo = (UserCustom) request.getSession().getAttribute("userInfo");
-        String departmentCode = userInfo.getDepartmentCode();
-        Department query = new Department();
-        query.setCode(departmentCode);
-        query.setType(type);
-        List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(query);
-        model.addAttribute("parentDepartment", list);
         Department department = departmentService.findDepartmentById(dep.getId());
         model.addAttribute("department", department);
         return returnUrl;

@@ -9,11 +9,12 @@
         FROM
             department d
         LEFT JOIN department parent ON d.parent_id = parent.id
-        WHERE
-            d.deleteStatus = FALSE
-        AND d.type = #{type}
-        AND d. CODE LIKE CONCAT(#{code},'%')
-        ORDER BY d.code
+        <where>
+            AND d.deleteStatus = FALSE
+            AND d.type = #{type}
+            AND d. CODE LIKE CONCAT(#{code},'%')
+            ORDER BY d.code
+        </where>
     </select>
 
     <!-- 查询parent下面的最大code -->

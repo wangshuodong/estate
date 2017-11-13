@@ -3,6 +3,7 @@ package com.wangsd.web.service.impl;
 
 import com.wangsd.web.dao.DepartmentMapper;
 import com.wangsd.web.model.Department;
+import com.wangsd.web.model.DepartmentExample;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,17 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<DepartmentCustom> queryDepartmentListByCode(Department department) {
         List<DepartmentCustom> list = departmentMapper.queryDepartmentListByCode(department);
+        return list;
+    }
+
+    @Override
+    public List<Department> queryDepartmentList(String code, Integer type) {
+        DepartmentExample example = new DepartmentExample();
+        example.createCriteria().andCodeLike(code+"%");
+        if (type != null) {
+            example.createCriteria().andTypeEqualTo(type);
+        }
+        List<Department> list = departmentMapper.selectByExample(example);
         return list;
     }
 

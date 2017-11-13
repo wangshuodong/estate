@@ -6,9 +6,17 @@
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-	<div class="codeView docs-example">
+	<form class="codeView docs-example">
+		<div class="form-group">
+			<select class="form-control" name="parentId" id="parentId" style="width:250px">
+				<option value="0">请选择所属物业</option>
+				<c:forEach items="${parentDepartment}" var="item">
+					<option value="${item.id}">${item.name}</option>
+				</c:forEach>
+			</select>
+		</div>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="info_add();">新&nbsp;增</button>
-	</div>
+	</form>
 
 	<div class="panel panel-default mt-20">
 		<div class="panel-header">

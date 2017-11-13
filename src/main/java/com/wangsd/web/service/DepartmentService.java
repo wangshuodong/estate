@@ -15,6 +15,13 @@ public interface DepartmentService {
 	public List<DepartmentCustom> queryDepartmentListByCode(Department department);
 
 	/**
+	 * 查询下拉列表所需要的Department
+	 * @param code
+	 * @return
+	 */
+	public List<Department> queryDepartmentList(String code, Integer type);
+
+	/**
 	 * 根据id查询Department
 	 * @param id
 	 * @return
