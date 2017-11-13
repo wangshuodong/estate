@@ -9,7 +9,7 @@ public class Roominfo {
 
     private String roomId;
 
-    private String group;
+    private String groupName;
 
     private String building;
 
@@ -55,12 +55,12 @@ public class Roominfo {
         this.roomId = roomId == null ? null : roomId.trim();
     }
 
-    public String getGroup() {
-        return group;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setGroup(String group) {
-        this.group = group == null ? null : group.trim();
+    public void setGroupName(String groupName) {
+        this.groupName = groupName == null ? null : groupName.trim();
     }
 
     public String getBuilding() {

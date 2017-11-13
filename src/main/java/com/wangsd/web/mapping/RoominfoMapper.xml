@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
     <result column="room_id" property="roomId" jdbcType="VARCHAR" />
-    <result column="group" property="group" jdbcType="VARCHAR" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
     <result column="building" property="building" jdbcType="VARCHAR" />
     <result column="unit" property="unit" jdbcType="VARCHAR" />
     <result column="room" property="room" jdbcType="VARCHAR" />
@@ -76,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, department_id, room_id, group, building, unit, room, address, owner_name, owner_card, 
-    owner_phone, entryDate, deleteStatus, create_time
+    id, department_id, room_id, group_name, building, unit, room, address, owner_name, 
+    owner_card, owner_phone, entryDate, deleteStatus, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.RoominfoExample" >
     select
@@ -111,12 +111,12 @@
   </delete>
   <insert id="insert" parameterType="com.wangsd.web.model.Roominfo" >
     insert into roominfo (id, department_id, room_id, 
-      group, building, unit, 
+      group_name, building, unit, 
       room, address, owner_name, 
       owner_card, owner_phone, entryDate, 
       deleteStatus, create_time)
     values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{roomId,jdbcType=VARCHAR}, 
-      #{group,jdbcType=VARCHAR}, #{building,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{groupName,jdbcType=VARCHAR}, #{building,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
       #{room,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{ownerName,jdbcType=VARCHAR}, 
       #{ownerCard,jdbcType=VARCHAR}, #{ownerPhone,jdbcType=VARCHAR}, #{entrydate,jdbcType=TIMESTAMP}, 
       #{deletestatus,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
@@ -133,8 +133,8 @@
       <if test="roomId != null" >
         room_id,
       </if>
-      <if test="group != null" >
-        group,
+      <if test="groupName != null" >
+        group_name,
       </if>
       <if test="building != null" >
         building,
@@ -177,8 +177,8 @@
       <if test="roomId != null" >
         #{roomId,jdbcType=VARCHAR},
       </if>
-      <if test="group != null" >
-        #{group,jdbcType=VARCHAR},
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
       </if>
       <if test="building != null" >
         #{building,jdbcType=VARCHAR},
@@ -230,8 +230,8 @@
       <if test="record.roomId != null" >
         room_id = #{record.roomId,jdbcType=VARCHAR},
       </if>
-      <if test="record.group != null" >
-        group = #{record.group,jdbcType=VARCHAR},
+      <if test="record.groupName != null" >
+        group_name = #{record.groupName,jdbcType=VARCHAR},
       </if>
       <if test="record.building != null" >
         building = #{record.building,jdbcType=VARCHAR},
@@ -273,7 +273,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       department_id = #{record.departmentId,jdbcType=INTEGER},
       room_id = #{record.roomId,jdbcType=VARCHAR},
-      group = #{record.group,jdbcType=VARCHAR},
+      group_name = #{record.groupName,jdbcType=VARCHAR},
       building = #{record.building,jdbcType=VARCHAR},
       unit = #{record.unit,jdbcType=VARCHAR},
       room = #{record.room,jdbcType=VARCHAR},
@@ -297,8 +297,8 @@
       <if test="roomId != null" >
         room_id = #{roomId,jdbcType=VARCHAR},
       </if>
-      <if test="group != null" >
-        group = #{group,jdbcType=VARCHAR},
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
       </if>
       <if test="building != null" >
         building = #{building,jdbcType=VARCHAR},
@@ -337,7 +337,7 @@
     update roominfo
     set department_id = #{departmentId,jdbcType=INTEGER},
       room_id = #{roomId,jdbcType=VARCHAR},
-      group = #{group,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR},
       building = #{building,jdbcType=VARCHAR},
       unit = #{unit,jdbcType=VARCHAR},
       room = #{room,jdbcType=VARCHAR},

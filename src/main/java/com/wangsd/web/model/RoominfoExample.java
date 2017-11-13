@@ -295,73 +295,73 @@ public class RoominfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andGroupIsNull() {
-            addCriterion("group is null");
+        public Criteria andGroupNameIsNull() {
+            addCriterion("group_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIsNotNull() {
-            addCriterion("group is not null");
+        public Criteria andGroupNameIsNotNull() {
+            addCriterion("group_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andGroupEqualTo(String value) {
-            addCriterion("group =", value, "group");
+        public Criteria andGroupNameEqualTo(String value) {
+            addCriterion("group_name =", value, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupNotEqualTo(String value) {
-            addCriterion("group <>", value, "group");
+        public Criteria andGroupNameNotEqualTo(String value) {
+            addCriterion("group_name <>", value, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupGreaterThan(String value) {
-            addCriterion("group >", value, "group");
+        public Criteria andGroupNameGreaterThan(String value) {
+            addCriterion("group_name >", value, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupGreaterThanOrEqualTo(String value) {
-            addCriterion("group >=", value, "group");
+        public Criteria andGroupNameGreaterThanOrEqualTo(String value) {
+            addCriterion("group_name >=", value, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupLessThan(String value) {
-            addCriterion("group <", value, "group");
+        public Criteria andGroupNameLessThan(String value) {
+            addCriterion("group_name <", value, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupLessThanOrEqualTo(String value) {
-            addCriterion("group <=", value, "group");
+        public Criteria andGroupNameLessThanOrEqualTo(String value) {
+            addCriterion("group_name <=", value, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupLike(String value) {
-            addCriterion("group like", value, "group");
+        public Criteria andGroupNameLike(String value) {
+            addCriterion("group_name like", value, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupNotLike(String value) {
-            addCriterion("group not like", value, "group");
+        public Criteria andGroupNameNotLike(String value) {
+            addCriterion("group_name not like", value, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIn(List<String> values) {
-            addCriterion("group in", values, "group");
+        public Criteria andGroupNameIn(List<String> values) {
+            addCriterion("group_name in", values, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupNotIn(List<String> values) {
-            addCriterion("group not in", values, "group");
+        public Criteria andGroupNameNotIn(List<String> values) {
+            addCriterion("group_name not in", values, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupBetween(String value1, String value2) {
-            addCriterion("group between", value1, value2, "group");
+        public Criteria andGroupNameBetween(String value1, String value2) {
+            addCriterion("group_name between", value1, value2, "groupName");
             return (Criteria) this;
         }
 
-        public Criteria andGroupNotBetween(String value1, String value2) {
-            addCriterion("group not between", value1, value2, "group");
+        public Criteria andGroupNameNotBetween(String value1, String value2) {
+            addCriterion("group_name not between", value1, value2, "groupName");
             return (Criteria) this;
         }
 

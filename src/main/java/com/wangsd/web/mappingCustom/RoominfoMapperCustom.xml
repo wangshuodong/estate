@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangsd.web.dao.RoominfoMapper">
     <!-- 查询所有房屋信息 -->
-    <select id="queryRoominfoList" parameterType="Roominfo" resultType="RoominfoCustom">
+    <select id="queryRoominfoList" parameterType="RoominfoCustom" resultType="RoominfoCustom">
         SELECT
-            r.*, d.`name`
+            r.*, d.`name` as deptName
         FROM
             roominfo r
         JOIN department d ON r.department_id = d.id
         WHERE
-            d.CODE LIKE CONCAT(#{code},'%')
+            d.CODE LIKE CONCAT(#{departmentCode},'%')
     </select>
 </mapper>
