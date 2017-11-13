@@ -42,5 +42,5 @@ public interface DepartmentMapper {
      * @param parentId
      * @return
      */
-    String selectMaxByParentCode(Integer parentId);
+    String selectMaxByParentCode(@Param("parentId") Integer parentId);
 }

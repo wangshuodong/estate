@@ -5,10 +5,10 @@
 <div class="page-container">
     <form class="form form-horizontal" id="form-department-add" action="${pageContext.request.contextPath }/rest/department/saveOrUpdateDepartment" method="post">
         <input type="hidden" value="${department.id}" name="id">
-        <input type="hidden" value="1" name="type">
+        <input type="hidden" value="2" name="type">
         <input type="hidden" value="${department.parentId}" id="selectId1">
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>服务商名称：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>物业名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input type="text" class="input-text radius size-L" value="${department.name}" placeholder="服务商名称" name="name" required>
             </div>
@@ -62,9 +62,9 @@
 <script type="text/javascript">
     $(function(){
         var parent = $("#selectId1").val();;
-        console.info(parent)
         if(parent != null){
             $("#parentId").val(parent);
+
         }
     });
 

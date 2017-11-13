@@ -37,14 +37,28 @@ public class DepartmentController {
      */
     @RequestMapping("/departmentList")
     public String departmentList(Integer type, HttpServletRequest request, Model model) {
+        String returnUrl = null;
+        if (type == 1) {
+            returnUrl = "/service/service-list";
+        } else if (type == 2) {
+            returnUrl = "/property/property-list";
+        } else if (type == 3) {
+            returnUrl = "/housing/housing-list";
+        }
         UserCustom obj = (UserCustom) request.getSession().getAttribute("userInfo");
         String departmentCode = obj.getDepartmentCode();
         Department department = new Department();
         department.setCode(departmentCode);
         department.setType(type);
         List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(department);
+        if (list.size() > 0) {
+            DepartmentCustom test = list.get(0);
+            if (test.getCode().equals("001")) {
+                list.remove(test);
+            }
+        }
         model.addAttribute("departmentList", list);
-        return "/service/service-list";
+        return returnUrl;
     }
 
     /**
@@ -57,6 +71,18 @@ public class DepartmentController {
      */
     @RequestMapping(value = "addDepartment")
     public String addDepartment(Integer type, HttpServletRequest request, Model model) {
+        String returnUrl = null;
+        if (type == 1) {
+            returnUrl = "/service/service-info";
+        } else if (type == 2) {
+            //新增物业的时候需要查询上级服务商
+            type = 1;
+            returnUrl = "/property/property-info";
+        } else if (type == 3) {
+            //新增小区的时候需要查询上级物业
+            type = 2;
+            returnUrl = "/housing/housing-info";
+        }
         UserCustom obj = (UserCustom) request.getSession().getAttribute("userInfo");
         String departmentCode = obj.getDepartmentCode();
         Department department = new Department();
@@ -64,7 +90,7 @@ public class DepartmentController {
         department.setType(type);
         List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(department);
         model.addAttribute("parentDepartment", list);
-        return "/service/service-info";
+        return returnUrl;
     }
 
     /**
@@ -76,16 +102,30 @@ public class DepartmentController {
      */
     @RequestMapping(value = "/updateDepartment")
     public String updateDepartment(Department dep, HttpServletRequest request, Model model) {
+        String returnUrl = null;
+        int type = 1;
+        if (dep.getType() == 1) {
+            returnUrl = "/service/service-info";
+            type = 1;
+        } else if (dep.getType() == 2) {
+            //新增物业的时候需要查询上级服务商
+            type = 1;
+            returnUrl = "/property/property-info";
+        } else if (dep.getType() == 3) {
+            //新增小区的时候需要查询上级物业
+            type = 2;
+            returnUrl = "/housing/housing-info";
+        }
         UserCustom userInfo = (UserCustom) request.getSession().getAttribute("userInfo");
         String departmentCode = userInfo.getDepartmentCode();
         Department query = new Department();
         query.setCode(departmentCode);
-        query.setType(dep.getType());
+        query.setType(type);
         List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(query);
         model.addAttribute("parentDepartment", list);
         Department department = departmentService.findDepartmentById(dep.getId());
         model.addAttribute("department", department);
-        return "/service/service-info";
+        return returnUrl;
     }
 
     /**
@@ -113,14 +153,14 @@ public class DepartmentController {
 
     /**
      *  删除department
-     * @param departmentId
+     * @param id
      * @return
      */
     @RequestMapping("/deleteDepartment")
     @ResponseBody
-    public JSONResult deleteDepartment(Integer departmentId) {
+    public JSONResult deleteDepartment(Integer id) {
         JSONResult obj = new JSONResult();
-        boolean delStatus = departmentService.deleteDepartmentById(departmentId);
+        boolean delStatus = departmentService.deleteDepartmentById(id);
         obj.setSuccess(delStatus);
         return obj;
     }

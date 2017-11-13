@@ -13,10 +13,11 @@
             d.deleteStatus = FALSE
         AND d.type = #{type}
         AND d. CODE LIKE CONCAT(#{code},'%')
+        ORDER BY d.code
     </select>
 
     <!-- 查询parent下面的最大code -->
-    <select id="selectMaxByParentCode" parameterType="int" resultType="string">
+    <select id="selectMaxByParentCode" resultType="string">
         select max(code) from department d where d.parent_id = #{parentId}
     </select>
 </mapper>
