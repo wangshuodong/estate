@@ -6,6 +6,7 @@
     <form class="form form-horizontal" id="form-department-add" action="${pageContext.request.contextPath }/rest/department/saveOrUpdateDepartment" method="post">
         <input type="hidden" value="${department.id}" name="id">
         <input type="hidden" value="1" name="type">
+        <input type="hidden" value="${department.parentId}" name="selectId1">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>服务商名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
@@ -59,8 +60,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
     $(function(){
-        var parent = ${department.parentId};
-        console.info(parent);
+        var parent = $("#selectId1").val();;
         if(parent != null){
             $("#parentId").val(parent);
 
@@ -69,16 +69,23 @@
 
     $("#form-department-add").validate({
         submitHandler:function(form) {
-            $(form).ajaxSubmit();
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.$('.btn-refresh').click();
-            parent.layer.close(index);
+            var options = {
+                dataType:'json',
+                success:  successRes
+            };
+            $(form).ajaxSubmit(options);
+            //非常重要，如果是false，则表明是不跳转
+            //在本页上处理，也就是ajax，如果是非false，则传统的form跳转。
+            return false;
         }
     });
 
-    function successRes(jsonData) {
-        console.info(jsonData);
-        //window.parent.location.reload();
+    function successRes(data) {
+        if (data.success) {
+            window.parent.location.reload();
+        }else {
+            layer.alert(data.msg);
+        }
     }
     
     function saveOrUpdate() {
