@@ -18,7 +18,8 @@
 			<table class="table table-border table-bordered table-bg table-hover table-sort table-striped">
 				<thead>
 				<tr class="text-c">
-					<th>用户名称</th>
+					<th>登陆名</th>
+					<th>用户昵称</th>
 					<th>部门名称</th>
 					<th>联系电话</th>
 					<th>联系邮箱</th>
@@ -29,6 +30,7 @@
 				<tbody>
 				<c:forEach items="${userList}" var="item">
 					<tr class="text-c">
+						<td>${ item.username }</td>
 						<td>${ item.name }</td>
 						<td>${ item.deptName }</td>
 						<td>${ item.phone }</td>

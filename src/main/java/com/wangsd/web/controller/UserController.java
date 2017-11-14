@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -137,30 +136,9 @@ public class UserController {
      */
     @RequestMapping(path = "/saveOrUpdateUser", method = RequestMethod.POST)
     @ResponseBody
-    public JSONResult saveOrUpdateUser(Users user, Model model) {
-        UserCustom user1 = usersService.selectByUsername(user.getUsername());
-        if (user1 == null){
-            user.setCreateTime(new Date());
-            //user.setPassword();
-            usersService.addUserInfo(user);
-        }else{
-
-        }
-
+    public JSONResult saveOrUpdateUser(Users user) {
+        boolean bl = usersService.saveOrUpdateUser(user);
         JSONResult obj = new JSONResult();
-
-        /*
-        Department parent = departmentService.findDepartmentById(department.getParentId());
-        String maxCode = departmentService.selectMaxByParentCode(department.getParentId());
-        if (maxCode == null) {
-            department.setCode(parent.getCode() + "0001");
-        }else {
-            department.setCode(ApplicationUtils.getOrgCode(maxCode));
-        }
-        department.setCreateTime(new Date());
-        boolean bl = departmentService.saveOrUpdateDepartment(department);
-        */
-        boolean bl= true;
         obj.setSuccess(bl);
         return obj;
     }
@@ -199,16 +177,17 @@ public class UserController {
 
 
     @RequestMapping(value = "checkUserName")
+    @ResponseBody
     public JSONResult checkUserName(String username) {
         JSONResult obj = new JSONResult();
         UserCustom user1 = usersService.selectByUsername(username);
         boolean objStatus;
         if(user1 != null){
-            objStatus = false;
+            obj.setSuccess(false);
+            obj.setMessage("登陆名已存在，请重新输入");
         }else{
-            objStatus = true;
+            obj.setSuccess(true);
         }
-        obj.setSuccess(objStatus);
         return obj;
     }
 }

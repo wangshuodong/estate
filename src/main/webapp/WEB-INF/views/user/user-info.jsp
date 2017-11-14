@@ -64,16 +64,23 @@
 
     $("#form-user-add").validate({
         submitHandler:function(form) {
-            $(form).ajaxSubmit();
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.$('.btn-refresh').click();
-            parent.layer.close(index);
+            var options = {
+                dataType:'json',
+                success:  successRes
+            };
+            $(form).ajaxSubmit(options);
+            //非常重要，如果是false，则表明是不跳转
+            //在本页上处理，也就是ajax，如果是非false，则传统的form跳转。
+            return false;
         }
     });
 
-    function successRes(jsonData) {
-        console.info(jsonData);
-        //window.parent.location.reload();
+    function successRes(data) {
+        if (data.success) {
+            window.parent.location.reload();
+        }else {
+            layer.alert(data.msg);
+        }
     }
     
     function saveOrUpdate() {
@@ -112,9 +119,8 @@
             },
             success : function(data) {
                 if (data.success) {
-                    layer.alert("不存在");
                 }else {
-                    layer.alert("登陆用户名已存在");
+                    layer.alert(data.message);
                 }
             }
         });

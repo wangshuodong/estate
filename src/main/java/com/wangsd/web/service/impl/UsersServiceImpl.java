@@ -59,4 +59,20 @@ public class UsersServiceImpl implements UsersService {
 		List<UserCustom> list = usersMapper.queryUserListByCode(department);
 		return list;
 	}
+	@Override
+	public boolean saveOrUpdateUser(Users user){
+		int ret = 0;
+		if (user.getId() != null) {
+			ret = usersMapper.updateByPrimaryKeySelective(user);
+		} else {
+			user.setCreateTime(new Date());
+			user.setPassword("111111");
+			ret = usersMapper.insertSelective(user);
+		}
+		if (ret > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

@@ -54,4 +54,6 @@ public interface UsersService {
 	 * @return
 	 */
 	public List<UserCustom> queryUserListByCode(Department department);
+
+	public boolean saveOrUpdateUser(Users user);
 }

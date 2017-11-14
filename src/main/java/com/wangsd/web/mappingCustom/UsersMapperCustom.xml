@@ -51,7 +51,7 @@
             d.*, parent.`name` as deptName
         FROM
             users d
-        LEFT JOIN department parent ON d.department_id = parent.parent_id
+        JOIN department parent ON d.department_id = parent.id
         WHERE
             parent.deleteStatus = FALSE
         AND parent. CODE LIKE CONCAT(#{code},'%')
