@@ -72,7 +72,7 @@
 	function info_add(){
 		var index = layer.open({
 			type: 2,
-			title: "添加角色",
+			title: "添加小区",
 			content: "${pageContext.request.contextPath }/rest/department/addDepartment?type=3"
 		});
 		layer.full(index);

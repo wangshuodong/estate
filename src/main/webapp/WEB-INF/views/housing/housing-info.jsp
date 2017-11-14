@@ -1,8 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/share/_meta.jsp" %>
 <%@ include file="/share/_footer.jsp" %>
-<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
-
+<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css"/>
+<style type="text/css">
+    body {
+        font-size: 12px;
+    }
+    #tip {
+        background-color: #ddf;
+        color: #333;
+        border: 1px solid silver;
+        box-shadow: 3px 4px 3px 0px silver;
+        position: absolute;
+        top: 55px;
+        right: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+        line-height: 20px;
+    }
+    #tip input[type="text"] {
+        height: 40px;
+        border: 0;
+        padding-left: 5px;
+        width: 280px;
+        border-radius: 3px;
+        outline: none;
+    }
+</style>
 <div class="page-container">
     <form class="form form-horizontal" id="form-department-add" action="${pageContext.request.contextPath }/rest/department/saveOrUpdateDepartment" method="post">
         <input type="hidden" value="${department.id}" name="id">
@@ -43,31 +67,18 @@
                 <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="联系电话" name="phone">
             </div>
         </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">联系地址：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.address}" placeholder="联系地址" name="address">
-            </div>
-        </div>
-        <div class="row cl" style="height: 400px;">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择地址：</label>
-            <div class="col-sm-4" style="height: 300px">
-                <div><input style="width: 300px" type="text" class="input-text" placeholder="请输入关键字进行搜索" id="tipinput"></div>
-                <div id="container" style="top: 35px"></div>
-                <div class="button-group">
-                    <input style="margin-bottom: -120px;margin-right: -30px;" type="button" class="button" value="删除点标记" id="clearMarker"/>
-                </div>
-                <div id="myPageTop" style="top: 330px;width:368px;margin-right: -10px">
-                    <table>
-                        <tr>
-                            <td >
-                                <label>经纬度：</label><input type="text" class="input-text" readonly="true" id="lnglat">
-                            </td>
-                        </tr>
-                    </table>
+
+        <div class="row cl" style="height: 450px;">
+            <label class="form-label col-xs-4 col-sm-2">经纬度：</label>
+            <div class="formControls col-xs-8 col-sm-9" style="height: 400px;">
+                <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="经纬度" name="communityLocations" id="poi">
+                <div id="mapContainer" class="bk-gray" style="margin-left:15px;margin-top:45px;"></div>
+                <div id="tip">
+                    <input type="text" id="keyword" name="keyword" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'/>
                 </div>
             </div>
         </div>
+
 
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
@@ -79,47 +90,40 @@
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
-<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=b21500f54849d2d0d9a5c2057cca62be&plugin=AMap.Autocomplete"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.1&key=44dee8ce7187e4a17d7351341daff62c"></script>
+<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
 <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
 <script type="text/javascript">
     /*地图添加点*/
-    var marker;
-    var markers =[];
-    var longitude = null;//经度
-    var latitude = null;//纬度
-    var map = new AMap.Map("container", {
-        resizeEnable: true
+    var windowsArr = [];
+    var marker = [];
+    var map = new AMap.Map("mapContainer", {
+        resizeEnable: true,
+//        center: [116.40, 39.91],//地图中心点
+//        zoom: 13,//地图显示的缩放级别
+//        keyboardEnable: false
     });
-    //为地图注册click事件获取鼠标点击出的经纬度坐标
-    var clickEventListener = map.on('click', function(e) {
-        document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
-        longitude = e.lnglat.getLng();
-        latitude = e.lnglat.getLat();
-        addMarker(e.lnglat.getLng(),e.lnglat.getLat());
-    });
-    var auto = new AMap.Autocomplete({
-        input: "tipinput"
-    });
-    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
-    function select(e) {
-        if (e.poi && e.poi.location) {
+    AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+        var autoOptions = {
+            city: "", //城市，默认全国
+            input: "keyword"//使用联想输入的input的id
+        };
+        autocomplete= new AMap.Autocomplete(autoOptions);
+        var placeSearch = new AMap.PlaceSearch({
+            city:'',
+            map:map
+        })
+        AMap.event.addListener(autocomplete, "select", function(e){
+            //TODO 针对选中的poi实现自己的功能
+            //placeSearch.setCity(e.poi.adcode);
+            //placeSearch.search(e.poi.name)
             map.setZoom(15);
             map.setCenter(e.poi.location);
-        }
-    }
-    function addMarker(a,b) {
-        marker = new AMap.Marker({
-            icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-            position: [a, b]
         });
-        marker.setMap(map);
-        markers.push(marker);
-    }
-    AMap.event.addDomListener(document.getElementById('clearMarker'), 'click', function() {
-        map.remove(markers);
-        markers = [];
-        $("#lnglat").val("");
-    }, false);
+    });
+    var clickEventListener = map.on('click', function(e) {
+        document.getElementById("poi").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+    });
     /*地图添加点*/
 
 
