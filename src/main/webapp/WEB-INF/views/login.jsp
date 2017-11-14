@@ -28,15 +28,14 @@
 </head>
 <body>
 <input type="hidden" id="TenantId" name="TenantId" value=""/>
-<div class="header">
-</div>
+<div class="header">在线物业管理系统</div>
 <div class="loginWraper">
     <div id="loginform" class="loginBox">
         <form class="form form-horizontal" action="${pageContext.request.contextPath}/rest/user/login" method="post">
             <div class="row cl">
                 <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
                 <div class="formControls col-xs-8">
-                    <input id="username" name="username" value="${username}" type="text" placeholder="账户名/手机"
+                    <input id="username" name="username" value="${username}" type="text" placeholder="用户名"
                            class="input-text size-L" required>
                     <span class="c-red" style="display: block;">${usernameError}</span>
                 </div>
@@ -66,7 +65,7 @@
         </form>
     </div>
 </div>
-<div class="footer">©2017 霸气测漏 气体检测的互联网+平台</div>
+<div class="footer">Copyright © 在线物业(ZXWY.COM)Inc.All Rights Reserved.</div>
 
 <%@ include file="/share/_footer.jsp" %>
 
