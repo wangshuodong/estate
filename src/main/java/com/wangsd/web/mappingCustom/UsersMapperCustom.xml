@@ -2,33 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangsd.web.dao.UsersMapper">
     <!--<resultMap id="userCustomReturn" type="com.wangsd.web.modelCustom.UserCustom"
-               extends="com.bqcl.gasinternet.dao.AccountMapper.BaseResultMap">
-        <result column="roleName" property="roleName"/>
-        <association property="company" javaType="com.bqcl.gasinternet.model.Company">
-            <id column="companyid" property="id"/>
-            <result column="companyname" property="companyname"/>
-            <result column="departmentname" property="departmentname"/>
-            <result column="province" property="province"/>
-            <result column="city" property="city"/>
-            <result column="area" property="area"/>
-            <result column="detailadress" property="detailadress"/>
-            <result column="phone" property="phone"/>
-            <result column="filepath" property="filepath"/>
-            <result column="type" property="type"/>
-            <result column="longitude" property="longitude"/>
-            <result column="latitude" property="latitude"/>
-            <result column="parentid" property="parentid"/>
-            <result column="status" property="status"/>
-            <result column="createtime" property="createtime"/>
-            <result column="deletestatus" property="deletestatus"/>
-        </association>
+             extends="com.bqcl.gasinternet.dao.AccountMapper.BaseResultMap">
 
-    </resultMap>-->
+      <result column="roleName" property="roleName"/>
+      <association property="company" javaType="com.bqcl.gasinternet.model.Company">
+          <id column="companyid" property="id"/>
+          <result column="companyname" property="companyname"/>
+          <result column="departmentname" property="departmentname"/>
+          <result column="province" property="province"/>
+          <result column="city" property="city"/>
+          <result column="area" property="area"/>
+          <result column="detailadress" property="detailadress"/>
+          <result column="phone" property="phone"/>
+          <result column="filepath" property="filepath"/>
+          <result column="type" property="type"/>
+          <result column="longitude" property="longitude"/>
+          <result column="latitude" property="latitude"/>
+          <result column="parentid" property="parentid"/>
+          <result column="status" property="status"/>
+          <result column="createtime" property="createtime"/>
+          <result column="deletestatus" property="deletestatus"/>
+      </association>
 
+    </resultMap>
+ -->
     <!-- 用户登录成功，根据用户名查询信息 -->
     <select id="selectByUsername" parameterType="String" resultType="UserCustom">
         select u.*, d.type as deptType, d.name as deptName
         from users u left join department d on u.department_id = d.id
         where u.username=#{username}
+    </select>
+
+    <!-- 根据条件查询所有用户 -->
+    <select id="selectUserList" parameterType="com.wangsd.web.modelCustom.UserCustom"
+            resultType="UserCustom">
+        SELECT
+        a.*,c.*
+        FROM
+        users a
+        LEFT JOIN department c ON a.department_id = c.parent_id
+  <!--      where a.user_id=#{user_id} -->
+    </select>
+
+    <!-- 根据code以及type条件查询所有用户 -->
+    <select id="queryUserListByCode" parameterType="com.wangsd.web.modelCustom.DepartmentCustom"
+            resultType="UserCustom">
+        SELECT
+            d.*, parent.`name` as deptName
+        FROM
+            users d
+        LEFT JOIN department parent ON d.department_id = parent.parent_id
+        WHERE
+            parent.deleteStatus = FALSE
+        AND parent. CODE LIKE CONCAT(#{code},'%')
     </select>
 </mapper>

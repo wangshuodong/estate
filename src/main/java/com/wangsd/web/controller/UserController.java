@@ -1,7 +1,11 @@
 package com.wangsd.web.controller;
 
+import com.wangsd.core.entity.JSONResult;
+import com.wangsd.web.dao.UsersMapper;
+import com.wangsd.web.model.Department;
 import com.wangsd.web.model.Users;
 import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.service.DepartmentService;
 import com.wangsd.web.service.UsersService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,9 +19,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 用户管理
@@ -30,6 +37,10 @@ public class UserController {
 
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private UsersMapper usersMapper;
+    @Autowired
+    DepartmentService departmentService;
     /**
      * 用户登录
      * @param user
@@ -78,4 +89,126 @@ public class UserController {
         return "login";
     }
 
+    /**
+     *
+     * Description: 查询所有用户信息
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("/userList")
+    public String userList(Model model,HttpServletRequest request) {
+        UserCustom obj = (UserCustom) request.getSession().getAttribute("userInfo");
+        String departmentCode = obj.getDepartmentCode();
+        Department department = new Department();
+        department.setCode(departmentCode);
+        List<UserCustom> list = usersService.queryUserListByCode(department);
+        model.addAttribute("userList", list);
+        return "/user/user-list";
+    }
+
+    /**
+     *
+     * Description: 跳转新增用户页面
+     *
+     * @param model
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "addUser")
+    public String addUser(Model model, HttpServletRequest request) {
+        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
+        String departmentCode = user.getDepartmentCode();
+        Integer type = null;
+        Department department = new Department();
+        department.setCode(departmentCode);
+        department.setType(type);
+        List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(),user.getDeptType());
+        model.addAttribute("parentDepartment", list);
+        return "/user/user-info";
+    }
+
+
+    /**
+     * 新增或者保存User
+     * @param user
+     * @param model
+     * @return
+     */
+    @RequestMapping(path = "/saveOrUpdateUser", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResult saveOrUpdateUser(Users user, Model model) {
+        UserCustom user1 = usersService.selectByUsername(user.getUsername());
+        if (user1 == null){
+            user.setCreateTime(new Date());
+            //user.setPassword();
+            usersService.addUserInfo(user);
+        }else{
+
+        }
+
+        JSONResult obj = new JSONResult();
+
+        /*
+        Department parent = departmentService.findDepartmentById(department.getParentId());
+        String maxCode = departmentService.selectMaxByParentCode(department.getParentId());
+        if (maxCode == null) {
+            department.setCode(parent.getCode() + "0001");
+        }else {
+            department.setCode(ApplicationUtils.getOrgCode(maxCode));
+        }
+        department.setCreateTime(new Date());
+        boolean bl = departmentService.saveOrUpdateDepartment(department);
+        */
+        boolean bl= true;
+        obj.setSuccess(bl);
+        return obj;
+    }
+
+    /**
+     * 打开修改User页面
+     * @param user
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/updateUser")
+    public String updateUser(UserCustom user, HttpServletRequest request, Model model) {
+        return null;
+    }
+
+    /**
+     *  删除User
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/deleteUser")
+    @ResponseBody
+    public JSONResult deleteUser(Integer id) {
+        JSONResult obj = new JSONResult();
+        int num= usersService.deleteUserInfo(id);
+        boolean delStatus;
+        if (num == 1) {
+            delStatus = true;
+        } else {
+            delStatus = false;
+        }
+        obj.setSuccess(delStatus);
+        return obj;
+    }
+
+
+    @RequestMapping(value = "checkUserName")
+    public JSONResult checkUserName(String username) {
+        JSONResult obj = new JSONResult();
+        UserCustom user1 = usersService.selectByUsername(username);
+        boolean objStatus;
+        if(user1 != null){
+            objStatus = false;
+        }else{
+            objStatus = true;
+        }
+        obj.setSuccess(objStatus);
+        return obj;
+    }
 }

@@ -1,7 +1,10 @@
 package com.wangsd.web.service;
 
+import com.wangsd.web.model.Department;
 import com.wangsd.web.model.Users;
 import com.wangsd.web.modelCustom.UserCustom;
+
+import java.util.List;
 
 public interface UsersService {
 	
@@ -20,4 +23,35 @@ public interface UsersService {
 	 */
 	Users authentication(Users user);
 
+	/**
+	 *
+	 * 根据条件查询所有用户
+	 *
+	 * @param
+	 * @return
+	 */
+	public List<UserCustom> selectUserList(UserCustom userCustom);
+
+	/**
+	 *
+	 * Description: 删除用户信息
+	 * @param id
+	 * @return
+	 */
+	public int deleteUserInfo(int id);
+
+	/**
+	 *
+	 * Description: 新增用户信息
+	 * @param
+	 * @return
+	 */
+	public int addUserInfo(Users user);
+
+	/**
+	 * 根据部门code查询所有用户
+	 * @param
+	 * @return
+	 */
+	public List<UserCustom> queryUserListByCode(Department department);
 }

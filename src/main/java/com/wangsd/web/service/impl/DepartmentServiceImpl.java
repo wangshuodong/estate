@@ -51,7 +51,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             return true;
         } else {
             return false;
-        }
+    }
     }
 
     @Override

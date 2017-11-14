@@ -23,4 +23,11 @@ public interface RoominfoService {
      * @return
      */
     public Roominfo findRoominfoById(Integer id);
+
+    /**
+     * 根据id删除房屋信息
+     * @param id
+     * @return
+     */
+    public int deleteRoominfo(int id);
 }

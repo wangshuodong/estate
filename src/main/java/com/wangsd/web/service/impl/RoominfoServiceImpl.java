@@ -23,4 +23,10 @@ public class RoominfoServiceImpl implements RoominfoService {
     public Roominfo findRoominfoById(Integer id) {
         return roominfoMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int deleteRoominfo(int id) {
+        int num = roominfoMapper.deleteByPrimaryKey(id);
+        return num;
+    }
 }

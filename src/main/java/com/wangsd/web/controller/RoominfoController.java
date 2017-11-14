@@ -1,5 +1,6 @@
 package com.wangsd.web.controller;
 
+import com.wangsd.core.entity.JSONResult;
 import com.wangsd.web.model.Department;
 import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.RoominfoCustom;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -62,5 +64,20 @@ public class RoominfoController {
         Roominfo roominfo = roominfoService.findRoominfoById(id);
         model.addAttribute("roominfo", roominfo);
         return "/roominfo/roominfo-info";
+    }
+
+    @RequestMapping("/deleteRoominfo")
+    @ResponseBody
+    public JSONResult deleteRoominfo(Integer id) {
+        JSONResult obj = new JSONResult();
+        int num = roominfoService.deleteRoominfo(id);
+        boolean delStatus;
+        if (num == 1) {
+            delStatus = true;
+        } else {
+            delStatus = false;
+        }
+        obj.setSuccess(delStatus);
+        return obj;
     }
 }
