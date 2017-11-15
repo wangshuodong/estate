@@ -41,7 +41,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
     @Override
-	public Role findRoleById(int id) {
+	public Role selectRoleById(int id) {
 		Role role = roleMapper.selectByPrimaryKey(id);
 		return role;
 	}
@@ -93,7 +93,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public List<Permission> selectPermissionsByRoleId(Integer roleId) {
+	public List<Permission> queryPermissionsByRoleId(Integer roleId) {
 		List<Permission> list = permissionMapper.selectPermissionsByRoleId(roleId);
 		return list;
 	}

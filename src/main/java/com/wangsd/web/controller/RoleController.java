@@ -59,7 +59,7 @@ public class RoleController {
      */
     @RequestMapping(value = "/updateRole")
     public String updateRole(Integer roleId, Model model) {
-        Role role = roleService.findRoleById(roleId);
+        Role role = roleService.selectRoleById(roleId);
         List<MenuCustom> list = menuService.queryAllMenuTreeList();
         List<Integer> menuIds = roleService.queryMenuIdByRoleid(roleId);
         for (int i=0; i<list.size(); i++) {

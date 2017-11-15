@@ -28,7 +28,7 @@ public interface DepartmentService {
 	 * @param id
 	 * @return
 	 */
-	public Department findDepartmentById(int id);
+	public Department selectDepartmentById(int id);
 
 	/**
 	 * 新增或修改Department

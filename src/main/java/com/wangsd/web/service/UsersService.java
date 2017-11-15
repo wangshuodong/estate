@@ -30,7 +30,7 @@ public interface UsersService {
 	 * @param
 	 * @return
 	 */
-	public List<UserCustom> selectUserList(UserCustom userCustom);
+	public List<UserCustom> queryUserList(UserCustom userCustom);
 
 	/**
 	 *

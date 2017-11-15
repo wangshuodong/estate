@@ -49,7 +49,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department findDepartmentById(int id) {
+    public Department selectDepartmentById(int id) {
         Department dep = departmentMapper.selectByPrimaryKey(id);
         return dep;
     }
@@ -91,7 +91,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             department.setType(StaticVar.DEPARTMENT_TYPE3);
             department.setCreateTime(new Date());
             department.setStatus(StaticVar.DEPARTMENT_STATUS_NEW);
-            Department parent = findDepartmentById(housingCustom.getParentId());
+            Department parent = selectDepartmentById(housingCustom.getParentId());
             String maxCode = selectMaxByParentCode(housingCustom.getParentId());
             if (maxCode == null) {
                 department.setCode(parent.getCode() + "0001");
@@ -104,7 +104,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         }else {
             Department department = departmentMapper.selectByPrimaryKey(housingCustom.getDepartmentId());
             if (department.getParentId() != housingCustom.getParentId()) {
-                Department parent = findDepartmentById(housingCustom.getParentId());
+                Department parent = selectDepartmentById(housingCustom.getParentId());
                 String maxCode = selectMaxByParentCode(housingCustom.getParentId());
                 if (maxCode == null) {
                     department.setCode(parent.getCode() + "0001");

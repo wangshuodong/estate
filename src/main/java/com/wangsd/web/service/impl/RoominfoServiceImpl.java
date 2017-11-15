@@ -21,7 +21,7 @@ public class RoominfoServiceImpl implements RoominfoService {
         return roominfoMapper.queryRoominfoList(roominfo);
     }
     @Override
-    public Roominfo findRoominfoById(Integer id) {
+    public Roominfo selectRoominfoById(Integer id) {
         return roominfoMapper.selectByPrimaryKey(id);
     }
 

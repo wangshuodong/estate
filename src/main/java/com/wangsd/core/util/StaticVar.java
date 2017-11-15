@@ -2,6 +2,10 @@ package com.wangsd.core.util;
 
 public class StaticVar {
 
+	public static final String format = "json";
+	public static final String charset = "utf-8";
+	public static final String sign_type = "RSA";
+
 	/**
 	 * 服务商
 	 */

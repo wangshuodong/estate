@@ -22,7 +22,7 @@ public interface RoominfoService {
      * @param id
      * @return
      */
-    public Roominfo findRoominfoById(Integer id);
+    public Roominfo selectRoominfoById(Integer id);
 
     /**
      * 根据id删除房屋信息

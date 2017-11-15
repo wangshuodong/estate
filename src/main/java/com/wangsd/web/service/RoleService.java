@@ -20,7 +20,7 @@ public interface RoleService {
 	 * @param id
 	 * @return
 	 */
-	public Role findRoleById(int id);
+	public Role selectRoleById(int id);
 
 	/**
      * 根据角色id查询菜单id
@@ -47,5 +47,5 @@ public interface RoleService {
 	 * @param roleId
 	 * @return
 	 */
-	public List<Permission> selectPermissionsByRoleId(Integer roleId);
+	public List<Permission> queryPermissionsByRoleId(Integer roleId);
 }

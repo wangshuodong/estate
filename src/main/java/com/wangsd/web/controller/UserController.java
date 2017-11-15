@@ -66,6 +66,8 @@ public class UserController {
             // 验证成功在Session中保存用户信息
             final UserCustom userCustom = usersService.selectByUsername(user.getUsername());
             request.getSession().setAttribute("userInfo", userCustom);
+            //查询appid,公钥、私钥
+
         } catch (AuthenticationException e) {
             // 身份验证失败
             model.addAttribute("usernameError", "用户名或密码错误 ！");

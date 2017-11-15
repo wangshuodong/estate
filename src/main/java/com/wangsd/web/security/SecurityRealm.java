@@ -45,10 +45,10 @@ public class SecurityRealm extends AuthorizingRealm {
         String username = String.valueOf(principals.getPrimaryPrincipal());
 
         UserCustom userCustom = usersService.selectByUsername(username);
-        Role role = roleService.findRoleById(userCustom.getRoleId());
+        Role role = roleService.selectRoleById(userCustom.getRoleId());
         logger.debug("----role----=" + JSON.toJSONString(role));
         authorizationInfo.addRole(role.getRoleSign());
-        final List<Permission> permissions = roleService.selectPermissionsByRoleId(role.getId());
+        final List<Permission> permissions = roleService.queryPermissionsByRoleId(role.getId());
         for (Permission permission : permissions) {
             // 添加权限
             logger.debug("----permission----=" + JSON.toJSONString(permission));

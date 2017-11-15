@@ -36,7 +36,7 @@ public class RoominfoController {
         model.addAttribute("parentList", parentList);
         String departmentCode;
         if (room.getDepartmentId() != null) {
-            Department parent = departmentService.findDepartmentById(room.getDepartmentId());
+            Department parent = departmentService.selectDepartmentById(room.getDepartmentId());
             departmentCode = parent.getCode();
         } else {
             departmentCode = user.getDepartmentCode();
@@ -62,7 +62,7 @@ public class RoominfoController {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
         List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
         model.addAttribute("parentList", parentList);
-        Roominfo roominfo = roominfoService.findRoominfoById(id);
+        Roominfo roominfo = roominfoService.selectRoominfoById(id);
         model.addAttribute("roominfo", roominfo);
         return "/roominfo/roominfo-info";
     }

@@ -38,7 +38,7 @@ public class UsersServiceImpl implements UsersService {
 		return retobj;
 	}
 	@Override
-	public List<UserCustom> selectUserList(UserCustom userCustom){
+	public List<UserCustom> queryUserList(UserCustom userCustom){
 		List<UserCustom> list = usersMapper.selectUserList(userCustom);
 		return list;
 	}

@@ -43,11 +43,11 @@
 						<td>${ item.address }</td>
 						<td>${ item.phone }</td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
-						<c:if test="${ item.phone }==NEW"><td>新建</td></c:if>
-						<c:if test="${ item.phone }==PENDING_ONLINE"><td>待上线</td></c:if>
-						<c:if test="${ item.phone }==ONLINE"><td>上线</td></c:if>
-						<c:if test="${ item.phone }==MAINTAIN"><td>维护中</td></c:if>
-						<c:if test="${ item.phone }==OFFLINE"><td>下线</td></c:if>
+						<c:if test="${ item.status=='NEW' }"><td>新建</td></c:if>
+						<c:if test="${ item.status=='PENDING_ONLINE' }"><td>待上线</td></c:if>
+						<c:if test="${ item.status=='ONLINE' }"><td>上线</td></c:if>
+						<c:if test="${ item.status=='MAINTAIN' }"><td>维护中</td></c:if>
+						<c:if test="${ item.status=='OFFLINE' }"><td>下线</td></c:if>
 						<td width="120">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a><br>
