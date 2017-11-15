@@ -20,6 +20,7 @@
 				<tr class="text-c">
 					<th>登陆名</th>
 					<th>用户昵称</th>
+					<th>用户密码</th>
 					<th>部门名称</th>
 					<th>联系电话</th>
 					<th>联系邮箱</th>
@@ -32,6 +33,7 @@
 					<tr class="text-c">
 						<td>${ item.username }</td>
 						<td>${ item.name }</td>
+						<td>${ item.password }</td>
 						<td>${ item.deptName }</td>
 						<td>${ item.phone }</td>
 						<td>${ item.email }</td>
@@ -39,13 +41,6 @@
 						<td width="130">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
-							<shiro:hasAnyRoles name="super_admin">
-								<a title="配置公钥" style="text-decoration:none" onclick="role_del(this, ${item.id })" href="javascript:;" class="c-success">配置公钥</a>
-							</shiro:hasAnyRoles>
-							<%--<shiro:hasPermission name="service:create">
-								<span class="pipe"> |</span>
-								<a title="应用信息" style="text-decoration:none" onclick="role_del(this, ${item.id })" href="javascript:;" class="c-success">应用信息1</a>
-							</shiro:hasPermission>--%>
 						</td>
 					</tr>
 				</c:forEach>

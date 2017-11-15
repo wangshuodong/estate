@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/share/_meta.jsp" %>
 <%@ include file="/share/_footer.jsp" %>
-console.log(1);
 <div class="page-container">
     <form class="form form-horizontal" id="form-user-add" action="${pageContext.request.contextPath }/rest/user/saveOrUpdateUser" method="post">
         <input type="hidden" value="${user.id}" name="id">
@@ -11,7 +10,7 @@ console.log(1);
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>登陆名：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${user.username}" placeholder="用户名" id="nameId" name="username" onblur="checkUsername();" required>
+                <input type="text" class="input-text radius size-L" value="${user.username}" placeholder="用户名" id="nameId" name="username" onblur="checkUsername();" required disabled="disabled">
             </div>
         </div>
         <div class="row cl">
