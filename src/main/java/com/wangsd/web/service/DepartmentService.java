@@ -1,6 +1,7 @@
 package com.wangsd.web.service;
 
 import com.wangsd.web.model.Department;
+import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.modelCustom.HousingCustom;
 
@@ -63,4 +64,12 @@ public interface DepartmentService {
 	 * @return
 	 */
 	public HousingCustom selectHousingCustomBydeptId(Integer deptId);
+
+	/**
+	 * 根据部门id得到公钥信息
+	 * @param deptId
+	 * @return
+	 */
+	public Serviceinfo selectServicekeyBydeptId(Integer deptId);
+
 }

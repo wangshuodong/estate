@@ -2,6 +2,7 @@ package com.wangsd.web.dao;
 
 import com.wangsd.web.model.Department;
 import com.wangsd.web.model.DepartmentExample;
+import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.modelCustom.HousingCustom;
 import org.apache.ibatis.annotations.Param;
@@ -51,4 +52,11 @@ public interface DepartmentMapper {
      * @return
      */
     HousingCustom selectHousingCustomBydeptId(Integer deptId);
+
+    /**
+     * 根据部门id得到公钥信息
+     * @param deptId
+     * @return
+     */
+    Serviceinfo selectServicekeyBydeptId(Integer deptId);
 }

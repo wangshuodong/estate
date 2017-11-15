@@ -7,6 +7,7 @@ import com.wangsd.web.dao.DepartmentMapper;
 import com.wangsd.web.dao.HousingMapper;
 import com.wangsd.web.model.Department;
 import com.wangsd.web.model.DepartmentExample;
+import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.modelCustom.HousingCustom;
 import com.wangsd.web.service.DepartmentService;
@@ -124,6 +125,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     public HousingCustom selectHousingCustomBydeptId(Integer deptId) {
         return departmentMapper.selectHousingCustomBydeptId(deptId);
+    }
+
+    public Serviceinfo selectServicekeyBydeptId(Integer deptId){
+        return departmentMapper.selectServicekeyBydeptId(deptId);
     }
 
     @Override

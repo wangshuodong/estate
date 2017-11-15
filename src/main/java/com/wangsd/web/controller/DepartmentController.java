@@ -3,6 +3,7 @@ package com.wangsd.web.controller;
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.web.model.Department;
+import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.modelCustom.HousingCustom;
 import com.wangsd.web.modelCustom.UserCustom;
@@ -224,5 +225,15 @@ public class DepartmentController {
         obj.setSuccess(delStatus);
         return obj;
     }
+
+    @RequestMapping(value = "/updateServicekey")
+    public String updateServicekey(Integer id, HttpServletRequest request, Model model) {
+        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
+        Serviceinfo serviceinfo = departmentService.selectServicekeyBydeptId(id);
+        model.addAttribute("serviceinfo", serviceinfo);
+        return "/service/service-key";
+    }
+
+
 
 }

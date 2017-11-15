@@ -2,7 +2,7 @@
 <%@ include file="/share/_meta.jsp" %>
 <%@ include file="/share/_footer.jsp" %>
 
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>系统管理中心 <span class="c-gray en">&gt;</span> 角色管理
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>系统管理中心 <span class="c-gray en">&gt;</span> 服务商管理
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
@@ -38,7 +38,7 @@
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
 							<shiro:hasAnyRoles name="super_admin">
-								<a title="配置公钥" style="text-decoration:none" onclick="role_del(this, ${item.id })" href="javascript:;" class="c-success">配置公钥</a>
+								<a title="配置公钥" style="text-decoration:none" onclick="key_edit(this, ${item.id })" href="javascript:;" class="c-success">配置公钥</a>
 							</shiro:hasAnyRoles>
 							<%--<shiro:hasPermission name="service:create">
 								<span class="pipe"> |</span>
@@ -65,7 +65,7 @@
 	function info_add(){
 		var index = layer.open({
 			type: 2,
-			title: "添加角色",
+			title: "新增服务商",
 			content: "${pageContext.request.contextPath }/rest/department/addDepartment?type=1"
 		});
 		layer.full(index);
@@ -74,7 +74,7 @@
     function info_edit(id){
         var index = layer.open({
             type: 2,
-            title: "修改角色",
+            title: "修改服务商",
             content: "${pageContext.request.contextPath }/rest/department/updateDepartment?id=" + id + "&type=1"
         });
         layer.full(index);
@@ -100,6 +100,16 @@
                 },
             });
         });
+    }
+
+    function key_edit(id){
+        alert(1);
+        var index = layer.open({
+            type: 2,
+            title: "配置公钥",
+            content: "${pageContext.request.contextPath }/rest/department/updateServicekey?id=" + id
+        });
+        layer.full(index);
     }
 </script>
 

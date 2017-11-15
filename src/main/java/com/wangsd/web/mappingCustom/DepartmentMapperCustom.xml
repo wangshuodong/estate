@@ -34,4 +34,16 @@
             h.department_id = d.id
         AND d.id = #{deptId}
     </select>
+
+    <!-- 根据部门id得到公钥信息 -->
+    <select id="selectServicekeyBydeptId" parameterType="int" resultType="Serviceinfo">
+        SELECT
+        *
+        FROM
+        serviceinfo h
+        JOIN department d
+        WHERE
+        h.department_id = d.id
+        AND d.id = #{deptId}
+    </select>
 </mapper>
