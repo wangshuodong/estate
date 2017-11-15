@@ -5,9 +5,11 @@ import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.dao.DepartmentMapper;
 import com.wangsd.web.dao.HousingMapper;
+import com.wangsd.web.dao.ServiceinfoMapper;
 import com.wangsd.web.model.Department;
 import com.wangsd.web.model.DepartmentExample;
 import com.wangsd.web.model.Serviceinfo;
+import com.wangsd.web.model.ServiceinfoExample;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.modelCustom.HousingCustom;
 import com.wangsd.web.service.DepartmentService;
@@ -25,6 +27,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     DepartmentMapper departmentMapper;
     @Autowired
     HousingMapper housingMapper;
+    @Autowired
+    ServiceinfoMapper serviceinfoMapper;
 
     @Override
     public List<DepartmentCustom> queryDepartmentListByCode(Department department) {
@@ -129,11 +133,33 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     public Serviceinfo selectServicekeyBydeptId(Integer deptId){
-        return departmentMapper.selectServicekeyBydeptId(deptId);
+        Serviceinfo serviceinfo = null;
+        ServiceinfoExample example = new ServiceinfoExample();
+        example.createCriteria().andDepartmentIdEqualTo(deptId);
+        List<Serviceinfo> list = serviceinfoMapper.selectByExample(example);
+        if(list != null && list.size() >0 ){
+            serviceinfo = list.get(0);
+        }
+        return serviceinfo;
     }
 
     @Override
     public String selectMaxByParentCode(Integer parentId) {
         return departmentMapper.selectMaxByParentCode(parentId);
+    }
+
+    @Override
+    public boolean saveOrUpdateServicekey(Serviceinfo Serviceinfo){
+        int ret;
+        if(Serviceinfo.getId() == null){//新增
+            ret = serviceinfoMapper.insert(Serviceinfo);
+        }else{
+            ret = serviceinfoMapper.updateByPrimaryKeySelective(Serviceinfo);
+        }
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

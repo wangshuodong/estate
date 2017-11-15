@@ -229,13 +229,35 @@ public class DepartmentController {
         return obj;
     }
 
+    /**
+     *  跳转Servicekey更新页面
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/updateServicekey")
     public String updateServicekey(Integer id, HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
         Serviceinfo serviceinfo = departmentService.selectServicekeyBydeptId(id);
         model.addAttribute("serviceinfo", serviceinfo);
+        model.addAttribute("departmentId",id);
         return "/service/service-key";
     }
+
+    /**
+     * 保存Servicekey
+     * @param serviceinfo
+     * @param model
+     * @return
+     */
+    @RequestMapping(path = "/saveOrUpdateService", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResult saveOrUpdateService(Serviceinfo serviceinfo, Model model) {
+        JSONResult obj = new JSONResult();
+        boolean bl = departmentService.saveOrUpdateServicekey(serviceinfo);
+        obj.setSuccess(bl);
+        return obj;
+    }
+
 
 
 

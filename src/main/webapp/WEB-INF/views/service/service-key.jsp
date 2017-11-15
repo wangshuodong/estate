@@ -3,8 +3,9 @@
 <%@ include file="/share/_footer.jsp" %>
 
 <div class="page-container">
-    <form class="form form-horizontal" id="form-department-add" action="${pageContext.request.contextPath }/rest/department/saveOrUpdateDepartment" method="post">
+    <form class="form form-horizontal" id="form-serviceinfo-add" action="${pageContext.request.contextPath }/rest/department/saveOrUpdateService" method="post">
         <input type="hidden" value="${serviceinfo.id}" name="id">
+        <input type="hidden" value="${departmentId}" name="departmentId" id = "depid">
         <input type="hidden" value="1" name="type">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">应用ID：</label>
@@ -27,7 +28,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">签名方式：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${serviceinfo.sign_type}" placeholder="签名方式" name="address">
+                <input type="text" class="input-text radius size-L" value="${serviceinfo.signType}" placeholder="签名方式" name="signType">
             </div>
         </div>
 
@@ -43,18 +44,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
     $(function(){
-        var parent = $("#selectId1").val();
-        if(parent != null){
-            $("#parentId").val(parent);
-        }
     });
 
-    $("#form-department-add").validate({
-        messages: {
-            parentId: {
-                min: "必须选择上级服务商"
-            }
-        },
+    $("#form-serviceinfo-add").validate({
         submitHandler:function(form) {
             var options = {
                 dataType:'json',
@@ -74,31 +66,5 @@
             layer.alert(data.msg);
         }
     }
-    
-    function saveOrUpdate() {
-        var nodes=treeObj.getCheckedNodes(true);
-        var menuIds = "";
-        for(var i=0;i<nodes.length;i++) {
-            if (i == nodes.length-1) {
-                menuIds += nodes[i].id
-            }else {
-                menuIds += nodes[i].id + ","
-            }
-        }
-        $.ajax({
-            url : '${pageContext.request.contextPath }/rest/department/saveOrUpdateRole',
-            type : 'post',
-            data : {
-                'id': $('#id').val(),
-                'name': $('#name').val(),
-                'description': $('#description').val(),
-                'menuIds' : menuIds
-            },
-            success : function(data) {
-                if (data.success) {
-                    window.parent.location.reload();
-                }
-            }
-        });
-    }
+
 </script>

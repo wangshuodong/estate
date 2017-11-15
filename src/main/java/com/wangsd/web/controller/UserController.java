@@ -183,7 +183,11 @@ public class UserController {
         obj.setSuccess(delStatus);
         return obj;
     }
-
+    /**
+     *  检查新增登陆名是否重复
+     * @param username
+     * @return
+     */
 
     @RequestMapping(value = "checkUserName")
     @ResponseBody
@@ -198,7 +202,11 @@ public class UserController {
         }
         return obj;
     }
-
+    /**
+     *  用户启用/停用
+     * @param user
+     * @return
+     */
     @RequestMapping(value = "activeUser")
     @ResponseBody
     public JSONResult activeUser(Users user) {

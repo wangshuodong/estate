@@ -66,10 +66,17 @@ public interface DepartmentService {
 	public HousingCustom selectHousingCustomBydeptId(Integer deptId);
 
 	/**
-	 * 根据部门id得到公钥信息
+	 * 根据部门id查询公钥信息
 	 * @param deptId
 	 * @return
 	 */
 	public Serviceinfo selectServicekeyBydeptId(Integer deptId);
+
+	/**
+	 * 新增更新公钥信息
+	 * @param Serviceinfo
+	 * @return
+	 */
+	public boolean saveOrUpdateServicekey(Serviceinfo Serviceinfo);
 
 }
