@@ -103,7 +103,6 @@
     }
 
     function key_edit(id){
-        alert(id);
         var index = layer.open({
             type: 2,
             title: "配置公钥",
