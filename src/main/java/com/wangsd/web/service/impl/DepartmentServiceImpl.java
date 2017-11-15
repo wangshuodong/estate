@@ -86,6 +86,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             BeanUtils.copyProperties(housingCustom, department);
             department.setType(StaticVar.DEPARTMENT_TYPE3);
             department.setCreateTime(new Date());
+            department.setStatus(StaticVar.DEPARTMENT_STATUS_NEW);
             Department parent = findDepartmentById(housingCustom.getParentId());
             String maxCode = selectMaxByParentCode(housingCustom.getParentId());
             if (maxCode == null) {

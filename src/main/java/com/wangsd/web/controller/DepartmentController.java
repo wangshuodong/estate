@@ -185,12 +185,14 @@ public class DepartmentController {
     public JSONResult saveOrUpdateDepartment(Department department, Model model) {
         JSONResult obj = new JSONResult();
         Department oldDept = departmentService.findDepartmentById(department.getId());
-        Department parent = departmentService.findDepartmentById(department.getParentId());
-        String maxCode = departmentService.selectMaxByParentCode(department.getParentId());
-        if (maxCode == null) {
-            department.setCode(parent.getCode() + "0001");
-        }else {
-            department.setCode(ApplicationUtils.getOrgCode(maxCode));
+        if (oldDept.getParentId() != department.getParentId()) {
+            Department parent = departmentService.findDepartmentById(department.getParentId());
+            String maxCode = departmentService.selectMaxByParentCode(department.getParentId());
+            if (maxCode == null) {
+                department.setCode(parent.getCode() + "0001");
+            }else {
+                department.setCode(ApplicationUtils.getOrgCode(maxCode));
+            }
         }
         department.setCreateTime(new Date());
         boolean bl = departmentService.saveOrUpdateDepartment(department);
