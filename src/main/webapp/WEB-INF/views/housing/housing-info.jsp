@@ -3,9 +3,6 @@
 <%@ include file="/share/_footer.jsp" %>
 <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css"/>
 <style type="text/css">
-    body {
-        font-size: 12px;
-    }
     #tip {
         background-color: #ddf;
         color: #333;
@@ -67,11 +64,16 @@
                 <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="联系电话" name="phone">
             </div>
         </div>
-
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">联系电话：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="联系电话" name="phone">
+            </div>
+        </div>
         <div class="row cl" style="height: 450px;">
-            <label class="form-label col-xs-4 col-sm-2">经纬度：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经纬度：</label>
             <div class="formControls col-xs-8 col-sm-9" style="height: 400px;">
-                <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="经纬度" name="communityLocations" id="poi">
+                <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="经纬度" name="communityLocations" id="poi" required>
                 <div id="mapContainer" class="bk-gray" style="margin-left:15px;margin-top:45px;"></div>
                 <div id="tip">
                     <input type="text" id="keyword" name="keyword" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'/>
@@ -122,7 +124,7 @@
         });
     });
     var clickEventListener = map.on('click', function(e) {
-        document.getElementById("poi").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+        document.getElementById("poi").value = e.lnglat.getLng() + '|' + e.lnglat.getLat()
     });
     /*地图添加点*/
 

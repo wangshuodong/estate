@@ -2,8 +2,9 @@ package com.wangsd.web.dao;
 
 import com.wangsd.web.model.Housing;
 import com.wangsd.web.model.HousingExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface HousingMapper {
     int countByExample(HousingExample example);

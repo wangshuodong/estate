@@ -22,4 +22,9 @@
     <select id="selectMaxByParentCode" resultType="string">
         select max(code) from department d where d.parent_id = #{parentId}
     </select>
+
+    <!-- 根据部门id得到小区详情 -->
+    <select id="selectHousingCustomBydeptId" resultType="string">
+        select max(code) from department d where d.parent_id = #{parentId}
+    </select>
 </mapper>

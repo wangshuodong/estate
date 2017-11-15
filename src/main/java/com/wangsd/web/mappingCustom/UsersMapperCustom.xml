@@ -45,7 +45,7 @@
     </select>
 
     <!-- 根据code以及type条件查询所有用户 -->
-    <select id="queryUserListByCode" parameterType="com.wangsd.web.modelCustom.DepartmentCustom"
+    <select id="queryUserListByCode" parameterType="com.wangsd.web.model.Department"
             resultType="UserCustom">
         SELECT
             d.*, parent.`name` as deptName

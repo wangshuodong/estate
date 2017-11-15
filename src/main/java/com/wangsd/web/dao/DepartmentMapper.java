@@ -3,6 +3,7 @@ package com.wangsd.web.dao;
 import com.wangsd.web.model.Department;
 import com.wangsd.web.model.DepartmentExample;
 import com.wangsd.web.modelCustom.DepartmentCustom;
+import com.wangsd.web.modelCustom.HousingCustom;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -43,4 +44,11 @@ public interface DepartmentMapper {
      * @return
      */
     String selectMaxByParentCode(@Param("parentId") Integer parentId);
+
+    /**
+     * 根据部门id得到小区详情
+     * @param deptId
+     * @return
+     */
+    HousingCustom selectHousingCustomBydeptId(Integer deptId);
 }
