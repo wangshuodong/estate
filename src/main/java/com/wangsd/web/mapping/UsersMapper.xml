@@ -7,7 +7,6 @@
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
-    <result column="department_code" property="departmentCode" jdbcType="VARCHAR" />
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
@@ -73,8 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, username, password, department_id, department_code, role_id, phone, email, 
-    enable, create_time
+    id, name, username, password, department_id, role_id, phone, email, enable, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.UsersExample" >
     select
@@ -108,13 +106,13 @@
   </delete>
   <insert id="insert" parameterType="com.wangsd.web.model.Users" >
     insert into users (id, name, username, 
-      password, department_id, department_code, 
-      role_id, phone, email, 
-      enable, create_time)
+      password, department_id, role_id, 
+      phone, email, enable, create_time
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{departmentCode,jdbcType=VARCHAR}, 
-      #{roleId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{enable,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
+      #{password,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{enable,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Users" >
     insert into users
@@ -133,9 +131,6 @@
       </if>
       <if test="departmentId != null" >
         department_id,
-      </if>
-      <if test="departmentCode != null" >
-        department_code,
       </if>
       <if test="roleId != null" >
         role_id,
@@ -168,9 +163,6 @@
       </if>
       <if test="departmentId != null" >
         #{departmentId,jdbcType=INTEGER},
-      </if>
-      <if test="departmentCode != null" >
-        #{departmentCode,jdbcType=VARCHAR},
       </if>
       <if test="roleId != null" >
         #{roleId,jdbcType=INTEGER},
@@ -213,9 +205,6 @@
       <if test="record.departmentId != null" >
         department_id = #{record.departmentId,jdbcType=INTEGER},
       </if>
-      <if test="record.departmentCode != null" >
-        department_code = #{record.departmentCode,jdbcType=VARCHAR},
-      </if>
       <if test="record.roleId != null" >
         role_id = #{record.roleId,jdbcType=INTEGER},
       </if>
@@ -243,7 +232,6 @@
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       department_id = #{record.departmentId,jdbcType=INTEGER},
-      department_code = #{record.departmentCode,jdbcType=VARCHAR},
       role_id = #{record.roleId,jdbcType=INTEGER},
       phone = #{record.phone,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
@@ -267,9 +255,6 @@
       </if>
       <if test="departmentId != null" >
         department_id = #{departmentId,jdbcType=INTEGER},
-      </if>
-      <if test="departmentCode != null" >
-        department_code = #{departmentCode,jdbcType=VARCHAR},
       </if>
       <if test="roleId != null" >
         role_id = #{roleId,jdbcType=INTEGER},
@@ -295,7 +280,6 @@
       username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       department_id = #{departmentId,jdbcType=INTEGER},
-      department_code = #{departmentCode,jdbcType=VARCHAR},
       role_id = #{roleId,jdbcType=INTEGER},
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},

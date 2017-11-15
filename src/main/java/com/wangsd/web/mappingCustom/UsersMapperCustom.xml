@@ -28,7 +28,7 @@
  -->
     <!-- 用户登录成功，根据用户名查询信息 -->
     <select id="selectByUsername" parameterType="String" resultType="UserCustom">
-        select u.*, d.type as deptType, d.name as deptName
+        select u.*, d.type as deptType, d.name as deptName, d.code as departmentCode
         from users u left join department d on u.department_id = d.id
         where u.username=#{username}
     </select>

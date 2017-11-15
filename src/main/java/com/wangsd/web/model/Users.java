@@ -13,8 +13,6 @@ public class Users {
 
     private Integer departmentId;
 
-    private String departmentCode;
-
     private Integer roleId;
 
     private String phone;
@@ -63,14 +61,6 @@ public class Users {
 
     public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
-    }
-
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode == null ? null : departmentCode.trim();
     }
 
     public Integer getRoleId() {

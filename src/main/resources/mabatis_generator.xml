@@ -46,8 +46,8 @@
         <table tableName="department" domainObjectName="Department">
         	<generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        <table tableName="users" domainObjectName="Users"/>
-        -->
         <table tableName="roominfo" domainObjectName="Roominfo"/>
+        -->
+        <table tableName="users" domainObjectName="Users"/>
     </context>
 </generatorConfiguration>
