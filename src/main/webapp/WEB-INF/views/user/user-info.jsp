@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/share/_meta.jsp" %>
 <%@ include file="/share/_footer.jsp" %>
-
+console.log(1);
 <div class="page-container">
     <form class="form form-horizontal" id="form-user-add" action="${pageContext.request.contextPath }/rest/user/saveOrUpdateUser" method="post">
         <input type="hidden" value="${user.id}" name="id">

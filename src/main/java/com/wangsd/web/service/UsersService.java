@@ -56,4 +56,6 @@ public interface UsersService {
 	public List<UserCustom> queryUserListByCode(Department department);
 
 	public boolean saveOrUpdateUser(Users user);
+
+	public Users selectByPrimaryKey(Integer userId);
 }

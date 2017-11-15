@@ -131,7 +131,7 @@ public class UserController {
     /**
      * 新增或者保存User
      * @param user
-     * @param model
+     * @param
      * @return
      */
     @RequestMapping(path = "/saveOrUpdateUser", method = RequestMethod.POST)
@@ -145,16 +145,25 @@ public class UserController {
 
     /**
      * 打开修改User页面
-     * @param user
+     * @param id
      * @param request
      * @param model
      * @return
      */
     @RequestMapping(value = "/updateUser")
-    public String updateUser(UserCustom user, HttpServletRequest request, Model model) {
-        return null;
-    }
-
+    public String updateUser(Integer id, HttpServletRequest request, Model model) {
+        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
+        String departmentCode = user.getDepartmentCode();
+        Integer type = null;
+        Department department = new Department();
+        department.setCode(departmentCode);
+        department.setType(type);
+        List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(),user.getDeptType());
+        model.addAttribute("parentDepartment", list);
+        Users userInfo = usersService.selectByPrimaryKey(id);
+        model.addAttribute("user", userInfo);
+        return "/user/user-info";
+}
     /**
      *  删除User
      * @param id

@@ -75,4 +75,9 @@ public class UsersServiceImpl implements UsersService {
 			return false;
 		}
 	}
+	@Override
+	public Users selectByPrimaryKey(Integer userId){
+		Users user  = usersMapper.selectByPrimaryKey(userId);
+		return user;
+	}
 }
