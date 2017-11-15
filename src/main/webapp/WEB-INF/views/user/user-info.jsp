@@ -10,7 +10,8 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>登陆名：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${user.username}" placeholder="用户名" id="nameId" name="username" onblur="checkUsername();" required >
+                <input type="text" class="input-text radius size-L" value="${user.username}" placeholder="用户名" id="nameId" name="username"
+                       onblur="checkUsername();" <c:if test="${user.username!=null }">disabled</c:if> required>
             </div>
         </div>
         <div class="row cl">

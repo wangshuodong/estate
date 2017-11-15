@@ -190,7 +190,6 @@ public class UserController {
     public JSONResult checkUserName(String username) {
         JSONResult obj = new JSONResult();
         UserCustom user1 = usersService.selectByUsername(username);
-        boolean objStatus;
         if(user1 != null){
             obj.setSuccess(false);
             obj.setMessage("登陆名已存在，请重新输入");
@@ -202,8 +201,10 @@ public class UserController {
 
     @RequestMapping(value = "activeUser")
     @ResponseBody
-    public JSONResult activeUser(Integer id) {
+    public JSONResult activeUser(Users user) {
         JSONResult obj = new JSONResult();
+        boolean bl = usersService.saveOrUpdateUser(user);
+        obj.setSuccess(bl);
         return obj;
     }
 

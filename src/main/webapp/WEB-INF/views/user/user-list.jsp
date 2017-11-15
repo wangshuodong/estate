@@ -38,9 +38,14 @@
 						<td>${ item.phone }</td>
 						<td>${ item.email }</td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
-						<td width="130">
+						<td class="td-manage" width="130">
+							<c:if test="${item.enable == true}">
+								<a style="text-decoration:none" onClick="admin_stop(this,${item.id })" href="javascript:;" title="停用" class="c-success">停用</a>
+							</c:if>
+							<c:if test="${item.enable == false}">
+								<a style="text-decoration:none" onClick="admin_start(this,${item.id })" href="javascript:;" title="启用" class="c-success">启用</a>
+							</c:if>
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
-                            <a title="暂停" style="text-decoration:none" onclick="info_active(this, ${item.id })" href="javascript:;" class="c-success">暂停</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
 						</td>
 					</tr>
@@ -100,26 +105,38 @@
         });
     }
 
-    function info_active(obj,id){
-        layer.confirm(function(index){
-            $.ajax({
-                type: 'POST',
-                url: '${pageContext.request.contextPath }/rest/user/activeUser',
-                dataType: 'json',
-                data:{
-                    id : id
-                },
-                success: function(data){
-                    if (data.success) {
-                       // $(obj).parents("tr").remove();
-                        layer.msg('操作成功!',{icon:1,time:1000});
-                    }
-                },
-                error:function(data) {
-                    console.log(data.msg);
-                },
-            });
+	/*管理员-停用*/
+    function admin_stop(obj,id){
+        layer.confirm('确认要停用吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            info_active(id, false);
+            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="admin_start(this,'+id+')" href="javascript:;" title="启用" class="c-success">启用</a>');
+            $(obj).remove();
+            layer.msg('已停用!',{icon: 5,time:1000});
         });
+    }
+
+	/*管理员-启用*/
+    function admin_start(obj,id){
+        layer.confirm('确认要启用吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            info_active(id, true);
+            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="admin_stop(this,'+id+')" href="javascript:;" title="停用" class="c-success">停用</a>');
+            $(obj).remove();
+            layer.msg('已启用!', {icon: 6,time:1000});
+        });
+    }
+
+    function info_active(id, status){
+		$.ajax({
+			type: 'POST',
+			url: '${pageContext.request.contextPath }/rest/user/activeUser',
+			dataType: 'json',
+			data:{
+				id : id,
+                enable: status
+			}
+		});
     }
 </script>
 
