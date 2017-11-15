@@ -1,7 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/share/_meta.jsp" %>
 <%@ include file="/share/_footer.jsp" %>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>系统管理中心 <span class="c-gray en">&gt;</span> 角色管理
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>系统管理中心 <span class="c-gray en">&gt;</span> 小区信息
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
@@ -57,7 +57,6 @@
 						<td width="130">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
-							<a title="参数配置" style="text-decoration:none" onclick="role_del(this, ${item.id })" href="javascript:;" class="c-success">参数配置</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -88,7 +87,7 @@
     function info_edit(id){
         var index = layer.open({
             type: 2,
-            title: "修改角色",
+            title: "修改小区信息",
             content: "${pageContext.request.contextPath }/rest/roominfo/updateRoominfo?id=" + id,
         });
         layer.full(index);

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,7 @@ public class RoominfoController {
         if (room.getDepartmentId() != null) {
             Department parent = departmentService.findDepartmentById(room.getDepartmentId());
             departmentCode = parent.getCode();
-        }else {
+        } else {
             departmentCode = user.getDepartmentCode();
         }
         RoominfoCustom query = new RoominfoCustom();
@@ -80,4 +81,14 @@ public class RoominfoController {
         obj.setSuccess(delStatus);
         return obj;
     }
+
+    @RequestMapping(path = "/saveOrUpdateRoominfo", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResult saveOrUpdateRoominfo(Roominfo roominfo) {
+        boolean bl = roominfoService.saveOrUpdateUser(roominfo);
+        JSONResult obj = new JSONResult();
+        obj.setSuccess(bl);
+        return obj;
+    }
+
 }

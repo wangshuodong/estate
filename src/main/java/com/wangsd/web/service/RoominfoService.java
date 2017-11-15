@@ -30,4 +30,6 @@ public interface RoominfoService {
      * @return
      */
     public int deleteRoominfo(int id);
+
+    public boolean saveOrUpdateUser(Roominfo roominfo);
 }

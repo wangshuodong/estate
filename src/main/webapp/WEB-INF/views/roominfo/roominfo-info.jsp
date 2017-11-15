@@ -3,7 +3,7 @@
 <%@ include file="/share/_footer.jsp" %>
 
 <div class="page-container">
-    <form class="form form-horizontal" id="form-department-add" action="${pageContext.request.contextPath }/rest/department/saveOrUpdateDepartment" method="post">
+    <form class="form form-horizontal" id="form-roominfo-add" action="${pageContext.request.contextPath }/rest/roominfo/saveOrUpdateRoominfo" method="post">
         <input type="hidden" value="${roominfo.id}" name="id">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属小区：</label>
@@ -82,7 +82,7 @@
         });
     });
 
-    $("#form-department-add").validate({
+    $("#form-roominfo-add").validate({
         messages: {
             parentId: {
                 min: "必须选择上级服务商"
