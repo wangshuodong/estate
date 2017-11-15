@@ -35,10 +35,10 @@
 						<td>${ item.phone }</td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td width="130">
-							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
-							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
+							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id });" href="javascript:;" class="c-success">编辑</a>
+							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id });" href="javascript:;" class="c-success">删除</a>
 							<shiro:hasAnyRoles name="super_admin">
-								<a title="配置公钥" style="text-decoration:none" onclick="key_edit(this, ${item.id })" href="javascript:;" class="c-success">配置公钥</a>
+								<a title="配置公钥" style="text-decoration:none" onclick="key_edit(${item.id });" href="javascript:;" class="c-success">配置公钥</a>
 							</shiro:hasAnyRoles>
 							<%--<shiro:hasPermission name="service:create">
 								<span class="pipe"> |</span>
@@ -103,11 +103,11 @@
     }
 
     function key_edit(id){
-        alert(1);
+        alert(id);
         var index = layer.open({
             type: 2,
             title: "配置公钥",
-            content: "${pageContext.request.contextPath }/rest/department/updateServicekey?id=" + id
+            content: "${pageContext.request.contextPath }/rest/department/updateServicekey?id=" + id,
         });
         layer.full(index);
     }

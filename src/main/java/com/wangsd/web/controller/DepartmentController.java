@@ -2,6 +2,7 @@ package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
+import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Department;
 import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.DepartmentCustom;
@@ -48,7 +49,7 @@ public class DepartmentController {
         }
         Department query = new Department();
         query.setCode(departmentCode);
-        query.setType(1);
+        query.setType(StaticVar.DEPARTMENT_TYPE1);
         List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(query);
         model.addAttribute("departmentList", list);
         return "/service/service-list";
@@ -73,7 +74,7 @@ public class DepartmentController {
         }
         Department query = new Department();
         query.setCode(departmentCode);
-        query.setType(2);
+        query.setType(StaticVar.DEPARTMENT_TYPE2);
         List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(query);
         model.addAttribute("departmentList", list);
         return "/property/property-list";
@@ -100,7 +101,7 @@ public class DepartmentController {
         }
         Department query = new Department();
         query.setCode(departmentCode);
-        query.setType(3);
+        query.setType(StaticVar.DEPARTMENT_TYPE3);
         List<DepartmentCustom> list = departmentService.queryDepartmentListByCode(query);
         model.addAttribute("departmentList", list);
         model.addAttribute("query", dep);
@@ -119,18 +120,18 @@ public class DepartmentController {
     public String addDepartment(Integer type, HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
         String returnUrl = null;
-        if (type == 1) {
-            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 1);
+        if (type == StaticVar.DEPARTMENT_TYPE1) {
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE1);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/service/service-info";
-        } else if (type == 2) {
+        } else if (type == StaticVar.DEPARTMENT_TYPE2) {
             //新增物业的时候需要查询上级服务商
-            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 1);
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE2);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/property/property-info";
-        } else if (type == 3) {
+        } else if (type == StaticVar.DEPARTMENT_TYPE3) {
             //新增小区的时候需要查询上级物业
-            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 2);
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE3);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/housing/housing-info";
         }
@@ -148,23 +149,22 @@ public class DepartmentController {
     public String updateDepartment(Department dep, HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
         String returnUrl = null;
-        int type = 1;
-        if (dep.getType() == 1) {
-            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 1);
+        if (dep.getType() == StaticVar.DEPARTMENT_TYPE1) {
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE1);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/service/service-info";
             Department department = departmentService.findDepartmentById(dep.getId());
             model.addAttribute("department", department);
-        } else if (dep.getType() == 2) {
+        } else if (dep.getType() == StaticVar.DEPARTMENT_TYPE2) {
             //新增物业的时候需要查询上级服务商
-            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 1);
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE2);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/property/property-info";
             Department department = departmentService.findDepartmentById(dep.getId());
             model.addAttribute("department", department);
-        } else if (dep.getType() == 3) {
+        } else if (dep.getType() == StaticVar.DEPARTMENT_TYPE3) {
             //新增小区的时候需要查询上级物业
-            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 2);
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE3);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/housing/housing-info";
             HousingCustom department = departmentService.selectHousingCustomBydeptId(dep.getId());
@@ -184,6 +184,7 @@ public class DepartmentController {
     @ResponseBody
     public JSONResult saveOrUpdateDepartment(Department department, Model model) {
         JSONResult obj = new JSONResult();
+        Department oldDept = departmentService.findDepartmentById(department.getId());
         Department parent = departmentService.findDepartmentById(department.getParentId());
         String maxCode = departmentService.selectMaxByParentCode(department.getParentId());
         if (maxCode == null) {
