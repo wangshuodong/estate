@@ -4,6 +4,7 @@ import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.web.model.Department;
 import com.wangsd.web.modelCustom.DepartmentCustom;
+import com.wangsd.web.modelCustom.HousingCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,19 +152,24 @@ public class DepartmentController {
             List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 1);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/service/service-info";
+            Department department = departmentService.findDepartmentById(dep.getId());
+            model.addAttribute("department", department);
         } else if (dep.getType() == 2) {
             //新增物业的时候需要查询上级服务商
             List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 1);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/property/property-info";
+            Department department = departmentService.findDepartmentById(dep.getId());
+            model.addAttribute("department", department);
         } else if (dep.getType() == 3) {
             //新增小区的时候需要查询上级物业
             List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), 2);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/housing/housing-info";
+            HousingCustom department = departmentService.selectHousingCustomBydeptId(dep.getId());
+            model.addAttribute("department", department);
         }
-        Department department = departmentService.findDepartmentById(dep.getId());
-        model.addAttribute("department", department);
+
         return returnUrl;
     }
 
@@ -186,6 +192,21 @@ public class DepartmentController {
         }
         department.setCreateTime(new Date());
         boolean bl = departmentService.saveOrUpdateDepartment(department);
+        obj.setSuccess(bl);
+        return obj;
+    }
+
+    /**
+     * 保存小区
+     * @param housingCustom
+     * @param model
+     * @return
+     */
+    @RequestMapping(path = "/saveOrUpdateHousing", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResult saveOrUpdateHousing(HousingCustom housingCustom, Model model) {
+        JSONResult obj = new JSONResult();
+        boolean bl = departmentService.saveOrUpdateHousing(housingCustom);
         obj.setSuccess(bl);
         return obj;
     }

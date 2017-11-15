@@ -24,7 +24,14 @@
     </select>
 
     <!-- 根据部门id得到小区详情 -->
-    <select id="selectHousingCustomBydeptId" resultType="string">
-        select max(code) from department d where d.parent_id = #{parentId}
+    <select id="selectHousingCustomBydeptId" parameterType="int" resultType="HousingCustom">
+        SELECT
+            *
+        FROM
+            housing h
+        JOIN department d
+        WHERE
+            h.department_id = d.id
+        AND d.id = #{deptId}
     </select>
 </mapper>

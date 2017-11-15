@@ -25,9 +25,9 @@
     }
 </style>
 <div class="page-container">
-    <form class="form form-horizontal" id="form-department-add" action="${pageContext.request.contextPath }/rest/department/saveOrUpdateDepartment" method="post">
+    <form class="form form-horizontal" id="form-department-add" action="${pageContext.request.contextPath }/rest/department/saveOrUpdateHousing" method="post">
+        <input type="hidden" value="${department.departmentId}" name="departmentId">
         <input type="hidden" value="${department.id}" name="id">
-        <input type="hidden" value="3" name="type">
         <input type="hidden" value="${department.parentId}" id="selectId1">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>小区名称：</label>
@@ -65,9 +65,33 @@
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">联系电话：</label>
+            <label class="form-label col-xs-4 col-sm-2">联系地址：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="联系电话" name="phone">
+                <input type="text" class="input-text radius size-L" value="${department.address}" placeholder="联系地址" name="address">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>省份编码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${department.provinceCode}" placeholder="省份编码" name="provinceCode" required>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>地级市编码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${department.cityCode}" placeholder="地级市编码" name="cityCode" required>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>区县编码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${department.districtCode}" placeholder="区县编码" name="districtCode" required>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>服务热线电话：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${department.hotline}" placeholder="服务热线电话" name="hotline" required>
             </div>
         </div>
         <div class="row cl" style="height: 450px;">
@@ -160,32 +184,5 @@
         }else {
             layer.alert(data.msg);
         }
-    }
-    
-    function saveOrUpdate() {
-        var nodes=treeObj.getCheckedNodes(true);
-        var menuIds = "";
-        for(var i=0;i<nodes.length;i++) {
-            if (i == nodes.length-1) {
-                menuIds += nodes[i].id
-            }else {
-                menuIds += nodes[i].id + ","
-            }
-        }
-        $.ajax({
-            url : '${pageContext.request.contextPath }/rest/department/saveOrUpdateRole',
-            type : 'post',
-            data : {
-                'id': $('#id').val(),
-                'name': $('#name').val(),
-                'description': $('#description').val(),
-                'menuIds' : menuIds
-            },
-            success : function(data) {
-                if (data.success) {
-                    window.parent.location.reload();
-                }
-            }
-        });
     }
 </script>

@@ -14,7 +14,6 @@
 				</c:forEach>
 			</select>
 		</div>
-		<input type="text" class="layui-input input-text radius size-L" id="test1" style="width:250px">
 		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="info_add();">新&nbsp;增</button>
 	</form>
@@ -43,10 +42,10 @@
 						<td>${ item.address }</td>
 						<td>${ item.phone }</td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
-						<td width="130">
+						<td width="120">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
-							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
-							<a title="参数配置" style="text-decoration:none" onclick="role_del(this, ${item.id })" href="javascript:;" class="c-success">参数配置</a>
+							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a><br>
+							<a title="参数配置" style="text-decoration:none" onclick="role_del(this, ${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -65,9 +64,6 @@
 		scrollX: true,
 		ordering: false
 	});
-    laydate.render({
-        elem: '#test1' //指定元素
-    });
 
 	function info_add(){
 		var index = layer.open({

@@ -4,13 +4,14 @@
   <resultMap id="BaseResultMap" type="com.wangsd.web.model.Department" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="region" property="region" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="contact_people" property="contactPeople" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -73,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, code, name, region, address, phone, contact_people, type, parent_id, deleteStatus, 
-    create_time
+    id, code, parent_id, name, region, address, phone, contact_people, type, status, 
+    deleteStatus, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.DepartmentExample" >
     select
@@ -110,14 +111,14 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into department (code, name, region, 
-      address, phone, contact_people, 
-      type, parent_id, deleteStatus, 
-      create_time)
-    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{contactPeople,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{deletestatus,jdbcType=BIT}, 
-      #{createTime,jdbcType=TIMESTAMP})
+    insert into department (code, parent_id, name, 
+      region, address, phone, 
+      contact_people, type, status, 
+      deleteStatus, create_time)
+    values (#{code,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{contactPeople,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
+      #{deletestatus,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Department" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -127,6 +128,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="code != null" >
         code,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
       </if>
       <if test="name != null" >
         name,
@@ -146,8 +150,8 @@
       <if test="type != null" >
         type,
       </if>
-      <if test="parentId != null" >
-        parent_id,
+      <if test="status != null" >
+        status,
       </if>
       <if test="deletestatus != null" >
         deleteStatus,
@@ -159,6 +163,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="code != null" >
         #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -178,8 +185,8 @@
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
       </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=INTEGER},
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
       </if>
       <if test="deletestatus != null" >
         #{deletestatus,jdbcType=BIT},
@@ -204,6 +211,9 @@
       <if test="record.code != null" >
         code = #{record.code,jdbcType=VARCHAR},
       </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -222,8 +232,8 @@
       <if test="record.type != null" >
         type = #{record.type,jdbcType=INTEGER},
       </if>
-      <if test="record.parentId != null" >
-        parent_id = #{record.parentId,jdbcType=INTEGER},
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
       </if>
       <if test="record.deletestatus != null" >
         deleteStatus = #{record.deletestatus,jdbcType=BIT},
@@ -240,13 +250,14 @@
     update department
     set id = #{record.id,jdbcType=INTEGER},
       code = #{record.code,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       region = #{record.region,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       contact_people = #{record.contactPeople,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
-      parent_id = #{record.parentId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=VARCHAR},
       deleteStatus = #{record.deletestatus,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -258,6 +269,9 @@
     <set >
       <if test="code != null" >
         code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -277,8 +291,8 @@
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=INTEGER},
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
       </if>
       <if test="deletestatus != null" >
         deleteStatus = #{deletestatus,jdbcType=BIT},
@@ -292,13 +306,14 @@
   <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Department" >
     update department
     set code = #{code,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       region = #{region,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       contact_people = #{contactPeople,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
-      parent_id = #{parentId,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
       deleteStatus = #{deletestatus,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

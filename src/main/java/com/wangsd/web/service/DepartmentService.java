@@ -2,6 +2,7 @@ package com.wangsd.web.service;
 
 import com.wangsd.web.model.Department;
 import com.wangsd.web.modelCustom.DepartmentCustom;
+import com.wangsd.web.modelCustom.HousingCustom;
 
 import java.util.List;
 
@@ -36,6 +37,13 @@ public interface DepartmentService {
 	public boolean saveOrUpdateDepartment(Department department);
 
 	/**
+	 * 新增或修改小区
+	 * @param housingCustom
+	 * @return
+	 */
+	public boolean saveOrUpdateHousing(HousingCustom housingCustom);
+
+	/**
 	 * 根据id删除Department
 	 * @param id
 	 * @return
@@ -48,4 +56,11 @@ public interface DepartmentService {
 	 * @return
 	 */
 	public String selectMaxByParentCode(Integer parentId);
+
+	/**
+	 * 根据部门id得到小区详情
+	 * @param deptId
+	 * @return
+	 */
+	public HousingCustom selectHousingCustomBydeptId(Integer deptId);
 }

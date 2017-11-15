@@ -7,6 +7,8 @@ public class Department {
 
     private String code;
 
+    private Integer parentId;
+
     private String name;
 
     private String region;
@@ -19,7 +21,7 @@ public class Department {
 
     private Integer type;
 
-    private Integer parentId;
+    private String status;
 
     private Boolean deletestatus;
 
@@ -39,6 +41,14 @@ public class Department {
 
     public void setCode(String code) {
         this.code = code == null ? null : code.trim();
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public String getName() {
@@ -89,12 +99,12 @@ public class Department {
         this.type = type;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
     public Boolean getDeletestatus() {

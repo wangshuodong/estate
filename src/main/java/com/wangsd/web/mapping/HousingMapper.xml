@@ -11,9 +11,6 @@
     <result column="community_locations" property="communityLocations" jdbcType="VARCHAR" />
     <result column="associated_pois" property="associatedPois" jdbcType="VARCHAR" />
     <result column="hotline" property="hotline" jdbcType="VARCHAR" />
-    <result column="init" property="init" jdbcType="TINYINT" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,7 +72,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, department_id, community_id, district_code, city_code, province_code, community_locations, 
-    associated_pois, hotline, init, status, create_time
+    associated_pois, hotline
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.HousingExample" >
     select
@@ -110,13 +107,11 @@
   <insert id="insert" parameterType="com.wangsd.web.model.Housing" >
     insert into housing (id, department_id, community_id, 
       district_code, city_code, province_code, 
-      community_locations, associated_pois, hotline, 
-      init, status, create_time
+      community_locations, associated_pois, hotline
       )
     values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{communityId,jdbcType=VARCHAR}, 
       #{districtCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, 
-      #{communityLocations,jdbcType=VARCHAR}, #{associatedPois,jdbcType=VARCHAR}, #{hotline,jdbcType=VARCHAR}, 
-      #{init,jdbcType=TINYINT}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{communityLocations,jdbcType=VARCHAR}, #{associatedPois,jdbcType=VARCHAR}, #{hotline,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Housing" >
@@ -149,15 +144,6 @@
       <if test="hotline != null" >
         hotline,
       </if>
-      <if test="init != null" >
-        init,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -186,15 +172,6 @@
       </if>
       <if test="hotline != null" >
         #{hotline,jdbcType=VARCHAR},
-      </if>
-      <if test="init != null" >
-        #{init,jdbcType=TINYINT},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -234,15 +211,6 @@
       <if test="record.hotline != null" >
         hotline = #{record.hotline,jdbcType=VARCHAR},
       </if>
-      <if test="record.init != null" >
-        init = #{record.init,jdbcType=TINYINT},
-      </if>
-      <if test="record.status != null" >
-        status = #{record.status,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createTime != null" >
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -258,10 +226,7 @@
       province_code = #{record.provinceCode,jdbcType=VARCHAR},
       community_locations = #{record.communityLocations,jdbcType=VARCHAR},
       associated_pois = #{record.associatedPois,jdbcType=VARCHAR},
-      hotline = #{record.hotline,jdbcType=VARCHAR},
-      init = #{record.init,jdbcType=TINYINT},
-      status = #{record.status,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      hotline = #{record.hotline,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -293,15 +258,6 @@
       <if test="hotline != null" >
         hotline = #{hotline,jdbcType=VARCHAR},
       </if>
-      <if test="init != null" >
-        init = #{init,jdbcType=TINYINT},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -314,10 +270,7 @@
       province_code = #{provinceCode,jdbcType=VARCHAR},
       community_locations = #{communityLocations,jdbcType=VARCHAR},
       associated_pois = #{associatedPois,jdbcType=VARCHAR},
-      hotline = #{hotline,jdbcType=VARCHAR},
-      init = #{init,jdbcType=TINYINT},
-      status = #{status,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      hotline = #{hotline,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

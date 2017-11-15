@@ -1,7 +1,5 @@
 package com.wangsd.web.model;
 
-import java.util.Date;
-
 public class Housing {
     private Integer id;
 
@@ -20,12 +18,6 @@ public class Housing {
     private String associatedPois;
 
     private String hotline;
-
-    private Byte init;
-
-    private String status;
-
-    private Date createTime;
 
     public Integer getId() {
         return id;
@@ -97,29 +89,5 @@ public class Housing {
 
     public void setHotline(String hotline) {
         this.hotline = hotline == null ? null : hotline.trim();
-    }
-
-    public Byte getInit() {
-        return init;
-    }
-
-    public void setInit(Byte init) {
-        this.init = init;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 }

@@ -31,7 +31,7 @@
         <!--
         <table tableName="menu" domainObjectName="Menu"/>
         <table tableName="users" domainObjectName="Users"/>
-        <table tableName="housing" domainObjectName="Housing"/>
+        
         <table tableName="role_menu" domainObjectName="RoleMenu"/>
         <table tableName="printinfo" domainObjectName="Printinfo"/>
         <table tableName="property" domainObjectName="Property"/>
@@ -43,11 +43,13 @@
         <table tableName="role_permission" domainObjectName="RolePermission"/>
         <table tableName="billaccount" domainObjectName="Billaccount"/>
         <table tableName="roominfo" domainObjectName="Roominfo"/>
+        
+        <table tableName="roominfo" domainObjectName="Roominfo"/>
+        <table tableName="users" domainObjectName="Users"/>
+        -->
+        <table tableName="housing" domainObjectName="Housing"/>
         <table tableName="department" domainObjectName="Department">
         	<generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        <table tableName="roominfo" domainObjectName="Roominfo"/>
-        -->
-        <table tableName="users" domainObjectName="Users"/>
     </context>
 </generatorConfiguration>
