@@ -199,4 +199,12 @@ public class UserController {
         }
         return obj;
     }
+
+    @RequestMapping(value = "activeUser")
+    @ResponseBody
+    public JSONResult activeUser(Integer id) {
+        JSONResult obj = new JSONResult();
+        return obj;
+    }
+
 }

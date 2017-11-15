@@ -10,7 +10,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>登陆名：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${user.username}" placeholder="用户名" id="nameId" name="username" onblur="checkUsername();" required disabled="disabled">
+                <input type="text" class="input-text radius size-L" value="${user.username}" placeholder="用户名" id="nameId" name="username" onblur="checkUsername();" required >
             </div>
         </div>
         <div class="row cl">
@@ -80,33 +80,6 @@
         }else {
             layer.alert(data.msg);
         }
-    }
-    
-    function saveOrUpdate() {
-        var nodes=treeObj.getCheckedNodes(true);
-        var menuIds = "";
-        for(var i=0;i<nodes.length;i++) {
-            if (i == nodes.length-1) {
-                menuIds += nodes[i].id
-            }else {
-                menuIds += nodes[i].id + ","
-            }
-        }
-        $.ajax({
-            url : '${pageContext.request.contextPath }/rest/department/saveOrUpdateRole',
-            type : 'post',
-            data : {
-                'id': $('#id').val(),
-                'name': $('#name').val(),
-                'description': $('#description').val(),
-                'menuIds' : menuIds
-            },
-            success : function(data) {
-                if (data.success) {
-                    window.parent.location.reload();
-                }
-            }
-        });
     }
 
     function checkUsername() {

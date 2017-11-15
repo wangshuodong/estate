@@ -40,6 +40,7 @@
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td width="130">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
+                            <a title="暂停" style="text-decoration:none" onclick="info_active(this, ${item.id })" href="javascript:;" class="c-success">暂停</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
 						</td>
 					</tr>
@@ -90,6 +91,28 @@
                     if (data.success) {
                         $(obj).parents("tr").remove();
                         layer.msg('已删除!',{icon:1,time:1000});
+                    }
+                },
+                error:function(data) {
+                    console.log(data.msg);
+                },
+            });
+        });
+    }
+
+    function info_active(obj,id){
+        layer.confirm(function(index){
+            $.ajax({
+                type: 'POST',
+                url: '${pageContext.request.contextPath }/rest/user/activeUser',
+                dataType: 'json',
+                data:{
+                    id : id
+                },
+                success: function(data){
+                    if (data.success) {
+                       // $(obj).parents("tr").remove();
+                        layer.msg('操作成功!',{icon:1,time:1000});
                     }
                 },
                 error:function(data) {
