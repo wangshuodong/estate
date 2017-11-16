@@ -5,6 +5,7 @@ public class StaticVar {
 	public static final String format = "json";
 	public static final String charset = "utf-8";
 	public static final String sign_type = "RSA";
+	public static final String serverUrl = "https://openapi.alipaydev.com/gateway.do";
 
 	/**
 	 * 服务商

@@ -16,19 +16,13 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">商户私钥：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${serviceinfo.merchantPrivateKey}" placeholder="商户私钥" name="merchantPrivateKey">
+                <textarea class="textarea radius" value="${serviceinfo.merchantPrivateKey}" placeholder="商户私钥" name="merchantPrivateKey"></textarea>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">支付宝公钥：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${serviceinfo.alipayPublicKey}" placeholder="支付宝公钥" name="alipayPublicKey">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">签名方式：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${serviceinfo.signType}" placeholder="签名方式" name="signType">
+                <textarea class="textarea radius" value="${serviceinfo.alipayPublicKey}" placeholder="支付宝公钥" name="alipayPublicKey"></textarea>
             </div>
         </div>
 

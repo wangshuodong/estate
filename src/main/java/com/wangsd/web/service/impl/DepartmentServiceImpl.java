@@ -132,11 +132,11 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentMapper.selectHousingCustomBydeptId(deptId);
     }
 
-    public Serviceinfo selectServicekeyBydeptId(Integer deptId){
-        Serviceinfo serviceinfo = null;
+    public ServiceinfoWithBLOBs selectServicekeyBydeptId(Integer deptId){
+        ServiceinfoWithBLOBs serviceinfo = null;
         ServiceinfoExample example = new ServiceinfoExample();
         example.createCriteria().andDepartmentIdEqualTo(deptId);
-        List<Serviceinfo> list = serviceinfoMapper.selectByExample(example);
+        List<ServiceinfoWithBLOBs> list = serviceinfoMapper.selectByExampleWithBLOBs(example);
         if(list != null && list.size() >0 ){
             serviceinfo = list.get(0);
         }
@@ -149,7 +149,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public boolean saveOrUpdateServicekey(Serviceinfo serviceinfo){
+    public boolean saveOrUpdateServicekey(ServiceinfoWithBLOBs serviceinfo){
         int ret;
         if(serviceinfo.getId() == null){//新增
             ret = serviceinfoMapper.insert(serviceinfo);

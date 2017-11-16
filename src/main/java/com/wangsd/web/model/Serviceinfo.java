@@ -7,12 +7,6 @@ public class Serviceinfo {
 
     private String appId;
 
-    private String merchantPrivateKey;
-
-    private String alipayPublicKey;
-
-    private String signType;
-
     public Integer getId() {
         return id;
     }
@@ -35,29 +29,5 @@ public class Serviceinfo {
 
     public void setAppId(String appId) {
         this.appId = appId == null ? null : appId.trim();
-    }
-
-    public String getMerchantPrivateKey() {
-        return merchantPrivateKey;
-    }
-
-    public void setMerchantPrivateKey(String merchantPrivateKey) {
-        this.merchantPrivateKey = merchantPrivateKey == null ? null : merchantPrivateKey.trim();
-    }
-
-    public String getAlipayPublicKey() {
-        return alipayPublicKey;
-    }
-
-    public void setAlipayPublicKey(String alipayPublicKey) {
-        this.alipayPublicKey = alipayPublicKey == null ? null : alipayPublicKey.trim();
-    }
-
-    public String getSignType() {
-        return signType;
-    }
-
-    public void setSignType(String signType) {
-        this.signType = signType == null ? null : signType.trim();
     }
 }

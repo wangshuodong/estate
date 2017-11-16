@@ -2,7 +2,7 @@ package com.wangsd.web.service;
 
 import com.wangsd.web.model.Department;
 import com.wangsd.web.model.Property;
-import com.wangsd.web.model.Serviceinfo;
+import com.wangsd.web.model.ServiceinfoWithBLOBs;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.modelCustom.HousingCustom;
 
@@ -71,14 +71,14 @@ public interface DepartmentService {
 	 * @param deptId
 	 * @return
 	 */
-	public Serviceinfo selectServicekeyBydeptId(Integer deptId);
+	public ServiceinfoWithBLOBs selectServicekeyBydeptId(Integer deptId);
 
 	/**
 	 * 新增更新公钥信息
 	 * @param Serviceinfo
 	 * @return
 	 */
-	public boolean saveOrUpdateServicekey(Serviceinfo Serviceinfo);
+	public boolean saveOrUpdateServicekey(ServiceinfoWithBLOBs Serviceinfo);
 
 	/**
 	 * 根据部门id查询参数配置

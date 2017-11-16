@@ -5,9 +5,10 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
     <result column="app_id" property="appId" jdbcType="VARCHAR" />
-    <result column="merchant_private_key" property="merchantPrivateKey" jdbcType="VARCHAR" />
-    <result column="alipay_public_key" property="alipayPublicKey" jdbcType="VARCHAR" />
-    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wangsd.web.model.ServiceinfoWithBLOBs" extends="BaseResultMap" >
+    <result column="merchant_private_key" property="merchantPrivateKey" jdbcType="LONGVARCHAR" />
+    <result column="alipay_public_key" property="alipayPublicKey" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,8 +69,27 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, department_id, app_id, merchant_private_key, alipay_public_key, sign_type
+    id, department_id, app_id
   </sql>
+  <sql id="Blob_Column_List" >
+    merchant_private_key, alipay_public_key
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.wangsd.web.model.ServiceinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from serviceinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.ServiceinfoExample" >
     select
     <if test="distinct" >
@@ -84,9 +104,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from serviceinfo
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -100,15 +122,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wangsd.web.model.Serviceinfo" >
+  <insert id="insert" parameterType="com.wangsd.web.model.ServiceinfoWithBLOBs" >
     insert into serviceinfo (id, department_id, app_id, 
-      merchant_private_key, alipay_public_key, sign_type
+      merchant_private_key, alipay_public_key
       )
     values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, 
-      #{merchantPrivateKey,jdbcType=VARCHAR}, #{alipayPublicKey,jdbcType=VARCHAR}, #{signType,jdbcType=VARCHAR}
+      #{merchantPrivateKey,jdbcType=LONGVARCHAR}, #{alipayPublicKey,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.wangsd.web.model.Serviceinfo" >
+  <insert id="insertSelective" parameterType="com.wangsd.web.model.ServiceinfoWithBLOBs" >
     insert into serviceinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -126,9 +148,6 @@
       <if test="alipayPublicKey != null" >
         alipay_public_key,
       </if>
-      <if test="signType != null" >
-        sign_type,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -141,13 +160,10 @@
         #{appId,jdbcType=VARCHAR},
       </if>
       <if test="merchantPrivateKey != null" >
-        #{merchantPrivateKey,jdbcType=VARCHAR},
+        #{merchantPrivateKey,jdbcType=LONGVARCHAR},
       </if>
       <if test="alipayPublicKey != null" >
-        #{alipayPublicKey,jdbcType=VARCHAR},
-      </if>
-      <if test="signType != null" >
-        #{signType,jdbcType=VARCHAR},
+        #{alipayPublicKey,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -170,15 +186,23 @@
         app_id = #{record.appId,jdbcType=VARCHAR},
       </if>
       <if test="record.merchantPrivateKey != null" >
-        merchant_private_key = #{record.merchantPrivateKey,jdbcType=VARCHAR},
+        merchant_private_key = #{record.merchantPrivateKey,jdbcType=LONGVARCHAR},
       </if>
       <if test="record.alipayPublicKey != null" >
-        alipay_public_key = #{record.alipayPublicKey,jdbcType=VARCHAR},
-      </if>
-      <if test="record.signType != null" >
-        sign_type = #{record.signType,jdbcType=VARCHAR},
+        alipay_public_key = #{record.alipayPublicKey,jdbcType=LONGVARCHAR},
       </if>
     </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update serviceinfo
+    set id = #{record.id,jdbcType=INTEGER},
+      department_id = #{record.departmentId,jdbcType=INTEGER},
+      app_id = #{record.appId,jdbcType=VARCHAR},
+      merchant_private_key = #{record.merchantPrivateKey,jdbcType=LONGVARCHAR},
+      alipay_public_key = #{record.alipayPublicKey,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -187,15 +211,12 @@
     update serviceinfo
     set id = #{record.id,jdbcType=INTEGER},
       department_id = #{record.departmentId,jdbcType=INTEGER},
-      app_id = #{record.appId,jdbcType=VARCHAR},
-      merchant_private_key = #{record.merchantPrivateKey,jdbcType=VARCHAR},
-      alipay_public_key = #{record.alipayPublicKey,jdbcType=VARCHAR},
-      sign_type = #{record.signType,jdbcType=VARCHAR}
+      app_id = #{record.appId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Serviceinfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.ServiceinfoWithBLOBs" >
     update serviceinfo
     <set >
       <if test="departmentId != null" >
@@ -205,24 +226,26 @@
         app_id = #{appId,jdbcType=VARCHAR},
       </if>
       <if test="merchantPrivateKey != null" >
-        merchant_private_key = #{merchantPrivateKey,jdbcType=VARCHAR},
+        merchant_private_key = #{merchantPrivateKey,jdbcType=LONGVARCHAR},
       </if>
       <if test="alipayPublicKey != null" >
-        alipay_public_key = #{alipayPublicKey,jdbcType=VARCHAR},
-      </if>
-      <if test="signType != null" >
-        sign_type = #{signType,jdbcType=VARCHAR},
+        alipay_public_key = #{alipayPublicKey,jdbcType=LONGVARCHAR},
       </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wangsd.web.model.ServiceinfoWithBLOBs" >
+    update serviceinfo
+    set department_id = #{departmentId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=VARCHAR},
+      merchant_private_key = #{merchantPrivateKey,jdbcType=LONGVARCHAR},
+      alipay_public_key = #{alipayPublicKey,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Serviceinfo" >
     update serviceinfo
     set department_id = #{departmentId,jdbcType=INTEGER},
-      app_id = #{appId,jdbcType=VARCHAR},
-      merchant_private_key = #{merchantPrivateKey,jdbcType=VARCHAR},
-      alipay_public_key = #{alipayPublicKey,jdbcType=VARCHAR},
-      sign_type = #{signType,jdbcType=VARCHAR}
+      app_id = #{appId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

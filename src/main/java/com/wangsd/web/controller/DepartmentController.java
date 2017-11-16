@@ -5,7 +5,7 @@ import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Department;
 import com.wangsd.web.model.Property;
-import com.wangsd.web.model.Serviceinfo;
+import com.wangsd.web.model.ServiceinfoWithBLOBs;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.modelCustom.HousingCustom;
 import com.wangsd.web.modelCustom.UserCustom;
@@ -185,14 +185,24 @@ public class DepartmentController {
     @ResponseBody
     public JSONResult saveOrUpdateDepartment(Department department, Model model) {
         JSONResult obj = new JSONResult();
-        Department oldDept = departmentService.selectDepartmentById(department.getId());
-        if (oldDept.getParentId() != department.getParentId()) {
+        if (department.getId() == null) {  //新增
             Department parent = departmentService.selectDepartmentById(department.getParentId());
             String maxCode = departmentService.selectMaxByParentCode(department.getParentId());
             if (maxCode == null) {
                 department.setCode(parent.getCode() + "0001");
             }else {
                 department.setCode(ApplicationUtils.getOrgCode(maxCode));
+            }
+        }else { //修改
+            Department oldDept = departmentService.selectDepartmentById(department.getId());
+            if (oldDept.getParentId() != department.getParentId()) {
+                Department parent = departmentService.selectDepartmentById(department.getParentId());
+                String maxCode = departmentService.selectMaxByParentCode(department.getParentId());
+                if (maxCode == null) {
+                    department.setCode(parent.getCode() + "0001");
+                }else {
+                    department.setCode(ApplicationUtils.getOrgCode(maxCode));
+                }
             }
         }
         department.setCreateTime(new Date());
@@ -238,7 +248,7 @@ public class DepartmentController {
     @RequestMapping(value = "/updateServicekey")
     public String updateServicekey(Integer id, HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        Serviceinfo serviceinfo = departmentService.selectServicekeyBydeptId(id);
+        ServiceinfoWithBLOBs serviceinfo = departmentService.selectServicekeyBydeptId(id);
         model.addAttribute("serviceinfo", serviceinfo);
         model.addAttribute("departmentId",id);
         return "/service/service-config";
@@ -252,7 +262,7 @@ public class DepartmentController {
      */
     @RequestMapping(path = "/saveOrUpdateService", method = RequestMethod.POST)
     @ResponseBody
-    public JSONResult saveOrUpdateService(Serviceinfo serviceinfo, Model model) {
+    public JSONResult saveOrUpdateService(ServiceinfoWithBLOBs serviceinfo, Model model) {
         JSONResult obj = new JSONResult();
         boolean bl = departmentService.saveOrUpdateServicekey(serviceinfo);
         obj.setSuccess(bl);
