@@ -60,7 +60,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "新增物业",
-			content: "${pageContext.request.contextPath }/rest/department/addDepartment?type=2"
+			content: "${pageContext.request.contextPath }/rest/department/addDepartment?type=1"
 		});
 		layer.full(index);
 	}

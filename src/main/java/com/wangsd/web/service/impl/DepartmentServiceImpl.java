@@ -41,6 +41,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         DepartmentExample example = new DepartmentExample();
         DepartmentExample.Criteria criteria = example.createCriteria();
         criteria.andCodeLike(code+"%");
+        criteria.andDeletestatusEqualTo(false);
         if (type != null) {
             criteria.andTypeEqualTo(type);
         }

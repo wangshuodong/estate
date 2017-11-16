@@ -61,7 +61,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
     $(function(){
-        var parent = $("#selectId1").val();;
+        var parent = $("#selectId1").val();
         if(parent != null){
             $("#parentId").val(parent);
 

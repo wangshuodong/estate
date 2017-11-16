@@ -10,19 +10,19 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">应用ID：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${serviceinfo.appId}" placeholder="应用ID" name="appId">
+                <input type="text" class="input-text radius size-L" value="${serviceinfo.appId}" placeholder="应用ID" name="appId" >
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">商户私钥：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <textarea class="textarea radius" value="${serviceinfo.merchantPrivateKey}" placeholder="商户私钥" name="merchantPrivateKey"></textarea>
+               <textarea class="textarea radius"  placeholder="商户私钥"  name="merchantPrivateKey">${serviceinfo.merchantPrivateKey}</textarea>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">支付宝公钥：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <textarea class="textarea radius" value="${serviceinfo.alipayPublicKey}" placeholder="支付宝公钥" name="alipayPublicKey"></textarea>
+                <textarea class="textarea radius" placeholder="支付宝公钥" name="alipayPublicKey">${serviceinfo.alipayPublicKey}</textarea>
             </div>
         </div>
 
