@@ -39,7 +39,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">联系邮箱：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${user.email}" placeholder="联系邮箱" name="address">
+                <input type="text" class="input-text radius size-L" value="${user.email}" placeholder="联系邮箱" name="email">
             </div>
         </div>
 
