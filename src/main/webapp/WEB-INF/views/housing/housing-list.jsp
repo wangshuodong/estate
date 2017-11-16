@@ -83,7 +83,7 @@
     function info_edit(id){
         var index = layer.open({
             type: 2,
-            title: "修改角色",
+            title: "修改小区",
             content: "${pageContext.request.contextPath }/rest/department/updateDepartment?id=" + id + "&type=3"
         });
         layer.full(index);

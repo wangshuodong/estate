@@ -158,14 +158,14 @@ public class DepartmentController {
             model.addAttribute("department", department);
         } else if (dep.getType() == StaticVar.DEPARTMENT_TYPE2) {
             //新增物业的时候需要查询上级服务商
-            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE2);
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE1);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/property/property-info";
             Department department = departmentService.selectDepartmentById(dep.getId());
             model.addAttribute("department", department);
         } else if (dep.getType() == StaticVar.DEPARTMENT_TYPE3) {
             //新增小区的时候需要查询上级物业
-            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE3);
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE2);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/housing/housing-info";
             HousingCustom department = departmentService.selectHousingCustomBydeptId(dep.getId());
