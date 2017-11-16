@@ -165,76 +165,6 @@ public class BillaccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andBillEntryIdIsNull() {
-            addCriterion("bill_entry_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdIsNotNull() {
-            addCriterion("bill_entry_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdEqualTo(String value) {
-            addCriterion("bill_entry_id =", value, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdNotEqualTo(String value) {
-            addCriterion("bill_entry_id <>", value, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdGreaterThan(String value) {
-            addCriterion("bill_entry_id >", value, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdGreaterThanOrEqualTo(String value) {
-            addCriterion("bill_entry_id >=", value, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdLessThan(String value) {
-            addCriterion("bill_entry_id <", value, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdLessThanOrEqualTo(String value) {
-            addCriterion("bill_entry_id <=", value, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdLike(String value) {
-            addCriterion("bill_entry_id like", value, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdNotLike(String value) {
-            addCriterion("bill_entry_id not like", value, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdIn(List<String> values) {
-            addCriterion("bill_entry_id in", values, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdNotIn(List<String> values) {
-            addCriterion("bill_entry_id not in", values, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdBetween(String value1, String value2) {
-            addCriterion("bill_entry_id between", value1, value2, "billEntryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBillEntryIdNotBetween(String value1, String value2) {
-            addCriterion("bill_entry_id not between", value1, value2, "billEntryId");
-            return (Criteria) this;
-        }
-
         public Criteria andDepartmentIdIsNull() {
             addCriterion("department_id is null");
             return (Criteria) this;
@@ -295,73 +225,63 @@ public class BillaccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeIsNull() {
-            addCriterion("department_code is null");
+        public Criteria andRoominfoIdIsNull() {
+            addCriterion("roominfo_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeIsNotNull() {
-            addCriterion("department_code is not null");
+        public Criteria andRoominfoIdIsNotNull() {
+            addCriterion("roominfo_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeEqualTo(String value) {
-            addCriterion("department_code =", value, "departmentCode");
+        public Criteria andRoominfoIdEqualTo(Integer value) {
+            addCriterion("roominfo_id =", value, "roominfoId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeNotEqualTo(String value) {
-            addCriterion("department_code <>", value, "departmentCode");
+        public Criteria andRoominfoIdNotEqualTo(Integer value) {
+            addCriterion("roominfo_id <>", value, "roominfoId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeGreaterThan(String value) {
-            addCriterion("department_code >", value, "departmentCode");
+        public Criteria andRoominfoIdGreaterThan(Integer value) {
+            addCriterion("roominfo_id >", value, "roominfoId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeGreaterThanOrEqualTo(String value) {
-            addCriterion("department_code >=", value, "departmentCode");
+        public Criteria andRoominfoIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("roominfo_id >=", value, "roominfoId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeLessThan(String value) {
-            addCriterion("department_code <", value, "departmentCode");
+        public Criteria andRoominfoIdLessThan(Integer value) {
+            addCriterion("roominfo_id <", value, "roominfoId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeLessThanOrEqualTo(String value) {
-            addCriterion("department_code <=", value, "departmentCode");
+        public Criteria andRoominfoIdLessThanOrEqualTo(Integer value) {
+            addCriterion("roominfo_id <=", value, "roominfoId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeLike(String value) {
-            addCriterion("department_code like", value, "departmentCode");
+        public Criteria andRoominfoIdIn(List<Integer> values) {
+            addCriterion("roominfo_id in", values, "roominfoId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeNotLike(String value) {
-            addCriterion("department_code not like", value, "departmentCode");
+        public Criteria andRoominfoIdNotIn(List<Integer> values) {
+            addCriterion("roominfo_id not in", values, "roominfoId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeIn(List<String> values) {
-            addCriterion("department_code in", values, "departmentCode");
+        public Criteria andRoominfoIdBetween(Integer value1, Integer value2) {
+            addCriterion("roominfo_id between", value1, value2, "roominfoId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentCodeNotIn(List<String> values) {
-            addCriterion("department_code not in", values, "departmentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentCodeBetween(String value1, String value2) {
-            addCriterion("department_code between", value1, value2, "departmentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentCodeNotBetween(String value1, String value2) {
-            addCriterion("department_code not between", value1, value2, "departmentCode");
+        public Criteria andRoominfoIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("roominfo_id not between", value1, value2, "roominfoId");
             return (Criteria) this;
         }
 

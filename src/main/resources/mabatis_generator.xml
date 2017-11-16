@@ -41,7 +41,7 @@
         </table>
         <table tableName="permission" domainObjectName="Permission"/>
         <table tableName="role_permission" domainObjectName="RolePermission"/>
-        <table tableName="billaccount" domainObjectName="Billaccount"/>
+        
         <table tableName="roominfo" domainObjectName="Roominfo"/>
         <table tableName="roominfo" domainObjectName="Roominfo"/>
         <table tableName="users" domainObjectName="Users"/>
@@ -49,7 +49,8 @@
         <table tableName="department" domainObjectName="Department">
         	<generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        -->
         <table tableName="serviceinfo" domainObjectName="Serviceinfo"/>
+        -->
+        <table tableName="billaccount" domainObjectName="Billaccount"/>
     </context>
 </generatorConfiguration>

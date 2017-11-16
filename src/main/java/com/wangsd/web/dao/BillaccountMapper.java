@@ -2,6 +2,7 @@ package com.wangsd.web.dao;
 
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.BillaccountExample;
+import com.wangsd.web.modelCustom.BillAccountCustom;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,10 @@ public interface BillaccountMapper {
     int updateByPrimaryKeySelective(Billaccount record);
 
     int updateByPrimaryKey(Billaccount record);
+
+    /**
+     * 根据条件查询所有账单
+     * @return
+     */
+    List<BillAccountCustom>  queryBillAccountList(BillAccountCustom billAccountCustom);
 }

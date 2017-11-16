@@ -5,11 +5,9 @@ import java.util.Date;
 public class Billaccount {
     private Integer id;
 
-    private String billEntryId;
-
     private Integer departmentId;
 
-    private String departmentCode;
+    private Integer roominfoId;
 
     private String costType;
 
@@ -45,14 +43,6 @@ public class Billaccount {
         this.id = id;
     }
 
-    public String getBillEntryId() {
-        return billEntryId;
-    }
-
-    public void setBillEntryId(String billEntryId) {
-        this.billEntryId = billEntryId == null ? null : billEntryId.trim();
-    }
-
     public Integer getDepartmentId() {
         return departmentId;
     }
@@ -61,12 +51,12 @@ public class Billaccount {
         this.departmentId = departmentId;
     }
 
-    public String getDepartmentCode() {
-        return departmentCode;
+    public Integer getRoominfoId() {
+        return roominfoId;
     }
 
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode == null ? null : departmentCode.trim();
+    public void setRoominfoId(Integer roominfoId) {
+        this.roominfoId = roominfoId;
     }
 
     public String getCostType() {

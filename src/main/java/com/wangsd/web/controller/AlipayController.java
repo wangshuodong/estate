@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/alipay")
-public class AlipayComtroller {
+public class AlipayController {
 
     @Autowired
     DepartmentService departmentService;

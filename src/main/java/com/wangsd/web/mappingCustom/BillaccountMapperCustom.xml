@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangsd.web.dao.BillaccountMapper">
+    <select id="queryBillAccountList" parameterType="BillAccountCustom" resultType="BillAccountCustom">
+        SELECT
+            b.*, d.`name`, r.address
+        FROM
+            billaccount b
+        JOIN department d ON b.department_id = d.id
+        JOIN roominfo r ON b.roominfo_id = r.id
+        <where>
+            d.`code` like CONCAT(#{departmentCode},'%')
+        </where>
+    </select>
+</mapper>

@@ -3,9 +3,8 @@
 <mapper namespace="com.wangsd.web.dao.BillaccountMapper" >
   <resultMap id="BaseResultMap" type="com.wangsd.web.model.Billaccount" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="bill_entry_id" property="billEntryId" jdbcType="VARCHAR" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
-    <result column="department_code" property="departmentCode" jdbcType="VARCHAR" />
+    <result column="roominfo_id" property="roominfoId" jdbcType="INTEGER" />
     <result column="cost_type" property="costType" jdbcType="VARCHAR" />
     <result column="bill_entry_amount" property="billEntryAmount" jdbcType="DOUBLE" />
     <result column="acct_period" property="acctPeriod" jdbcType="VARCHAR" />
@@ -79,9 +78,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, bill_entry_id, department_id, department_code, cost_type, bill_entry_amount, 
-    acct_period, release_day, deadline, relate_id, status, payDate, payType, payStatus, 
-    deleteStatus, alipay_trade_no, weixin_trade_no
+    id, department_id, roominfo_id, cost_type, bill_entry_amount, acct_period, release_day, 
+    deadline, relate_id, status, payDate, payType, payStatus, deleteStatus, alipay_trade_no, 
+    weixin_trade_no
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.BillaccountExample" >
     select
@@ -114,18 +113,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.wangsd.web.model.Billaccount" >
-    insert into billaccount (id, bill_entry_id, department_id, 
-      department_code, cost_type, bill_entry_amount, 
-      acct_period, release_day, deadline, 
-      relate_id, status, payDate, 
-      payType, payStatus, deleteStatus, 
-      alipay_trade_no, weixin_trade_no)
-    values (#{id,jdbcType=INTEGER}, #{billEntryId,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, 
-      #{departmentCode,jdbcType=VARCHAR}, #{costType,jdbcType=VARCHAR}, #{billEntryAmount,jdbcType=DOUBLE}, 
-      #{acctPeriod,jdbcType=VARCHAR}, #{releaseDay,jdbcType=VARCHAR}, #{deadline,jdbcType=VARCHAR}, 
-      #{relateId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{paydate,jdbcType=TIMESTAMP}, 
-      #{paytype,jdbcType=INTEGER}, #{paystatus,jdbcType=INTEGER}, #{deletestatus,jdbcType=BIT}, 
-      #{alipayTradeNo,jdbcType=VARCHAR}, #{weixinTradeNo,jdbcType=VARCHAR})
+    insert into billaccount (id, department_id, roominfo_id, 
+      cost_type, bill_entry_amount, acct_period, 
+      release_day, deadline, relate_id, 
+      status, payDate, payType, 
+      payStatus, deleteStatus, alipay_trade_no, 
+      weixin_trade_no)
+    values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{roominfoId,jdbcType=INTEGER}, 
+      #{costType,jdbcType=VARCHAR}, #{billEntryAmount,jdbcType=DOUBLE}, #{acctPeriod,jdbcType=VARCHAR}, 
+      #{releaseDay,jdbcType=VARCHAR}, #{deadline,jdbcType=VARCHAR}, #{relateId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{paydate,jdbcType=TIMESTAMP}, #{paytype,jdbcType=INTEGER}, 
+      #{paystatus,jdbcType=INTEGER}, #{deletestatus,jdbcType=BIT}, #{alipayTradeNo,jdbcType=VARCHAR}, 
+      #{weixinTradeNo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Billaccount" >
     insert into billaccount
@@ -133,14 +132,11 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="billEntryId != null" >
-        bill_entry_id,
-      </if>
       <if test="departmentId != null" >
         department_id,
       </if>
-      <if test="departmentCode != null" >
-        department_code,
+      <if test="roominfoId != null" >
+        roominfo_id,
       </if>
       <if test="costType != null" >
         cost_type,
@@ -186,14 +182,11 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="billEntryId != null" >
-        #{billEntryId,jdbcType=VARCHAR},
-      </if>
       <if test="departmentId != null" >
         #{departmentId,jdbcType=INTEGER},
       </if>
-      <if test="departmentCode != null" >
-        #{departmentCode,jdbcType=VARCHAR},
+      <if test="roominfoId != null" >
+        #{roominfoId,jdbcType=INTEGER},
       </if>
       <if test="costType != null" >
         #{costType,jdbcType=VARCHAR},
@@ -248,14 +241,11 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.billEntryId != null" >
-        bill_entry_id = #{record.billEntryId,jdbcType=VARCHAR},
-      </if>
       <if test="record.departmentId != null" >
         department_id = #{record.departmentId,jdbcType=INTEGER},
       </if>
-      <if test="record.departmentCode != null" >
-        department_code = #{record.departmentCode,jdbcType=VARCHAR},
+      <if test="record.roominfoId != null" >
+        roominfo_id = #{record.roominfoId,jdbcType=INTEGER},
       </if>
       <if test="record.costType != null" >
         cost_type = #{record.costType,jdbcType=VARCHAR},
@@ -304,9 +294,8 @@
   <update id="updateByExample" parameterType="map" >
     update billaccount
     set id = #{record.id,jdbcType=INTEGER},
-      bill_entry_id = #{record.billEntryId,jdbcType=VARCHAR},
       department_id = #{record.departmentId,jdbcType=INTEGER},
-      department_code = #{record.departmentCode,jdbcType=VARCHAR},
+      roominfo_id = #{record.roominfoId,jdbcType=INTEGER},
       cost_type = #{record.costType,jdbcType=VARCHAR},
       bill_entry_amount = #{record.billEntryAmount,jdbcType=DOUBLE},
       acct_period = #{record.acctPeriod,jdbcType=VARCHAR},
@@ -327,14 +316,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Billaccount" >
     update billaccount
     <set >
-      <if test="billEntryId != null" >
-        bill_entry_id = #{billEntryId,jdbcType=VARCHAR},
-      </if>
       <if test="departmentId != null" >
         department_id = #{departmentId,jdbcType=INTEGER},
       </if>
-      <if test="departmentCode != null" >
-        department_code = #{departmentCode,jdbcType=VARCHAR},
+      <if test="roominfoId != null" >
+        roominfo_id = #{roominfoId,jdbcType=INTEGER},
       </if>
       <if test="costType != null" >
         cost_type = #{costType,jdbcType=VARCHAR},
@@ -380,9 +366,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Billaccount" >
     update billaccount
-    set bill_entry_id = #{billEntryId,jdbcType=VARCHAR},
-      department_id = #{departmentId,jdbcType=INTEGER},
-      department_code = #{departmentCode,jdbcType=VARCHAR},
+    set department_id = #{departmentId,jdbcType=INTEGER},
+      roominfo_id = #{roominfoId,jdbcType=INTEGER},
       cost_type = #{costType,jdbcType=VARCHAR},
       bill_entry_amount = #{billEntryAmount,jdbcType=DOUBLE},
       acct_period = #{acctPeriod,jdbcType=VARCHAR},
