@@ -28,6 +28,7 @@
 				<tr class="text-c">
 					<th>小区名称</th>
 					<th>上级名称</th>
+					<th>区域</th>
 					<th>联系地址</th>
 					<th>联系电话</th>
 					<th>创建时间</th>
@@ -40,6 +41,7 @@
 					<tr class="text-c">
 						<td>${ item.name }</td>
 						<td>${ item.parentName }</td>
+						<td>${ item.region }</td>
 						<td>${ item.address }</td>
 						<td>${ item.phone }</td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>

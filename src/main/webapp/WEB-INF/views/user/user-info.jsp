@@ -2,7 +2,7 @@
 <%@ include file="/share/_meta.jsp" %>
 <%@ include file="/share/_footer.jsp" %>
 <div class="page-container">
-    <form class="form form-horizontal" id="form-user-add" action="${pageContext.request.contextPath }/rest/user/saveOrUpdateUser" method="post">
+    <form class="form form-horizontal" id="myform" action="" method="post">
         <input type="hidden" value="${user.id}" name="id">
 
         <div class="row cl">
@@ -15,8 +15,8 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>部门名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <select class="form-control" name="departmentId" validate="required:true" min="1">
-                    <option value="0">请选择</option>
+                <select class="form-control" name="departmentId" required>
+                    <option></option>
                     <c:forEach items="${parentDepartment}" var="item">
                         <option value="${item.id}" <c:if test="${item.id == user.departmentId}">selected</c:if>>${item.name}</option>
                     </c:forEach>
@@ -26,8 +26,8 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>角色名：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <select class="form-control" name="roleId" validate="required:true" min="1">
-                    <option value="0">请选择</option>
+                <select class="form-control" name="roleId" required>
+                    <option></option>
                     <c:forEach items="${roleList}" var="item">
                         <option value="${item.id}" <c:if test="${item.id == user.roleId}">selected</c:if>>${item.name}</option>
                     </c:forEach>
@@ -64,26 +64,27 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
-    $("#form-user-add").validate({
+    $("#myform").validate({
         submitHandler:function(form) {
-            var options = {
-                dataType:'json',
-                success:  successRes
-            };
-            $(form).ajaxSubmit(options);
-            //非常重要，如果是false，则表明是不跳转
-            //在本页上处理，也就是ajax，如果是非false，则传统的form跳转。
-            return false;
+            $(form).ajaxSubmit({
+                type: 'post',
+                url: "${pageContext.request.contextPath }/rest/user/saveOrUpdateUser",
+                beforeSubmit: function () {
+                    layer.load();
+                },
+                success: function(data){
+                    if (data.success) {
+                        window.parent.location.reload();
+                    }else {
+                        layer.msg(data.message);
+                    }
+                },
+                error: function(XmlHttpRequest, textStatus, errorThrown){
+                    layer.msg('error!',{icon:1,time:1000});
+                }
+            });
         }
     });
-
-    function successRes(data) {
-        if (data.success) {
-            window.parent.location.reload();
-        }else {
-            layer.alert(data.msg);
-        }
-    }
 
     function checkUsername() {
         $.ajax({

@@ -3,13 +3,13 @@
 <%@ include file="/share/_footer.jsp" %>
 
 <div class="page-container">
-    <form class="form form-horizontal" id="form-roominfo-add" action="${pageContext.request.contextPath }/rest/roominfo/saveOrUpdateRoominfo" method="post">
+    <form class="form form-horizontal" id="myform" action="" method="post">
         <input type="hidden" value="${roominfo.id}" name="id">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属小区：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <select class="form-control" name="departmentId" validate="required:true" min="1">
-                    <option value="0">请选择</option>
+                <select class="form-control" name="departmentId" required>
+                    <option></option>
                     <c:forEach items="${parentList}" var="item">
                         <option value="${item.id}" <c:if test="${roominfo.departmentId==item.id }">selected</c:if>>${item.name}</option>
                     </c:forEach>
@@ -82,56 +82,25 @@
         });
     });
 
-    $("#form-roominfo-add").validate({
-        messages: {
-            parentId: {
-                min: "必须选择上级服务商"
-            }
-        },
+    $("#myform").validate({
         submitHandler:function(form) {
-            var options = {
-                dataType:'json',
-                success:  successRes
-            };
-            $(form).ajaxSubmit(options);
-            //非常重要，如果是false，则表明是不跳转
-            //在本页上处理，也就是ajax，如果是非false，则传统的form跳转。
-            return false;
+            $(form).ajaxSubmit({
+                type: 'post',
+                url: "${pageContext.request.contextPath }/rest/roominfo/saveOrUpdateRoominfo",
+                beforeSubmit: function () {
+                    layer.load();
+                },
+                success: function(data){
+                    if (data.success) {
+                        window.parent.location.reload();
+                    }else {
+                        layer.msg(data.message);
+                    }
+                },
+                error: function(XmlHttpRequest, textStatus, errorThrown){
+                    layer.msg('error!',{icon:1,time:1000});
+                }
+            });
         }
     });
-
-    function successRes(data) {
-        if (data.success) {
-            window.parent.location.reload();
-        }else {
-            layer.alert(data.msg);
-        }
-    }
-    
-    function saveOrUpdate() {
-        var nodes=treeObj.getCheckedNodes(true);
-        var menuIds = "";
-        for(var i=0;i<nodes.length;i++) {
-            if (i == nodes.length-1) {
-                menuIds += nodes[i].id
-            }else {
-                menuIds += nodes[i].id + ","
-            }
-        }
-        $.ajax({
-            url : '${pageContext.request.contextPath }/rest/department/saveOrUpdateRole',
-            type : 'post',
-            data : {
-                'id': $('#id').val(),
-                'name': $('#name').val(),
-                'description': $('#description').val(),
-                'menuIds' : menuIds
-            },
-            success : function(data) {
-                if (data.success) {
-                    window.parent.location.reload();
-                }
-            }
-        });
-    }
 </script>

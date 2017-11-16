@@ -25,10 +25,9 @@
     }
 </style>
 <div class="page-container">
-    <form class="form form-horizontal" id="form-department-add" action="${pageContext.request.contextPath }/rest/department/saveOrUpdateHousing" method="post">
+    <form class="form form-horizontal" id="myform" action="" method="post">
         <input type="hidden" value="${department.departmentId}" name="departmentId">
         <input type="hidden" value="${department.id}" name="id">
-        <input type="hidden" value="${department.parentId}" id="selectId1">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>小区名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
@@ -38,10 +37,10 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级物业：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <select class="form-control" name="parentId" id="parentId" validate="required:true" min="1">
-                    <option value="0">请选择</option>
+                <select class="form-control" name="parentId" id="parentId" required>
+                    <option></option>
                     <c:forEach items="${parentDepartment}" var="item">
-                        <option value="${item.id}">${item.name}</option>
+                        <option value="${item.id}" <c:if test="${item.id == department.parentId}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -97,7 +96,7 @@
         <div class="row cl" style="height: 450px;">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经纬度：</label>
             <div class="formControls col-xs-8 col-sm-9" style="height: 400px;">
-                <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="经纬度" name="communityLocations" id="poi" required>
+                <input type="text" class="input-text radius size-L" value="${department.communityLocations}" placeholder="经纬度" name="communityLocations" id="poi" required>
                 <div id="mapContainer" class="bk-gray" style="margin-left:15px;margin-top:45px;"></div>
                 <div id="tip">
                     <input type="text" id="keyword" name="keyword" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'/>
@@ -152,37 +151,25 @@
     });
     /*地图添加点*/
 
-
-    $(function(){
-        var parent = $("#selectId1").val();;
-        if(parent != null){
-            $("#parentId").val(parent);
-        }
-    });
-
-    $("#form-department-add").validate({
-        messages: {
-            parentId: {
-                min: "必须选择上级服务商"
-            }
-        },
+    $("#myform").validate({
         submitHandler:function(form) {
-            var options = {
-                dataType:'json',
-                success:  successRes
-            };
-            $(form).ajaxSubmit(options);
-            //非常重要，如果是false，则表明是不跳转
-            //在本页上处理，也就是ajax，如果是非false，则传统的form跳转。
-            return false;
+            $(form).ajaxSubmit({
+                type: 'post',
+                url: "${pageContext.request.contextPath }/rest/department/saveOrUpdateHousing",
+                beforeSubmit: function () {
+                    layer.load();
+                },
+                success: function(data){
+                    if (data.success) {
+                        window.parent.location.reload();
+                    }else {
+                        layer.msg(data.message);
+                    }
+                },
+                error: function(XmlHttpRequest, textStatus, errorThrown){
+                    layer.msg('error!',{icon:1,time:1000});
+                }
+            });
         }
     });
-
-    function successRes(data) {
-        if (data.success) {
-            window.parent.location.reload();
-        }else {
-            layer.alert(data.msg);
-        }
-    }
 </script>

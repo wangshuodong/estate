@@ -3,26 +3,26 @@
 <%@ include file="/share/_footer.jsp" %>
 
 <div class="page-container">
-    <form class="form form-horizontal" id="form-serviceinfo-add" action="${pageContext.request.contextPath }/rest/department/saveOrUpdateService" method="post">
+    <form class="form form-horizontal" id="myform" action="" method="post">
         <input type="hidden" value="${serviceinfo.id}" name="id">
         <input type="hidden" value="${departmentId}" name="departmentId" id = "depid">
         <input type="hidden" value="1" name="type">
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">应用ID：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>应用ID：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${serviceinfo.appId}" placeholder="应用ID" name="appId" >
+                <input type="text" class="input-text radius size-L" value="${serviceinfo.appId}" placeholder="应用ID" name="appId" required>
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">商户私钥：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商户私钥：</label>
             <div class="formControls col-xs-8 col-sm-9">
-               <textarea class="textarea radius"  placeholder="商户私钥"  name="merchantPrivateKey">${serviceinfo.merchantPrivateKey}</textarea>
+               <textarea class="textarea radius"  placeholder="商户私钥"  name="merchantPrivateKey" required>${serviceinfo.merchantPrivateKey}</textarea>
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">支付宝公钥：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>支付宝公钥：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <textarea class="textarea radius" placeholder="支付宝公钥" name="alipayPublicKey">${serviceinfo.alipayPublicKey}</textarea>
+                <textarea class="textarea radius" placeholder="支付宝公钥" name="alipayPublicKey" required>${serviceinfo.alipayPublicKey}</textarea>
             </div>
         </div>
 
@@ -37,28 +37,25 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
-    $(function(){
-    });
-
-    $("#form-serviceinfo-add").validate({
+    $("#myform").validate({
         submitHandler:function(form) {
-            var options = {
-                dataType:'json',
-                success:  successRes
-            };
-            $(form).ajaxSubmit(options);
-            //非常重要，如果是false，则表明是不跳转
-            //在本页上处理，也就是ajax，如果是非false，则传统的form跳转。
-            return false;
+            $(form).ajaxSubmit({
+                type: 'post',
+                url: "${pageContext.request.contextPath }/rest/department/saveOrUpdateService",
+                beforeSubmit: function () {
+                    layer.load();
+                },
+                success: function(data){
+                    if (data.success) {
+                        window.parent.location.reload();
+                    }else {
+                        layer.msg(data.message);
+                    }
+                },
+                error: function(XmlHttpRequest, textStatus, errorThrown){
+                    layer.msg('error!',{icon:1,time:1000});
+                }
+            });
         }
     });
-
-    function successRes(data) {
-        if (data.success) {
-            window.parent.location.reload();
-        }else {
-            layer.alert(data.msg);
-        }
-    }
-
 </script>
