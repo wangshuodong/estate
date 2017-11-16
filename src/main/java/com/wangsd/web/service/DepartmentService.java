@@ -1,6 +1,7 @@
 package com.wangsd.web.service;
 
 import com.wangsd.web.model.Department;
+import com.wangsd.web.model.Property;
 import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.modelCustom.HousingCustom;
@@ -78,5 +79,20 @@ public interface DepartmentService {
 	 * @return
 	 */
 	public boolean saveOrUpdateServicekey(Serviceinfo Serviceinfo);
+
+	/**
+	 * 根据部门id查询参数配置
+	 * @param deptId
+	 * @return
+	 */
+	public Property selectPropertyBydeptId(Integer deptId);
+
+	/**
+	 * 新增更新参数配置
+	 * @param poperty
+	 * @return
+	 */
+	public boolean saveOrUpdateProperty(Property poperty);
+
 
 }

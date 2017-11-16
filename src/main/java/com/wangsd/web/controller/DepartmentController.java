@@ -4,6 +4,7 @@ import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Department;
+import com.wangsd.web.model.Property;
 import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.modelCustom.HousingCustom;
@@ -240,7 +241,7 @@ public class DepartmentController {
         Serviceinfo serviceinfo = departmentService.selectServicekeyBydeptId(id);
         model.addAttribute("serviceinfo", serviceinfo);
         model.addAttribute("departmentId",id);
-        return "/service/service-key";
+        return "/service/service-config";
     }
 
     /**
@@ -258,7 +259,34 @@ public class DepartmentController {
         return obj;
     }
 
+    /**
+     *  跳转property参数配置页面
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/updateProperty")
+    public String updateProperty(Integer id, HttpServletRequest request, Model model) {
+        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
+        Property property = departmentService.selectPropertyBydeptId(id);
+        model.addAttribute("property", property);
+        model.addAttribute("departmentId",id);
+        return "/property/property-cofig";
+    }
 
+    /**
+     * 保存Property
+     * @param property
+     * @param model
+     * @return
+     */
+    @RequestMapping(path = "/saveOrUpdateProperty", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResult saveOrUpdateProperty(Property property, Model model) {
+        JSONResult obj = new JSONResult();
+        boolean bl = departmentService.saveOrUpdateProperty(property);
+        obj.setSuccess(bl);
+        return obj;
+    }
 
 
 }

@@ -5,11 +5,9 @@ import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.dao.DepartmentMapper;
 import com.wangsd.web.dao.HousingMapper;
+import com.wangsd.web.dao.PropertyMapper;
 import com.wangsd.web.dao.ServiceinfoMapper;
-import com.wangsd.web.model.Department;
-import com.wangsd.web.model.DepartmentExample;
-import com.wangsd.web.model.Serviceinfo;
-import com.wangsd.web.model.ServiceinfoExample;
+import com.wangsd.web.model.*;
 import com.wangsd.web.modelCustom.DepartmentCustom;
 import com.wangsd.web.modelCustom.HousingCustom;
 import com.wangsd.web.service.DepartmentService;
@@ -29,6 +27,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     HousingMapper housingMapper;
     @Autowired
     ServiceinfoMapper serviceinfoMapper;
+    @Autowired
+    PropertyMapper propertyMapper;
 
     @Override
     public List<DepartmentCustom> queryDepartmentListByCode(Department department) {
@@ -149,12 +149,37 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public boolean saveOrUpdateServicekey(Serviceinfo Serviceinfo){
+    public boolean saveOrUpdateServicekey(Serviceinfo serviceinfo){
         int ret;
-        if(Serviceinfo.getId() == null){//新增
-            ret = serviceinfoMapper.insert(Serviceinfo);
+        if(serviceinfo.getId() == null){//新增
+            ret = serviceinfoMapper.insert(serviceinfo);
         }else{
-            ret = serviceinfoMapper.updateByPrimaryKeySelective(Serviceinfo);
+            ret = serviceinfoMapper.updateByPrimaryKeySelective(serviceinfo);
+        }
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    @Override
+    public Property selectPropertyBydeptId(Integer deptId){
+        Property property = null;
+        PropertyExample example = new PropertyExample();
+        example.createCriteria().andDepartmentIdEqualTo(deptId);
+        List<Property> list = propertyMapper.selectByExample(example);
+        if(list != null && list.size() >0 ){
+            property = list.get(0);
+        }
+        return property;
+    }
+    @Override
+    public boolean saveOrUpdateProperty(Property poperty){
+        int ret;
+        if(poperty.getId() == null){//新增
+            ret = propertyMapper.insert(poperty);
+        }else{
+            ret = propertyMapper.updateByPrimaryKeySelective(poperty);
         }
         if (ret > 0) {
             return true;
