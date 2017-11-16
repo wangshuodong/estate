@@ -10,7 +10,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>物业名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.name}" placeholder="服务商名称" name="name" required>
+                <input type="text" class="input-text radius size-L" value="${department.name}" placeholder="物业名称" name="name" required>
             </div>
         </div>
         <div class="row cl">
