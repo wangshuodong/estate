@@ -4,8 +4,6 @@
 <div class="page-container">
     <form class="form form-horizontal" id="form-user-add" action="${pageContext.request.contextPath }/rest/user/saveOrUpdateUser" method="post">
         <input type="hidden" value="${user.id}" name="id">
-        <input type="hidden" value="1" name="type">
-        <input type="hidden" value="${user.departmentId}" id="selectId1">
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>登陆名：</label>
@@ -17,9 +15,21 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>部门名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <select class="form-control" name="departmentId" id="parentId">
+                <select class="form-control" name="departmentId" validate="required:true" min="1">
+                    <option value="0">请选择</option>
                     <c:forEach items="${parentDepartment}" var="item">
-                        <option value="${item.id}">${item.name}</option>
+                        <option value="${item.id}" <c:if test="${item.id == user.departmentId}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>角色名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <select class="form-control" name="roleId" validate="required:true" min="1">
+                    <option value="0">请选择</option>
+                    <c:forEach items="${roleList}" var="item">
+                        <option value="${item.id}" <c:if test="${item.id == user.roleId}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -54,14 +64,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
-    $(function(){
-        var parent = $("#selectId1").val();
-        console.log(parent);
-        if(parent != null){
-            $("#parentId").val(parent);
-        }
-    });
-
     $("#form-user-add").validate({
         submitHandler:function(form) {
             var options = {

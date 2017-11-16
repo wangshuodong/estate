@@ -1,11 +1,13 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
-import com.wangsd.web.dao.UsersMapper;
 import com.wangsd.web.model.Department;
+import com.wangsd.web.model.Role;
+import com.wangsd.web.model.ServiceinfoWithBLOBs;
 import com.wangsd.web.model.Users;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.DepartmentService;
+import com.wangsd.web.service.RoleService;
 import com.wangsd.web.service.UsersService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,9 +39,10 @@ public class UserController {
     @Autowired
     private UsersService usersService;
     @Autowired
-    private UsersMapper usersMapper;
-    @Autowired
     DepartmentService departmentService;
+    @Autowired
+    RoleService roleService;
+
     /**
      * 用户登录
      * @param user
@@ -67,7 +70,14 @@ public class UserController {
             final UserCustom userCustom = usersService.selectByUsername(user.getUsername());
             request.getSession().setAttribute("userInfo", userCustom);
             //查询appid,公钥、私钥
-
+            String deptCode = userCustom.getDepartmentCode();
+            if (deptCode.length() >= 7) {
+                //得到登录人属于哪个服务商的code
+                deptCode = deptCode.substring(0,7);
+                Department department = departmentService.selectDepartmentByCode(deptCode);
+                ServiceinfoWithBLOBs info = departmentService.selectServicekeyBydeptId(department.getId());
+                request.getSession().setAttribute("serviceInfo", info);
+            }
         } catch (AuthenticationException e) {
             // 身份验证失败
             model.addAttribute("usernameError", "用户名或密码错误 ！");
@@ -124,8 +134,10 @@ public class UserController {
         Department department = new Department();
         department.setCode(departmentCode);
         department.setType(type);
-        List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(),user.getDeptType());
+        List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), null);
         model.addAttribute("parentDepartment", list);
+        List<Role> roleList = roleService.queryAllRoleList(1);
+        model.addAttribute("roleList", roleList);
         return "/user/user-info";
     }
 
@@ -160,8 +172,10 @@ public class UserController {
         Department department = new Department();
         department.setCode(departmentCode);
         department.setType(type);
-        List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(),user.getDeptType());
+        List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), null);
         model.addAttribute("parentDepartment", list);
+        List<Role> roleList = roleService.queryAllRoleList(1);
+        model.addAttribute("roleList", roleList);
         Users userInfo = usersService.selectByPrimaryKey(id);
         model.addAttribute("user", userInfo);
         return "/user/user-info";

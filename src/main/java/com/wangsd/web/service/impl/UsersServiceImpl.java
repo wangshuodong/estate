@@ -29,8 +29,10 @@ public class UsersServiceImpl implements UsersService {
 	public Users authentication(Users user) {
 		Users retobj = null;
 		UsersExample example = new UsersExample();
-		example.createCriteria().andUsernameEqualTo(user.getUsername());
-		example.createCriteria().andPasswordEqualTo(user.getPassword());
+		UsersExample.Criteria criteria = example.createCriteria();
+		criteria.andUsernameEqualTo(user.getUsername());
+		criteria.andPasswordEqualTo(user.getPassword());
+		criteria.andEnableEqualTo(true);
 		List<Users> list = usersMapper.selectByExample(example);
 		if (list.size() > 0) {
 			retobj = list.get(0);
@@ -67,6 +69,7 @@ public class UsersServiceImpl implements UsersService {
 		} else {
 			user.setCreateTime(new Date());
 			user.setPassword("111111");
+			user.setEnable(true);
 			ret = usersMapper.insertSelective(user);
 		}
 		if (ret > 0) {

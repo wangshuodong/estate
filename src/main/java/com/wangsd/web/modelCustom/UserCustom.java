@@ -13,6 +13,8 @@ public class UserCustom extends Users {
 
     private Integer deptType;
 
+    private String roleName;
+
     public String getDeptName() {
         return deptName;
     }
@@ -35,5 +37,13 @@ public class UserCustom extends Users {
 
     public void setDepartmentCode(String departmentCode) {
         this.departmentCode = departmentCode;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

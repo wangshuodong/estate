@@ -94,5 +94,10 @@ public interface DepartmentService {
 	 */
 	public boolean saveOrUpdateProperty(Property poperty);
 
-
+	/**
+	 * 根据code查询Department
+	 * @param code
+	 * @return
+	 */
+	public Department selectDepartmentByCode(String code);
 }

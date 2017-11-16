@@ -20,6 +20,7 @@ public class RoominfoServiceImpl implements RoominfoService {
     public List<RoominfoCustom> queryRoominfoList(Roominfo roominfo) {
         return roominfoMapper.queryRoominfoList(roominfo);
     }
+
     @Override
     public Roominfo selectRoominfoById(Integer id) {
         return roominfoMapper.selectByPrimaryKey(id);
@@ -30,13 +31,15 @@ public class RoominfoServiceImpl implements RoominfoService {
         int num = roominfoMapper.deleteByPrimaryKey(id);
         return num;
     }
+
     @Override
-    public boolean saveOrUpdateUser(Roominfo roominfo){
+    public boolean saveOrUpdateUser(Roominfo roominfo) {
         int ret = 0;
         if (roominfo.getId() != null) {
             ret = roominfoMapper.updateByPrimaryKeySelective(roominfo);
         } else {
             roominfo.setCreateTime(new Date());
+            roominfo.setAddress(roominfo.getGroupName() + roominfo.getBuilding() + roominfo.getUnit() + roominfo.getRoom());
             ret = roominfoMapper.insertSelective(roominfo);
         }
         if (ret > 0) {

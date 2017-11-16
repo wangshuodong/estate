@@ -44,16 +44,17 @@
   <!--      where a.user_id=#{user_id} -->
     </select>
 
-    <!-- 根据code以及type条件查询所有用户 -->
+    <!-- 根据code条件查询所有用户 -->
     <select id="queryUserListByCode" parameterType="com.wangsd.web.model.Department"
             resultType="UserCustom">
         SELECT
-            d.*, parent.`name` as deptName
+            u.*, d.`name` as deptName, r.name as roleName
         FROM
-            users d
-        JOIN department parent ON d.department_id = parent.id
+            users u
+        JOIN department d ON u.department_id = d.id
+        JOIN role r ON u.role_id = r.id
         WHERE
-            parent.deleteStatus = FALSE
-        AND parent. CODE LIKE CONCAT(#{code},'%')
+            d.deleteStatus = FALSE
+        AND d.CODE LIKE CONCAT(#{code},'%')
     </select>
 </mapper>

@@ -188,4 +188,16 @@ public class DepartmentServiceImpl implements DepartmentService {
             return false;
         }
     }
+
+    @Override
+    public Department selectDepartmentByCode(String code) {
+        Department department = null;
+        DepartmentExample example = new DepartmentExample();
+        example.createCriteria().andCodeEqualTo(code);
+        List<Department> list = departmentMapper.selectByExample(example);
+        if (list != null && list.size() > 0) {
+            department = list.get(0);
+        }
+        return department;
+    }
 }

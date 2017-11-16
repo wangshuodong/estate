@@ -127,12 +127,12 @@ public class DepartmentController {
             returnUrl = "/service/service-info";
         } else if (type == StaticVar.DEPARTMENT_TYPE2) {
             //新增物业的时候需要查询上级服务商
-            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE2);
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE1);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/property/property-info";
         } else if (type == StaticVar.DEPARTMENT_TYPE3) {
             //新增小区的时候需要查询上级物业
-            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE3);
+            List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), StaticVar.DEPARTMENT_TYPE2);
             model.addAttribute("parentDepartment", list);
             returnUrl = "/housing/housing-info";
         }

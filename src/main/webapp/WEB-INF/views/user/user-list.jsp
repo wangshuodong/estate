@@ -22,9 +22,10 @@
 					<th>用户昵称</th>
 					<th>用户密码</th>
 					<th>部门名称</th>
+					<th>角色名称</th>
 					<th>联系电话</th>
 					<th>联系邮箱</th>
-					<th>创建时间</th>
+					<th>状态</th>
 					<th>操作</th>
 				</tr>
 				</thead>
@@ -35,9 +36,10 @@
 						<td>${ item.name }</td>
 						<td>${ item.password }</td>
 						<td>${ item.deptName }</td>
+						<td>${ item.roleName }</td>
 						<td>${ item.phone }</td>
 						<td>${ item.email }</td>
-						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td class="td-status"><c:if test="${ item.enable == true }">已启用</c:if><c:if test="${ item.enable == false }">已禁用</c:if></td>
 						<td class="td-manage" width="130">
 							<c:if test="${item.enable == true}">
 								<a style="text-decoration:none" onClick="admin_stop(this,${item.id })" href="javascript:;" title="停用" class="c-success">停用</a>
@@ -111,6 +113,7 @@
             //此处请求后台程序，下方是成功后的前台处理……
             info_active(id, false);
             $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="admin_start(this,'+id+')" href="javascript:;" title="启用" class="c-success">启用</a>');
+            $(obj).parents("tr").find(".td-status").html('已禁用');
             $(obj).remove();
             layer.msg('已停用!',{icon: 5,time:1000});
         });
@@ -122,6 +125,7 @@
             //此处请求后台程序，下方是成功后的前台处理……
             info_active(id, true);
             $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="admin_stop(this,'+id+')" href="javascript:;" title="停用" class="c-success">停用</a>');
+            $(obj).parents("tr").find(".td-status").html('已启用');
             $(obj).remove();
             layer.msg('已启用!', {icon: 6,time:1000});
         });

@@ -35,11 +35,11 @@ public class RoominfoController {
         List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
         model.addAttribute("parentList", parentList);
         String departmentCode;
-        if (room.getDepartmentId() != null) {
+        if (room.getDepartmentId() == null || room.getDepartmentId() == 0) {
+            departmentCode = user.getDepartmentCode();
+        } else {
             Department parent = departmentService.selectDepartmentById(room.getDepartmentId());
             departmentCode = parent.getCode();
-        } else {
-            departmentCode = user.getDepartmentCode();
         }
         RoominfoCustom query = new RoominfoCustom();
         query.setDepartmentCode(departmentCode);
