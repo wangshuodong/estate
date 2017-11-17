@@ -61,40 +61,7 @@
 
     $("#form-role-add").validate({
         submitHandler:function(form){
-            //form.submit();
             saveOrUpdate();
-//            var menuIds = "";
-//            for(var i=0;i<nodes.length;i++) {
-//                if (i == nodes.length-1) {
-//                    menuIds += nodes[i].id
-//                }else {
-//                    menuIds += nodes[i].id + ","
-//                }
-//            }
-//            var options = {
-//                //target: '#output1',
-//                //这个参数是指通过ajax来给服务器提交除了form内部input的参数
-//                //在后台中使用String param1=req.getParameter("param1");获取。
-//                data:{menuIds: menuIds},
-//                //这个参数值的是服务器返回的数据类型，默认的是null
-//                //也就是服务器可以默认返回字符串，然后将这些字符串放在target内部
-//                //当然还有json、xml，其中最常用的便是null和json
-//                //对于json的使用，我们会稍后讲解到
-//                // dataType: null,
-//                dataType:'json',
-//                //beforeSubmit: showRequest,
-//                success:  successRes,
-//                //提交方式，默认是自己在form标签上指定的method
-//                //如果没有指定，则使用get。
-//                //type：'POST'
-//                //重新提交的url，即url可以在form中配置
-//                //也可以在这里配置。
-//                //url：''
-//            };
-//            $(form).ajaxSubmit(options);
-//            //非常重要，如果是false，则表明是不跳转
-//            //在本页上处理，也就是ajax，如果是非false，则传统的form跳转。
-//            return false;
         }
     });
 

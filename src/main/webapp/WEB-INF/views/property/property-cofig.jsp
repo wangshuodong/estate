@@ -77,6 +77,7 @@
                     }
                 },
                 error: function(XmlHttpRequest, textStatus, errorThrown){
+                    layer.closeAll('loading');
                     layer.msg('error!',{icon:1,time:1000});
                 }
             });
