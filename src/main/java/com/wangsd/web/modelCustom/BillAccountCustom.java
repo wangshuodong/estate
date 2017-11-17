@@ -13,6 +13,12 @@ public class BillAccountCustom extends Billaccount {
 
     private String roominfoaddress;
 
+    private String ownerName;
+
+    private String ownerCard;
+
+    private String ownerPhone;
+
     public String getDeptName() {
         return deptName;
     }
@@ -35,5 +41,29 @@ public class BillAccountCustom extends Billaccount {
 
     public void setRoominfoaddress(String roominfoaddress) {
         this.roominfoaddress = roominfoaddress;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public String getOwnerCard() {
+        return ownerCard;
+    }
+
+    public void setOwnerCard(String ownerCard) {
+        this.ownerCard = ownerCard;
+    }
+
+    public String getOwnerPhone() {
+        return ownerPhone;
+    }
+
+    public void setOwnerPhone(String ownerPhone) {
+        this.ownerPhone = ownerPhone;
     }
 }

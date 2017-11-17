@@ -32,4 +32,7 @@ public interface RoominfoService {
     public int deleteRoominfo(int id);
 
     public boolean saveOrUpdateUser(Roominfo roominfo);
+
+    public List<RoominfoCustom> queryRoominfoDistinct(Roominfo roominfo);
+
 }

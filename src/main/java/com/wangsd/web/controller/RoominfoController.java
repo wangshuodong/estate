@@ -29,6 +29,7 @@ public class RoominfoController {
     @Autowired
     DepartmentService departmentService;
 
+
     @RequestMapping("/roominfoList")
     public String roominfoList(RoominfoCustom room, HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");

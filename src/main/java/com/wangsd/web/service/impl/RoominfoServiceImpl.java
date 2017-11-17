@@ -48,4 +48,9 @@ public class RoominfoServiceImpl implements RoominfoService {
             return false;
         }
     }
+
+    @Override
+    public List<RoominfoCustom> queryRoominfoDistinct(Roominfo roominfo){
+        return roominfoMapper.queryRoominfoDistinct(roominfo);
+    }
 }

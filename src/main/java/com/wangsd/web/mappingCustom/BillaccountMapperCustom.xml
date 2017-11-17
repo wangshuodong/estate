@@ -12,4 +12,17 @@
             d.`code` like CONCAT(#{departmentCode},'%')
         </where>
     </select>
+
+    <select id="queryBillAccountListByCode" parameterType="com.wangsd.web.model.Department" resultType="BillAccountCustom">
+        SELECT
+        b.*, d.`name` as deptName, r.address as roominfoaddress,r.owner_name as ownerName,r.owner_card as ownerCard,r.owner_phone as ownerPhone
+        FROM
+        billaccount b
+        JOIN department d ON b.department_id = d.id
+        JOIN roominfo r ON b.roominfo_id = r.id
+        <where>
+            d.deleteStatus = FALSE
+            and d.`code` like CONCAT(#{code},'%')
+        </where>
+    </select>
 </mapper>

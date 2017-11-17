@@ -36,4 +36,11 @@ public interface RoominfoMapper {
      * @return
      */
     List<RoominfoCustom> queryRoominfoList(Roominfo roominfo);
+
+    /**
+     * 查询distinct房屋信息
+     * @param roominfo
+     * @return
+     */
+    List<RoominfoCustom> queryRoominfoDistinct(Roominfo roominfo);
 }

@@ -2,6 +2,7 @@ package com.wangsd.web.dao;
 
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.BillaccountExample;
+import com.wangsd.web.model.Department;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,4 +36,8 @@ public interface BillaccountMapper {
      * @return
      */
     List<BillAccountCustom>  queryBillAccountList(BillAccountCustom billAccountCustom);
+
+    List<BillAccountCustom> queryBillAccountListByCode(Department department);
+
+
 }

@@ -32,7 +32,7 @@
         JOIN department d
         WHERE
             h.department_id = d.id
-        AND d.id = #{deptId}
+        AND d.id = #{deptId} and d.deleteStatus = FALSE
     </select>
 
 </mapper>

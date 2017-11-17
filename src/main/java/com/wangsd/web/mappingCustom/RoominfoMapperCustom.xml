@@ -9,6 +9,19 @@
             roominfo r
         JOIN department d ON r.department_id = d.id
         WHERE
-            d.CODE LIKE CONCAT(#{departmentCode},'%')
+            d.deleteStatus = FALSE
+            and d.CODE LIKE CONCAT(#{departmentCode},'%')
+    </select>
+
+    <!-- 查询distinct房屋信息 -->
+    <select id="queryRoominfoDistinct" parameterType="RoominfoCustom" resultType="RoominfoCustom">
+        SELECT
+        r.group_name,r.building,r.unit,r.room
+        FROM
+        roominfo r
+        JOIN department d ON r.department_id = d.id
+        WHERE
+        d.deleteStatus = FALSE
+        and d.CODE LIKE CONCAT(#{departmentCode},'%') group by r.group_name,r.building,r.unit,r.room
     </select>
 </mapper>
