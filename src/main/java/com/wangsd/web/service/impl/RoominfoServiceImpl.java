@@ -35,11 +35,11 @@ public class RoominfoServiceImpl implements RoominfoService {
     @Override
     public boolean saveOrUpdateUser(Roominfo roominfo) {
         int ret = 0;
+        roominfo.setAddress(roominfo.getGroupName() + roominfo.getBuilding() + roominfo.getUnit() + roominfo.getRoom());
         if (roominfo.getId() != null) {
             ret = roominfoMapper.updateByPrimaryKeySelective(roominfo);
         } else {
             roominfo.setCreateTime(new Date());
-            roominfo.setAddress(roominfo.getGroupName() + roominfo.getBuilding() + roominfo.getUnit() + roominfo.getRoom());
             ret = roominfoMapper.insertSelective(roominfo);
         }
         if (ret > 0) {

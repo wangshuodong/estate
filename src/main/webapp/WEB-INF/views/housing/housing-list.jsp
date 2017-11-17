@@ -45,7 +45,7 @@
 						<td>${ item.address }</td>
 						<td>${ item.phone }</td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
-						<c:if test="${ item.status=='NEW' }"><td>新建</td></c:if>
+						<c:if test="${ item.status=='NEW' }"><td>未同步</td></c:if>
 						<c:if test="${ item.status=='PENDING_ONLINE' }"><td>待上线</td></c:if>
 						<c:if test="${ item.status=='ONLINE' }"><td>上线</td></c:if>
 						<c:if test="${ item.status=='MAINTAIN' }"><td>维护中</td></c:if>
@@ -53,7 +53,7 @@
 						<td width="120">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a><br>
-							<a title="参数配置" style="text-decoration:none" onclick="role_del(this, ${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
+							<a title="参数配置" style="text-decoration:none" onclick="housing_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -110,6 +110,28 @@
                     console.log(data.msg);
                 },
             });
+        });
+    }
+
+    function housing_sync(id) {
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath }/rest/alipay/alipayEcoCplifeCommunityCreateRequest',
+            dataType: 'json',
+            data:{
+                deptId : id
+            },
+            success: function(data){
+                if (data.success) {
+                    window.location.reload();
+                    layer.msg(data.message, {icon: 1});
+                }else {
+                    layer.msg(data.message, {icon: 5});
+                }
+            },
+            error:function(data) {
+                console.log(data.msg);
+            },
         });
     }
 </script>

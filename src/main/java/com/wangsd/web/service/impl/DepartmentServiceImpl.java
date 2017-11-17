@@ -119,6 +119,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             department.setRegion(housingCustom.getRegion());
             department.setName(housingCustom.getName());
             department.setPhone(housingCustom.getPhone());
+            department.setStatus(StaticVar.DEPARTMENT_STATUS_NEW);
             departmentMapper.updateByPrimaryKeySelective(department);
             ret = housingMapper.updateByPrimaryKeySelective(housingCustom);
         }

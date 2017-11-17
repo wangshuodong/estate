@@ -1,7 +1,6 @@
 package com.wangsd.web.security;
 
 import com.alibaba.fastjson.JSON;
-import com.wangsd.web.model.Permission;
 import com.wangsd.web.model.Role;
 import com.wangsd.web.model.Users;
 import com.wangsd.web.modelCustom.UserCustom;
@@ -19,8 +18,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * 用户身份验证,授权 Realm 组件
@@ -48,12 +45,12 @@ public class SecurityRealm extends AuthorizingRealm {
         Role role = roleService.selectRoleById(userCustom.getRoleId());
         logger.debug("----role----=" + JSON.toJSONString(role));
         authorizationInfo.addRole(role.getRoleSign());
-        final List<Permission> permissions = roleService.queryPermissionsByRoleId(role.getId());
-        for (Permission permission : permissions) {
-            // 添加权限
-            logger.debug("----permission----=" + JSON.toJSONString(permission));
-            authorizationInfo.addStringPermission(permission.getPermissionSign());
-        }
+//        final List<Permission> permissions = roleService.queryPermissionsByRoleId(role.getId());
+//        for (Permission permission : permissions) {
+//            // 添加权限
+//            logger.debug("----permission----=" + JSON.toJSONString(permission));
+//            authorizationInfo.addStringPermission(permission.getPermissionSign());
+//        }
         return authorizationInfo;
     }
 

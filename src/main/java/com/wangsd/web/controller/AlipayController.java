@@ -58,10 +58,13 @@ public class AlipayController {
         bizContent.put("hotline", housing.getHotline());
         AlipayEcoCplifeCommunityCreateRequest request = new AlipayEcoCplifeCommunityCreateRequest();
         request.setBizContent(bizContent.toString());
-        //requestAlipay.putOtherTextParam("app_auth_token", token);
+        //request.putOtherTextParam("app_auth_token", token);
         try {
             AlipayEcoCplifeCommunityCreateResponse response = alipayClient.execute(request);
+            logger.debug(response.getBody());
             if (response.getCode().equals("10000")) {
+                housing.setCommunityId(response.getCommunityId());
+
                 jsonResult.setSuccess(true);
                 jsonResult.setMessage("小区同步完成...,等待下一步基础服务初始化！");
             } else {
@@ -72,7 +75,7 @@ public class AlipayController {
             logger.info(e.getMessage());
             e.printStackTrace();
         }
-        return null;
+        return jsonResult;
     }
 
 }
