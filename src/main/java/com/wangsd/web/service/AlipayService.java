@@ -25,7 +25,7 @@ public interface AlipayService {
      * @param alipayClient
      * @return
      */
-    public HousingCustom AlipayEcoCplifeCommunityModifyRequest(HousingCustom housing, String token, AlipayClient alipayClient);
+    public HousingCustom alipayEcoCplifeCommunityModifyRequest(HousingCustom housing, String token, AlipayClient alipayClient);
 
     /**
      * 查询单个物业小区信息
@@ -34,7 +34,7 @@ public interface AlipayService {
      * @param alipayClient
      * @return
      */
-    public String AlipayEcoCplifeCommunityDetailsQueryRequest(String community_id, String token, AlipayClient alipayClient);
+    public String alipayEcoCplifeCommunityDetailsQueryRequest(String community_id, String token, AlipayClient alipayClient);
 
     /**
      * 批量查询支付宝小区编号
@@ -43,7 +43,9 @@ public interface AlipayService {
      * @param alipayClient
      * @return
      */
-    public String AlipayEcoCplifeCommunityBatchqueryRequest(String status, String token, AlipayClient alipayClient);
+    public String alipayEcoCplifeCommunityBatchqueryRequest(String status, String token, AlipayClient alipayClient);
+
+    //public boolean alipayEcoCplifeBillBatchUploadRequest(String token, AlipayClient alipayClient);
 
     /**
      * 删除已上传的物业账单数据
@@ -53,5 +55,5 @@ public interface AlipayService {
      * @param alipayClient
      * @return
      */
-    public boolean AlipayEcoCplifeBillDeleteRequest(String community_id, List<String> bill_entry_id_list, String token, AlipayClient alipayClient);
+    public boolean alipayEcoCplifeBillDeleteRequest(String community_id, List<String> bill_entry_id_list, String token, AlipayClient alipayClient);
 }

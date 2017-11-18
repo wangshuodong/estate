@@ -1,5 +1,6 @@
 package com.wangsd.web.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
@@ -43,7 +44,9 @@ public class AlipayServiceImpl implements AlipayService {
         bizContent.put("district_code", housing.getDistrictCode());
         bizContent.put("city_code", housing.getCityCode());
         bizContent.put("province_code", housing.getProvinceCode());
-        bizContent.put("community_locations", housing.getCommunityLocations());
+        JSONArray array = new JSONArray();
+        array.add(housing.getCommunityLocations());
+        bizContent.put("community_locations", array);
         bizContent.put("hotline", housing.getHotline());
         bizContent.put("out_community_id", housing.getId());
         request.setBizContent(bizContent.toString());
@@ -79,7 +82,7 @@ public class AlipayServiceImpl implements AlipayService {
      * @return
      */
     @Override
-    public HousingCustom AlipayEcoCplifeCommunityModifyRequest(HousingCustom housing, String token, AlipayClient alipayClient) {
+    public HousingCustom alipayEcoCplifeCommunityModifyRequest(HousingCustom housing, String token, AlipayClient alipayClient) {
         HousingCustom retStatus = null;
         AlipayEcoCplifeCommunityModifyRequest request = new AlipayEcoCplifeCommunityModifyRequest();
         JSONObject bizContent = new JSONObject();
@@ -121,7 +124,7 @@ public class AlipayServiceImpl implements AlipayService {
      * @param alipayClient
      * @return
      */
-    public String AlipayEcoCplifeCommunityDetailsQueryRequest(String community_id, String token, AlipayClient alipayClient) {
+    public String alipayEcoCplifeCommunityDetailsQueryRequest(String community_id, String token, AlipayClient alipayClient) {
         String retStatus = null;
         AlipayEcoCplifeCommunityDetailsQueryRequest request = new AlipayEcoCplifeCommunityDetailsQueryRequest();
         JSONObject bizContent = new JSONObject();
@@ -153,7 +156,7 @@ public class AlipayServiceImpl implements AlipayService {
      * @param alipayClient
      * @return
      */
-    public String AlipayEcoCplifeCommunityBatchqueryRequest(String status, String token, AlipayClient alipayClient) {
+    public String alipayEcoCplifeCommunityBatchqueryRequest(String status, String token, AlipayClient alipayClient) {
         String retStatus = null;
         AlipayEcoCplifeCommunityBatchqueryRequest request = new AlipayEcoCplifeCommunityBatchqueryRequest();
         if (status != null) {
@@ -189,7 +192,7 @@ public class AlipayServiceImpl implements AlipayService {
      * @return
      */
     @Override
-    public boolean AlipayEcoCplifeBillDeleteRequest(String community_id, List<String> bill_entry_id_list, String token, AlipayClient alipayClient) {
+    public boolean alipayEcoCplifeBillDeleteRequest(String community_id, List<String> bill_entry_id_list, String token, AlipayClient alipayClient) {
         boolean retStatus = false;
         AlipayEcoCplifeBillDeleteRequest request = new AlipayEcoCplifeBillDeleteRequest();
         JSONObject bizContent = new JSONObject();
@@ -201,13 +204,14 @@ public class AlipayServiceImpl implements AlipayService {
         }
         try {
             AlipayEcoCplifeBillDeleteResponse response = alipayClient.execute(request);
-            logger.debug(response.getBody());
-            if(response.isSuccess()){
+            if("10000".equals(response.getCode())){
+                logger.debug("调用成功");
+                logger.debug("----response----" + response.getBody());
                 retStatus = true;
-                System.out.println("调用成功");
             } else {
+                logger.info("调用失败");
+                logger.info("----response----" + response.getBody());
                 retStatus = false;
-                System.out.println("调用失败");
             }
         } catch (AlipayApiException e) {
             e.printStackTrace();
