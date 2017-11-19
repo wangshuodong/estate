@@ -11,7 +11,9 @@ public class Users {
 
     private String password;
 
-    private Integer departmentId;
+    private Integer parentId;
+
+    private String parentCode;
 
     private Integer roleId;
 
@@ -20,6 +22,8 @@ public class Users {
     private String email;
 
     private Boolean enable;
+
+    private Integer type;
 
     private Date createTime;
 
@@ -55,12 +59,20 @@ public class Users {
         this.password = password == null ? null : password.trim();
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode == null ? null : parentCode.trim();
     }
 
     public Integer getRoleId() {
@@ -93,6 +105,14 @@ public class Users {
 
     public void setEnable(Boolean enable) {
         this.enable = enable;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Date getCreateTime() {

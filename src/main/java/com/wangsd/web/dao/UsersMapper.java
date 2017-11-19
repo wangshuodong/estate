@@ -1,6 +1,5 @@
 package com.wangsd.web.dao;
 
-import com.wangsd.web.model.Department;
 import com.wangsd.web.model.Users;
 import com.wangsd.web.model.UsersExample;
 import com.wangsd.web.modelCustom.UserCustom;
@@ -40,6 +39,11 @@ public interface UsersMapper {
 
     List<UserCustom> selectUserList(UserCustom userCustom);
 
-    List<UserCustom> queryUserListByCode(Department department);
+    /**
+     * 查询所有用户列表
+     * @param userCustom
+     * @return
+     */
+    List<UserCustom> queryUserListByCode(UserCustom userCustom);
 
 }

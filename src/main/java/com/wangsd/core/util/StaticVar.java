@@ -10,36 +10,36 @@ public class StaticVar {
 	/**
 	 * 服务商
 	 */
-	public static final int DEPARTMENT_TYPE1 = 1;
+	public static final int USERS_TYPE1 = 1;
 	/**
 	 * 物业
 	 */
-	public static final int DEPARTMENT_TYPE2 = 2;
+	public static final int USERS_TYPE2 = 2;
 	/**
 	 * 小区
 	 */
-	public static final int DEPARTMENT_TYPE3 = 3;
+	public static final int USERS_TYPE3 = 3;
 
 
 
 	/**
 	 * 新建小区
 	 */
-	public static final String DEPARTMENT_STATUS_NEW = "NEW";
+	public static final String HOUSING_STATUS_NEW = "NEW";
 	/**
 	 * 待上线
 	 */
-	public static final String DEPARTMENT_STATUS_PENDING_ONLINE = "PENDING_ONLINE";
+	public static final String HOUSING_STATUS_PENDING_ONLINE = "PENDING_ONLINE";
 	/**
 	 * 上线
 	 */
-	public static final String DEPARTMENT_STATUS_ONLINE = "ONLINE";
+	public static final String HOUSING_STATUS_ONLINE = "ONLINE";
 	/**
 	 * 维护中
 	 */
-	public static final String DEPARTMENT_STATUS_MAINTAIN = "MAINTAIN";
+	public static final String HOUSING_STATUS_MAINTAIN = "MAINTAIN";
 	/**
 	 * 下线
 	 */
-	public static final String DEPARTMENT_STATUS_OFFLINE = "OFFLINE";
+	public static final String HOUSING_STATUS_OFFLINE = "OFFLINE";
 }

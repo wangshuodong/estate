@@ -26,12 +26,6 @@
 
     </resultMap>
  -->
-    <!-- 用户登录成功，根据用户名查询信息 -->
-    <select id="selectByUsername" parameterType="String" resultType="UserCustom">
-        select u.*, d.type as deptType, d.name as deptName, d.code as departmentCode
-        from users u left join department d on u.department_id = d.id
-        where u.username=#{username}
-    </select>
 
     <!-- 根据条件查询所有用户 -->
     <select id="selectUserList" parameterType="com.wangsd.web.modelCustom.UserCustom"
@@ -45,16 +39,19 @@
     </select>
 
     <!-- 根据code条件查询所有用户 -->
-    <select id="queryUserListByCode" parameterType="com.wangsd.web.model.Department"
+    <select id="queryUserListByCode" parameterType="UserCustom"
             resultType="UserCustom">
         SELECT
-            u.*, d.`name` as deptName, r.name as roleName
+            u.*, r.name as roleName
         FROM
             users u
-        JOIN department d ON u.department_id = d.id
-        JOIN role r ON u.role_id = r.id
-        WHERE
-            d.deleteStatus = FALSE
-        AND d.CODE LIKE CONCAT(#{code},'%')
+        left JOIN role r ON u.role_id = r.id
+        <where>
+            and d.deleteStatus = FALSE
+            AND u.parent_code LIKE CONCAT(#{parentCode},'%')
+            <if test="roleId != null and roleId != ''">
+                and r.role_id = #{roleId}
+            </if>
+        </where>
     </select>
 </mapper>

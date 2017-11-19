@@ -1,13 +1,13 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
-import com.wangsd.web.model.Department;
 import com.wangsd.web.model.Role;
-import com.wangsd.web.model.ServiceinfoWithBLOBs;
+import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.model.Users;
+import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
-import com.wangsd.web.service.DepartmentService;
 import com.wangsd.web.service.RoleService;
+import com.wangsd.web.service.ServiceinfoServic;
 import com.wangsd.web.service.UsersService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +15,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,12 +40,13 @@ public class UserController {
     @Autowired
     private UsersService usersService;
     @Autowired
-    DepartmentService departmentService;
+    ServiceinfoServic serviceinfoServic;
     @Autowired
     RoleService roleService;
 
     /**
      * 用户登录
+     *
      * @param user
      * @param result
      * @param request
@@ -67,17 +69,20 @@ public class UserController {
             // 身份验证
             subject.login(new UsernamePasswordToken(user.getUsername(), user.getPassword()));
             // 验证成功在Session中保存用户信息
-            final UserCustom userCustom = usersService.selectByUsername(user.getUsername());
-            request.getSession().setAttribute("userInfo", userCustom);
+            final Users users = usersService.selectByUsername(user.getUsername());
+            UserCustom userCustom = new UserCustom();
+            BeanUtils.copyProperties(users, userCustom);
             //查询appid,公钥、私钥
-            String deptCode = userCustom.getDepartmentCode();
+            String deptCode = users.getParentCode();
             if (deptCode.length() >= 7) {
                 //得到登录人属于哪个服务商的code
-                deptCode = deptCode.substring(0,7);
-                Department department = departmentService.selectDepartmentByCode(deptCode);
-                ServiceinfoWithBLOBs info = departmentService.selectServicekeyBydeptId(department.getId());
-                request.getSession().setAttribute("serviceInfo", info);
+                deptCode = deptCode.substring(0, 7);
+                Serviceinfo serviceinfo = serviceinfoServic.selectServiceinfoByCode(deptCode);
+                userCustom.setAppId(serviceinfo.getAppId());
+                userCustom.setAlipayPublicKey(serviceinfo.getAlipayPublicKey());
+                userCustom.setMerchantPrivateKey(serviceinfo.getMerchantPrivateKey());
             }
+            request.getSession().setAttribute("userInfo", userCustom);
         } catch (AuthenticationException e) {
             // 身份验证失败
             model.addAttribute("usernameError", "用户名或密码错误 ！");
@@ -88,6 +93,7 @@ public class UserController {
 
     /**
      * 用户登出
+     *
      * @param session
      * @return
      */
@@ -101,25 +107,22 @@ public class UserController {
     }
 
     /**
-     *
      * Description: 查询所有用户信息
+     *
      * @param model
      * @param request
      * @return
      */
     @RequestMapping("/userList")
-    public String userList(Model model,HttpServletRequest request) {
+    public String userList(UserCustom users, Model model, HttpServletRequest request) {
         UserCustom obj = (UserCustom) request.getSession().getAttribute("userInfo");
-        String departmentCode = obj.getDepartmentCode();
-        Department department = new Department();
-        department.setCode(departmentCode);
-        List<UserCustom> list = usersService.queryUserListByCode(department);
+        users.setParentCode(obj.getParentCode());
+        List<UserCustom> list = usersService.queryUserListByCode(users);
         model.addAttribute("userList", list);
         return "/user/user-list";
     }
 
     /**
-     *
      * Description: 跳转新增用户页面
      *
      * @param model
@@ -129,13 +132,9 @@ public class UserController {
     @RequestMapping(value = "addUser")
     public String addUser(Model model, HttpServletRequest request) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        String departmentCode = user.getDepartmentCode();
-        Integer type = null;
-        Department department = new Department();
-        department.setCode(departmentCode);
-        department.setType(type);
-        List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), null);
-        model.addAttribute("parentDepartment", list);
+        String parentCode = user.getParentCode();
+        List<ParentCustom> parentList = usersService.queryParentCustomByCode(parentCode);
+        model.addAttribute("parentList", parentList);
         List<Role> roleList = roleService.queryAllRoleList(1);
         model.addAttribute("roleList", roleList);
         return "/user/user-info";
@@ -144,6 +143,7 @@ public class UserController {
 
     /**
      * 新增或者保存User
+     *
      * @param user
      * @param
      * @return
@@ -159,6 +159,7 @@ public class UserController {
 
     /**
      * 打开修改User页面
+     *
      * @param id
      * @param request
      * @param model
@@ -167,21 +168,19 @@ public class UserController {
     @RequestMapping(value = "/updateUser")
     public String updateUser(Integer id, HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        String departmentCode = user.getDepartmentCode();
-        Integer type = null;
-        Department department = new Department();
-        department.setCode(departmentCode);
-        department.setType(type);
-        List<Department> list = departmentService.queryDepartmentList(user.getDepartmentCode(), null);
-        model.addAttribute("parentDepartment", list);
+        String parentCode = user.getParentCode();
+        List<ParentCustom> parentList = usersService.queryParentCustomByCode(parentCode);
+        model.addAttribute("parentList", parentList);
         List<Role> roleList = roleService.queryAllRoleList(1);
         model.addAttribute("roleList", roleList);
         Users userInfo = usersService.selectByPrimaryKey(id);
         model.addAttribute("user", userInfo);
         return "/user/user-info";
-}
+    }
+
     /**
-     *  删除User
+     * 删除User
+     *
      * @param id
      * @return
      */
@@ -189,7 +188,7 @@ public class UserController {
     @ResponseBody
     public JSONResult deleteUser(Integer id) {
         JSONResult obj = new JSONResult();
-        int num= usersService.deleteUserInfo(id);
+        int num = usersService.deleteUserInfo(id);
         boolean delStatus;
         if (num == 1) {
             delStatus = true;
@@ -199,8 +198,10 @@ public class UserController {
         obj.setSuccess(delStatus);
         return obj;
     }
+
     /**
-     *  检查新增登陆名是否重复
+     * 检查新增登陆名是否重复
+     *
      * @param username
      * @return
      */
@@ -209,17 +210,19 @@ public class UserController {
     @ResponseBody
     public JSONResult checkUserName(String username) {
         JSONResult obj = new JSONResult();
-        UserCustom user1 = usersService.selectByUsername(username);
-        if(user1 != null){
+        Users user1 = usersService.selectByUsername(username);
+        if (user1 != null) {
             obj.setSuccess(false);
             obj.setMessage("登陆名已存在，请重新输入");
-        }else{
+        } else {
             obj.setSuccess(true);
         }
         return obj;
     }
+
     /**
-     *  用户启用/停用
+     * 用户启用/停用
+     *
      * @param user
      * @return
      */

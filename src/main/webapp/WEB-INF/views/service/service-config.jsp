@@ -5,8 +5,7 @@
 <div class="page-container">
     <form class="form form-horizontal" id="myform" action="" method="post">
         <input type="hidden" value="${serviceinfo.id}" name="id">
-        <input type="hidden" value="${departmentId}" name="departmentId" id = "depid">
-        <input type="hidden" value="1" name="type">
+        <input type="hidden" value="${serviceinfo.parentId}" name="parentId">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>应用ID：</label>
             <div class="formControls col-xs-8 col-sm-9">
@@ -41,7 +40,7 @@
         submitHandler:function(form) {
             $(form).ajaxSubmit({
                 type: 'post',
-                url: "${pageContext.request.contextPath }/rest/department/saveOrUpdateService",
+                url: "${pageContext.request.contextPath }/rest/service/saveOrUpdateService",
                 beforeSubmit: function () {
                     layer.load();
                 },

@@ -19,27 +19,22 @@
 				<thead>
 				<tr class="text-c">
 					<th>物业名称</th>
-					<th>上级名称</th>
-					<th>区域</th>
+					<th>联系人</th>
 					<th>联系地址</th>
 					<th>联系电话</th>
-					<th>创建时间</th>
 					<th>操作</th>
 				</tr>
 				</thead>
 				<tbody>
-				<c:forEach items="${departmentList}" var="item">
+				<c:forEach items="${propertyList}" var="item">
 					<tr class="text-c">
 						<td>${ item.name }</td>
-						<td>${ item.parentName }</td>
-						<td>${ item.region }</td>
-						<td>${ item.address }</td>
-						<td>${ item.phone }</td>
-						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td>${ item.contactPeople }</td>
+						<td>${ item.contactAddress }</td>
+						<td>${ item.contactPhone }</td>
 						<td width="130">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
-							<a title="参数配置" style="text-decoration:none" onclick="para_edit(${item.id })" href="javascript:;" class="c-success">参数配置</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -62,7 +57,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "新增物业",
-			content: "${pageContext.request.contextPath }/rest/department/addDepartment?type=2"
+			content: "${pageContext.request.contextPath }/rest/property/addProperty"
 		});
 		layer.full(index);
 	}
@@ -71,7 +66,7 @@
         var index = layer.open({
             type: 2,
             title: "修改物业",
-            content: "${pageContext.request.contextPath }/rest/department/updateDepartment?id=" + id + "&type=2"
+            content: "${pageContext.request.contextPath }/rest/property/updateProperty?id=" + id
         });
         layer.full(index);
     }
@@ -80,7 +75,7 @@
         layer.confirm('确认要删除吗？',function(index){
             $.ajax({
                 type: 'POST',
-                url: '${pageContext.request.contextPath }/rest/department/deleteDepartment',
+                url: '${pageContext.request.contextPath }/rest/property/deleteProperty',
                 dataType: 'json',
                 data:{
                     id : id
@@ -96,15 +91,6 @@
                 },
             });
         });
-    }
-
-    function para_edit(id){
-        var index = layer.open({
-            type: 2,
-            title: "参数配置",
-            content: "${pageContext.request.contextPath }/rest/department/updateProperty?id=" + id,
-        });
-        layer.full(index);
     }
 </script>
 

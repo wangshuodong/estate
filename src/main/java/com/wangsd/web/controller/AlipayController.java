@@ -8,9 +8,9 @@ import com.alipay.api.request.AlipayEcoCplifeCommunityCreateRequest;
 import com.alipay.api.response.AlipayEcoCplifeCommunityCreateResponse;
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.StaticVar;
-import com.wangsd.web.model.ServiceinfoWithBLOBs;
-import com.wangsd.web.modelCustom.HousingCustom;
-import com.wangsd.web.service.DepartmentService;
+import com.wangsd.web.model.Housinginfo;
+import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.service.HousinginfoServic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class AlipayController {
     private static final Logger logger = LogManager.getLogger(AlipayController.class.getName());
 
     @Autowired
-    DepartmentService departmentService;
+    HousinginfoServic housinginfoServic;
 
     /**
      * 同步小区到支付宝
@@ -44,8 +44,8 @@ public class AlipayController {
     public JSONResult alipayEcoCplifeCommunityCreateRequest(Integer deptId, HttpSession session) {
         JSONResult jsonResult = new JSONResult();
         //获取公钥 私钥
-        ServiceinfoWithBLOBs info = (ServiceinfoWithBLOBs) session.getAttribute("serviceInfo");
-        HousingCustom housing = departmentService.selectHousingCustomBydeptId(deptId);
+        UserCustom info = (UserCustom) session.getAttribute("userInfo");
+        Housinginfo housing = housinginfoServic.selectHousinginfoById(deptId);
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, info.getAppId(), info.getMerchantPrivateKey(),
                 StaticVar.format, StaticVar.charset, info.getAlipayPublicKey(), StaticVar.sign_type);
         JSONObject bizContent = new JSONObject();

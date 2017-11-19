@@ -1,9 +1,21 @@
 package com.wangsd.web.model;
 
-public class Property {
+import java.util.Date;
+
+public class Propertyinfo {
     private Integer id;
 
-    private Integer departmentId;
+    private String code;
+
+    private String name;
+
+    private String contactPeople;
+
+    private String contactPhone;
+
+    private String contactAddress;
+
+    private Integer parentId;
 
     private String alipayLoginId;
 
@@ -19,6 +31,8 @@ public class Property {
 
     private String api;
 
+    private Date createTime;
+
     public Integer getId() {
         return id;
     }
@@ -27,12 +41,52 @@ public class Property {
         this.id = id;
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
+    public String getCode() {
+        return code;
     }
 
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getContactPeople() {
+        return contactPeople;
+    }
+
+    public void setContactPeople(String contactPeople) {
+        this.contactPeople = contactPeople == null ? null : contactPeople.trim();
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone == null ? null : contactPhone.trim();
+    }
+
+    public String getContactAddress() {
+        return contactAddress;
+    }
+
+    public void setContactAddress(String contactAddress) {
+        this.contactAddress = contactAddress == null ? null : contactAddress.trim();
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public String getAlipayLoginId() {
@@ -89,5 +143,13 @@ public class Property {
 
     public void setApi(String api) {
         this.api = api == null ? null : api.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

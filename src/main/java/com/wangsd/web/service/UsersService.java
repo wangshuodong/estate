@@ -1,7 +1,7 @@
 package com.wangsd.web.service;
 
-import com.wangsd.web.model.Department;
 import com.wangsd.web.model.Users;
+import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface UsersService {
 	 * @param username
 	 * @return
 	 */
-	public UserCustom selectByUsername(String username);
+	public Users selectByUsername(String username);
 
 	/**
 	 * 用户验证
@@ -49,13 +49,30 @@ public interface UsersService {
 	public int addUserInfo(Users user);
 
 	/**
-	 * 根据部门code查询所有用户
+	 * 根据code查询所有用户
 	 * @param
 	 * @return
 	 */
-	public List<UserCustom> queryUserListByCode(Department department);
+	public List<UserCustom> queryUserListByCode(UserCustom userCustom);
 
+	/**
+	 * 查询所有的上级公司
+	 * @param code
+	 * @return
+	 */
+	List<ParentCustom> queryParentCustomByCode(String code);
+
+	/**
+	 * 新增或者保存User
+	 * @param user
+	 * @return
+	 */
 	public boolean saveOrUpdateUser(Users user);
 
+	/**
+	 * 根据主键查询单个用户
+	 * @param userId
+	 * @return
+	 */
 	public Users selectByPrimaryKey(Integer userId);
 }

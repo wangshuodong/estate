@@ -30,11 +30,11 @@
         <!-- 要生成那些表(更改tableName和domainObjectName就可以)-->
         <!--
         <table tableName="menu" domainObjectName="Menu"/>
-        <table tableName="users" domainObjectName="Users"/>
+        
         
         <table tableName="role_menu" domainObjectName="RoleMenu"/>
-        <table tableName="printinfo" domainObjectName="Printinfo"/>
-        <table tableName="property" domainObjectName="Property"/>
+        
+        
         
         <table tableName="role" domainObjectName="Role">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
@@ -45,12 +45,16 @@
         <table tableName="roominfo" domainObjectName="Roominfo"/>
         <table tableName="roominfo" domainObjectName="Roominfo"/>
         <table tableName="users" domainObjectName="Users"/>
-        <table tableName="housing" domainObjectName="Housing"/>
+      
         <table tableName="department" domainObjectName="Department">
         	<generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        <table tableName="serviceinfo" domainObjectName="Serviceinfo"/>
-        -->
         <table tableName="billaccount" domainObjectName="Billaccount"/>
+        <table tableName="printinfo"/>
+        <table tableName="serviceinfo"/>
+        <table tableName="users"/>
+        <table tableName="housinginfo"/>
+        -->
+        <table tableName="propertyinfo"/>
     </context>
 </generatorConfiguration>

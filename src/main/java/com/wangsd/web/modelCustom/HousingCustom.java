@@ -1,11 +1,11 @@
 package com.wangsd.web.modelCustom;
 
-import com.wangsd.web.model.Housing;
+import com.wangsd.web.model.Housinginfo;
 
 /**
  * Created by Administrator on 2017/11/15.
  */
-public class HousingCustom extends Housing {
+public class HousingCustom extends Housinginfo {
     private String name;
 
     private String region;

@@ -26,7 +26,6 @@
 </style>
 <div class="page-container">
     <form class="form form-horizontal" id="myform" action="" method="post">
-        <input type="hidden" value="${department.departmentId}" name="departmentId">
         <input type="hidden" value="${department.id}" name="id">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>小区名称：</label>
@@ -39,34 +38,16 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <select class="form-control" name="parentId" id="parentId" required>
                     <option></option>
-                    <c:forEach items="${parentDepartment}" var="item">
+                    <c:forEach items="${parentList}" var="item">
                         <option value="${item.id}" <c:if test="${item.id == department.parentId}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">区域：</label>
+            <label class="form-label col-xs-4 col-sm-2">小区地址：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.region}" placeholder="区域" name="region">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">联系人：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.contactPeople}" placeholder="联系人" name="contactPeople">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">联系电话：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="联系电话" name="phone">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">联系地址：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.address}" placeholder="联系地址" name="address">
+                <input type="text" class="input-text radius size-L" value="${department.address}" placeholder="小区地址" name="address">
             </div>
         </div>
         <div class="row cl">
@@ -155,7 +136,7 @@
         submitHandler:function(form) {
             $(form).ajaxSubmit({
                 type: 'post',
-                url: "${pageContext.request.contextPath }/rest/department/saveOrUpdateHousing",
+                url: "${pageContext.request.contextPath }/rest/housing/saveOrUpdateHousing",
                 beforeSubmit: function () {
                     layer.load();
                 },

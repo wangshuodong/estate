@@ -8,7 +8,7 @@ import com.alipay.api.request.*;
 import com.alipay.api.response.*;
 import com.wangsd.web.modelCustom.HousingCustom;
 import com.wangsd.web.service.AlipayService;
-import com.wangsd.web.service.DepartmentService;
+import com.wangsd.web.service.HousinginfoServic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class AlipayServiceImpl implements AlipayService {
     private static final Logger logger = LogManager.getLogger(AlipayServiceImpl.class.getName());
 
     @Autowired
-    DepartmentService departmentService;
+    HousinginfoServic housinginfoServic;
 
     /**
      * 同步小区到支付宝

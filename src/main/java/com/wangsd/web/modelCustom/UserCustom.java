@@ -7,37 +7,13 @@ import com.wangsd.web.model.Users;
  */
 public class UserCustom extends Users {
 
-    private String deptName;
-
-    private String departmentCode;
-
-    private Integer deptType;
-
     private String roleName;
 
-    public String getDeptName() {
-        return deptName;
-    }
+    private String appId;
 
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
+    private String merchantPrivateKey;
 
-    public Integer getDeptType() {
-        return deptType;
-    }
-
-    public void setDeptType(Integer deptType) {
-        this.deptType = deptType;
-    }
-
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
-    }
+    private String alipayPublicKey;
 
     public String getRoleName() {
         return roleName;
@@ -45,5 +21,29 @@ public class UserCustom extends Users {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    public String getMerchantPrivateKey() {
+        return merchantPrivateKey;
+    }
+
+    public void setMerchantPrivateKey(String merchantPrivateKey) {
+        this.merchantPrivateKey = merchantPrivateKey;
+    }
+
+    public String getAlipayPublicKey() {
+        return alipayPublicKey;
+    }
+
+    public void setAlipayPublicKey(String alipayPublicKey) {
+        this.alipayPublicKey = alipayPublicKey;
     }
 }

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wangsd.web.dao.PropertyMapper" >
-  <resultMap id="BaseResultMap" type="com.wangsd.web.model.Property" >
+<mapper namespace="com.wangsd.web.dao.PropertyinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wangsd.web.model.Propertyinfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="contact_people" property="contactPeople" jdbcType="VARCHAR" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="contact_address" property="contactAddress" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="alipay_login_id" property="alipayLoginId" jdbcType="VARCHAR" />
     <result column="app_id" property="appId" jdbcType="VARCHAR" />
     <result column="token" property="token" jdbcType="VARCHAR" />
@@ -11,6 +16,7 @@
     <result column="weixin_debit_num" property="weixinDebitNum" jdbcType="VARCHAR" />
     <result column="weixin_children_num" property="weixinChildrenNum" jdbcType="VARCHAR" />
     <result column="api" property="api" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,16 +77,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, department_id, alipay_login_id, app_id, token, alipay_debit_num, weixin_debit_num, 
-    weixin_children_num, api
+    id, code, name, contact_people, contact_phone, contact_address, parent_id, alipay_login_id, 
+    app_id, token, alipay_debit_num, weixin_debit_num, weixin_children_num, api, create_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.PropertyExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.PropertyinfoExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from property
+    from propertyinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,37 +97,56 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from property
+    from propertyinfo
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from property
+    delete from propertyinfo
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.wangsd.web.model.PropertyExample" >
-    delete from property
+  <delete id="deleteByExample" parameterType="com.wangsd.web.model.PropertyinfoExample" >
+    delete from propertyinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wangsd.web.model.Property" >
-    insert into property (id, department_id, alipay_login_id, 
-      app_id, token, alipay_debit_num, 
-      weixin_debit_num, weixin_children_num, api
+  <insert id="insert" parameterType="com.wangsd.web.model.Propertyinfo" >
+    insert into propertyinfo (id, code, name, 
+      contact_people, contact_phone, contact_address, 
+      parent_id, alipay_login_id, app_id, 
+      token, alipay_debit_num, weixin_debit_num, 
+      weixin_children_num, api, create_time
       )
-    values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{alipayLoginId,jdbcType=VARCHAR}, 
-      #{appId,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, #{alipayDebitNum,jdbcType=VARCHAR}, 
-      #{weixinDebitNum,jdbcType=VARCHAR}, #{weixinChildrenNum,jdbcType=VARCHAR}, #{api,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{contactPeople,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, #{contactAddress,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=INTEGER}, #{alipayLoginId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
+      #{token,jdbcType=VARCHAR}, #{alipayDebitNum,jdbcType=VARCHAR}, #{weixinDebitNum,jdbcType=VARCHAR}, 
+      #{weixinChildrenNum,jdbcType=VARCHAR}, #{api,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.wangsd.web.model.Property" >
-    insert into property
+  <insert id="insertSelective" parameterType="com.wangsd.web.model.Propertyinfo" >
+    insert into propertyinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="departmentId != null" >
-        department_id,
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="contactPeople != null" >
+        contact_people,
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone,
+      </if>
+      <if test="contactAddress != null" >
+        contact_address,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
       </if>
       <if test="alipayLoginId != null" >
         alipay_login_id,
@@ -144,13 +169,31 @@
       <if test="api != null" >
         api,
       </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="departmentId != null" >
-        #{departmentId,jdbcType=INTEGER},
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPeople != null" >
+        #{contactPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddress != null" >
+        #{contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
       </if>
       <if test="alipayLoginId != null" >
         #{alipayLoginId,jdbcType=VARCHAR},
@@ -173,22 +216,40 @@
       <if test="api != null" >
         #{api,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.wangsd.web.model.PropertyExample" resultType="java.lang.Integer" >
-    select count(*) from property
+  <select id="countByExample" parameterType="com.wangsd.web.model.PropertyinfoExample" resultType="java.lang.Integer" >
+    select count(*) from propertyinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update property
+    update propertyinfo
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.departmentId != null" >
-        department_id = #{record.departmentId,jdbcType=INTEGER},
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPeople != null" >
+        contact_people = #{record.contactPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPhone != null" >
+        contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactAddress != null" >
+        contact_address = #{record.contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
       <if test="record.alipayLoginId != null" >
         alipay_login_id = #{record.alipayLoginId,jdbcType=VARCHAR},
@@ -211,31 +272,55 @@
       <if test="record.api != null" >
         api = #{record.api,jdbcType=VARCHAR},
       </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update property
+    update propertyinfo
     set id = #{record.id,jdbcType=INTEGER},
-      department_id = #{record.departmentId,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      contact_people = #{record.contactPeople,jdbcType=VARCHAR},
+      contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      contact_address = #{record.contactAddress,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
       alipay_login_id = #{record.alipayLoginId,jdbcType=VARCHAR},
       app_id = #{record.appId,jdbcType=VARCHAR},
       token = #{record.token,jdbcType=VARCHAR},
       alipay_debit_num = #{record.alipayDebitNum,jdbcType=VARCHAR},
       weixin_debit_num = #{record.weixinDebitNum,jdbcType=VARCHAR},
       weixin_children_num = #{record.weixinChildrenNum,jdbcType=VARCHAR},
-      api = #{record.api,jdbcType=VARCHAR}
+      api = #{record.api,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Property" >
-    update property
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Propertyinfo" >
+    update propertyinfo
     <set >
-      <if test="departmentId != null" >
-        department_id = #{departmentId,jdbcType=INTEGER},
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPeople != null" >
+        contact_people = #{contactPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddress != null" >
+        contact_address = #{contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
       </if>
       <if test="alipayLoginId != null" >
         alipay_login_id = #{alipayLoginId,jdbcType=VARCHAR},
@@ -258,19 +343,28 @@
       <if test="api != null" >
         api = #{api,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Property" >
-    update property
-    set department_id = #{departmentId,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Propertyinfo" >
+    update propertyinfo
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      contact_people = #{contactPeople,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      contact_address = #{contactAddress,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
       alipay_login_id = #{alipayLoginId,jdbcType=VARCHAR},
       app_id = #{appId,jdbcType=VARCHAR},
       token = #{token,jdbcType=VARCHAR},
       alipay_debit_num = #{alipayDebitNum,jdbcType=VARCHAR},
       weixin_debit_num = #{weixinDebitNum,jdbcType=VARCHAR},
       weixin_children_num = #{weixinChildrenNum,jdbcType=VARCHAR},
-      api = #{api,jdbcType=VARCHAR}
+      api = #{api,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

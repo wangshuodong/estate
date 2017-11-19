@@ -1,11 +1,12 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
-import com.wangsd.web.model.Department;
+import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.Roominfo;
+import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.RoominfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
-import com.wangsd.web.service.DepartmentService;
+import com.wangsd.web.service.HousinginfoServic;
 import com.wangsd.web.service.RoominfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,19 +28,19 @@ public class RoominfoController {
     @Autowired
     RoominfoService roominfoService;
     @Autowired
-    DepartmentService departmentService;
+    HousinginfoServic housinginfoServic;
 
 
     @RequestMapping("/roominfoList")
     public String roominfoList(RoominfoCustom room, HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
+        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(user.getParentCode());
         model.addAttribute("parentList", parentList);
         String departmentCode;
         if (room.getDepartmentId() == null || room.getDepartmentId() == 0) {
-            departmentCode = user.getDepartmentCode();
+            departmentCode = user.getParentCode();
         } else {
-            Department parent = departmentService.selectDepartmentById(room.getDepartmentId());
+            Housinginfo parent = housinginfoServic.selectHousinginfoById(room.getDepartmentId());
             departmentCode = parent.getCode();
         }
         RoominfoCustom query = new RoominfoCustom();
@@ -53,7 +54,7 @@ public class RoominfoController {
     @RequestMapping("/addRoominfo")
     public String addRoominfo(HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
+        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(user.getParentCode());
         model.addAttribute("parentList", parentList);
         return "/roominfo/roominfo-info";
     }
@@ -61,7 +62,7 @@ public class RoominfoController {
     @RequestMapping("/updateRoominfo")
     public String updateRoominfo(Integer id, HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
+        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(user.getParentCode());
         model.addAttribute("parentList", parentList);
         Roominfo roominfo = roominfoService.selectRoominfoById(id);
         model.addAttribute("roominfo", roominfo);

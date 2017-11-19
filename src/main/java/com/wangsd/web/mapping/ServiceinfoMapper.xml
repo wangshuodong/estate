@@ -3,12 +3,17 @@
 <mapper namespace="com.wangsd.web.dao.ServiceinfoMapper" >
   <resultMap id="BaseResultMap" type="com.wangsd.web.model.Serviceinfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="region" property="region" jdbcType="VARCHAR" />
+    <result column="contact_people" property="contactPeople" jdbcType="VARCHAR" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="contact_address" property="contactAddress" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="app_id" property="appId" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.wangsd.web.model.ServiceinfoWithBLOBs" extends="BaseResultMap" >
-    <result column="merchant_private_key" property="merchantPrivateKey" jdbcType="LONGVARCHAR" />
-    <result column="alipay_public_key" property="alipayPublicKey" jdbcType="LONGVARCHAR" />
+    <result column="merchant_private_key" property="merchantPrivateKey" jdbcType="VARCHAR" />
+    <result column="alipay_public_key" property="alipayPublicKey" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,27 +74,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, department_id, app_id
+    id, code, name, region, contact_people, contact_phone, contact_address, parent_id, 
+    app_id, merchant_private_key, alipay_public_key, create_time
   </sql>
-  <sql id="Blob_Column_List" >
-    merchant_private_key, alipay_public_key
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.wangsd.web.model.ServiceinfoExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from serviceinfo
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.ServiceinfoExample" >
     select
     <if test="distinct" >
@@ -104,11 +91,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from serviceinfo
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -122,22 +107,44 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wangsd.web.model.ServiceinfoWithBLOBs" >
-    insert into serviceinfo (id, department_id, app_id, 
-      merchant_private_key, alipay_public_key
+  <insert id="insert" parameterType="com.wangsd.web.model.Serviceinfo" >
+    insert into serviceinfo (id, code, name, 
+      region, contact_people, contact_phone, 
+      contact_address, parent_id, app_id, 
+      merchant_private_key, alipay_public_key, create_time
       )
-    values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, 
-      #{merchantPrivateKey,jdbcType=LONGVARCHAR}, #{alipayPublicKey,jdbcType=LONGVARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{contactPeople,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
+      #{contactAddress,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, 
+      #{merchantPrivateKey,jdbcType=VARCHAR}, #{alipayPublicKey,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.wangsd.web.model.ServiceinfoWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.wangsd.web.model.Serviceinfo" >
     insert into serviceinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="departmentId != null" >
-        department_id,
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="contactPeople != null" >
+        contact_people,
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone,
+      </if>
+      <if test="contactAddress != null" >
+        contact_address,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
       </if>
       <if test="appId != null" >
         app_id,
@@ -148,22 +155,46 @@
       <if test="alipayPublicKey != null" >
         alipay_public_key,
       </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="departmentId != null" >
-        #{departmentId,jdbcType=INTEGER},
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPeople != null" >
+        #{contactPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddress != null" >
+        #{contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
       </if>
       <if test="appId != null" >
         #{appId,jdbcType=VARCHAR},
       </if>
       <if test="merchantPrivateKey != null" >
-        #{merchantPrivateKey,jdbcType=LONGVARCHAR},
+        #{merchantPrivateKey,jdbcType=VARCHAR},
       </if>
       <if test="alipayPublicKey != null" >
-        #{alipayPublicKey,jdbcType=LONGVARCHAR},
+        #{alipayPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -179,30 +210,40 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.departmentId != null" >
-        department_id = #{record.departmentId,jdbcType=INTEGER},
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null" >
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPeople != null" >
+        contact_people = #{record.contactPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPhone != null" >
+        contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactAddress != null" >
+        contact_address = #{record.contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
       <if test="record.appId != null" >
         app_id = #{record.appId,jdbcType=VARCHAR},
       </if>
       <if test="record.merchantPrivateKey != null" >
-        merchant_private_key = #{record.merchantPrivateKey,jdbcType=LONGVARCHAR},
+        merchant_private_key = #{record.merchantPrivateKey,jdbcType=VARCHAR},
       </if>
       <if test="record.alipayPublicKey != null" >
-        alipay_public_key = #{record.alipayPublicKey,jdbcType=LONGVARCHAR},
+        alipay_public_key = #{record.alipayPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update serviceinfo
-    set id = #{record.id,jdbcType=INTEGER},
-      department_id = #{record.departmentId,jdbcType=INTEGER},
-      app_id = #{record.appId,jdbcType=VARCHAR},
-      merchant_private_key = #{record.merchantPrivateKey,jdbcType=LONGVARCHAR},
-      alipay_public_key = #{record.alipayPublicKey,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -210,42 +251,73 @@
   <update id="updateByExample" parameterType="map" >
     update serviceinfo
     set id = #{record.id,jdbcType=INTEGER},
-      department_id = #{record.departmentId,jdbcType=INTEGER},
-      app_id = #{record.appId,jdbcType=VARCHAR}
+      code = #{record.code,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      contact_people = #{record.contactPeople,jdbcType=VARCHAR},
+      contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      contact_address = #{record.contactAddress,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      app_id = #{record.appId,jdbcType=VARCHAR},
+      merchant_private_key = #{record.merchantPrivateKey,jdbcType=VARCHAR},
+      alipay_public_key = #{record.alipayPublicKey,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.ServiceinfoWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Serviceinfo" >
     update serviceinfo
     <set >
-      <if test="departmentId != null" >
-        department_id = #{departmentId,jdbcType=INTEGER},
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPeople != null" >
+        contact_people = #{contactPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddress != null" >
+        contact_address = #{contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
       </if>
       <if test="appId != null" >
         app_id = #{appId,jdbcType=VARCHAR},
       </if>
       <if test="merchantPrivateKey != null" >
-        merchant_private_key = #{merchantPrivateKey,jdbcType=LONGVARCHAR},
+        merchant_private_key = #{merchantPrivateKey,jdbcType=VARCHAR},
       </if>
       <if test="alipayPublicKey != null" >
-        alipay_public_key = #{alipayPublicKey,jdbcType=LONGVARCHAR},
+        alipay_public_key = #{alipayPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wangsd.web.model.ServiceinfoWithBLOBs" >
-    update serviceinfo
-    set department_id = #{departmentId,jdbcType=INTEGER},
-      app_id = #{appId,jdbcType=VARCHAR},
-      merchant_private_key = #{merchantPrivateKey,jdbcType=LONGVARCHAR},
-      alipay_public_key = #{alipayPublicKey,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
   <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Serviceinfo" >
     update serviceinfo
-    set department_id = #{departmentId,jdbcType=INTEGER},
-      app_id = #{appId,jdbcType=VARCHAR}
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      contact_people = #{contactPeople,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      contact_address = #{contactAddress,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=VARCHAR},
+      merchant_private_key = #{merchantPrivateKey,jdbcType=VARCHAR},
+      alipay_public_key = #{alipayPublicKey,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

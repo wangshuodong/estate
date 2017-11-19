@@ -3,10 +3,8 @@ package com.wangsd.web.controller;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Department;
 import com.wangsd.web.modelCustom.BillAccountCustom;
-import com.wangsd.web.modelCustom.RoominfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.BillAccountService;
-import com.wangsd.web.service.DepartmentService;
 import com.wangsd.web.service.RoominfoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,8 +26,6 @@ public class BillAccountController {
     @Autowired
     BillAccountService billAccountService;
     @Autowired
-    DepartmentService departmentService;
-    @Autowired
     RoominfoService roominfoService;
 
     /**
@@ -40,7 +36,7 @@ public class BillAccountController {
     @RequestMapping("/billAccountList")
     public String billAccountList(BillAccountCustom billAccountCustom, HttpServletRequest request, Model model) {
         UserCustom obj = (UserCustom) request.getSession().getAttribute("userInfo");
-        String departmentCode = obj.getDepartmentCode();
+        String departmentCode = obj.getParentCode();
         Department department = new Department();
         department.setCode(departmentCode);
         List<BillAccountCustom> list = billAccountService.queryBillAccountListByCode(department);
@@ -56,14 +52,14 @@ public class BillAccountController {
     @RequestMapping("/addBillAccount")
     public String addBillAccount( HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
-        model.addAttribute("parentList", parentList);
-        RoominfoCustom query = new RoominfoCustom();
-        query.setDepartmentCode(user.getDepartmentCode());
-        List<RoominfoCustom> roominfoDist = roominfoService.queryRoominfoDistinct(query);
-        List<RoominfoCustom> roominfoList = roominfoService.queryRoominfoList(query);
-        model.addAttribute("roominfoDist", roominfoDist);
-        model.addAttribute("roominfoList", roominfoList);
+//        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
+//        model.addAttribute("parentList", parentList);
+//        RoominfoCustom query = new RoominfoCustom();
+//        query.setDepartmentCode(user.getDepartmentCode());
+//        List<RoominfoCustom> roominfoDist = roominfoService.queryRoominfoDistinct(query);
+//        List<RoominfoCustom> roominfoList = roominfoService.queryRoominfoList(query);
+//        model.addAttribute("roominfoDist", roominfoDist);
+//        model.addAttribute("roominfoList", roominfoList);
         return "/billaccount/billaccount-info";
     }
 
@@ -75,10 +71,10 @@ public class BillAccountController {
     @RequestMapping("/updateBillAccount")
     public String updateBillAccount(Integer id, HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
-        model.addAttribute("parentList", parentList);
-        RoominfoCustom query = new RoominfoCustom();
-        query.setDepartmentCode(user.getDepartmentCode());
+//        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
+//        model.addAttribute("parentList", parentList);
+//        RoominfoCustom query = new RoominfoCustom();
+//        query.setDepartmentCode(user.getDepartmentCode());
     //    List<RoominfoCustom> roominfoDist = roominfoService.queryRoominfoDistinct(query);
   //      model.addAttribute("roominfoDist", roominfoDist);
         Billaccount billaccount = billAccountService.selectBillAccountById(id);

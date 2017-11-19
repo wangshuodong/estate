@@ -17,7 +17,7 @@ public class UsersServiceTest extends TestSupport {
 
     @Test
     public void selectByUsername() throws Exception {
-        UserCustom obj = usersService.selectByUsername("admin");
+        Users obj = usersService.selectByUsername("admin");
         System.out.println(JSON.toJSONStringWithDateFormat(obj, "yyyy-MM-dd HH:mm:ss"));
     }
 

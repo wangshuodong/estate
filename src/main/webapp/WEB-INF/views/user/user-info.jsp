@@ -17,7 +17,7 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <select class="form-control" name="departmentId" required>
                     <option></option>
-                    <c:forEach items="${parentDepartment}" var="item">
+                    <c:forEach items="${parentList}" var="item">
                         <option value="${item.id}" <c:if test="${item.id == user.departmentId}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>

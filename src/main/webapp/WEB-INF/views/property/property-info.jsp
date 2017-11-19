@@ -4,12 +4,11 @@
 
 <div class="page-container">
     <form class="form form-horizontal" id="myform">
-        <input type="hidden" value="${department.id}" name="id">
-        <input type="hidden" value="2" name="type">
+        <input type="hidden" value="${propertyinfo.id}" name="id">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>物业名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.name}" placeholder="物业名称" name="name" required>
+                <input type="text" class="input-text radius size-L" value="${propertyinfo.name}" placeholder="物业名称" name="name" required>
             </div>
         </div>
         <div class="row cl">
@@ -17,34 +16,71 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <select class="form-control" name="parentId" id="parentId" required>
                     <option></option>
-                    <c:forEach items="${parentDepartment}" var="item">
-                        <option value="${item.id}" <c:if test="${item.id == department.parentId}">selected</c:if>>${item.name}</option>
+                    <c:forEach items="${parentList}" var="item">
+                        <option value="${item.id}" <c:if test="${item.id == propertyinfo.parentId}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">区域：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.region}" placeholder="区域" name="region">
-            </div>
-        </div>
-        <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">联系人：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.contactPeople}" placeholder="联系人" name="contactPeople">
+                <input type="text" class="input-text radius size-L" value="${propertyinfo.contactPeople}" placeholder="联系人" name="contactPeople">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">联系电话：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="联系电话" name="phone">
+                <input type="text" class="input-text radius size-L" value="${propertyinfo.contactPhone}" placeholder="联系电话" name="contactPhone">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">联系地址：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.address}" placeholder="联系地址" name="address">
+                <input type="text" class="input-text radius size-L" value="${propertyinfo.contactAddress}" placeholder="联系地址" name="contactAddress">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">商户账号：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${property.alipayLoginId}" placeholder="商户账号" name="alipayLoginId">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">商户PID：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${property.appId}" placeholder="商户PID" name="appId">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">授权TOKEN：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${property.token}" placeholder="授权TOKEN" name="token">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">支付宝代扣协议编号：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${property.alipayDebitNum}" placeholder="支付宝代扣协议编号" name="alipayDebitNum">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">微信代扣协议编号：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${property.weixinDebitNum}" placeholder="微信代扣协议编号" name="weixinDebitNum">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">微信子商户：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${property.weixinChildrenNum}" placeholder="微信子商户" name="weixinChildrenNum">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">API：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${property.api}" placeholder="API" name="api">
             </div>
         </div>
 
@@ -63,7 +99,7 @@
         submitHandler:function(form) {
             $(form).ajaxSubmit({
                 type: 'post',
-                url: "${pageContext.request.contextPath }/rest/department/saveOrUpdateDepartment" ,
+                url: "${pageContext.request.contextPath }/rest/property/saveOrUpdateProperty" ,
                 beforeSubmit: function () {
                     layer.load();
                 },

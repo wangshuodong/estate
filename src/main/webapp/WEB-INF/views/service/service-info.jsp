@@ -4,12 +4,11 @@
 
 <div class="page-container">
     <form class="form form-horizontal" id="myform">
-        <input type="hidden" value="${department.id}" name="id">
-        <input type="hidden" value="1" name="type">
+        <input type="hidden" value="${serviceinfo.id}" name="id">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>服务商名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.name}" placeholder="服务商名称" name="name" required>
+                <input type="text" class="input-text radius size-L" value="${serviceinfo.name}" placeholder="服务商名称" name="name" required>
             </div>
         </div>
         <div class="row cl">
@@ -17,8 +16,8 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <select class="form-control" name="parentId" id="parentId" required>
                     <option></option>
-                    <c:forEach items="${parentDepartment}" var="item">
-                        <option value="${item.id}" <c:if test="${item.id == department.parentId}">selected</c:if>>${item.name}</option>
+                    <c:forEach items="${parentList}" var="item">
+                        <option value="${item.id}" <c:if test="${item.id == serviceinfo.parentId}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -26,25 +25,25 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">区域：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.region}" placeholder="区域" name="region">
+                <input type="text" class="input-text radius size-L" value="${serviceinfo.region}" placeholder="区域" name="region">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">联系人：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.contactPeople}" placeholder="联系人" name="contactPeople">
+                <input type="text" class="input-text radius size-L" value="${serviceinfo.contactPeople}" placeholder="联系人" name="contactPeople">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">联系电话：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.phone}" placeholder="联系电话" name="phone">
+                <input type="text" class="input-text radius size-L" value="${serviceinfo.contactPhone}" placeholder="联系电话" name="contactPhone">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">联系地址：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.address}" placeholder="联系地址" name="address">
+                <input type="text" class="input-text radius size-L" value="${serviceinfo.contactAddress}" placeholder="联系地址" name="contactAddress">
             </div>
         </div>
 
@@ -63,7 +62,7 @@
         submitHandler:function(form) {
             $(form).ajaxSubmit({
                 type: 'post',
-                url: "${pageContext.request.contextPath }/rest/department/saveOrUpdateDepartment" ,
+                url: "${pageContext.request.contextPath }/rest/service/saveOrUpdateService" ,
                 beforeSubmit: function () {
                     layer.load();
                 },

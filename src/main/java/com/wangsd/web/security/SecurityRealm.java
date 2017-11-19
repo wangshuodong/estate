@@ -41,7 +41,7 @@ public class SecurityRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         String username = String.valueOf(principals.getPrimaryPrincipal());
 
-        UserCustom userCustom = usersService.selectByUsername(username);
+        Users userCustom = usersService.selectByUsername(username);
         Role role = roleService.selectRoleById(userCustom.getRoleId());
         logger.debug("----role----=" + JSON.toJSONString(role));
         authorizationInfo.addRole(role.getRoleSign());

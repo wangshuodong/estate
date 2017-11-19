@@ -21,21 +21,21 @@
 					<th>服务商名称</th>
 					<th>上级服务商</th>
 					<th>区域</th>
+					<th>联系人</th>
 					<th>联系地址</th>
 					<th>联系电话</th>
-					<th>创建时间</th>
 					<th>操作</th>
 				</tr>
 				</thead>
 				<tbody>
-				<c:forEach items="${departmentList}" var="item">
+				<c:forEach items="${serviceList}" var="item">
 					<tr class="text-c">
 						<td>${ item.name }</td>
-						<td>${ item.parentName }</td>
+						<td></td>
 						<td>${ item.region }</td>
-						<td>${ item.address }</td>
-						<td>${ item.phone }</td>
-						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td>${ item.contactPeople }</td>
+						<td>${ item.contactAddress }</td>
+						<td>${ item.contactPhone }</td>
 						<td width="130">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id });" href="javascript:;" class="c-success">编辑</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id });" href="javascript:;" class="c-success">删除</a>
@@ -68,7 +68,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "新增服务商",
-			content: "${pageContext.request.contextPath }/rest/department/addDepartment?type=1"
+			content: "${pageContext.request.contextPath }/rest/service/addService"
 		});
 		layer.full(index);
 	}
@@ -77,7 +77,7 @@
         var index = layer.open({
             type: 2,
             title: "修改服务商",
-            content: "${pageContext.request.contextPath }/rest/department/updateDepartment?id=" + id + "&type=1"
+            content: "${pageContext.request.contextPath }/rest/service/updateService?id=" + id
         });
         layer.full(index);
     }
@@ -86,7 +86,7 @@
         layer.confirm('确认要删除吗？',function(index){
             $.ajax({
                 type: 'POST',
-                url: '${pageContext.request.contextPath }/rest/department/deleteDepartment',
+                url: '${pageContext.request.contextPath }/rest/service/deleteServicer',
                 dataType: 'json',
                 data:{
                     id : id
@@ -98,7 +98,7 @@
                     }
                 },
                 error:function(data) {
-                    console.log(data.msg);
+                    layer.msg('error!',{icon:1,time:1000});
                 },
             });
         });
@@ -108,7 +108,7 @@
         var index = layer.open({
             type: 2,
             title: "配置公钥",
-            content: "${pageContext.request.contextPath }/rest/department/updateServicekey?id=" + id,
+            content: "${pageContext.request.contextPath }/rest/service/updateServicekey?id=" + id,
         });
         layer.full(index);
     }
