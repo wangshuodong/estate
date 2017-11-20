@@ -62,10 +62,13 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/common/jquery.editable-select.min.js"></script>
 <script type="text/javascript">
-	$('.table-sort').dataTable({
-		scrollX: true,
-		ordering: false
-	});
+    $('.table-sort').dataTable({
+        ordering: false,
+        lengthChange: false,
+        language: {
+            search: "关键字    ",
+        }
+    });
 
 	$('#selects1').editableSelect({
 		effects: 'slide',

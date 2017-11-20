@@ -62,10 +62,13 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-	$('.table-sort').dataTable({
-		scrollX: true,
-		ordering: false
-	});
+    $('.table-sort').dataTable({
+        ordering: false,
+        lengthChange: false,
+        language: {
+            search: "关键字    ",
+        }
+    });
 
 	function info_add(){
 		var index = layer.open({
