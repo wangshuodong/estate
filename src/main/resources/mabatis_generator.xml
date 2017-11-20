@@ -42,8 +42,7 @@
         <table tableName="permission" domainObjectName="Permission"/>
         <table tableName="role_permission" domainObjectName="RolePermission"/>
         
-        <table tableName="roominfo" domainObjectName="Roominfo"/>
-        <table tableName="roominfo" domainObjectName="Roominfo"/>
+        
         <table tableName="users" domainObjectName="Users"/>
       
         <table tableName="department" domainObjectName="Department">
@@ -54,7 +53,8 @@
         <table tableName="serviceinfo"/>
         <table tableName="users"/>
         <table tableName="housinginfo"/>
-        -->
         <table tableName="propertyinfo"/>
+        -->
+        <table tableName="roominfo"/>
     </context>
 </generatorConfiguration>

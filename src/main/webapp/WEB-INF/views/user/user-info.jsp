@@ -15,10 +15,10 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>部门名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <select class="form-control" name="departmentId" required>
+                <select class="form-control" name="parentId" required>
                     <option></option>
                     <c:forEach items="${parentList}" var="item">
-                        <option value="${item.id}" <c:if test="${item.id == user.departmentId}">selected</c:if>>${item.name}</option>
+                        <option value="${item.id}" <c:if test="${item.id == user.parentId}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
             </div>

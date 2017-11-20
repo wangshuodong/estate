@@ -2,6 +2,7 @@ package com.wangsd.web.dao;
 
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.HousinginfoExample;
+import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import org.apache.ibatis.annotations.Param;
 
@@ -43,4 +44,11 @@ public interface HousinginfoMapper {
      * @return
      */
     String selectMaxByParentCode(Integer parentId);
+
+    /**
+     * 根据id查询小区和物业信息
+     * @param id
+     * @return
+     */
+    HousinginfoCustom selectHousingCustomById(Integer id);
 }

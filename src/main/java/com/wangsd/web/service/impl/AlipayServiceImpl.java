@@ -6,7 +6,8 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.request.*;
 import com.alipay.api.response.*;
-import com.wangsd.web.modelCustom.HousingCustom;
+import com.wangsd.web.model.Housinginfo;
+import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.service.AlipayService;
 import com.wangsd.web.service.HousinginfoServic;
 import org.apache.logging.log4j.LogManager;
@@ -35,8 +36,7 @@ public class AlipayServiceImpl implements AlipayService {
      * @return
      */
     @Override
-    public HousingCustom alipayEcoCplifeCommunityCreateRequest(HousingCustom housing, String token, AlipayClient alipayClient) {
-        HousingCustom retStatus = null;
+    public HousinginfoCustom alipayEcoCplifeCommunityCreateRequest(HousinginfoCustom housing, String token, AlipayClient alipayClient) {
         AlipayEcoCplifeCommunityCreateRequest request = new AlipayEcoCplifeCommunityCreateRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("community_name", housing.getName());
@@ -59,10 +59,8 @@ public class AlipayServiceImpl implements AlipayService {
                 logger.debug("调用成功");
                 logger.debug("----response----" + response.getBody());
                 //执行成功返回支付宝的小区统一编号和状态
-                retStatus = new HousingCustom();
-                retStatus.setId(housing.getId());
-                retStatus.setCommunityId(response.getCommunityId());
-                retStatus.setStatus(response.getStatus());
+                housing.setCommunityId(response.getCommunityId());
+                housing.setStatus(response.getStatus());
             } else {
                 logger.info("调用失败");
                 logger.info("----response----" + response.getBody());
@@ -71,7 +69,7 @@ public class AlipayServiceImpl implements AlipayService {
             logger.info(e.getMessage());
             e.printStackTrace();
         }
-        return retStatus;
+        return housing;
     }
 
     /**
@@ -82,8 +80,8 @@ public class AlipayServiceImpl implements AlipayService {
      * @return
      */
     @Override
-    public HousingCustom alipayEcoCplifeCommunityModifyRequest(HousingCustom housing, String token, AlipayClient alipayClient) {
-        HousingCustom retStatus = null;
+    public Housinginfo alipayEcoCplifeCommunityModifyRequest(Housinginfo housing, String token, AlipayClient alipayClient) {
+    	Housinginfo retStatus = null;
         AlipayEcoCplifeCommunityModifyRequest request = new AlipayEcoCplifeCommunityModifyRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("community_name", housing.getName());
@@ -103,7 +101,7 @@ public class AlipayServiceImpl implements AlipayService {
             if("10000".equals(response.getCode())){
                 logger.debug("调用成功");
                 //执行成功返回支付宝的小区统一编号和状态
-                retStatus = new HousingCustom();
+                retStatus = new Housinginfo();
                 retStatus.setId(housing.getId());
                 retStatus.setStatus(response.getStatus());
             } else {
@@ -161,8 +159,8 @@ public class AlipayServiceImpl implements AlipayService {
         AlipayEcoCplifeCommunityBatchqueryRequest request = new AlipayEcoCplifeCommunityBatchqueryRequest();
         if (status != null) {
             JSONObject bizContent = new JSONObject();
-            bizContent.put("status", status);
-            request.setBizContent(bizContent.toString());
+//            bizContent.put("status", status);
+            //request.setBizContent(bizContent.toString());
         }
         if (token != null) {
             request.putOtherTextParam("app_auth_token", token);

@@ -63,11 +63,18 @@ public interface UsersService {
 	List<ParentCustom> queryParentCustomByCode(String code);
 
 	/**
-	 * 新增或者保存User
+	 * 新增用户
 	 * @param user
 	 * @return
 	 */
-	public boolean saveOrUpdateUser(Users user);
+	public boolean insertUser(Users user);
+
+	/**
+	 * 更新用户
+	 * @param user
+	 * @return
+	 */
+	public boolean updateUser(Users user);
 
 	/**
 	 * 根据主键查询单个用户

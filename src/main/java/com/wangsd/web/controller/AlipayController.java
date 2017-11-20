@@ -1,15 +1,12 @@
 package com.wangsd.web.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.request.AlipayEcoCplifeCommunityCreateRequest;
-import com.alipay.api.response.AlipayEcoCplifeCommunityCreateResponse;
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.StaticVar;
-import com.wangsd.web.model.Housinginfo;
+import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.service.AlipayService;
 import com.wangsd.web.service.HousinginfoServic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,50 +28,28 @@ public class AlipayController {
 
     @Autowired
     HousinginfoServic housinginfoServic;
+    @Autowired
+    AlipayService alipayService;
 
     /**
      * 同步小区到支付宝
      *
-     * @param deptId
+     * @param id
      * @param session
      * @return
      */
     @RequestMapping(value = "/alipayEcoCplifeCommunityCreateRequest")
     @ResponseBody
-    public JSONResult alipayEcoCplifeCommunityCreateRequest(Integer deptId, HttpSession session) {
+    public JSONResult alipayEcoCplifeCommunityCreateRequest(Integer id, HttpSession session) {
         JSONResult jsonResult = new JSONResult();
         //获取公钥 私钥
         UserCustom info = (UserCustom) session.getAttribute("userInfo");
-        Housinginfo housing = housinginfoServic.selectHousinginfoById(deptId);
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, info.getAppId(), info.getMerchantPrivateKey(),
                 StaticVar.format, StaticVar.charset, info.getAlipayPublicKey(), StaticVar.sign_type);
-        JSONObject bizContent = new JSONObject();
-        bizContent.put("community_name", housing.getName());
-        bizContent.put("community_address", housing.getAddress());
-        bizContent.put("district_code", housing.getDistrictCode());
-        bizContent.put("city_code", housing.getCityCode());
-        bizContent.put("province_code", housing.getProvinceCode());
-        bizContent.put("community_locations", housing.getCommunityLocations());
-        bizContent.put("hotline", housing.getHotline());
-        AlipayEcoCplifeCommunityCreateRequest request = new AlipayEcoCplifeCommunityCreateRequest();
-        request.setBizContent(bizContent.toString());
-        //request.putOtherTextParam("app_auth_token", token);
-        try {
-            AlipayEcoCplifeCommunityCreateResponse response = alipayClient.execute(request);
-            logger.debug(response.getBody());
-            if (response.getCode().equals("10000")) {
-                housing.setCommunityId(response.getCommunityId());
-
-                jsonResult.setSuccess(true);
-                jsonResult.setMessage("小区同步完成...,等待下一步基础服务初始化！");
-            } else {
-                jsonResult.setSuccess(false);
-                jsonResult.setMessage("小区同步失败：" + response.getSubMsg());
-            }
-        } catch (AlipayApiException e) {
-            logger.info(e.getMessage());
-            e.printStackTrace();
-        }
+        housing = alipayService.alipayEcoCplifeCommunityCreateRequest(housing, housing.getToken(), alipayClient);
+        boolean bl = housinginfoServic.saveOrUpdateHousing(housing);
+        jsonResult.setSuccess(bl);
         return jsonResult;
     }
 

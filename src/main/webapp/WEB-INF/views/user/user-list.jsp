@@ -6,9 +6,18 @@
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-	<div class="codeView docs-example">
+	<form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/user/userList" method="post">
+		<div class="form-group">
+			<select class="form-control" name="roleId" style="width:250px">
+				<option value="0">请选择角色</option>
+				<c:forEach items="${roleList}" var="item">
+					<option value="${item.id}" <c:if test="${item.id == query.roleId}">selected</c:if>>${item.name}</option>
+				</c:forEach>
+			</select>
+		</div>
+		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="info_add();">新&nbsp;增</button>
-	</div>
+	</form>
 
 	<div class="panel panel-default mt-20">
 		<div class="panel-header">
@@ -21,7 +30,6 @@
 					<th>登陆名</th>
 					<th>用户昵称</th>
 					<th>用户密码</th>
-					<th>部门名称</th>
 					<th>角色名称</th>
 					<th>联系电话</th>
 					<th>联系邮箱</th>
@@ -35,7 +43,6 @@
 						<td>${ item.username }</td>
 						<td>${ item.name }</td>
 						<td>${ item.password }</td>
-						<td>${ item.deptName }</td>
 						<td>${ item.roleName }</td>
 						<td>${ item.phone }</td>
 						<td>${ item.email }</td>

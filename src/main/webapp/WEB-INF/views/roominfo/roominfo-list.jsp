@@ -10,7 +10,7 @@
 			<select class="form-control" name="departmentId" style="width:250px">
 				<option value="0">请选择所属小区</option>
 				<c:forEach items="${parentList}" var="item">
-					<option value="${item.id}" <c:if test="${query.departmentId==item.id }">selected</c:if>>${item.name}</option>
+					<option value="${item.id}" <c:if test="${query.parentId==item.id }">selected</c:if>>${item.name}</option>
 				</c:forEach>
 			</select>
 		</div>

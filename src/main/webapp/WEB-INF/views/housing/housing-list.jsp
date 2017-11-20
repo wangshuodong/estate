@@ -5,7 +5,7 @@
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-	<form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/department/housingList" method="post">
+	<form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/housing/housingList" method="post">
 		<div class="form-group">
 			<select class="form-control" name="parentId" id="parentId" style="width:250px">
 				<option value="0">请选择所属物业</option>
@@ -51,7 +51,9 @@
 						<td width="120">
 							<%--<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>--%>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a><br>
-							<a title="参数配置" style="text-decoration:none" onclick="housing_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
+							<c:if test="${ item.status=='NEW' }">
+								<a title="同步支付宝" style="text-decoration:none" onclick="housing_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
+							</c:if>
 						</td>
 					</tr>
 				</c:forEach>
@@ -120,7 +122,7 @@
             url: '${pageContext.request.contextPath }/rest/alipay/alipayEcoCplifeCommunityCreateRequest',
             dataType: 'json',
             data:{
-                deptId : id
+                id : id
             },
             success: function(data){
                 if (data.success) {

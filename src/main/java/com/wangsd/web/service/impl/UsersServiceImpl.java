@@ -97,16 +97,18 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public boolean saveOrUpdateUser(Users user) {
-        int ret = 0;
-        if (user.getId() != null) {
-            ret = usersMapper.updateByPrimaryKeySelective(user);
+    public boolean insertUser(Users user) {
+        int  ret = usersMapper.insertSelective(user);
+        if (ret > 0) {
+            return true;
         } else {
-            user.setCreateTime(new Date());
-            user.setPassword("111111");
-            user.setEnable(true);
-            ret = usersMapper.insertSelective(user);
+            return false;
         }
+    }
+
+    @Override
+    public boolean updateUser(Users user) {
+        int ret = usersMapper.updateByPrimaryKeySelective(user);
         if (ret > 0) {
             return true;
         } else {

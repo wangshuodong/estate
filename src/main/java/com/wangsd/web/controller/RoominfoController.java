@@ -32,29 +32,28 @@ public class RoominfoController {
 
 
     @RequestMapping("/roominfoList")
-    public String roominfoList(RoominfoCustom room, HttpServletRequest request, Model model) {
+    public String roominfoList(RoominfoCustom query, HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
         List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(user.getParentCode());
         model.addAttribute("parentList", parentList);
         String departmentCode;
-        if (room.getDepartmentId() == null || room.getDepartmentId() == 0) {
+        if (query.getParentId() == null || query.getParentId() == 0) {
             departmentCode = user.getParentCode();
         } else {
-            Housinginfo parent = housinginfoServic.selectHousinginfoById(room.getDepartmentId());
+            Housinginfo parent = housinginfoServic.selectHousinginfoById(query.getParentId());
             departmentCode = parent.getCode();
         }
-        RoominfoCustom query = new RoominfoCustom();
         query.setDepartmentCode(departmentCode);
         List<RoominfoCustom> list = roominfoService.queryRoominfoList(query);
         model.addAttribute("roominfoList", list);
-        model.addAttribute("query", room);
+        model.addAttribute("query", query);
         return "/roominfo/roominfo-list";
     }
 
     @RequestMapping("/addRoominfo")
     public String addRoominfo(HttpServletRequest request, Model model) {
         UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(user.getParentCode());
+        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(user.getParentCode());
         model.addAttribute("parentList", parentList);
         return "/roominfo/roominfo-info";
     }

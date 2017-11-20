@@ -5,6 +5,7 @@ import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.Propertyinfo;
+import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.HousinginfoServic;
@@ -39,11 +40,20 @@ public class HousinginfoController {
      * @return
      */
     @RequestMapping(value = "housingList")
-    public String housingList(Model model, HttpSession session) {
-        UserCustom obj = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = obj.getParentCode();
+    public String housingList(HousinginfoCustom query, Model model, HttpSession session) {
+        UserCustom user = (UserCustom) session.getAttribute("userInfo");
+        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(user.getParentCode());
+        model.addAttribute("parentList", parentList);
+        String parentCode;
+        if (query.getParentId() == null || query.getParentId() == 0) {
+            parentCode = user.getParentCode();
+        } else {
+            Propertyinfo parent = propertyinfoServic.selectPropertyinfoById(query.getParentId());
+            parentCode = parent.getCode();
+        }
         List<Housinginfo> list = housinginfoServic.queryAllList(parentCode);
         model.addAttribute("housingList", list);
+        model.addAttribute("query", query);
         return "/housing/housing-list";
     }
 
@@ -98,6 +108,7 @@ public class HousinginfoController {
             }else {
                 housinginfo.setCode(ApplicationUtils.getOrgCode(maxCode));
             }
+            housinginfo.setDeletestatus(false);
             housinginfo.setStatus(StaticVar.HOUSING_STATUS_NEW);
             housinginfo.setCreateTime(new Date());
         }else { //修改

@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级服务商：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级服务商或物业：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <select class="form-control" name="parentId" id="parentId" required>
                     <option></option>

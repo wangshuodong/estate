@@ -7,7 +7,7 @@
             r.*, d.`name` as deptName
         FROM
             roominfo r
-        JOIN department d ON r.department_id = d.id
+        JOIN housinginfo d ON r.parent_id = d.id
         WHERE
             d.deleteStatus = FALSE
             and d.CODE LIKE CONCAT(#{departmentCode},'%')

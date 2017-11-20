@@ -1,7 +1,8 @@
 package com.wangsd.web.service;
 
 import com.alipay.api.AlipayClient;
-import com.wangsd.web.modelCustom.HousingCustom;
+import com.wangsd.web.model.Housinginfo;
+import com.wangsd.web.modelCustom.HousinginfoCustom;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface AlipayService {
      * @param alipayClient
      * @return
      */
-    public HousingCustom alipayEcoCplifeCommunityCreateRequest(HousingCustom housing, String token, AlipayClient alipayClient);
+    public HousinginfoCustom alipayEcoCplifeCommunityCreateRequest(HousinginfoCustom housing, String token, AlipayClient alipayClient);
 
     /**
      * 变更物业小区信息
@@ -25,7 +26,7 @@ public interface AlipayService {
      * @param alipayClient
      * @return
      */
-    public HousingCustom alipayEcoCplifeCommunityModifyRequest(HousingCustom housing, String token, AlipayClient alipayClient);
+    public Housinginfo alipayEcoCplifeCommunityModifyRequest(Housinginfo housing, String token, AlipayClient alipayClient);
 
     /**
      * 查询单个物业小区信息

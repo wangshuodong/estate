@@ -5,7 +5,7 @@ import java.util.Date;
 public class Roominfo {
     private Integer id;
 
-    private Integer departmentId;
+    private Integer parentId;
 
     private String roomId;
 
@@ -39,12 +39,12 @@ public class Roominfo {
         this.id = id;
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public String getRoomId() {

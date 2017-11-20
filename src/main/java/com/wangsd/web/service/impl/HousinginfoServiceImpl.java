@@ -4,6 +4,7 @@ import com.wangsd.web.dao.HousinginfoMapper;
 import com.wangsd.web.dao.PropertyinfoMapper;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.HousinginfoExample;
+import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.service.HousinginfoServic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     }
 
     @Override
+    public List<ParentCustom> queryParentHousingByCode(String code) {
+        return housinginfoMapper.queryParentCustomByCode(code);
+    }
+
+    @Override
     public List<Housinginfo> queryAllList(String code) {
         HousinginfoExample example = new HousinginfoExample();
         example.createCriteria().andCodeLike(code + "%");
@@ -38,6 +44,11 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     @Override
     public Housinginfo selectHousinginfoById(Integer id) {
         return housinginfoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public HousinginfoCustom selectHousingCustomById(Integer id) {
+        return  housinginfoMapper.selectHousingCustomById(id);
     }
 
     @Override

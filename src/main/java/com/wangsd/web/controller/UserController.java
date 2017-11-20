@@ -1,14 +1,11 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
-import com.wangsd.web.model.Role;
-import com.wangsd.web.model.Serviceinfo;
-import com.wangsd.web.model.Users;
+import com.wangsd.core.util.StaticVar;
+import com.wangsd.web.model.*;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
-import com.wangsd.web.service.RoleService;
-import com.wangsd.web.service.ServiceinfoServic;
-import com.wangsd.web.service.UsersService;
+import com.wangsd.web.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -26,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,6 +39,10 @@ public class UserController {
     private UsersService usersService;
     @Autowired
     ServiceinfoServic serviceinfoServic;
+    @Autowired
+    PropertyinfoServic propertyinfoServic;
+    @Autowired
+    HousinginfoServic housinginfoServic;
     @Autowired
     RoleService roleService;
 
@@ -114,11 +116,17 @@ public class UserController {
      * @return
      */
     @RequestMapping("/userList")
-    public String userList(UserCustom users, Model model, HttpServletRequest request) {
-        UserCustom obj = (UserCustom) request.getSession().getAttribute("userInfo");
-        users.setParentCode(obj.getParentCode());
-        List<UserCustom> list = usersService.queryUserListByCode(users);
+    public String userList(UserCustom query, Model model, HttpServletRequest request) {
+        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        List<Role> roleList = roleService.queryAllRoleList(StaticVar.USERS_TYPE99);
+        model.addAttribute("roleList", roleList);
+        if (query.getRoleId() == null || query.getRoleId() == 0) {
+            query.setRoleId(null);
+        }
+        query.setParentCode(loginUser.getParentCode());
+        List<UserCustom> list = usersService.queryUserListByCode(query);
         model.addAttribute("userList", list);
+        model.addAttribute("query", query);
         return "/user/user-list";
     }
 
@@ -135,7 +143,7 @@ public class UserController {
         String parentCode = user.getParentCode();
         List<ParentCustom> parentList = usersService.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
-        List<Role> roleList = roleService.queryAllRoleList(1);
+        List<Role> roleList = roleService.queryAllRoleList(StaticVar.USERS_TYPE99);
         model.addAttribute("roleList", roleList);
         return "/user/user-info";
     }
@@ -150,8 +158,30 @@ public class UserController {
      */
     @RequestMapping(path = "/saveOrUpdateUser", method = RequestMethod.POST)
     @ResponseBody
-    public JSONResult saveOrUpdateUser(Users user) {
-        boolean bl = usersService.saveOrUpdateUser(user);
+    public JSONResult saveOrUpdateUser(Users user, HttpSession session) {
+        //UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        boolean bl;
+        if (user.getId() == null) {
+            user.setCreateTime(new Date());
+            user.setPassword("111111");
+            user.setEnable(true);
+            if (user.getRoleId() == StaticVar.USERS_TYPE1) { //服务商
+                Serviceinfo info = serviceinfoServic.selectServiceinfoById(user.getParentId());
+                user.setType(StaticVar.USERS_TYPE1);
+                user.setParentCode(info.getCode());
+            }else if (user.getRoleId() == StaticVar.USERS_TYPE2) { //物业
+                Propertyinfo info = propertyinfoServic.selectPropertyinfoById(user.getParentId());
+                user.setType(StaticVar.USERS_TYPE2);
+                user.setParentCode(info.getCode());
+            }else if (user.getRoleId() == StaticVar.USERS_TYPE3) {
+                Housinginfo info = housinginfoServic.selectHousinginfoById(user.getParentId());
+                user.setType(StaticVar.USERS_TYPE3);
+                user.setParentCode(info.getCode());
+            }
+            bl = usersService.insertUser(user);
+        }else {
+            bl = usersService.updateUser(user);
+        }
         JSONResult obj = new JSONResult();
         obj.setSuccess(bl);
         return obj;
@@ -161,17 +191,17 @@ public class UserController {
      * 打开修改User页面
      *
      * @param id
-     * @param request
+     * @param session
      * @param model
      * @return
      */
     @RequestMapping(value = "/updateUser")
-    public String updateUser(Integer id, HttpServletRequest request, Model model) {
-        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        String parentCode = user.getParentCode();
+    public String updateUser(Integer id, HttpSession session, Model model) {
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        String parentCode = loginUser.getParentCode();
         List<ParentCustom> parentList = usersService.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
-        List<Role> roleList = roleService.queryAllRoleList(1);
+        List<Role> roleList = roleService.queryAllRoleList(StaticVar.USERS_TYPE99);
         model.addAttribute("roleList", roleList);
         Users userInfo = usersService.selectByPrimaryKey(id);
         model.addAttribute("user", userInfo);
@@ -230,7 +260,7 @@ public class UserController {
     @ResponseBody
     public JSONResult activeUser(Users user) {
         JSONResult obj = new JSONResult();
-        boolean bl = usersService.saveOrUpdateUser(user);
+        boolean bl = usersService.updateUser(user);
         obj.setSuccess(bl);
         return obj;
     }
