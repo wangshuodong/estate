@@ -1237,7 +1237,7 @@ table.dataTable thead .sorting_desc {background-image:url(../images/dataTable/so
 .dataTables_wrapper .dataTables_length {float: left;padding-bottom:20px}
 .dataTables_wrapper .dataTables_length .select{ width:50px}
 .dataTables_wrapper .dataTables_filter {float: right;text-align: right; margin-top: -50px;}
-.dataTables_wrapper .dataTables_filter .input-text { width:auto}
+.dataTables_wrapper .dataTables_filter .input-text { width:auto; margin-left: 5px}
 .dataTables_wrapper .dataTables_info {clear: both;float: left;padding-top:10px;font-size:14px; color:#666}
 .dataTables_wrapper .dataTables_paginate {float: right;padding-top:10px;text-align: right}
 .dataTables_wrapper .dataTables_paginate .paginate_button {border: 1px solid #ccc;cursor: pointer;display: inline-block;margin-left: 2px;text-align: center;text-decoration: none;color: #666;height: 26px;line-height: 26px;text-decoration: none;margin: 0 0px 6px 6px;padding: 0 10px;font-size:14px}
