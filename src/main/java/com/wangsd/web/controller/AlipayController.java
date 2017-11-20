@@ -38,16 +38,16 @@ public class AlipayController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "/alipayEcoCplifeCommunityCreateRequest")
+    @RequestMapping(value = "/communityCreateRequest")
     @ResponseBody
-    public JSONResult alipayEcoCplifeCommunityCreateRequest(Integer id, HttpSession session) {
+    public JSONResult communityCreateRequest(Integer id, HttpSession session) {
         JSONResult jsonResult = new JSONResult();
         //获取公钥 私钥
         UserCustom info = (UserCustom) session.getAttribute("userInfo");
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, info.getAppId(), info.getMerchantPrivateKey(),
                 StaticVar.format, StaticVar.charset, info.getAlipayPublicKey(), StaticVar.sign_type);
-        housing = alipayService.alipayEcoCplifeCommunityCreateRequest(housing, housing.getToken(), alipayClient);
+        housing = alipayService.communityCreateRequest(housing, housing.getToken(), alipayClient);
         boolean bl = housinginfoServic.saveOrUpdateHousing(housing);
         jsonResult.setSuccess(bl);
         return jsonResult;

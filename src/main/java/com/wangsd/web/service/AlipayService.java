@@ -105,6 +105,16 @@ public interface AlipayService {
     public List<BillAccountCustom> billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, AlipayClient alipayClient);
 
     /**
+     * 修改已上传的物业费账单数据
+     * @param community_id
+     * @param billList
+     * @param token
+     * @param alipayClient
+     * @return
+     */
+    public void billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, AlipayClient alipayClient);
+
+    /**
      * 删除已上传的物业账单数据
      * @param community_id
      * @param bill_entry_id_list

@@ -377,6 +377,43 @@ public class AlipayServiceImpl implements AlipayService {
         return null;
     }
 
+    public void billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, AlipayClient alipayClient) {
+        AlipayEcoCplifeBillModifyRequest request = new AlipayEcoCplifeBillModifyRequest();
+        JSONObject bizContent = new JSONObject();
+        bizContent.put("batch_id", Long.valueOf(System.currentTimeMillis()));
+        bizContent.put("community_id", community_id);
+        JSONArray jsonArray = new JSONArray();
+        for (BillAccountCustom billaccount : billList) {
+            JSONObject room_info_set = new JSONObject();
+            room_info_set.put("bill_entry_id", billaccount.getId());
+//            room_info_set.put("cost_type", billaccount.getCostType());
+            room_info_set.put("bill_entry_amount", billaccount.getBillEntryAmount());
+            room_info_set.put("acct_period", billaccount.getAcctPeriod());
+            room_info_set.put("release_day", billaccount.getReleaseDay());
+            room_info_set.put("deadline", billaccount.getDeadline());
+            if (billaccount.getOwnerName() != null) {
+                room_info_set.put("remark_str", billaccount.getOwnerName());
+            }
+            jsonArray.add(room_info_set);
+        }
+        bizContent.put("bill_entry_list ", jsonArray);
+        request.setBizContent(bizContent.toString());
+        if (token != null) {
+            request.putOtherTextParam("app_auth_token", token);
+        }
+        try {
+            AlipayEcoCplifeBillModifyResponse response = alipayClient.execute(request);
+            logger.debug("----response----" + response.getBody());
+            if("10000".equals(response.getCode())){
+                logger.debug("调用成功");
+            } else {
+                logger.info("调用失败");
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 删除已上传的物业账单数据
      * @param community_id
