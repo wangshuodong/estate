@@ -35,8 +35,8 @@ public class ServiceinfoController {
      */
     @RequestMapping(value = "serviceList")
     public String serviceList(Model model, HttpSession session) {
-        UserCustom obj = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = obj.getParentCode();
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        String parentCode = loginUser.getParentCode();
         List<Serviceinfo> list = serviceinfoServic.queryAllList(parentCode);
         model.addAttribute("serviceList", list);
         return "/service/service-list";
@@ -50,8 +50,8 @@ public class ServiceinfoController {
      */
     @RequestMapping(value = "addService")
     public String addService(Model model, HttpSession session) {
-        UserCustom obj = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = obj.getParentCode();
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        String parentCode = loginUser.getParentCode();
         List<ParentCustom> parentList = serviceinfoServic.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
         return "/service/service-info";
@@ -66,8 +66,8 @@ public class ServiceinfoController {
      */
     @RequestMapping(value = "updateService")
     public String updateService(Integer id, Model model, HttpSession session) {
-        UserCustom obj = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = obj.getParentCode();
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        String parentCode = loginUser.getParentCode();
         List<ParentCustom> parentList = serviceinfoServic.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
         Serviceinfo serviceinfo = serviceinfoServic.selectServiceinfoById(id);
@@ -84,7 +84,6 @@ public class ServiceinfoController {
     @RequestMapping(path = "/saveOrUpdateService", method = RequestMethod.POST)
     @ResponseBody
     public JSONResult saveOrUpdateService(Serviceinfo serviceinfo, Model model) {
-        JSONResult obj = new JSONResult();
         if (serviceinfo.getId() == null) {  //新增
             Serviceinfo parent = serviceinfoServic.selectServiceinfoById(serviceinfo.getParentId());
             String maxCode = serviceinfoServic.selectMaxByParentCode(serviceinfo.getParentId());
@@ -107,8 +106,9 @@ public class ServiceinfoController {
             }
         }
         boolean bl = serviceinfoServic.saveOrUpdateService(serviceinfo);
-        obj.setSuccess(bl);
-        return obj;
+        JSONResult jsonResult = new JSONResult();
+        jsonResult.setSuccess(bl);
+        return jsonResult;
     }
 
     /**

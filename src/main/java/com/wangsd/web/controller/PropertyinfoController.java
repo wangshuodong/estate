@@ -40,8 +40,8 @@ public class PropertyinfoController {
      */
     @RequestMapping(value = "propertyList")
     public String propertyList(Model model, HttpSession session) {
-        UserCustom obj = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = obj.getParentCode();
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        String parentCode = loginUser.getParentCode();
         List<Propertyinfo> list = propertyinfoServic.queryAllList(parentCode);
         model.addAttribute("propertyList", list);
         return "/property/property-list";
@@ -56,8 +56,8 @@ public class PropertyinfoController {
      */
     @RequestMapping(value = "addProperty")
     public String addProperty(Model model, HttpSession session) {
-        UserCustom obj = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = obj.getParentCode();
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        String parentCode = loginUser.getParentCode();
         List<ParentCustom> parentList = propertyinfoServic.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
         return "/property/property-info";
@@ -73,8 +73,8 @@ public class PropertyinfoController {
      */
     @RequestMapping(value = "updateProperty")
     public String updateProperty(Integer id, Model model, HttpSession session) {
-        UserCustom obj = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = obj.getParentCode();
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        String parentCode = loginUser.getParentCode();
         List<ParentCustom> parentList = propertyinfoServic.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
         Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(id);
@@ -92,7 +92,6 @@ public class PropertyinfoController {
     @RequestMapping(path = "/saveOrUpdateProperty", method = RequestMethod.POST)
     @ResponseBody
     public JSONResult saveOrUpdateProperty(Propertyinfo propertyinfo, Model model) {
-        JSONResult obj = new JSONResult();
         if (propertyinfo.getId() == null) {  //新增
             String code;
             //查询上级物业
@@ -124,8 +123,9 @@ public class PropertyinfoController {
             }
         }
         boolean bl = propertyinfoServic.saveOrUpdateProperty(propertyinfo);
-        obj.setSuccess(bl);
-        return obj;
+        JSONResult jsonResult = new JSONResult();
+        jsonResult.setSuccess(bl);
+        return jsonResult;
     }
 
     /**

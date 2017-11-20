@@ -33,12 +33,12 @@ public class RoominfoController {
 
     @RequestMapping("/roominfoList")
     public String roominfoList(RoominfoCustom query, HttpServletRequest request, Model model) {
-        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(user.getParentCode());
+        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         String departmentCode;
         if (query.getParentId() == null || query.getParentId() == 0) {
-            departmentCode = user.getParentCode();
+            departmentCode = loginUser.getParentCode();
         } else {
             Housinginfo parent = housinginfoServic.selectHousinginfoById(query.getParentId());
             departmentCode = parent.getCode();
@@ -52,16 +52,16 @@ public class RoominfoController {
 
     @RequestMapping("/addRoominfo")
     public String addRoominfo(HttpServletRequest request, Model model) {
-        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(user.getParentCode());
+        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         return "/roominfo/roominfo-info";
     }
 
     @RequestMapping("/updateRoominfo")
     public String updateRoominfo(Integer id, HttpServletRequest request, Model model) {
-        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(user.getParentCode());
+        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         Roominfo roominfo = roominfoService.selectRoominfoById(id);
         model.addAttribute("roominfo", roominfo);

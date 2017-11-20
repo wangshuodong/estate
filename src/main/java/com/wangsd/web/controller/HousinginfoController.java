@@ -41,12 +41,12 @@ public class HousinginfoController {
      */
     @RequestMapping(value = "housingList")
     public String housingList(HousinginfoCustom query, Model model, HttpSession session) {
-        UserCustom user = (UserCustom) session.getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(user.getParentCode());
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         String parentCode;
         if (query.getParentId() == null || query.getParentId() == 0) {
-            parentCode = user.getParentCode();
+            parentCode = loginUser.getParentCode();
         } else {
             Propertyinfo parent = propertyinfoServic.selectPropertyinfoById(query.getParentId());
             parentCode = parent.getCode();
@@ -65,8 +65,8 @@ public class HousinginfoController {
      */
     @RequestMapping(value = "addHousing")
     public String addHousing(Model model, HttpSession session) {
-        UserCustom obj = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = obj.getParentCode();
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        String parentCode = loginUser.getParentCode();
         List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
         return "/housing/housing-info";
@@ -99,7 +99,6 @@ public class HousinginfoController {
     @RequestMapping(path = "/saveOrUpdateHousing", method = RequestMethod.POST)
     @ResponseBody
     public JSONResult saveOrUpdateHousing(Housinginfo housinginfo, Model model) {
-        JSONResult obj = new JSONResult();
         if (housinginfo.getId() == null) {  //新增
             Propertyinfo parent = propertyinfoServic.selectPropertyinfoById(housinginfo.getParentId());
             String maxCode = housinginfoServic.selectMaxByParentCode(housinginfo.getParentId());
@@ -124,8 +123,9 @@ public class HousinginfoController {
             }
         }
         boolean bl = housinginfoServic.saveOrUpdateHousing(housinginfo);
-        obj.setSuccess(bl);
-        return obj;
+        JSONResult jsonResult = new JSONResult();
+        jsonResult.setSuccess(bl);
+        return jsonResult;
     }
 
     /**
