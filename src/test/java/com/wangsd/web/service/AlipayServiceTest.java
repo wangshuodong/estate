@@ -4,7 +4,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.wangsd.core.feature.test.TestSupport;
 import com.wangsd.core.util.StaticVar;
-import com.wangsd.web.model.Housinginfo;
+import com.wangsd.web.modelCustom.HousinginfoCustom;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,11 +33,11 @@ public class AlipayServiceTest extends TestSupport {
      * @throws Exception
      */
     @Test
-    public void alipayEcoCplifeCommunityCreateRequest() throws Exception {
+    public void communityCreateRequest() throws Exception {
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, appid, privateKey,
                 StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type);
-        Housinginfo housing = housinginfoServic.selectHousinginfoById(9);
-        housing = alipayService.alipayEcoCplifeCommunityCreateRequest(housing, "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42", alipayClient);
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
+        housing = alipayService.communityCreateRequest(housing, "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42", alipayClient);
 
     }
 
@@ -46,7 +46,7 @@ public class AlipayServiceTest extends TestSupport {
      * @throws Exception
      */
     @Test
-    public void AlipayEcoCplifeCommunityModifyRequest() throws Exception {
+    public void communityModifyRequest() throws Exception {
 
     }
 
@@ -55,10 +55,10 @@ public class AlipayServiceTest extends TestSupport {
      * @throws Exception
      */
     @Test
-    public void AlipayEcoCplifeCommunityBatchqueryRequest() throws Exception {
+    public void communityBatchqueryRequest() throws Exception {
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, appid, privateKey,
                 StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type);
-        alipayService.alipayEcoCplifeCommunityBatchqueryRequest(null, null, alipayClient);
+        alipayService.communityBatchqueryRequest("PENDING_ONLINE", "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42", alipayClient);
     }
 
     /**
@@ -66,10 +66,11 @@ public class AlipayServiceTest extends TestSupport {
      * @return
      */
     @Test
-    public void AlipayEcoCplifeCommunityDetailsQueryRequest() throws Exception {
+    public void communityDetailsQueryRequest() throws Exception {
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, appid, privateKey,
                 StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type);
-        alipayService.alipayEcoCplifeCommunityDetailsQueryRequest("", null, alipayClient);
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
+        alipayService.communityDetailsQueryRequest(housing.getCommunityId(), housing.getToken(), alipayClient);
     }
 
     /**
@@ -77,14 +78,14 @@ public class AlipayServiceTest extends TestSupport {
      * @throws Exception
      */
     @Test
-    public void AlipayEcoCplifeBillDeleteRequest() throws Exception {
+    public void billDeleteRequest() throws Exception {
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, appid, privateKey,
                 StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type);
         String community_id = "ASAYZA2P45001";
         String token = "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42";
         List<String> idList = new ArrayList<String>();
         idList.add("201711170000001");
-        alipayService.alipayEcoCplifeBillDeleteRequest(community_id, idList, token, alipayClient);
+        alipayService.billDeleteRequest(community_id, idList, token, alipayClient);
     }
 
 }

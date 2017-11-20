@@ -5,7 +5,7 @@ import java.util.Date;
 public class Billaccount {
     private Integer id;
 
-    private Integer departmentId;
+    private Integer housingId;
 
     private Integer roominfoId;
 
@@ -43,12 +43,12 @@ public class Billaccount {
         this.id = id;
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
+    public Integer getHousingId() {
+        return housingId;
     }
 
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setHousingId(Integer housingId) {
+        this.housingId = housingId;
     }
 
     public Integer getRoominfoId() {

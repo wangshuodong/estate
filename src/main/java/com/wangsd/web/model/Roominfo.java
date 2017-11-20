@@ -29,6 +29,8 @@ public class Roominfo {
 
     private Boolean deletestatus;
 
+    private Boolean status;
+
     private Date createTime;
 
     public Integer getId() {
@@ -133,6 +135,14 @@ public class Roominfo {
 
     public void setDeletestatus(Boolean deletestatus) {
         this.deletestatus = deletestatus;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Date getCreateTime() {

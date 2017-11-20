@@ -48,12 +48,13 @@
         <table tableName="department" domainObjectName="Department">
         	<generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        <table tableName="billaccount" domainObjectName="Billaccount"/>
+        
         <table tableName="printinfo"/>
         <table tableName="serviceinfo"/>
         <table tableName="users"/>
         <table tableName="housinginfo"/>
         <table tableName="propertyinfo"/>
+        <table tableName="billaccount"/>
         -->
         <table tableName="roominfo"/>
     </context>

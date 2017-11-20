@@ -3,7 +3,7 @@
 <mapper namespace="com.wangsd.web.dao.BillaccountMapper" >
   <resultMap id="BaseResultMap" type="com.wangsd.web.model.Billaccount" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="housing_id" property="housingId" jdbcType="INTEGER" />
     <result column="roominfo_id" property="roominfoId" jdbcType="INTEGER" />
     <result column="cost_type" property="costType" jdbcType="VARCHAR" />
     <result column="bill_entry_amount" property="billEntryAmount" jdbcType="DOUBLE" />
@@ -78,7 +78,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, department_id, roominfo_id, cost_type, bill_entry_amount, acct_period, release_day, 
+    id, housing_id, roominfo_id, cost_type, bill_entry_amount, acct_period, release_day, 
     deadline, relate_id, status, payDate, payType, payStatus, deleteStatus, alipay_trade_no, 
     weixin_trade_no
   </sql>
@@ -113,13 +113,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.wangsd.web.model.Billaccount" >
-    insert into billaccount (id, department_id, roominfo_id, 
+    insert into billaccount (id, housing_id, roominfo_id, 
       cost_type, bill_entry_amount, acct_period, 
       release_day, deadline, relate_id, 
       status, payDate, payType, 
       payStatus, deleteStatus, alipay_trade_no, 
       weixin_trade_no)
-    values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{roominfoId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{housingId,jdbcType=INTEGER}, #{roominfoId,jdbcType=INTEGER}, 
       #{costType,jdbcType=VARCHAR}, #{billEntryAmount,jdbcType=DOUBLE}, #{acctPeriod,jdbcType=VARCHAR}, 
       #{releaseDay,jdbcType=VARCHAR}, #{deadline,jdbcType=VARCHAR}, #{relateId,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{paydate,jdbcType=TIMESTAMP}, #{paytype,jdbcType=INTEGER}, 
@@ -132,8 +132,8 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="departmentId != null" >
-        department_id,
+      <if test="housingId != null" >
+        housing_id,
       </if>
       <if test="roominfoId != null" >
         roominfo_id,
@@ -182,8 +182,8 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="departmentId != null" >
-        #{departmentId,jdbcType=INTEGER},
+      <if test="housingId != null" >
+        #{housingId,jdbcType=INTEGER},
       </if>
       <if test="roominfoId != null" >
         #{roominfoId,jdbcType=INTEGER},
@@ -241,8 +241,8 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.departmentId != null" >
-        department_id = #{record.departmentId,jdbcType=INTEGER},
+      <if test="record.housingId != null" >
+        housing_id = #{record.housingId,jdbcType=INTEGER},
       </if>
       <if test="record.roominfoId != null" >
         roominfo_id = #{record.roominfoId,jdbcType=INTEGER},
@@ -294,7 +294,7 @@
   <update id="updateByExample" parameterType="map" >
     update billaccount
     set id = #{record.id,jdbcType=INTEGER},
-      department_id = #{record.departmentId,jdbcType=INTEGER},
+      housing_id = #{record.housingId,jdbcType=INTEGER},
       roominfo_id = #{record.roominfoId,jdbcType=INTEGER},
       cost_type = #{record.costType,jdbcType=VARCHAR},
       bill_entry_amount = #{record.billEntryAmount,jdbcType=DOUBLE},
@@ -316,8 +316,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.wangsd.web.model.Billaccount" >
     update billaccount
     <set >
-      <if test="departmentId != null" >
-        department_id = #{departmentId,jdbcType=INTEGER},
+      <if test="housingId != null" >
+        housing_id = #{housingId,jdbcType=INTEGER},
       </if>
       <if test="roominfoId != null" >
         roominfo_id = #{roominfoId,jdbcType=INTEGER},
@@ -366,7 +366,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wangsd.web.model.Billaccount" >
     update billaccount
-    set department_id = #{departmentId,jdbcType=INTEGER},
+    set housing_id = #{housingId,jdbcType=INTEGER},
       roominfo_id = #{roominfoId,jdbcType=INTEGER},
       cost_type = #{costType,jdbcType=VARCHAR},
       bill_entry_amount = #{billEntryAmount,jdbcType=DOUBLE},
