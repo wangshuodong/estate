@@ -131,10 +131,10 @@
             },
             success: function(data){
                 if (data.success) {
-                    window.location.reload();
-                    layer.msg(data.message, {icon: 1});
+                    layer.msg("同步支付宝成功!", {icon: 1});
+                    //window.location.reload();
                 }else {
-                    layer.msg(data.message, {icon: 5});
+                    layer.msg("同步支付宝失败!", {icon: 5});
                 }
             },
             error:function(data) {

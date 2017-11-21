@@ -267,11 +267,11 @@ public class AlipayServiceImpl implements AlipayService {
         for (Roominfo room : roominfos) {
             JSONObject room_info_set = new JSONObject();
             room_info_set.put("out_room_id", room.getId());
-            if (room.getGroupName() != null) {
+            if (room.getGroupName() != null && !"".equals(room.getGroupName())) {
                 room_info_set.put("group ", room.getGroupName());
             }
             room_info_set.put("building", room.getBuilding());
-            if (room.getUnit() != null) {
+            if (room.getUnit() != null && !"".equals(room.getGroupName())) {
                 room_info_set.put(" unit ", room.getUnit());
             }
             room_info_set.put("room", room.getRoom());

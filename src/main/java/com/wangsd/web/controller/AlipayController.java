@@ -118,7 +118,7 @@ public class AlipayController {
         List<Roominfo> roolList = new ArrayList<Roominfo>();
         roolList.add(roominfo);
         boolean bl = alipayService.roominfoUploadRequest(housing.getCommunityId(), roolList, housing.getToken(), loginUser);
-        jsonResult.setSuccess(true);
+        jsonResult.setSuccess(bl);
         return jsonResult;
     }
 
