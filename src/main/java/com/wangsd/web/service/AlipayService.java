@@ -64,7 +64,7 @@ public interface AlipayService {
      * @param alipayClient
      * @return
      */
-    public boolean basicserviceModifyRequest(String community_id, String token, AlipayClient alipayClient);
+    public boolean basicserviceModifyRequest(String community_id, String status, String token, AlipayClient alipayClient);
 
     /**
      * 上传物业小区内部房屋信息

@@ -1,5 +1,7 @@
 package com.wangsd.web.controller;
 
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.StaticVar;
@@ -8,6 +10,7 @@ import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.service.AlipayService;
 import com.wangsd.web.service.HousinginfoServic;
 import com.wangsd.web.service.PropertyinfoServic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +35,11 @@ public class HousinginfoController {
     HousinginfoServic housinginfoServic;
     @Autowired
     PropertyinfoServic propertyinfoServic;
+    @Autowired
+    AlipayService alipayService;
 
     /**
-     *查询所有物业
+     *查询所有小区
      * @param model
      * @param session
      * @return
@@ -58,7 +63,7 @@ public class HousinginfoController {
     }
 
     /**
-     * 打开新增服务商页面
+     * 打开新增小区页面
      * @param model
      * @param session
      * @return
@@ -73,7 +78,7 @@ public class HousinginfoController {
     }
 
     /**
-     * 打开修改服务商页面
+     * 打开修改小区页面
      * @param id
      * @param model
      * @param session
@@ -91,7 +96,7 @@ public class HousinginfoController {
     }
 
     /**
-     * 新增或者修改服务商
+     * 新增或者修改小区
      * @param housinginfo
      * @param model
      * @return
@@ -129,14 +134,22 @@ public class HousinginfoController {
     }
 
     /**
-     *  删除服务商
+     *  删除小区
      * @param id
      * @return
      */
     @RequestMapping("/deleteHousing")
     @ResponseBody
-    public JSONResult deleteHousing(Integer id) {
+    public JSONResult deleteHousing(Integer id, HttpSession session) {
         JSONResult obj = new JSONResult();
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
+        //让小区在支付宝平台下线
+        if (housing.getStatus() != StaticVar.HOUSING_STATUS_NEW) {
+            AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                    StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
+            alipayService.basicserviceModifyRequest(housing.getCommunityId(), "OFFLINE", housing.getToken(), alipayClient);
+        }
         boolean delStatus = housinginfoServic.deleteHousingById(id);
         obj.setSuccess(delStatus);
         return obj;

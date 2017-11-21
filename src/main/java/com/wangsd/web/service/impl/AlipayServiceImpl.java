@@ -208,13 +208,13 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public boolean basicserviceModifyRequest(String community_id, String token, AlipayClient alipayClient) {
+    public boolean basicserviceModifyRequest(String community_id, String status, String token, AlipayClient alipayClient) {
         boolean retStatus = false;
         AlipayEcoCplifeBasicserviceModifyRequest request = new AlipayEcoCplifeBasicserviceModifyRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("community_id", community_id);
         bizContent.put("service_type", "PROPERTY_PAY_BILL_MODE");
-        bizContent.put("status", "ONLINE");
+        bizContent.put("status", status);
         bizContent.put("external_invoke_address", "https://www.alipayjf.com/rest/page/alipay_estate_return");
         request.setBizContent(bizContent.toString());
         if (token != null) {
@@ -272,8 +272,9 @@ public class AlipayServiceImpl implements AlipayService {
                 List<CplifeRoomInfoResp> roomInfoSet = response.getRoomInfoSet();
                 for(CplifeRoomInfoResp cprifr : roomInfoSet) {
                     Roominfo roominfo = new Roominfo();
-                    roominfo.setId(Integer.parseInt(cprifr.getOutRoomId()));
-                    roominfo.setRoomId(cprifr.getRoomId());
+                    roominfo.setId(Integer.parseInt(cprifr.getOutRoomId()));//商户系统小区房屋唯一ID标示.
+                            roominfo.setRoomId(cprifr.getRoomId());//支付宝系统房间唯一标示.
+                    roominfo.setStatus(true);//同步状态
                     retList.add(roominfo);
                 }
             } else {

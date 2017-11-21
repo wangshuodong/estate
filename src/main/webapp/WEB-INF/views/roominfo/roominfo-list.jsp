@@ -55,6 +55,9 @@
 						<td>${ item.ownerPhone }</td>
 						<td><fmt:formatDate value="${ item.entrydate }"  pattern="yyyy-MM-dd"/></td>
 						<td width="130">
+							<c:if test="${ item.status==false }">
+								<a title="同步支付宝" style="text-decoration:none" onclick="room_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
+							</c:if>
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
 						</td>
@@ -115,6 +118,28 @@
                     console.log(data.msg);
                 },
             });
+        });
+    }
+
+    function room_sync(id) {
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath }/rest/alipay/communityCreateRequest',
+            dataType: 'json',
+            data:{
+                id : id
+            },
+            success: function(data){
+                if (data.success) {
+                    window.location.reload();
+                    layer.msg(data.message, {icon: 1});
+                }else {
+                    layer.msg(data.message, {icon: 5});
+                }
+            },
+            error:function(data) {
+                console.log(data.msg);
+            },
         });
     }
 </script>

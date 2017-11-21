@@ -50,10 +50,18 @@
 						<c:if test="${ item.status=='OFFLINE' }"><td>下线</td></c:if>
 						<td width="120">
 							<%--<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>--%>
-							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a><br>
+							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
 							<c:if test="${ item.status=='NEW' }">
 								<a title="同步支付宝" style="text-decoration:none" onclick="housing_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
 							</c:if>
+							<c:if test="${ item.status=='PENDING_ONLINE' }">
+								<a title="初始化" style="text-decoration:none" onclick="initialize(${item.id })" href="javascript:;" class="c-success">初始化</a>
+							</c:if>
+							<c:if test="${ item.status=='OFFLINE' }">
+								<a title="申请服务上线" style="text-decoration:none" onclick="basicservice(${item.id })" href="javascript:;" class="c-success">申请服务上线</a>
+							</c:if>
+								<a title="二维码" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">二维码</a>
+								<a title="短信催收" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">短信催收</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -119,7 +127,51 @@
     function housing_sync(id) {
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath }/rest/alipay/alipayEcoCplifeCommunityCreateRequest',
+            url: '${pageContext.request.contextPath }/rest/alipay/communityCreateRequest',
+            dataType: 'json',
+            data:{
+                id : id
+            },
+            success: function(data){
+                if (data.success) {
+                    window.location.reload();
+                    layer.msg(data.message, {icon: 1});
+                }else {
+                    layer.msg(data.message, {icon: 5});
+                }
+            },
+            error:function(data) {
+                console.log(data.msg);
+            },
+        });
+    }
+
+    function initialize(id) {
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath }/rest/alipay/basicserviceInitializeRequest',
+            dataType: 'json',
+            data:{
+                id : id
+            },
+            success: function(data){
+                if (data.success) {
+                    window.location.reload();
+                    layer.msg(data.message, {icon: 1});
+                }else {
+                    layer.msg(data.message, {icon: 5});
+                }
+            },
+            error:function(data) {
+                console.log(data.msg);
+            },
+        });
+    }
+
+    function basicservice(id) {
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath }/rest/alipay/basicserviceModifyRequest',
             dataType: 'json',
             data:{
                 id : id

@@ -29,9 +29,9 @@
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>单元：</label>
+            <label class="form-label col-xs-4 col-sm-2">单元：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${roominfo.unit}" placeholder="单元" name="unit" required>
+                <input type="text" class="input-text radius size-L" value="${roominfo.unit}" placeholder="单元" name="unit">
             </div>
         </div>
         <div class="row cl">
