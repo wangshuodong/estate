@@ -67,6 +67,8 @@ public interface HousinginfoServic {
      */
     public boolean updateHousing(Housinginfo housinginfo);
 
+    public boolean updateHousingByCommunityId(String status, String communityId);
+
     /**
      * 根据id删除小区
      * @param id

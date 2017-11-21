@@ -50,18 +50,16 @@ public class AlipayController {
         JSONResult jsonResult = new JSONResult();
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
-                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         //调用支付宝接口
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
-        housing = alipayService.communityCreateRequest(housing, housing.getToken(), alipayClient);
-        boolean bl = housinginfoServic.saveOrUpdateHousing(housing);
+        boolean bl = alipayService.communityCreateRequest(housing, housing.getToken(), loginUser);
         jsonResult.setSuccess(bl);
         return jsonResult;
     }
 
     /**
      * 初始化小区基础服务
+     *
      * @param id
      * @param session
      * @return
@@ -72,17 +70,16 @@ public class AlipayController {
         JSONResult jsonResult = new JSONResult();
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
-                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         //调用支付宝接口
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
-        boolean bl = alipayService.basicserviceInitializeRequest(housing.getCommunityId(), housing.getToken(), alipayClient);
+        boolean bl = alipayService.basicserviceInitializeRequest(housing.getCommunityId(), housing.getToken(), loginUser);
         jsonResult.setSuccess(bl);
         return jsonResult;
     }
 
     /**
      * 修改小区物业基础服务(申请服务上线)
+     *
      * @param id
      * @param session
      * @return
@@ -93,17 +90,16 @@ public class AlipayController {
         JSONResult jsonResult = new JSONResult();
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
-                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         //调用支付宝接口
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
-        boolean bl = alipayService.basicserviceModifyRequest(housing.getCommunityId(), "ONLINE", housing.getToken(), alipayClient);
+        boolean bl = alipayService.basicserviceModifyRequest(housing.getCommunityId(), "ONLINE", housing.getToken(), loginUser);
         jsonResult.setSuccess(bl);
         return jsonResult;
     }
 
     /**
      * 上传物业小区内部房屋信息
+     *
      * @param id
      * @param session
      * @return
@@ -121,10 +117,7 @@ public class AlipayController {
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(roominfo.getParentId());
         List<Roominfo> roolList = new ArrayList<Roominfo>();
         roolList.add(roominfo);
-        List<Roominfo> retList = alipayService.roominfoUploadRequest(housing.getCommunityId(), roolList, housing.getToken(), alipayClient);
-        for (Roominfo info : retList) {
-            //roominfoService.saveOrUpdateUser()
-        }
+        boolean bl = alipayService.roominfoUploadRequest(housing.getCommunityId(), roolList, housing.getToken(), loginUser);
         jsonResult.setSuccess(true);
         return jsonResult;
     }

@@ -91,6 +91,20 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     }
 
     @Override
+    public boolean updateHousingByCommunityId(String status, String communityId) {
+        Housinginfo housing = new Housinginfo();
+        housing.setStatus(status);
+        HousinginfoExample example = new HousinginfoExample();
+        example.createCriteria().andCommunityIdEqualTo(communityId);
+        int ret = housinginfoMapper.updateByExampleSelective(housing, example);
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public boolean deleteHousingById(Integer id){
         Housinginfo housinginfo = new Housinginfo();
         housinginfo.setId(id);

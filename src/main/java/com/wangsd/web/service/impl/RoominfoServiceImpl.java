@@ -7,7 +7,6 @@ import com.wangsd.web.service.RoominfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,21 +26,31 @@ public class RoominfoServiceImpl implements RoominfoService {
     }
 
     @Override
-    public int deleteRoominfo(int id) {
-        int num = roominfoMapper.deleteByPrimaryKey(id);
-        return num;
+    public boolean deleteRoominfo(int id) {
+        Roominfo roominfo = new Roominfo();
+        roominfo.setId(id);
+        roominfo.setDeletestatus(true);
+        int ret = roominfoMapper.updateByPrimaryKeySelective(roominfo);
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public boolean saveOrUpdateUser(Roominfo roominfo) {
-        int ret = 0;
-        roominfo.setAddress(roominfo.getGroupName() + roominfo.getBuilding() + roominfo.getUnit() + roominfo.getRoom());
-        if (roominfo.getId() != null) {
-            ret = roominfoMapper.updateByPrimaryKeySelective(roominfo);
+    public boolean insertRoominfo(Roominfo roominfo) {
+        int ret = roominfoMapper.insertSelective(roominfo);
+        if (ret > 0) {
+            return true;
         } else {
-            roominfo.setCreateTime(new Date());
-            ret = roominfoMapper.insertSelective(roominfo);
+            return false;
         }
+    }
+
+    @Override
+    public boolean updateRoominfo(Roominfo roominfo) {
+        int ret = roominfoMapper.updateByPrimaryKeySelective(roominfo);
         if (ret > 0) {
             return true;
         } else {

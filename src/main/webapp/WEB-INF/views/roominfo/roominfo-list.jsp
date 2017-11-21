@@ -115,7 +115,7 @@
                     }
                 },
                 error:function(data) {
-                    console.log(data.msg);
+                    layer.msg('error!',{icon:1,time:1000});
                 },
             });
         });
@@ -124,7 +124,7 @@
     function room_sync(id) {
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath }/rest/alipay/communityCreateRequest',
+            url: '${pageContext.request.contextPath }/rest/alipay/roominfoUploadRequest',
             dataType: 'json',
             data:{
                 id : id
@@ -138,7 +138,7 @@
                 }
             },
             error:function(data) {
-                console.log(data.msg);
+                layer.msg('error!',{icon:1,time:1000});
             },
         });
     }

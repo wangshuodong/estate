@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2017-11-20 23:33:09
+Date: 2017-11-21 18:35:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -326,11 +326,12 @@ CREATE TABLE `roominfo` (
   `status` tinyint(1) DEFAULT '0' COMMENT 'false没有同步，true同步',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1011 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1012 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of roominfo
 -- ----------------------------
+INSERT INTO `roominfo` VALUES ('1011', '9', null, '', '6栋', '', '801', '6栋801', '汪铄东', '', '', '2017-11-09 00:00:00', '0', '0', '2017-11-21 11:23:59');
 
 -- ----------------------------
 -- Table structure for serviceinfo
@@ -350,13 +351,14 @@ CREATE TABLE `serviceinfo` (
   `alipay_public_key` varchar(2555) DEFAULT NULL COMMENT '支付宝公钥',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of serviceinfo
 -- ----------------------------
 INSERT INTO `serviceinfo` VALUES ('1', '001', '总公司', null, null, null, null, null, null, null, null, '2017-11-19 22:09:21');
 INSERT INTO `serviceinfo` VALUES ('8', '0010001', '1级服务商', '', '', '', '', '1', '2016082000290066', 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJW2B/Wqka+T7s1HW/rFFKweF7fN+vtqmhkIvtXUoQi3+fiZKZjc1KHGLM8YS9BTUFNDcSvRva23qRlGp4ypbkl+QSx2spc0A2TKllVIBu9yWAvBIEVNBo3s8rRK1VWH8qKtMyYc2Q1rebeeEpFSJAjXGS99JS68GXo1QwDbH9kNAgMBAAECgYAHNHV5mzXbr1DkzDRfAzEVf3VAwUb85op3/fXBMLR3SPNcxXI9CxOonXL2nIK5iejpuOsvYq6wN5CJyN6zZEwMZpEXQ8ELhencbgYgBvBmvyPq5rnUb3MEt/W2B3EmgaCqYTfk0GWa50ybSh94ynBfK+DRy8NHYQg9kYzOfJt2gQJBAMUJ2wVR6PE2iK24jvcX/ajqE7kHRFf0T6bOKA4TRxxDMGNCH189RmXpxoPjrzsofKdh+qgvbLpz3e7cOG18Wp0CQQDCgqeSyxFecmmDvaDkn0Oj4GkgOdz6T23rsCfSVXWaBII0+nBlbWglQc/DwohTmdq8TBe6FnTfbOhDnIMo0DUxAkALXuQ6zF1K/kCo9cuaStIim0+ED/1LrheioqcBGO+zm9UBBWHWFy0m2HTSS6NjIJUA+9CBQCtgHyuhiyfeeZypAkBD4sfLgtYgCXxr/03dHPzFgDgQiEFolzo87PEpBqyRwYsUJGf/7kxP3IU/xHBCBUuDNmd9igLmS6NQnZplLy2xAkEAuIDbFGy34R8rEI5vXcqcMsn0tl5jBHSzbFcN1+3vz8dfudjl0RTqqpDXI1vtgbOph+NG3TVkSYbk0knjDNG15A==', 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB', '2017-11-19 22:45:06');
+INSERT INTO `serviceinfo` VALUES ('9', '0010002', 'wegw', '', '', '', '', '1', null, null, null, '2017-11-21 16:40:32');
 
 -- ----------------------------
 -- Table structure for users
@@ -376,10 +378,11 @@ CREATE TABLE `users` (
   `type` int(11) DEFAULT NULL COMMENT '1代表服务商，2代表物业，3代表小区',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES ('1', '管理员', 'admin', '123456', '1', '001', '99', '17784495260', 'wangsd@163.com', '1', null, '2017-11-19 22:08:54');
 INSERT INTO `users` VALUES ('13', '', '服务商', '111111', '8', '0010001', '1', '', '', '1', '1', '2017-11-20 17:10:07');
+INSERT INTO `users` VALUES ('14', '', 'wewh', '111111', '9', '0010002', '1', '', '', '1', '1', '2017-11-21 16:40:45');

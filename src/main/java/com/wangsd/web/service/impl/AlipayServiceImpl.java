@@ -4,21 +4,24 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.CplifeRoomInfoResp;
 import com.alipay.api.request.*;
 import com.alipay.api.response.*;
+import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
+import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.AlipayService;
 import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.RoominfoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,16 +34,21 @@ public class AlipayServiceImpl implements AlipayService {
 
     @Autowired
     HousinginfoServic housinginfoServic;
+    @Autowired
+    RoominfoService roominfoService;
 
     /**
      * 同步小区到支付宝
+     *
      * @param housing
      * @param token
-     * @param alipayClient
+     * @param loginUser
      * @return
      */
     @Override
-    public HousinginfoCustom communityCreateRequest(HousinginfoCustom housing, String token, AlipayClient alipayClient) {
+    public boolean communityCreateRequest(HousinginfoCustom housing, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeCommunityCreateRequest request = new AlipayEcoCplifeCommunityCreateRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("community_name", housing.getName());
@@ -60,11 +68,12 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeCommunityCreateResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
                 //执行成功返回支付宝的小区统一编号和状态
                 housing.setCommunityId(response.getCommunityId());
                 housing.setStatus(response.getStatus());
+                return housinginfoServic.updateHousing(housing);
             } else {
                 logger.info("调用失败");
             }
@@ -72,18 +81,21 @@ public class AlipayServiceImpl implements AlipayService {
             logger.info(e.getMessage());
             e.printStackTrace();
         }
-        return housing;
+        return false;
     }
 
     /**
      * 变更物业小区信息
+     *
      * @param housing
      * @param token
-     * @param alipayClient
+     * @param loginUser
      * @return
      */
     @Override
-    public Housinginfo communityModifyRequest(Housinginfo housing, String token, AlipayClient alipayClient) {
+    public boolean communityModifyRequest(Housinginfo housing, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeCommunityModifyRequest request = new AlipayEcoCplifeCommunityModifyRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("community_name", housing.getName());
@@ -101,10 +113,11 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeCommunityModifyResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
                 //执行成功返回支付宝的小区统一编号和状态
                 housing.setStatus(response.getStatus());
+                return housinginfoServic.updateHousing(housing);
             } else {
                 logger.info("调用失败");
             }
@@ -112,18 +125,20 @@ public class AlipayServiceImpl implements AlipayService {
             logger.info(e.getMessage());
             e.printStackTrace();
         }
-        return housing;
+        return false;
     }
 
     /**
      * 查询单个物业小区信息
+     *
      * @param community_id
      * @param token
-     * @param alipayClient
+     * @param loginUser
      * @return
      */
-    public String communityDetailsQueryRequest(String community_id, String token, AlipayClient alipayClient) {
-        String retStatus = null;
+    public String communityDetailsQueryRequest(String community_id, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeCommunityDetailsQueryRequest request = new AlipayEcoCplifeCommunityDetailsQueryRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("community_id", community_id);
@@ -134,9 +149,10 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeCommunityDetailsQueryResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
-                //执行成功返回支付宝的小区统一编号和状态
+                //执行成功返回支付宝推广二维码图片链接
+                return response.getQrCodeImage();
             } else {
                 logger.info("调用失败");
             }
@@ -144,17 +160,20 @@ public class AlipayServiceImpl implements AlipayService {
             logger.info(e.getMessage());
             e.printStackTrace();
         }
-        return retStatus;
+        return null;
     }
 
     /**
      * 批量查询支付宝小区编号
+     *
      * @param status
      * @param token
-     * @param alipayClient
+     * @param loginUser
      * @return
      */
-    public void communityBatchqueryRequest(String status, String token, AlipayClient alipayClient) {
+    public void communityBatchqueryRequest(String status, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeCommunityBatchqueryRequest request = new AlipayEcoCplifeCommunityBatchqueryRequest();
         if (status != null) {
             JSONObject bizContent = new JSONObject();
@@ -167,7 +186,7 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeCommunityBatchqueryResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
                 //执行成功返回支付宝的小区统一编号和状态
             } else {
@@ -180,8 +199,9 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public boolean basicserviceInitializeRequest(String community_id, String token, AlipayClient alipayClient) {
-        boolean retStatus = false;
+    public boolean basicserviceInitializeRequest(String community_id, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeBasicserviceInitializeRequest request = new AlipayEcoCplifeBasicserviceInitializeRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("community_id", community_id);
@@ -194,22 +214,22 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeBasicserviceInitializeResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
-                retStatus = true;
+                return housinginfoServic.updateHousingByCommunityId(response.getStatus(), community_id);
             } else {
                 logger.info("调用失败");
-                retStatus = false;
             }
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        return retStatus;
+        return false;
     }
 
     @Override
-    public boolean basicserviceModifyRequest(String community_id, String status, String token, AlipayClient alipayClient) {
-        boolean retStatus = false;
+    public boolean basicserviceModifyRequest(String community_id, String status, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeBasicserviceModifyRequest request = new AlipayEcoCplifeBasicserviceModifyRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("community_id", community_id);
@@ -223,21 +243,22 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeBasicserviceModifyResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
-                retStatus = true;
+                return housinginfoServic.updateHousingByCommunityId(response.getStatus(), community_id);
             } else {
                 logger.info("调用失败");
-                retStatus = false;
             }
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        return retStatus;
+        return false;
     }
+
     @Override
-    public List<Roominfo> roominfoUploadRequest(String community_id, List<Roominfo> roominfos, String token, AlipayClient alipayClient) {
-        List<Roominfo> retList = null;
+    public boolean roominfoUploadRequest(String community_id, List<Roominfo> roominfos, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeRoominfoUploadRequest request = new AlipayEcoCplifeRoominfoUploadRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("batch_id", Long.valueOf(System.currentTimeMillis()));
@@ -265,17 +286,16 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeRoominfoUploadResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
                 //执行成功返回支付宝房间编号和系统房间编号
-                retList = new ArrayList<Roominfo>();
                 List<CplifeRoomInfoResp> roomInfoSet = response.getRoomInfoSet();
-                for(CplifeRoomInfoResp cprifr : roomInfoSet) {
+                for (CplifeRoomInfoResp cprifr : roomInfoSet) {
                     Roominfo roominfo = new Roominfo();
                     roominfo.setId(Integer.parseInt(cprifr.getOutRoomId()));//商户系统小区房屋唯一ID标示.
-                            roominfo.setRoomId(cprifr.getRoomId());//支付宝系统房间唯一标示.
+                    roominfo.setRoomId(cprifr.getRoomId());//支付宝系统房间唯一标示.
                     roominfo.setStatus(true);//同步状态
-                    retList.add(roominfo);
+                    return roominfoService.updateRoominfo(roominfo);
                 }
             } else {
                 logger.info("调用失败");
@@ -284,11 +304,13 @@ public class AlipayServiceImpl implements AlipayService {
             logger.info(e.getMessage());
             e.printStackTrace();
         }
-        return retList;
+        return false;
     }
 
     @Override
-    public boolean roominfoDeleteRequest(String community_id, List<Integer> roominfoid, String token, AlipayClient alipayClient) {
+    public boolean roominfoDeleteRequest(String community_id, List<Integer> roominfoid, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         boolean retStatus = false;
         AlipayEcoCplifeRoominfoDeleteRequest request = new AlipayEcoCplifeRoominfoDeleteRequest();
         JSONObject bizContent = new JSONObject();
@@ -301,7 +323,7 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeRoominfoDeleteResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
                 retStatus = true;
             } else {
@@ -315,7 +337,9 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public void roominfoQueryRequest(String community_id, String token, AlipayClient alipayClient) {
+    public void roominfoQueryRequest(String community_id, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeRoominfoQueryRequest request = new AlipayEcoCplifeRoominfoQueryRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("community_id", community_id);
@@ -326,7 +350,7 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeRoominfoQueryResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
             } else {
                 logger.info("调用失败");
@@ -337,7 +361,9 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public List<BillAccountCustom> billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, AlipayClient alipayClient) {
+    public List<BillAccountCustom> billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeBillBatchUploadRequest request = new AlipayEcoCplifeBillBatchUploadRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("batch_id", Long.valueOf(System.currentTimeMillis()));
@@ -365,7 +391,7 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeBillBatchUploadResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
                 return billList;
             } else {
@@ -378,7 +404,9 @@ public class AlipayServiceImpl implements AlipayService {
         return null;
     }
 
-    public void billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, AlipayClient alipayClient) {
+    public void billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeBillModifyRequest request = new AlipayEcoCplifeBillModifyRequest();
         JSONObject bizContent = new JSONObject();
         bizContent.put("batch_id", Long.valueOf(System.currentTimeMillis()));
@@ -405,7 +433,7 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeBillModifyResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
             } else {
                 logger.info("调用失败");
@@ -417,14 +445,17 @@ public class AlipayServiceImpl implements AlipayService {
 
     /**
      * 删除已上传的物业账单数据
+     *
      * @param community_id
      * @param bill_entry_id_list
      * @param token
-     * @param alipayClient
+     * @param loginUser
      * @return
      */
     @Override
-    public boolean billDeleteRequest(String community_id, List<String> bill_entry_id_list, String token, AlipayClient alipayClient) {
+    public boolean billDeleteRequest(String community_id, List<String> bill_entry_id_list, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         boolean retStatus = false;
         AlipayEcoCplifeBillDeleteRequest request = new AlipayEcoCplifeBillDeleteRequest();
         JSONObject bizContent = new JSONObject();
@@ -437,7 +468,7 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             AlipayEcoCplifeBillDeleteResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
-            if("10000".equals(response.getCode())){
+            if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
                 retStatus = true;
             } else {

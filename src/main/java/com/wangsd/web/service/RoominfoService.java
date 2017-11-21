@@ -29,9 +29,21 @@ public interface RoominfoService {
      * @param id
      * @return
      */
-    public int deleteRoominfo(int id);
+    public boolean deleteRoominfo(int id);
 
-    public boolean saveOrUpdateUser(Roominfo roominfo);
+    /**
+     * 新增房间信息
+     * @param roominfo
+     * @return
+     */
+    public boolean insertRoominfo(Roominfo roominfo);
+
+    /**
+     * 更新房间信息
+     * @param roominfo
+     * @return
+     */
+    public boolean updateRoominfo(Roominfo roominfo);
 
     public List<RoominfoCustom> queryRoominfoDistinct(Roominfo roominfo);
 

@@ -118,7 +118,7 @@
                     }
                 },
                 error:function(data) {
-                    console.log(data.msg);
+                    layer.msg('error!',{icon:1,time:1000});
                 },
             });
         });
@@ -141,7 +141,7 @@
                 }
             },
             error:function(data) {
-                console.log(data.msg);
+                layer.msg('error!',{icon:1,time:1000});
             },
         });
     }
@@ -163,7 +163,7 @@
                 }
             },
             error:function(data) {
-                console.log(data.msg);
+                layer.msg('error!',{icon:1,time:1000});
             },
         });
     }
@@ -185,7 +185,7 @@
                 }
             },
             error:function(data) {
-                console.log(data.msg);
+                layer.msg('error!',{icon:1,time:1000});
             },
         });
     }

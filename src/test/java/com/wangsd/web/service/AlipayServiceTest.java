@@ -1,15 +1,14 @@
 package com.wangsd.web.service;
 
-import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
-import com.wangsd.core.feature.test.TestSupport;
-import com.wangsd.core.util.StaticVar;
-import com.wangsd.web.modelCustom.HousinginfoCustom;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.wangsd.core.feature.test.TestSupport;
+import com.wangsd.web.modelCustom.HousinginfoCustom;
+import com.wangsd.web.modelCustom.UserCustom;
 
 /**
  * Created by Administrator on 2017/11/17.
@@ -34,10 +33,12 @@ public class AlipayServiceTest extends TestSupport {
      */
     @Test
     public void communityCreateRequest() throws Exception {
-        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, appid, privateKey,
-                StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type);
+        UserCustom loginUser = new UserCustom();
+        loginUser.setAppId(appid);
+        loginUser.setMerchantPrivateKey(privateKey);
+        loginUser.setAlipayPublicKey(publicKey);
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
-        housing = alipayService.communityCreateRequest(housing, "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42", alipayClient);
+        alipayService.communityCreateRequest(housing, "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42", loginUser);
 
     }
 
@@ -56,9 +57,11 @@ public class AlipayServiceTest extends TestSupport {
      */
     @Test
     public void communityBatchqueryRequest() throws Exception {
-        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, appid, privateKey,
-                StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type);
-        alipayService.communityBatchqueryRequest("PENDING_ONLINE", "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42", alipayClient);
+    	UserCustom loginUser = new UserCustom();
+        loginUser.setAppId(appid);
+        loginUser.setMerchantPrivateKey(privateKey);
+        loginUser.setAlipayPublicKey(publicKey);
+        alipayService.communityBatchqueryRequest("PENDING_ONLINE", "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42", loginUser);
     }
 
     /**
@@ -67,10 +70,12 @@ public class AlipayServiceTest extends TestSupport {
      */
     @Test
     public void communityDetailsQueryRequest() throws Exception {
-        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, appid, privateKey,
-                StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type);
+    	UserCustom loginUser = new UserCustom();
+        loginUser.setAppId(appid);
+        loginUser.setMerchantPrivateKey(privateKey);
+        loginUser.setAlipayPublicKey(publicKey);
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
-        alipayService.communityDetailsQueryRequest(housing.getCommunityId(), housing.getToken(), alipayClient);
+        alipayService.communityDetailsQueryRequest(housing.getCommunityId(), housing.getToken(), loginUser);
     }
 
     /**
@@ -79,13 +84,15 @@ public class AlipayServiceTest extends TestSupport {
      */
     @Test
     public void billDeleteRequest() throws Exception {
-        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, appid, privateKey,
-                StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type);
+    	UserCustom loginUser = new UserCustom();
+        loginUser.setAppId(appid);
+        loginUser.setMerchantPrivateKey(privateKey);
+        loginUser.setAlipayPublicKey(publicKey);
         String community_id = "ASAYZA2P45001";
         String token = "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42";
         List<String> idList = new ArrayList<String>();
         idList.add("201711170000001");
-        alipayService.billDeleteRequest(community_id, idList, token, alipayClient);
+        alipayService.billDeleteRequest(community_id, idList, token, loginUser);
     }
 
 }

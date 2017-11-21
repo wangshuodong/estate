@@ -1,7 +1,5 @@
 package com.wangsd.web.controller;
 
-import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.StaticVar;
@@ -143,9 +141,7 @@ public class HousinginfoController {
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
         //让小区在支付宝平台下线
         if (housing.getStatus() != StaticVar.HOUSING_STATUS_NEW) {
-            AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
-                    StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
-            alipayService.basicserviceModifyRequest(housing.getCommunityId(), "OFFLINE", housing.getToken(), alipayClient);
+            alipayService.basicserviceModifyRequest(housing.getCommunityId(), "OFFLINE", housing.getToken(), loginUser);
         }
         boolean delStatus = housinginfoServic.deleteHousingById(id);
         obj.setSuccess(delStatus);
