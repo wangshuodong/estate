@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,38 +42,31 @@ public class RoleController {
     }
 
     /**
-     * 新增角色
+     * 打开页面
      * @param model
      * @return
      */
-    @RequestMapping(value = "/addRole")
-    public String addRole(Model model) {
-        List<MenuCustom> list = menuService.queryAllMenuTreeList();
-        model.addAttribute("menuList", JSON.toJSON(list));
-        return "/system/role-info";
-    }
-
-    /**
-     * 更新角色
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/updateRole")
-    public String updateRole(Integer roleId, Model model) {
-        Role role = roleService.selectRoleById(roleId);
-        List<MenuCustom> list = menuService.queryAllMenuTreeList();
-        List<Integer> menuIds = roleService.queryMenuIdByRoleid(roleId);
-        for (int i=0; i<list.size(); i++) {
-            MenuCustom menuTree = list.get(i);
+    @RequestMapping(value = "/openRole")
+    public String openRole(Integer roleId, Model model) {
+        if (roleId == null) { //打开新增页面
+            List<MenuCustom> list = menuService.queryAllMenuTreeList();
+            model.addAttribute("menuList", JSON.toJSON(list));
+        }else { //打开修改页面
+            List<MenuCustom> list = menuService.queryAllMenuTreeList();
+            List<Integer> menuIds = roleService.queryMenuIdByRoleid(roleId);
+            for (int i=0; i<list.size(); i++) {
+                MenuCustom menuTree = list.get(i);
 //            	if (i==0 && menuTree.getParentid() == null) {
 //            		menuTree.setOpen(true);
 //            	}
-            if (menuIds.contains(menuTree.getId())) {
-                menuTree.setChecked(true);
+                if (menuIds.contains(menuTree.getId())) {
+                    menuTree.setChecked(true);
+                }
             }
+            model.addAttribute("menuList", JSON.toJSON(list));
+            Role role = roleService.selectRoleById(roleId);
+            model.addAttribute("role", role);
         }
-        model.addAttribute("role", role);
-        model.addAttribute("menuList", JSON.toJSON(list));
         return "/system/role-info";
     }
 
@@ -83,8 +77,14 @@ public class RoleController {
     @RequestMapping(path = "/saveOrUpdateRole", method = RequestMethod.POST)
     @ResponseBody
     public JSONResult saveOrUpdateRole(RoleCustom roleCustom, Model model) {
+        boolean bl;
+        if (roleCustom.getId() == null) { //新增
+            roleCustom.setCreateTime(new Date());
+            bl = roleService.insertRole(roleCustom);
+        }else { //修改
+            bl = roleService.updateRole(roleCustom);
+        }
         JSONResult obj = new JSONResult();
-        boolean bl = roleService.saveOrUpdateRole(roleCustom);
         obj.setSuccess(bl);
         return obj;
     }

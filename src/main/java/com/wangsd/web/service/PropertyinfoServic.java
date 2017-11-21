@@ -39,11 +39,18 @@ public interface PropertyinfoServic {
     public String selectMaxByParentCode(Integer parentId);
 
     /**
-     * 新增或者修改服务商
+     * 新增服务商
      * @param serviceinfo
      * @return
      */
-    public boolean saveOrUpdateProperty(Propertyinfo serviceinfo);
+    public boolean insertProperty(Propertyinfo serviceinfo);
+
+    /**
+     * 修改服务商
+     * @param serviceinfo
+     * @return
+     */
+    public boolean updateProperty(Propertyinfo serviceinfo);
 
     /**
      * 根据id删除服务商

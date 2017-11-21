@@ -1,9 +1,7 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
-import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.web.model.Propertyinfo;
-import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.PropertyinfoServic;
@@ -47,38 +45,26 @@ public class PropertyinfoController {
         return "/property/property-list";
     }
 
-    /**
-     * 打开新增服务商页面
-     *
-     * @param model
-     * @param session
-     * @return
-     */
-    @RequestMapping(value = "addProperty")
-    public String addProperty(Model model, HttpSession session) {
-        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = loginUser.getParentCode();
-        List<ParentCustom> parentList = propertyinfoServic.queryParentCustomByCode(parentCode);
-        model.addAttribute("parentList", parentList);
-        return "/property/property-info";
-    }
+
 
     /**
-     * 打开修改服务商页面
+     * 打开服务商页面
      *
      * @param id
      * @param model
      * @param session
      * @return
      */
-    @RequestMapping(value = "updateProperty")
-    public String updateProperty(Integer id, Model model, HttpSession session) {
+    @RequestMapping(value = "openProperty")
+    public String openProperty(Integer id, Model model, HttpSession session) {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         String parentCode = loginUser.getParentCode();
         List<ParentCustom> parentList = propertyinfoServic.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
-        Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(id);
-        model.addAttribute("propertyinfo", propertyinfo);
+        if (id != null) {
+            Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(id);
+            model.addAttribute("propertyinfo", propertyinfo);
+        }
         return "/property/property-info";
     }
 
@@ -92,37 +78,13 @@ public class PropertyinfoController {
     @RequestMapping(path = "/saveOrUpdateProperty", method = RequestMethod.POST)
     @ResponseBody
     public JSONResult saveOrUpdateProperty(Propertyinfo propertyinfo, Model model) {
+        boolean bl;
         if (propertyinfo.getId() == null) {  //新增
-            String code;
-            //查询上级物业
-            Propertyinfo propertyParent = propertyinfoServic.selectPropertyinfoById(propertyinfo.getParentId());
-            //propertyParent==null,说明选的上级是服务商
-            if (propertyParent == null) {
-                Serviceinfo serviceParent = serviceinfoServic.selectServiceinfoById(propertyinfo.getParentId());
-                code = serviceParent.getCode();
-            } else {
-                code = propertyParent.getCode();
-            }
-            String maxCode = propertyinfoServic.selectMaxByParentCode(propertyinfo.getParentId());
-            if (maxCode == null) {
-                propertyinfo.setCode(code + "0001");
-            } else {
-                propertyinfo.setCode(ApplicationUtils.getOrgCode(maxCode));
-            }
             propertyinfo.setCreateTime(new Date());
+            bl = propertyinfoServic.insertProperty(propertyinfo);
         } else { //修改
-            Propertyinfo oldDept = propertyinfoServic.selectPropertyinfoById(propertyinfo.getId());
-            if (oldDept.getParentId() != propertyinfo.getParentId()) {
-                Propertyinfo parent = propertyinfoServic.selectPropertyinfoById(propertyinfo.getParentId());
-                String maxCode = propertyinfoServic.selectMaxByParentCode(propertyinfo.getParentId());
-                if (maxCode == null) {
-                    propertyinfo.setCode(parent.getCode() + "0001");
-                } else {
-                    propertyinfo.setCode(ApplicationUtils.getOrgCode(maxCode));
-                }
-            }
+            bl = propertyinfoServic.updateProperty(propertyinfo);
         }
-        boolean bl = propertyinfoServic.saveOrUpdateProperty(propertyinfo);
         JSONResult jsonResult = new JSONResult();
         jsonResult.setSuccess(bl);
         return jsonResult;

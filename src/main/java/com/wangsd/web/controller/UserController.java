@@ -131,16 +131,21 @@ public class UserController {
     }
 
     /**
-     * Description: 跳转新增用户页面
+     * 打开User页面
      *
+     * @param id
+     * @param session
      * @param model
-     * @param
      * @return
      */
-    @RequestMapping(value = "addUser")
-    public String addUser(Model model, HttpServletRequest request) {
-        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-        String parentCode = user.getParentCode();
+    @RequestMapping(value = "/openUser")
+    public String openUser(Integer id, HttpSession session, Model model) {
+        if (id != null) { //修改
+            Users userInfo = usersService.selectByPrimaryKey(id);
+            model.addAttribute("user", userInfo);
+        }
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        String parentCode = loginUser.getParentCode();
         List<ParentCustom> parentList = usersService.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
         List<Role> roleList = roleService.queryAllRoleList(StaticVar.USERS_TYPE99);
@@ -161,7 +166,7 @@ public class UserController {
     public JSONResult saveOrUpdateUser(Users user, HttpSession session) {
         //UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         boolean bl;
-        if (user.getId() == null) {
+        if (user.getId() == null) { //新增
             user.setCreateTime(new Date());
             user.setPassword("111111");
             user.setEnable(true);
@@ -179,33 +184,12 @@ public class UserController {
                 user.setParentCode(info.getCode());
             }
             bl = usersService.insertUser(user);
-        }else {
+        }else { //修改
             bl = usersService.updateUser(user);
         }
         JSONResult obj = new JSONResult();
         obj.setSuccess(bl);
         return obj;
-    }
-
-    /**
-     * 打开修改User页面
-     *
-     * @param id
-     * @param session
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/updateUser")
-    public String updateUser(Integer id, HttpSession session, Model model) {
-        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = loginUser.getParentCode();
-        List<ParentCustom> parentList = usersService.queryParentCustomByCode(parentCode);
-        model.addAttribute("parentList", parentList);
-        List<Role> roleList = roleService.queryAllRoleList(StaticVar.USERS_TYPE99);
-        model.addAttribute("roleList", roleList);
-        Users userInfo = usersService.selectByPrimaryKey(id);
-        model.addAttribute("user", userInfo);
-        return "/user/user-info";
     }
 
     /**

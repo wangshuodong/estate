@@ -30,10 +30,16 @@ public interface RoleService {
     public List<Integer> queryMenuIdByRoleid(Integer roleid);
 
     /**
-     * 保存权限和角色
+     * 新增角色
      * @param roleCustom
      */
-	public boolean saveOrUpdateRole(RoleCustom roleCustom);
+	public boolean insertRole(RoleCustom roleCustom);
+
+	/**
+	 * 更新角色
+	 * @param roleCustom
+	 */
+	public boolean updateRole(RoleCustom roleCustom);
 
 	/**
 	 * 删除角色
@@ -48,4 +54,7 @@ public interface RoleService {
 	 * @return
 	 */
 	public List<Permission> queryPermissionsByRoleId(Integer roleId);
+
+
+
 }

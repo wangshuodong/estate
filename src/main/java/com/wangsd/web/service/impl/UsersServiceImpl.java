@@ -117,6 +117,15 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public void updateUserCodeById(Integer parentId, String code) {
+        Users user = new Users();
+        user.setParentCode(code);
+        UsersExample example = new UsersExample();
+        example.createCriteria().andParentIdEqualTo(parentId);
+        usersMapper.updateByExampleSelective(user, example);
+    }
+
+    @Override
     public Users selectByPrimaryKey(Integer userId) {
         Users user = usersMapper.selectByPrimaryKey(userId);
         return user;

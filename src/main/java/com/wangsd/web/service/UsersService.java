@@ -77,6 +77,12 @@ public interface UsersService {
 	public boolean updateUser(Users user);
 
 	/**
+	 * 更新用户的Code
+	 * @param parentId
+	 */
+	public void updateUserCodeById(Integer parentId, String code);
+
+	/**
 	 * 根据主键查询单个用户
 	 * @param userId
 	 * @return

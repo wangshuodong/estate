@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -52,38 +51,34 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-	public boolean saveOrUpdateRole(RoleCustom roleCustom) {
-    	boolean bl = false;
-		try {
-			if (roleCustom.getId() == null) {
-				roleCustom.setCreateTime(new Date());
-				roleMapper.insertSelective(roleCustom);
-			} else {
-				roleMapper.updateByPrimaryKeySelective(roleCustom);
-				RoleMenuExample example = new RoleMenuExample();
-				example.createCriteria().andRoleIdEqualTo(roleCustom.getId());
-				roleMenuMapper.deleteByExample(example);
-			}
-			int[] menuIds = roleCustom.getMenuIds();
-			for (int menuid : menuIds) {
-				RoleMenu roleMenu = new RoleMenu();
-				roleMenu.setRoleId(roleCustom.getId());
-				roleMenu.setMenuId(menuid);
-				roleMenuMapper.insert(roleMenu);
-			}
-			bl = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
+	public boolean insertRole(RoleCustom roleCustom) {
+		int ret = roleMapper.insertSelective(roleCustom);
+		insertRoleMenu(roleCustom.getId(), roleCustom.getMenuIds());
+		if (ret > 0) {
+			return true;
+		}else {
+			return false;
 		}
-		return bl;
+	}
+
+	@Override
+	public boolean updateRole(RoleCustom roleCustom) {
+		//更新角色
+		int ret = roleMapper.updateByPrimaryKeySelective(roleCustom);
+		//删除老的关联关系
+		deleteRoleMenu(roleCustom.getId());
+		//增加新的关联关系
+		insertRoleMenu(roleCustom.getId(), roleCustom.getMenuIds());
+		if (ret > 0) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
     @Override
 	public boolean deleteRoleInfo(Integer roleId) {
-    	RoleMenuExample example = new RoleMenuExample();
-		example.createCriteria().andRoleIdEqualTo(roleId);
-		roleMenuMapper.deleteByExample(example);
+		deleteRoleMenu(roleId);
 		int delStatus = roleMapper.deleteByPrimaryKey(roleId);
 		if (delStatus > 0) {
 			return true;
@@ -97,5 +92,29 @@ public class RoleServiceImpl implements RoleService {
 		List<Permission> list = permissionMapper.selectPermissionsByRoleId(roleId);
 		return list;
 	}
-	
+
+	/**
+	 * 新增关联关系表
+	 * @param roleId
+	 * @param menuIds
+	 * @return
+	 */
+	public void insertRoleMenu(Integer roleId, int[] menuIds) {
+		for (int menuid : menuIds) {
+			RoleMenu roleMenu = new RoleMenu();
+			roleMenu.setRoleId(roleId);
+			roleMenu.setMenuId(menuid);
+			roleMenuMapper.insert(roleMenu);
+		}
+	}
+
+	/**
+	 * 删除关联关系
+	 * @param roleId
+	 */
+	public void deleteRoleMenu(Integer roleId) {
+		RoleMenuExample example = new RoleMenuExample();
+		example.createCriteria().andRoleIdEqualTo(roleId);
+		roleMenuMapper.deleteByExample(example);
+	}
 }

@@ -82,7 +82,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "添加角色",
-			content: "${pageContext.request.contextPath }/rest/role/addRole"
+			content: "${pageContext.request.contextPath }/rest/role/openRole"
 		});
 		layer.full(index);
 	}
@@ -91,7 +91,7 @@
         var index = layer.open({
             type: 2,
             title: "修改角色",
-            content: "${pageContext.request.contextPath }/rest/role/updateRole?roleId=" + id
+            content: "${pageContext.request.contextPath }/rest/role/openRole?roleId=" + id
         });
         layer.full(index);
     }

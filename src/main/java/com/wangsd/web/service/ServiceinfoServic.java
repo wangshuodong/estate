@@ -45,11 +45,18 @@ public interface ServiceinfoServic {
     public String selectMaxByParentCode(Integer parentId);
 
     /**
-     * 新增或者修改服务商
+     * 新增服务商
      * @param serviceinfo
      * @return
      */
-    public boolean saveOrUpdateService(Serviceinfo serviceinfo);
+    public boolean insertService(Serviceinfo serviceinfo);
+
+    /**
+     * 修改服务商
+     * @param serviceinfo
+     * @return
+     */
+    public boolean updateService(Serviceinfo serviceinfo);
 
     /**
      * 根据id删除服务商

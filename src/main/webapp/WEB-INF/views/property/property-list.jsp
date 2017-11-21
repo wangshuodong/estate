@@ -60,7 +60,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "新增物业",
-			content: "${pageContext.request.contextPath }/rest/property/addProperty"
+			content: "${pageContext.request.contextPath }/rest/property/openProperty"
 		});
 		layer.full(index);
 	}
@@ -69,7 +69,7 @@
         var index = layer.open({
             type: 2,
             title: "修改物业",
-            content: "${pageContext.request.contextPath }/rest/property/updateProperty?id=" + id
+            content: "${pageContext.request.contextPath }/rest/property/openProperty?id=" + id
         });
         layer.full(index);
     }

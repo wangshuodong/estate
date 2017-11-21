@@ -1,11 +1,14 @@
 package com.wangsd.web.service.impl;
 
+import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.web.dao.PropertyinfoMapper;
-import com.wangsd.web.dao.ServiceinfoMapper;
 import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.model.PropertyinfoExample;
+import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.service.PropertyinfoServic;
+import com.wangsd.web.service.ServiceinfoServic;
+import com.wangsd.web.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +24,14 @@ public class PropertyinfoServiceImpl implements PropertyinfoServic {
     @Autowired
     PropertyinfoMapper propertyinfoMapper;
     @Autowired
-    ServiceinfoMapper serviceinfoMapper;
+    ServiceinfoServic serviceinfoServic;
+    @Autowired
+    UsersService usersService;
 
     @Override
     public List<ParentCustom> queryParentCustomByCode(String code) {
         List<ParentCustom> list = new ArrayList<ParentCustom>();
-        List<ParentCustom> serviceList = serviceinfoMapper.queryParentCustomByCode(code);
+        List<ParentCustom> serviceList = serviceinfoServic.queryParentCustomByCode(code);
         List<ParentCustom> propertyList = propertyinfoMapper.queryParentCustomByCode(code);
         list.addAll(serviceList);
         list.addAll(propertyList);
@@ -52,13 +57,27 @@ public class PropertyinfoServiceImpl implements PropertyinfoServic {
     }
 
     @Override
-    public boolean saveOrUpdateProperty(Propertyinfo propertyinfo) {
-        int ret = 0;
-        if (propertyinfo.getId() != null) {
-            ret = propertyinfoMapper.updateByPrimaryKeySelective(propertyinfo);
+    public boolean insertProperty(Propertyinfo propertyinfo) {
+        String code = getParentCode(propertyinfo.getParentId());
+        propertyinfo.setCode(code);
+        int ret = propertyinfoMapper.insertSelective(propertyinfo);
+        if (ret > 0) {
+            return true;
         } else {
-            ret = propertyinfoMapper.insertSelective(propertyinfo);
+            return false;
         }
+    }
+
+    @Override
+    public boolean updateProperty(Propertyinfo propertyinfo) {
+        Propertyinfo oldDept = selectPropertyinfoById(propertyinfo.getId());
+        if (oldDept.getParentId() != propertyinfo.getParentId()) {
+            String code = getParentCode(propertyinfo.getParentId());
+            propertyinfo.setCode(code);
+            //更新用户code
+            usersService.updateUserCodeById(propertyinfo.getId(), code);
+        }
+        int ret = propertyinfoMapper.updateByPrimaryKeySelective(propertyinfo);
         if (ret > 0) {
             return true;
         } else {
@@ -73,6 +92,25 @@ public class PropertyinfoServiceImpl implements PropertyinfoServic {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public String getParentCode(Integer parentId) {
+        String code;
+        //查询上级物业
+        Propertyinfo propertyParent = selectPropertyinfoById(parentId);
+        //propertyParent==null,说明选的上级是服务商
+        if (propertyParent == null) {
+            Serviceinfo serviceParent = serviceinfoServic.selectServiceinfoById(parentId);
+            code = serviceParent.getCode();
+        } else {
+            code = propertyParent.getCode();
+        }
+        String maxCode = selectMaxByParentCode(parentId);
+        if (maxCode == null) {
+            return code + "0001";
+        } else {
+            return ApplicationUtils.getOrgCode(maxCode);
         }
     }
 }

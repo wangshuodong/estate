@@ -71,7 +71,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "新增服务商",
-			content: "${pageContext.request.contextPath }/rest/service/addService"
+			content: "${pageContext.request.contextPath }/rest/service/openService"
 		});
 		layer.full(index);
 	}
@@ -80,7 +80,7 @@
         var index = layer.open({
             type: 2,
             title: "修改服务商",
-            content: "${pageContext.request.contextPath }/rest/service/updateService?id=" + id
+            content: "${pageContext.request.contextPath }/rest/service/openService?id=" + id
         });
         layer.full(index);
     }

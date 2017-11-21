@@ -81,7 +81,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "新增用户",
-			content: "${pageContext.request.contextPath }/rest/user/addUser?"
+			content: "${pageContext.request.contextPath }/rest/user/openUser"
 		});
 		layer.full(index);
 	}
@@ -90,7 +90,7 @@
         var index = layer.open({
             type: 2,
             title: "修改用户",
-            content: "${pageContext.request.contextPath }/rest/user/updateUser?id=" + id
+            content: "${pageContext.request.contextPath }/rest/user/openUser?id=" + id
         });
         layer.full(index);
     }

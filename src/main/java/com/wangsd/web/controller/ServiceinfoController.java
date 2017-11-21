@@ -1,7 +1,6 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
-import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
@@ -43,35 +42,22 @@ public class ServiceinfoController {
     }
 
     /**
-     * 打开新增服务商页面
-     * @param model
-     * @param session
-     * @return
-     */
-    @RequestMapping(value = "addService")
-    public String addService(Model model, HttpSession session) {
-        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = loginUser.getParentCode();
-        List<ParentCustom> parentList = serviceinfoServic.queryParentCustomByCode(parentCode);
-        model.addAttribute("parentList", parentList);
-        return "/service/service-info";
-    }
-
-    /**
      * 打开修改服务商页面
      * @param id
      * @param model
      * @param session
      * @return
      */
-    @RequestMapping(value = "updateService")
-    public String updateService(Integer id, Model model, HttpSession session) {
+    @RequestMapping(value = "openService")
+    public String openService(Integer id, Model model, HttpSession session) {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         String parentCode = loginUser.getParentCode();
         List<ParentCustom> parentList = serviceinfoServic.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
-        Serviceinfo serviceinfo = serviceinfoServic.selectServiceinfoById(id);
-        model.addAttribute("serviceinfo", serviceinfo);
+        if (id != null) {
+            Serviceinfo serviceinfo = serviceinfoServic.selectServiceinfoById(id);
+            model.addAttribute("serviceinfo", serviceinfo);
+        }
         return "/service/service-info";
     }
 
@@ -84,28 +70,13 @@ public class ServiceinfoController {
     @RequestMapping(path = "/saveOrUpdateService", method = RequestMethod.POST)
     @ResponseBody
     public JSONResult saveOrUpdateService(Serviceinfo serviceinfo, Model model) {
+        boolean bl;
         if (serviceinfo.getId() == null) {  //新增
-            Serviceinfo parent = serviceinfoServic.selectServiceinfoById(serviceinfo.getParentId());
-            String maxCode = serviceinfoServic.selectMaxByParentCode(serviceinfo.getParentId());
-            if (maxCode == null) {
-                serviceinfo.setCode(parent.getCode() + "0001");
-            }else {
-                serviceinfo.setCode(ApplicationUtils.getOrgCode(maxCode));
-            }
             serviceinfo.setCreateTime(new Date());
+            bl = serviceinfoServic.insertService(serviceinfo);
         }else { //修改
-            Serviceinfo oldDept = serviceinfoServic.selectServiceinfoById(serviceinfo.getId());
-            if (oldDept.getParentId() != serviceinfo.getParentId()) {
-                Serviceinfo parent = serviceinfoServic.selectServiceinfoById(serviceinfo.getParentId());
-                String maxCode = serviceinfoServic.selectMaxByParentCode(serviceinfo.getParentId());
-                if (maxCode == null) {
-                    serviceinfo.setCode(parent.getCode() + "0001");
-                }else {
-                    serviceinfo.setCode(ApplicationUtils.getOrgCode(maxCode));
-                }
-            }
+            bl = serviceinfoServic.updateService(serviceinfo);
         }
-        boolean bl = serviceinfoServic.saveOrUpdateService(serviceinfo);
         JSONResult jsonResult = new JSONResult();
         jsonResult.setSuccess(bl);
         return jsonResult;

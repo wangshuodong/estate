@@ -88,7 +88,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "添加小区",
-			content: "${pageContext.request.contextPath }/rest/housing/addHousing"
+			content: "${pageContext.request.contextPath }/rest/housing/openHousing"
 		});
 		layer.full(index);
 	}
@@ -97,7 +97,7 @@
         var index = layer.open({
             type: 2,
             title: "修改小区",
-            content: "${pageContext.request.contextPath }/rest/housing/updateHousing?id=" + id
+            content: "${pageContext.request.contextPath }/rest/housing/openHousing?id=" + id
         });
         layer.full(index);
     }

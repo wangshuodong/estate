@@ -54,11 +54,18 @@ public interface HousinginfoServic {
     public String selectMaxByParentCode(Integer parentId);
 
     /**
-     * 新增或者修改小区
+     * 新增小区
      * @param housinginfo
      * @return
      */
-    public boolean saveOrUpdateHousing(Housinginfo housinginfo);
+    public boolean insertHousing(Housinginfo housinginfo);
+
+    /**
+     * 修改小区
+     * @param housinginfo
+     * @return
+     */
+    public boolean updateHousing(Housinginfo housinginfo);
 
     /**
      * 根据id删除小区

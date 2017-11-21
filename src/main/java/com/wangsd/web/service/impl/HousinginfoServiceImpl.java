@@ -1,12 +1,15 @@
 package com.wangsd.web.service.impl;
 
+import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.web.dao.HousinginfoMapper;
-import com.wangsd.web.dao.PropertyinfoMapper;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.HousinginfoExample;
+import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.PropertyinfoServic;
+import com.wangsd.web.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +24,13 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     @Autowired
     HousinginfoMapper housinginfoMapper;
     @Autowired
-    PropertyinfoMapper propertyinfoMapper;
+    PropertyinfoServic propertyinfoServic;
+    @Autowired
+    UsersService usersService;
 
     @Override
     public List<ParentCustom> queryParentCustomByCode(String code) {
-        return propertyinfoMapper.queryParentCustomByCode(code);
+        return propertyinfoServic.queryParentCustomByCode(code);
     }
 
     @Override
@@ -57,13 +62,27 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     }
 
     @Override
-    public boolean saveOrUpdateHousing(Housinginfo housinginfo) {
-        int ret = 0;
-        if (housinginfo.getId() != null) {
-            ret = housinginfoMapper.updateByPrimaryKeySelective(housinginfo);
+    public boolean insertHousing(Housinginfo housinginfo) {
+        String code = getParentCode(housinginfo.getParentId());
+        housinginfo.setCode(code);
+        int ret = housinginfoMapper.insertSelective(housinginfo);
+        if (ret > 0) {
+            return true;
         } else {
-            ret = housinginfoMapper.insertSelective(housinginfo);
+            return false;
         }
+    }
+
+    @Override
+    public boolean updateHousing(Housinginfo housinginfo) {
+        Housinginfo oldDept = selectHousinginfoById(housinginfo.getId());
+        if (oldDept.getParentId() != housinginfo.getParentId()) {
+            String code = getParentCode(housinginfo.getParentId());
+            housinginfo.setCode(code);
+            //更新用户code
+            usersService.updateUserCodeById(housinginfo.getId(), code);
+        }
+        int ret = housinginfoMapper.updateByPrimaryKeySelective(housinginfo);
         if (ret > 0) {
             return true;
         } else {
@@ -81,6 +100,16 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public String getParentCode(Integer parentId) {
+        Propertyinfo parent = propertyinfoServic.selectPropertyinfoById(parentId);
+        String maxCode = selectMaxByParentCode(parentId);
+        if (maxCode == null) {
+            return parent.getCode() + "0001";
+        }else {
+            return  ApplicationUtils.getOrgCode(maxCode);
         }
     }
 }

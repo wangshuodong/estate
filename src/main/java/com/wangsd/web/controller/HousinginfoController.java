@@ -84,14 +84,16 @@ public class HousinginfoController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "updateHousing")
-    public String updateHousing(Integer id, Model model, HttpSession session) {
+    @RequestMapping(value = "openHousing")
+    public String openHousing(Integer id, Model model, HttpSession session) {
         UserCustom obj = (UserCustom) session.getAttribute("userInfo");
         String parentCode = obj.getParentCode();
         List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(parentCode);
         model.addAttribute("parentList", parentList);
-        Housinginfo housinginfo = housinginfoServic.selectHousinginfoById(id);
-        model.addAttribute("housinginfo", housinginfo);
+        if (id != null) {
+            Housinginfo housinginfo = housinginfoServic.selectHousinginfoById(id);
+            model.addAttribute("housinginfo", housinginfo);
+        }
         return "/housing/housing-info";
     }
 
@@ -104,17 +106,12 @@ public class HousinginfoController {
     @RequestMapping(path = "/saveOrUpdateHousing", method = RequestMethod.POST)
     @ResponseBody
     public JSONResult saveOrUpdateHousing(Housinginfo housinginfo, Model model) {
+        boolean bl;
         if (housinginfo.getId() == null) {  //新增
-            Propertyinfo parent = propertyinfoServic.selectPropertyinfoById(housinginfo.getParentId());
-            String maxCode = housinginfoServic.selectMaxByParentCode(housinginfo.getParentId());
-            if (maxCode == null) {
-                housinginfo.setCode(parent.getCode() + "0001");
-            }else {
-                housinginfo.setCode(ApplicationUtils.getOrgCode(maxCode));
-            }
             housinginfo.setDeletestatus(false);
             housinginfo.setStatus(StaticVar.HOUSING_STATUS_NEW);
             housinginfo.setCreateTime(new Date());
+            bl = housinginfoServic.insertHousing(housinginfo);
         }else { //修改
             Housinginfo oldDept = housinginfoServic.selectHousinginfoById(housinginfo.getId());
             if (oldDept.getParentId() != housinginfo.getParentId()) {
@@ -126,8 +123,8 @@ public class HousinginfoController {
                     housinginfo.setCode(ApplicationUtils.getOrgCode(maxCode));
                 }
             }
+            bl = housinginfoServic.updateHousing(housinginfo);
         }
-        boolean bl = housinginfoServic.saveOrUpdateHousing(housinginfo);
         JSONResult jsonResult = new JSONResult();
         jsonResult.setSuccess(bl);
         return jsonResult;
