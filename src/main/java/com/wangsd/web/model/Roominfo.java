@@ -25,7 +25,7 @@ public class Roominfo {
 
     private String ownerPhone;
 
-    private Date entrydate;
+    private String entrydate;
 
     private Boolean deletestatus;
 
@@ -121,12 +121,12 @@ public class Roominfo {
         this.ownerPhone = ownerPhone == null ? null : ownerPhone.trim();
     }
 
-    public Date getEntrydate() {
+    public String getEntrydate() {
         return entrydate;
     }
 
-    public void setEntrydate(Date entrydate) {
-        this.entrydate = entrydate;
+    public void setEntrydate(String entrydate) {
+        this.entrydate = entrydate == null ? null : entrydate.trim();
     }
 
     public Boolean getDeletestatus() {

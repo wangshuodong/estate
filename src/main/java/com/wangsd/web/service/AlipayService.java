@@ -1,9 +1,9 @@
 package com.wangsd.web.service;
 
 import com.wangsd.web.model.Housinginfo;
-import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
+import com.wangsd.web.modelCustom.RoominfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 
 import java.util.List;
@@ -74,7 +74,7 @@ public interface AlipayService {
      * @param loginUser
      * @return
      */
-    public boolean roominfoUploadRequest(String community_id, List<Roominfo> roominfos, String token, UserCustom loginUser);
+    public boolean roominfoUploadRequest(String community_id, List<RoominfoCustom> roominfos, String token, UserCustom loginUser);
 
     /**
      * 删除物业小区房屋信息
@@ -84,7 +84,7 @@ public interface AlipayService {
      * @param loginUser
      * @return
      */
-    public boolean roominfoDeleteRequest(String community_id, List<Integer> roominfoid, String token, UserCustom loginUser);
+    public boolean roominfoDeleteRequest(String community_id, List<String> roominfoid, String token, UserCustom loginUser);
 
     /**
      * 查询小区房屋信息列表

@@ -8,9 +8,19 @@
         FROM
             roominfo r
         JOIN housinginfo d ON r.parent_id = d.id
-        WHERE
-            d.deleteStatus = FALSE
-            and d.CODE LIKE CONCAT(#{departmentCode},'%')
+        <where>
+            and d.deleteStatus = FALSE
+            <if test="departmentCode != null and departmentCode != ''">
+                and d.CODE LIKE CONCAT(#{departmentCode},'%')
+            </if>
+            <if test="status != null">
+                and r.status = #{status}
+            </if>
+            <if test="parentId != null and parentId != ''">
+                and r.parent_id = #{parentId}
+            </if>
+        </where>
+
     </select>
 
     <!-- 查询distinct房屋信息 -->

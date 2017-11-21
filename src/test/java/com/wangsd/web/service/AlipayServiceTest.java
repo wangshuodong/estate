@@ -1,14 +1,13 @@
 package com.wangsd.web.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.wangsd.core.feature.test.TestSupport;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/11/17.
@@ -76,6 +75,29 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAlipayPublicKey(publicKey);
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
         alipayService.communityDetailsQueryRequest(housing.getCommunityId(), housing.getToken(), loginUser);
+    }
+
+    /**
+     *上传物业小区内部房屋信息
+     * @throws Exception
+     */
+    @Test
+    public void roominfoUploadRequest() throws Exception {
+
+    }
+
+    /**
+     * 查询小区房屋信息列表
+     * @throws Exception
+     */
+    @Test
+    public void roominfoQueryRequest() throws Exception {
+        UserCustom loginUser = new UserCustom();
+        loginUser.setAppId(appid);
+        loginUser.setMerchantPrivateKey(privateKey);
+        loginUser.setAlipayPublicKey(publicKey);
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
+        alipayService.roominfoQueryRequest(housing.getCommunityId(), housing.getToken(), loginUser);
     }
 
     /**

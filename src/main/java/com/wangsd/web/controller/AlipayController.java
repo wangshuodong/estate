@@ -1,17 +1,19 @@
 package com.wangsd.web.controller;
 
-import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
 import com.wangsd.core.entity.JSONResult;
-import com.wangsd.core.util.StaticVar;
+import com.wangsd.web.model.Housinginfo;
+import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
+import com.wangsd.web.modelCustom.RoominfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.AlipayService;
 import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.PropertyinfoServic;
 import com.wangsd.web.service.RoominfoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +38,8 @@ public class AlipayController {
     AlipayService alipayService;
     @Autowired
     RoominfoService roominfoService;
+    @Autowired
+    PropertyinfoServic propertyinfoServic;
 
     /**
      * 同步小区到支付宝
@@ -110,14 +114,39 @@ public class AlipayController {
         JSONResult jsonResult = new JSONResult();
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
-                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
-        //调用支付宝接口
+        //查询数据
+        List<RoominfoCustom> roomList = new ArrayList<>();
         Roominfo roominfo = roominfoService.selectRoominfoById(id);
+        RoominfoCustom roominfoCustom = new RoominfoCustom();
+        BeanUtils.copyProperties(roominfo, roominfoCustom);
+        roomList.add(roominfoCustom);
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(roominfo.getParentId());
-        List<Roominfo> roolList = new ArrayList<Roominfo>();
-        roolList.add(roominfo);
-        boolean bl = alipayService.roominfoUploadRequest(housing.getCommunityId(), roolList, housing.getToken(), loginUser);
+        //调用支付宝接口
+        boolean bl = alipayService.roominfoUploadRequest(housing.getCommunityId(), roomList, housing.getToken(), loginUser);
+        jsonResult.setSuccess(bl);
+        return jsonResult;
+    }
+
+    @RequestMapping(value = "/allRoominfoUploadRequest")
+    @ResponseBody
+    public JSONResult allRoominfoUploadRequest(HttpSession session) {
+        JSONResult jsonResult = new JSONResult();
+        boolean bl = false;
+        //获取公钥 私钥
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        //查询数据
+        List<Housinginfo> list = housinginfoServic.queryAllList(loginUser.getParentCode());
+        for (Housinginfo housing : list) {
+            Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(housing.getParentId());
+            RoominfoCustom query = new RoominfoCustom();
+            query.setStatus(false);//未同步的
+            query.setParentId(housing.getId());
+            List<RoominfoCustom> roomList = roominfoService.queryRoominfoList(query);
+            if (roomList.size() > 0) {
+                //调用支付宝接口
+                bl = alipayService.roominfoUploadRequest(housing.getCommunityId(), roomList, propertyinfo.getToken(), loginUser);
+            }
+        }
         jsonResult.setSuccess(bl);
         return jsonResult;
     }

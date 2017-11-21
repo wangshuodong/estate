@@ -13,7 +13,7 @@
     <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
     <result column="owner_card" property="ownerCard" jdbcType="VARCHAR" />
     <result column="owner_phone" property="ownerPhone" jdbcType="VARCHAR" />
-    <result column="entryDate" property="entrydate" jdbcType="TIMESTAMP" />
+    <result column="entryDate" property="entrydate" jdbcType="VARCHAR" />
     <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
     <result column="status" property="status" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -120,7 +120,7 @@
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{roomId,jdbcType=VARCHAR}, 
       #{groupName,jdbcType=VARCHAR}, #{building,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
       #{room,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{ownerName,jdbcType=VARCHAR}, 
-      #{ownerCard,jdbcType=VARCHAR}, #{ownerPhone,jdbcType=VARCHAR}, #{entrydate,jdbcType=TIMESTAMP}, 
+      #{ownerCard,jdbcType=VARCHAR}, #{ownerPhone,jdbcType=VARCHAR}, #{entrydate,jdbcType=VARCHAR}, 
       #{deletestatus,jdbcType=BIT}, #{status,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -208,7 +208,7 @@
         #{ownerPhone,jdbcType=VARCHAR},
       </if>
       <if test="entrydate != null" >
-        #{entrydate,jdbcType=TIMESTAMP},
+        #{entrydate,jdbcType=VARCHAR},
       </if>
       <if test="deletestatus != null" >
         #{deletestatus,jdbcType=BIT},
@@ -264,7 +264,7 @@
         owner_phone = #{record.ownerPhone,jdbcType=VARCHAR},
       </if>
       <if test="record.entrydate != null" >
-        entryDate = #{record.entrydate,jdbcType=TIMESTAMP},
+        entryDate = #{record.entrydate,jdbcType=VARCHAR},
       </if>
       <if test="record.deletestatus != null" >
         deleteStatus = #{record.deletestatus,jdbcType=BIT},
@@ -293,7 +293,7 @@
       owner_name = #{record.ownerName,jdbcType=VARCHAR},
       owner_card = #{record.ownerCard,jdbcType=VARCHAR},
       owner_phone = #{record.ownerPhone,jdbcType=VARCHAR},
-      entryDate = #{record.entrydate,jdbcType=TIMESTAMP},
+      entryDate = #{record.entrydate,jdbcType=VARCHAR},
       deleteStatus = #{record.deletestatus,jdbcType=BIT},
       status = #{record.status,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
@@ -335,7 +335,7 @@
         owner_phone = #{ownerPhone,jdbcType=VARCHAR},
       </if>
       <if test="entrydate != null" >
-        entryDate = #{entrydate,jdbcType=TIMESTAMP},
+        entryDate = #{entrydate,jdbcType=VARCHAR},
       </if>
       <if test="deletestatus != null" >
         deleteStatus = #{deletestatus,jdbcType=BIT},
@@ -361,7 +361,7 @@
       owner_name = #{ownerName,jdbcType=VARCHAR},
       owner_card = #{ownerCard,jdbcType=VARCHAR},
       owner_phone = #{ownerPhone,jdbcType=VARCHAR},
-      entryDate = #{entrydate,jdbcType=TIMESTAMP},
+      entryDate = #{entrydate,jdbcType=VARCHAR},
       deleteStatus = #{deletestatus,jdbcType=BIT},
       status = #{status,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP}

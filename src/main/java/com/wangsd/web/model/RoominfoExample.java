@@ -865,52 +865,62 @@ public class RoominfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andEntrydateEqualTo(Date value) {
+        public Criteria andEntrydateEqualTo(String value) {
             addCriterion("entryDate =", value, "entrydate");
             return (Criteria) this;
         }
 
-        public Criteria andEntrydateNotEqualTo(Date value) {
+        public Criteria andEntrydateNotEqualTo(String value) {
             addCriterion("entryDate <>", value, "entrydate");
             return (Criteria) this;
         }
 
-        public Criteria andEntrydateGreaterThan(Date value) {
+        public Criteria andEntrydateGreaterThan(String value) {
             addCriterion("entryDate >", value, "entrydate");
             return (Criteria) this;
         }
 
-        public Criteria andEntrydateGreaterThanOrEqualTo(Date value) {
+        public Criteria andEntrydateGreaterThanOrEqualTo(String value) {
             addCriterion("entryDate >=", value, "entrydate");
             return (Criteria) this;
         }
 
-        public Criteria andEntrydateLessThan(Date value) {
+        public Criteria andEntrydateLessThan(String value) {
             addCriterion("entryDate <", value, "entrydate");
             return (Criteria) this;
         }
 
-        public Criteria andEntrydateLessThanOrEqualTo(Date value) {
+        public Criteria andEntrydateLessThanOrEqualTo(String value) {
             addCriterion("entryDate <=", value, "entrydate");
             return (Criteria) this;
         }
 
-        public Criteria andEntrydateIn(List<Date> values) {
+        public Criteria andEntrydateLike(String value) {
+            addCriterion("entryDate like", value, "entrydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andEntrydateNotLike(String value) {
+            addCriterion("entryDate not like", value, "entrydate");
+            return (Criteria) this;
+        }
+
+        public Criteria andEntrydateIn(List<String> values) {
             addCriterion("entryDate in", values, "entrydate");
             return (Criteria) this;
         }
 
-        public Criteria andEntrydateNotIn(List<Date> values) {
+        public Criteria andEntrydateNotIn(List<String> values) {
             addCriterion("entryDate not in", values, "entrydate");
             return (Criteria) this;
         }
 
-        public Criteria andEntrydateBetween(Date value1, Date value2) {
+        public Criteria andEntrydateBetween(String value1, String value2) {
             addCriterion("entryDate between", value1, value2, "entrydate");
             return (Criteria) this;
         }
 
-        public Criteria andEntrydateNotBetween(Date value1, Date value2) {
+        public Criteria andEntrydateNotBetween(String value1, String value2) {
             addCriterion("entryDate not between", value1, value2, "entrydate");
             return (Criteria) this;
         }

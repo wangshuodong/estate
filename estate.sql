@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2017-11-21 18:52:00
+Date: 2017-11-21 23:28:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -99,7 +99,7 @@ INSERT INTO `menu` VALUES ('6', '系统管理中心', null, '&#xe61a;', null, '6
 INSERT INTO `menu` VALUES ('100', '我的服务商', '/rest/service/serviceList', null, '1', '99', '1');
 INSERT INTO `menu` VALUES ('101', '我的物业', '/rest/property/propertyList', null, '1', '99', '1');
 INSERT INTO `menu` VALUES ('102', '我的小区', '/rest/housing/housingList', null, '1', '99', '1');
-INSERT INTO `menu` VALUES ('103', '小区信息', '/rest/roominfo/roominfoList', null, '1', '99', '1');
+INSERT INTO `menu` VALUES ('103', '房屋信息', '/rest/roominfo/roominfoList', null, '1', '99', '1');
 INSERT INTO `menu` VALUES ('104', '我的账单', '/rest/billAccount/billAccountList', null, '1', '99', '1');
 INSERT INTO `menu` VALUES ('105', '交易中心', null, null, '1', '99', '1');
 INSERT INTO `menu` VALUES ('106', '业主催收', null, null, '1', '99', '1');
@@ -321,7 +321,7 @@ CREATE TABLE `roominfo` (
   `owner_name` varchar(255) DEFAULT NULL COMMENT '业主姓名',
   `owner_card` varchar(255) DEFAULT NULL COMMENT '业主身份证',
   `owner_phone` varchar(255) DEFAULT NULL COMMENT '业主电话',
-  `entryDate` datetime DEFAULT NULL COMMENT '入住时间',
+  `entryDate` varchar(255) DEFAULT NULL COMMENT '入住时间',
   `deleteStatus` tinyint(1) DEFAULT '0',
   `status` tinyint(1) DEFAULT '0' COMMENT 'false没有同步，true同步',
   `create_time` datetime DEFAULT NULL,
@@ -331,7 +331,7 @@ CREATE TABLE `roominfo` (
 -- ----------------------------
 -- Records of roominfo
 -- ----------------------------
-INSERT INTO `roominfo` VALUES ('1011', '9', null, '', '6栋', '', '801', '6栋801', '汪铄东', '', '', '2017-11-09 00:00:00', '0', '0', '2017-11-21 11:23:59');
+INSERT INTO `roominfo` VALUES ('1011', '9', 'ABD44SPAQ5001800006020801', '', '6栋', '2单元', '801室', '6栋2单元801', '汪铄东', '', '', '2017-11-09', '1', '1', '2017-11-21 11:23:59');
 
 -- ----------------------------
 -- Table structure for serviceinfo

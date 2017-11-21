@@ -30,6 +30,7 @@ public class RoominfoServiceImpl implements RoominfoService {
         Roominfo roominfo = new Roominfo();
         roominfo.setId(id);
         roominfo.setDeletestatus(true);
+        roominfo.setStatus(false);
         int ret = roominfoMapper.updateByPrimaryKeySelective(roominfo);
         if (ret > 0) {
             return true;

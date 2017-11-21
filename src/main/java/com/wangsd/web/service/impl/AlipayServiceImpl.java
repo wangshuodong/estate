@@ -13,6 +13,7 @@ import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
+import com.wangsd.web.modelCustom.RoominfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.AlipayService;
 import com.wangsd.web.service.HousinginfoServic;
@@ -256,7 +257,7 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public boolean roominfoUploadRequest(String community_id, List<Roominfo> roominfos, String token, UserCustom loginUser) {
+    public boolean roominfoUploadRequest(String community_id, List<RoominfoCustom> roominfos, String token, UserCustom loginUser) {
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
                 StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeRoominfoUploadRequest request = new AlipayEcoCplifeRoominfoUploadRequest();
@@ -268,17 +269,17 @@ public class AlipayServiceImpl implements AlipayService {
             JSONObject room_info_set = new JSONObject();
             room_info_set.put("out_room_id", room.getId());
             if (room.getGroupName() != null && !"".equals(room.getGroupName())) {
-                room_info_set.put("group ", room.getGroupName());
+                room_info_set.put("group", room.getGroupName());
             }
             room_info_set.put("building", room.getBuilding());
-            if (room.getUnit() != null && !"".equals(room.getGroupName())) {
-                room_info_set.put(" unit ", room.getUnit());
+            if (room.getUnit() != null && !"".equals(room.getUnit())) {
+                room_info_set.put("unit", room.getUnit());
             }
             room_info_set.put("room", room.getRoom());
             room_info_set.put("address", room.getAddress());
             jsonArray.add(room_info_set);
         }
-        bizContent.put("room_info_set ", jsonArray);
+        bizContent.put("room_info_set", jsonArray);
         request.setBizContent(bizContent.toString());
         if (token != null) {
             request.putOtherTextParam("app_auth_token", token);
@@ -308,14 +309,14 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public boolean roominfoDeleteRequest(String community_id, List<Integer> roominfoid, String token, UserCustom loginUser) {
+    public boolean roominfoDeleteRequest(String community_id, List<String> roominfoid, String token, UserCustom loginUser) {
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
                 StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
-        boolean retStatus = false;
         AlipayEcoCplifeRoominfoDeleteRequest request = new AlipayEcoCplifeRoominfoDeleteRequest();
         JSONObject bizContent = new JSONObject();
+        bizContent.put("batch_id", Long.valueOf(System.currentTimeMillis()));
         bizContent.put("community_id", community_id);
-        bizContent.put("out_room_id_set ", roominfoid);
+        bizContent.put("out_room_id_set", roominfoid);
         request.setBizContent(bizContent.toString());
         if (token != null) {
             request.putOtherTextParam("app_auth_token", token);
@@ -325,15 +326,14 @@ public class AlipayServiceImpl implements AlipayService {
             logger.debug("----response----" + response.getBody());
             if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
-                retStatus = true;
+                return true;
             } else {
                 logger.info("调用失败");
-                retStatus = false;
             }
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        return retStatus;
+        return false;
     }
 
     @Override

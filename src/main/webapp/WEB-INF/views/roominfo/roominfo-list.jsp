@@ -16,6 +16,7 @@
 		</div>
 		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="info_add();">新&nbsp;增</button>
+		<button type="button" class="btn btn-secondary radius size-L" onclick="room_list_sync();">批量同步</button>
 	</form>
 
 	<div class="panel panel-default mt-20">
@@ -37,6 +38,7 @@
 					<th>业主身份证</th>
 					<th>业主电话</th>
 					<th>入住时间</th>
+					<th>状态</th>
 					<th>操作</th>
 				</tr>
 				</thead>
@@ -53,7 +55,11 @@
 						<td>${ item.ownerName }</td>
 						<td>${ item.ownerCard }</td>
 						<td>${ item.ownerPhone }</td>
-						<td><fmt:formatDate value="${ item.entrydate }"  pattern="yyyy-MM-dd"/></td>
+						<td>${ item.entrydate }</td>
+						<td>
+							<c:if test="${ item.status==false }">未同步</c:if>
+							<c:if test="${ item.status==true }">已同步</c:if>
+						</td>
 						<td width="130">
 							<c:if test="${ item.status==false }">
 								<a title="同步支付宝" style="text-decoration:none" onclick="room_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
@@ -85,7 +91,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "新增房屋信息",
-			content: "${pageContext.request.contextPath }/rest/roominfo/addRoominfo",
+			content: "${pageContext.request.contextPath }/rest/roominfo/openRoominfo",
 		});
 		layer.full(index);
 	}
@@ -94,7 +100,7 @@
         var index = layer.open({
             type: 2,
             title: "修改小区信息",
-            content: "${pageContext.request.contextPath }/rest/roominfo/updateRoominfo?id=" + id,
+            content: "${pageContext.request.contextPath }/rest/roominfo/openRoominfo?id=" + id,
         });
         layer.full(index);
     }
@@ -132,7 +138,26 @@
             success: function(data){
                 if (data.success) {
                     layer.msg("同步支付宝成功!", {icon: 1});
-                    //window.location.reload();
+                    window.location.reload();
+                }else {
+                    layer.msg("同步支付宝失败!", {icon: 5});
+                }
+            },
+            error:function(data) {
+                layer.msg('error!',{icon:1,time:1000});
+            },
+        });
+    }
+
+    function room_list_sync() {
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath }/rest/alipay/allRoominfoUploadRequest',
+            dataType: 'json',
+            success: function(data){
+                if (data.success) {
+                    layer.msg("同步支付宝成功!", {icon: 1});
+                    window.location.reload();
                 }else {
                     layer.msg("同步支付宝失败!", {icon: 5});
                 }

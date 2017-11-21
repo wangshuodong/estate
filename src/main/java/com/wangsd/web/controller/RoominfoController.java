@@ -48,7 +48,7 @@ public class RoominfoController {
     @RequestMapping("/roominfoList")
     public String roominfoList(RoominfoCustom query, HttpServletRequest request, Model model) {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(loginUser.getParentCode());
+        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         String departmentCode;
         if (query.getParentId() == null || query.getParentId() == 0) {
@@ -74,7 +74,7 @@ public class RoominfoController {
     @RequestMapping("/openRoominfo")
     public String openRoominfo(Integer id, HttpServletRequest request, Model model) {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(loginUser.getParentCode());
+        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         if (id != null) {
             Roominfo roominfo = roominfoService.selectRoominfoById(id);
@@ -90,9 +90,9 @@ public class RoominfoController {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         Roominfo roominfo = roominfoService.selectRoominfoById(id);
         if (roominfo.getStatus()) { //已同步
-            HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
-            List<Integer> roomids = new ArrayList<Integer>();
-            roomids.add(roominfo.getId());
+            HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(roominfo.getParentId());
+            List<String> roomids = new ArrayList<>();
+            roomids.add(roominfo.getId().toString());
             alipayService.roominfoDeleteRequest(housing.getCommunityId(), roomids, housing.getToken(), loginUser);
         }
         boolean bl = roominfoService.deleteRoominfo(id);
