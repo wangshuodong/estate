@@ -23,9 +23,11 @@
 				<option value="1" <c:if test="${query.status == true }">selected</c:if>>已同步</option>
 			</select>
 		</div>
+
 		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="info_add();">新&nbsp;增</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="room_list_sync();">批量同步</button>
+		<button type="button" class="btn btn-secondary radius size-L" onclick="excel_upload();">导入房屋</button>
 	</form>
 
 	<div class="panel panel-default mt-20">
@@ -175,6 +177,10 @@
                 layer.msg('error!',{icon:1,time:1000});
             },
         });
+    }
+    
+    function excel_upload() {
+        layer_show("导入房屋","${pageContext.request.contextPath }/rest/roominfo/openExcel", 800, 300);
     }
 </script>
 

@@ -57,6 +57,10 @@ body, th, td, button, input, select, textarea {
     border: solid 1px #3bb4f2
 }
 
+.btn-upload{position: relative; display:inline-block;height:41px; *display:inline;overflow:hidden;vertical-align:middle;cursor:pointer}
+
+.dataTables_wrapper .dataTables_filter {float: right;text-align: right; margin-top: -50px;}
+.dataTables_wrapper .dataTables_filter .input-text { width:auto; margin-left: 5px}
 
 
 
