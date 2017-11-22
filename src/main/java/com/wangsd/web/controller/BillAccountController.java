@@ -1,5 +1,6 @@
 package com.wangsd.web.controller;
 
+import com.wangsd.core.entity.JSONResult;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
@@ -13,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,27 +51,48 @@ public class BillAccountController {
     }
 
     /**
+     * 跳转新增账单
+     * @param
+     * @return
+     */
+    @RequestMapping("/addBillAccount")
+    public String addBillAccount(HttpServletRequest request, Model model) {
+        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
+        model.addAttribute("parentList", parentList);
+        return "/billaccount/billaccount-info";
+    }
+
+    /**
      * 跳转编辑账单
      * @param
      * @return
      */
-    @RequestMapping("/openBillAccount")
-    public String openBillAccount(Integer id, HttpServletRequest request, Model model) {
-        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
-        model.addAttribute("parentList", parentList);
-//        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
-//        model.addAttribute("parentList", parentList);
-//        RoominfoCustom query = new RoominfoCustom();
-//        query.setDepartmentCode(user.getDepartmentCode());
-    //    List<RoominfoCustom> roominfoDist = roominfoService.queryRoominfoDistinct(query);
-  //      model.addAttribute("roominfoDist", roominfoDist);
-        if (id != null) {
-            Billaccount billaccount = billAccountService.selectBillAccountById(id);
+    @RequestMapping("/updateBillAccount")
+    public String updateBillAccount(Integer id, HttpServletRequest request, Model model) {
+        BillAccountCustom query = new BillAccountCustom();
+        query.setId(id);
+        List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
+        if (list.size() == 1) {
+            BillAccountCustom billaccount = list.get(0);
             model.addAttribute("billaccount", billaccount);
         }
-        return "/billaccount/billaccount-info";
+        return "/billaccount/billaccount-update";
     }
 
+    @RequestMapping(path = "/saveOrUpdateBillAccount", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResult saveOrUpdateBillAccount(Billaccount billaccount) {
+        boolean bl;
+        if (billaccount.getId() == null) {
+            billaccount.setCreateTime(new Date());
+            bl = billAccountService.insertBillaccount(billaccount);
+        }else {
+            bl = billAccountService.updateBillaccount(billaccount);
+        }
+        JSONResult obj = new JSONResult();
+        obj.setSuccess(bl);
+        return obj;
+    }
 
 }

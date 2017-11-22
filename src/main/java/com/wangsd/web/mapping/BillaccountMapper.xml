@@ -5,19 +5,22 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="housing_id" property="housingId" jdbcType="INTEGER" />
     <result column="roominfo_id" property="roominfoId" jdbcType="INTEGER" />
-    <result column="cost_type" property="costType" jdbcType="VARCHAR" />
+    <result column="cost_type" property="costType" jdbcType="INTEGER" />
     <result column="bill_entry_amount" property="billEntryAmount" jdbcType="DOUBLE" />
     <result column="acct_period" property="acctPeriod" jdbcType="VARCHAR" />
     <result column="release_day" property="releaseDay" jdbcType="VARCHAR" />
     <result column="deadline" property="deadline" jdbcType="VARCHAR" />
     <result column="relate_id" property="relateId" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="BIT" />
     <result column="payDate" property="paydate" jdbcType="TIMESTAMP" />
     <result column="payType" property="paytype" jdbcType="INTEGER" />
-    <result column="payStatus" property="paystatus" jdbcType="INTEGER" />
+    <result column="payStatus" property="paystatus" jdbcType="BIT" />
     <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
     <result column="alipay_trade_no" property="alipayTradeNo" jdbcType="VARCHAR" />
     <result column="weixin_trade_no" property="weixinTradeNo" jdbcType="VARCHAR" />
+    <result column="printStatus" property="printstatus" jdbcType="TINYINT" />
+    <result column="ticketStatus" property="ticketstatus" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -80,7 +83,7 @@
   <sql id="Base_Column_List" >
     id, housing_id, roominfo_id, cost_type, bill_entry_amount, acct_period, release_day, 
     deadline, relate_id, status, payDate, payType, payStatus, deleteStatus, alipay_trade_no, 
-    weixin_trade_no
+    weixin_trade_no, printStatus, ticketStatus, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.BillaccountExample" >
     select
@@ -118,13 +121,15 @@
       release_day, deadline, relate_id, 
       status, payDate, payType, 
       payStatus, deleteStatus, alipay_trade_no, 
-      weixin_trade_no)
+      weixin_trade_no, printStatus, ticketStatus, 
+      create_time)
     values (#{id,jdbcType=INTEGER}, #{housingId,jdbcType=INTEGER}, #{roominfoId,jdbcType=INTEGER}, 
-      #{costType,jdbcType=VARCHAR}, #{billEntryAmount,jdbcType=DOUBLE}, #{acctPeriod,jdbcType=VARCHAR}, 
+      #{costType,jdbcType=INTEGER}, #{billEntryAmount,jdbcType=DOUBLE}, #{acctPeriod,jdbcType=VARCHAR}, 
       #{releaseDay,jdbcType=VARCHAR}, #{deadline,jdbcType=VARCHAR}, #{relateId,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{paydate,jdbcType=TIMESTAMP}, #{paytype,jdbcType=INTEGER}, 
-      #{paystatus,jdbcType=INTEGER}, #{deletestatus,jdbcType=BIT}, #{alipayTradeNo,jdbcType=VARCHAR}, 
-      #{weixinTradeNo,jdbcType=VARCHAR})
+      #{status,jdbcType=BIT}, #{paydate,jdbcType=TIMESTAMP}, #{paytype,jdbcType=INTEGER}, 
+      #{paystatus,jdbcType=BIT}, #{deletestatus,jdbcType=BIT}, #{alipayTradeNo,jdbcType=VARCHAR}, 
+      #{weixinTradeNo,jdbcType=VARCHAR}, #{printstatus,jdbcType=TINYINT}, #{ticketstatus,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Billaccount" >
     insert into billaccount
@@ -177,6 +182,15 @@
       <if test="weixinTradeNo != null" >
         weixin_trade_no,
       </if>
+      <if test="printstatus != null" >
+        printStatus,
+      </if>
+      <if test="ticketstatus != null" >
+        ticketStatus,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -189,7 +203,7 @@
         #{roominfoId,jdbcType=INTEGER},
       </if>
       <if test="costType != null" >
-        #{costType,jdbcType=VARCHAR},
+        #{costType,jdbcType=INTEGER},
       </if>
       <if test="billEntryAmount != null" >
         #{billEntryAmount,jdbcType=DOUBLE},
@@ -207,7 +221,7 @@
         #{relateId,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=INTEGER},
+        #{status,jdbcType=BIT},
       </if>
       <if test="paydate != null" >
         #{paydate,jdbcType=TIMESTAMP},
@@ -216,7 +230,7 @@
         #{paytype,jdbcType=INTEGER},
       </if>
       <if test="paystatus != null" >
-        #{paystatus,jdbcType=INTEGER},
+        #{paystatus,jdbcType=BIT},
       </if>
       <if test="deletestatus != null" >
         #{deletestatus,jdbcType=BIT},
@@ -226,6 +240,15 @@
       </if>
       <if test="weixinTradeNo != null" >
         #{weixinTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="printstatus != null" >
+        #{printstatus,jdbcType=TINYINT},
+      </if>
+      <if test="ticketstatus != null" >
+        #{ticketstatus,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -248,7 +271,7 @@
         roominfo_id = #{record.roominfoId,jdbcType=INTEGER},
       </if>
       <if test="record.costType != null" >
-        cost_type = #{record.costType,jdbcType=VARCHAR},
+        cost_type = #{record.costType,jdbcType=INTEGER},
       </if>
       <if test="record.billEntryAmount != null" >
         bill_entry_amount = #{record.billEntryAmount,jdbcType=DOUBLE},
@@ -266,7 +289,7 @@
         relate_id = #{record.relateId,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null" >
-        status = #{record.status,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=BIT},
       </if>
       <if test="record.paydate != null" >
         payDate = #{record.paydate,jdbcType=TIMESTAMP},
@@ -275,7 +298,7 @@
         payType = #{record.paytype,jdbcType=INTEGER},
       </if>
       <if test="record.paystatus != null" >
-        payStatus = #{record.paystatus,jdbcType=INTEGER},
+        payStatus = #{record.paystatus,jdbcType=BIT},
       </if>
       <if test="record.deletestatus != null" >
         deleteStatus = #{record.deletestatus,jdbcType=BIT},
@@ -285,6 +308,15 @@
       </if>
       <if test="record.weixinTradeNo != null" >
         weixin_trade_no = #{record.weixinTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.printstatus != null" >
+        printStatus = #{record.printstatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.ticketstatus != null" >
+        ticketStatus = #{record.ticketstatus,jdbcType=BIT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -296,19 +328,22 @@
     set id = #{record.id,jdbcType=INTEGER},
       housing_id = #{record.housingId,jdbcType=INTEGER},
       roominfo_id = #{record.roominfoId,jdbcType=INTEGER},
-      cost_type = #{record.costType,jdbcType=VARCHAR},
+      cost_type = #{record.costType,jdbcType=INTEGER},
       bill_entry_amount = #{record.billEntryAmount,jdbcType=DOUBLE},
       acct_period = #{record.acctPeriod,jdbcType=VARCHAR},
       release_day = #{record.releaseDay,jdbcType=VARCHAR},
       deadline = #{record.deadline,jdbcType=VARCHAR},
       relate_id = #{record.relateId,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=BIT},
       payDate = #{record.paydate,jdbcType=TIMESTAMP},
       payType = #{record.paytype,jdbcType=INTEGER},
-      payStatus = #{record.paystatus,jdbcType=INTEGER},
+      payStatus = #{record.paystatus,jdbcType=BIT},
       deleteStatus = #{record.deletestatus,jdbcType=BIT},
       alipay_trade_no = #{record.alipayTradeNo,jdbcType=VARCHAR},
-      weixin_trade_no = #{record.weixinTradeNo,jdbcType=VARCHAR}
+      weixin_trade_no = #{record.weixinTradeNo,jdbcType=VARCHAR},
+      printStatus = #{record.printstatus,jdbcType=TINYINT},
+      ticketStatus = #{record.ticketstatus,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -323,7 +358,7 @@
         roominfo_id = #{roominfoId,jdbcType=INTEGER},
       </if>
       <if test="costType != null" >
-        cost_type = #{costType,jdbcType=VARCHAR},
+        cost_type = #{costType,jdbcType=INTEGER},
       </if>
       <if test="billEntryAmount != null" >
         bill_entry_amount = #{billEntryAmount,jdbcType=DOUBLE},
@@ -341,7 +376,7 @@
         relate_id = #{relateId,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
+        status = #{status,jdbcType=BIT},
       </if>
       <if test="paydate != null" >
         payDate = #{paydate,jdbcType=TIMESTAMP},
@@ -350,7 +385,7 @@
         payType = #{paytype,jdbcType=INTEGER},
       </if>
       <if test="paystatus != null" >
-        payStatus = #{paystatus,jdbcType=INTEGER},
+        payStatus = #{paystatus,jdbcType=BIT},
       </if>
       <if test="deletestatus != null" >
         deleteStatus = #{deletestatus,jdbcType=BIT},
@@ -361,6 +396,15 @@
       <if test="weixinTradeNo != null" >
         weixin_trade_no = #{weixinTradeNo,jdbcType=VARCHAR},
       </if>
+      <if test="printstatus != null" >
+        printStatus = #{printstatus,jdbcType=TINYINT},
+      </if>
+      <if test="ticketstatus != null" >
+        ticketStatus = #{ticketstatus,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -368,19 +412,22 @@
     update billaccount
     set housing_id = #{housingId,jdbcType=INTEGER},
       roominfo_id = #{roominfoId,jdbcType=INTEGER},
-      cost_type = #{costType,jdbcType=VARCHAR},
+      cost_type = #{costType,jdbcType=INTEGER},
       bill_entry_amount = #{billEntryAmount,jdbcType=DOUBLE},
       acct_period = #{acctPeriod,jdbcType=VARCHAR},
       release_day = #{releaseDay,jdbcType=VARCHAR},
       deadline = #{deadline,jdbcType=VARCHAR},
       relate_id = #{relateId,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
       payDate = #{paydate,jdbcType=TIMESTAMP},
       payType = #{paytype,jdbcType=INTEGER},
-      payStatus = #{paystatus,jdbcType=INTEGER},
+      payStatus = #{paystatus,jdbcType=BIT},
       deleteStatus = #{deletestatus,jdbcType=BIT},
       alipay_trade_no = #{alipayTradeNo,jdbcType=VARCHAR},
-      weixin_trade_no = #{weixinTradeNo,jdbcType=VARCHAR}
+      weixin_trade_no = #{weixinTradeNo,jdbcType=VARCHAR},
+      printStatus = #{printstatus,jdbcType=TINYINT},
+      ticketStatus = #{ticketstatus,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

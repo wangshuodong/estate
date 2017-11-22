@@ -19,4 +19,18 @@ public interface BillAccountService {
      * @return
      */
     public Billaccount selectBillAccountById(Integer id);
+
+    /**
+     * 新增账单信息
+     * @param billaccount
+     * @return
+     */
+    public boolean insertBillaccount(Billaccount billaccount);
+
+    /**
+     * 更新账单信息
+     * @param billaccount
+     * @return
+     */
+    public boolean updateBillaccount(Billaccount billaccount);
 }

@@ -28,4 +28,32 @@ public class BillAccountServiceImpl implements BillAccountService {
         return billaccountMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 新增账单信息
+     * @param billaccount
+     * @return
+     */
+    public boolean insertBillaccount(Billaccount billaccount) {
+        int ret = billaccountMapper.insertSelective(billaccount);
+        if (ret > 0) {
+            return true;
+        }else {
+            return true;
+        }
+    }
+
+    /**
+     * 更新账单信息
+     * @param billaccount
+     * @return
+     */
+    public boolean updateBillaccount(Billaccount billaccount) {
+        int ret = billaccountMapper.updateByPrimaryKeySelective(billaccount);
+        if (ret > 0) {
+            return true;
+        }else {
+            return true;
+        }
+    }
+
 }

@@ -38,8 +38,8 @@
 				<tbody>
 				<c:forEach items="${billaccountList}" var="item">
 					<tr class="text-c">
-						<td>${ item.deptName }</td>
-						<td>${ item.roominfoaddress }</td>
+						<td>${ item.housingName }</td>
+						<td>${ item.roominfoAddress }</td>
 						<td>${ item.ownerName }</td>
 						<td>${ item.ownerPhone }</td>
 						<td>${ item.ownerCard }</td>
@@ -80,7 +80,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "新增账单",
-			content: "${pageContext.request.contextPath }/rest/billAccount/openBillAccount"
+			content: "${pageContext.request.contextPath }/rest/billAccount/addBillAccount"
 		});
 		layer.full(index);
 	}
@@ -89,7 +89,7 @@
         var index = layer.open({
             type: 2,
             title: "修改账单",
-            content: "${pageContext.request.contextPath }/rest/billAccount/openBillAccount?id=" + id
+            content: "${pageContext.request.contextPath }/rest/billAccount/updateBillAccount?id=" + id
         });
         layer.full(index);
     }

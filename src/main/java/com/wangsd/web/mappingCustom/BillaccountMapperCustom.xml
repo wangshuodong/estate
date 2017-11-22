@@ -10,6 +10,7 @@
         JOIN housinginfo h ON b.housing_id = h.id
         JOIN roominfo r ON b.roominfo_id = r.id
         <where>
+            and b.deleteStatus = false and h.deleteStatus = false and r.deleteStatus = false
             <if test="housingCode != null and housingCode != ''">
                 and h.`code` like CONCAT(#{housingCode},'%')
             </if>
@@ -18,6 +19,12 @@
             </if>
             <if test="roominfoId != null and roominfoId != ''">
                 and b.roominfo_id = #{housingId}
+            </if>
+            <if test="roominfoId != null and roominfoId != ''">
+                and b.roominfo_id = #{housingId}
+            </if>
+            <if test="id != null and id != ''">
+                and b.id = #{id}
             </if>
         </where>
     </select>

@@ -9,7 +9,7 @@ public class Billaccount {
 
     private Integer roominfoId;
 
-    private String costType;
+    private Integer costType;
 
     private Double billEntryAmount;
 
@@ -21,19 +21,25 @@ public class Billaccount {
 
     private String relateId;
 
-    private Integer status;
+    private Boolean status;
 
     private Date paydate;
 
     private Integer paytype;
 
-    private Integer paystatus;
+    private Boolean paystatus;
 
     private Boolean deletestatus;
 
     private String alipayTradeNo;
 
     private String weixinTradeNo;
+
+    private Byte printstatus;
+
+    private Boolean ticketstatus;
+
+    private Date createTime;
 
     public Integer getId() {
         return id;
@@ -59,12 +65,12 @@ public class Billaccount {
         this.roominfoId = roominfoId;
     }
 
-    public String getCostType() {
+    public Integer getCostType() {
         return costType;
     }
 
-    public void setCostType(String costType) {
-        this.costType = costType == null ? null : costType.trim();
+    public void setCostType(Integer costType) {
+        this.costType = costType;
     }
 
     public Double getBillEntryAmount() {
@@ -107,11 +113,11 @@ public class Billaccount {
         this.relateId = relateId == null ? null : relateId.trim();
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
@@ -131,11 +137,11 @@ public class Billaccount {
         this.paytype = paytype;
     }
 
-    public Integer getPaystatus() {
+    public Boolean getPaystatus() {
         return paystatus;
     }
 
-    public void setPaystatus(Integer paystatus) {
+    public void setPaystatus(Boolean paystatus) {
         this.paystatus = paystatus;
     }
 
@@ -161,5 +167,29 @@ public class Billaccount {
 
     public void setWeixinTradeNo(String weixinTradeNo) {
         this.weixinTradeNo = weixinTradeNo == null ? null : weixinTradeNo.trim();
+    }
+
+    public Byte getPrintstatus() {
+        return printstatus;
+    }
+
+    public void setPrintstatus(Byte printstatus) {
+        this.printstatus = printstatus;
+    }
+
+    public Boolean getTicketstatus() {
+        return ticketstatus;
+    }
+
+    public void setTicketstatus(Boolean ticketstatus) {
+        this.ticketstatus = ticketstatus;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

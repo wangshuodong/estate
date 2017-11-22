@@ -8,20 +8,13 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属小区：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <select class="form-control" name="housingId" id="housingId" required>
-                    <option value='' disabled selected style='display:none;'>请选择小区</option>
-                    <c:forEach items="${parentList}" var="item">
-                        <option value="${item.id}" <c:if test="${billaccount.housingId==item.id }">selected</c:if>>${item.name}</option>
-                    </c:forEach>
-                </select>
+                <input type="text" class="layui-input input-text radius size-L" value="${billaccount.housingName}" name="housingName" disabled>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属房间：</label>
-            <div class="formControls col-xs-8 col-sm-9" id="roomdoc">
-                <select class="form-control shift-info" name="roominfoId" id="roominfoId" required>
-                    <option value='' disabled selected style='display:none;'>请选择房间</option>
-                </select>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="layui-input input-text radius size-L" value="${billaccount.roominfoAddress}" name="roominfoAddress" disabled>
             </div>
         </div>
         <div class="row cl">
@@ -29,14 +22,14 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <select class="form-control shift-info" name="costType" required>
                     <option value='' disabled selected style='display:none;'>请选择费用类型</option>
-                    <option value="1">物业管理费</option>
-                    <option value="2">水电公摊费</option>
-                    <option value="3">垃圾清运费</option>
-                    <option value="4">公共照明费</option>
-                    <option value="5">水费</option>
-                    <option value="6">电费</option>
-                    <option value="7">蒸汽费</option>
-                    <option value="99">其他</option>
+                    <option value="1" <c:if test="${billaccount.costType==1 }">selected</c:if>>物业管理费</option>
+                    <option value="2" <c:if test="${billaccount.costType==2 }">selected</c:if>>水电公摊费</option>
+                    <option value="3" <c:if test="${billaccount.costType==3 }">selected</c:if>>垃圾清运费</option>
+                    <option value="4" <c:if test="${billaccount.costType==4 }">selected</c:if>>公共照明费</option>
+                    <option value="5" <c:if test="${billaccount.costType==5 }">selected</c:if>>水费</option>
+                    <option value="6" <c:if test="${billaccount.costType==6 }">selected</c:if>>电费</option>
+                    <option value="7" <c:if test="${billaccount.costType==7 }">selected</c:if>>蒸汽费</option>
+                    <option value="99" <c:if test="${billaccount.costType==99 }">selected</c:if>>其他</option>
                 </select>
             </div>
         </div>

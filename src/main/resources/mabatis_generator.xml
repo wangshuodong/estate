@@ -54,8 +54,8 @@
         <table tableName="users"/>
         <table tableName="housinginfo"/>
         <table tableName="propertyinfo"/>
-        <table tableName="billaccount"/>
-        -->
         <table tableName="roominfo"/>
+        -->
+        <table tableName="billaccount"/>
     </context>
 </generatorConfiguration>

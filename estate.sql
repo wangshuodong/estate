@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2017-11-21 23:28:48
+Date: 2017-11-22 17:53:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,26 +23,29 @@ CREATE TABLE `billaccount` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `housing_id` int(11) DEFAULT NULL COMMENT '对应小区id',
   `roominfo_id` int(11) DEFAULT NULL COMMENT '对应房间id',
-  `cost_type` varchar(255) DEFAULT NULL COMMENT '费用类型名称',
+  `cost_type` int(11) DEFAULT NULL COMMENT '费用类型名称',
   `bill_entry_amount` double(11,0) DEFAULT NULL COMMENT '应收金额',
   `acct_period` varchar(255) DEFAULT NULL COMMENT '账期，用于归类和向用户展示',
   `release_day` varchar(255) DEFAULT NULL COMMENT '出账日期20160831',
   `deadline` varchar(255) DEFAULT NULL COMMENT '缴费截止日期20160831',
   `relate_id` varchar(255) DEFAULT NULL COMMENT '缴费明细条目关联ID。若物业系统业务约束上传的多条明细条目必须被一次同时支付，则对应的明细条目需传入同样的relate_id。',
-  `status` int(11) DEFAULT NULL COMMENT '0:未同步 1：已同步 2：同步失败  3：已付款   4:已撤销',
-  `payDate` datetime DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0' COMMENT '0:未同步 1：已同步',
+  `payDate` datetime DEFAULT NULL COMMENT '付款时间',
   `payType` int(11) DEFAULT NULL COMMENT '微信 支付宝 现金 刷卡 银行转账',
-  `payStatus` int(11) DEFAULT NULL COMMENT '付款状态 0：未付款  1：已付款',
+  `payStatus` tinyint(1) DEFAULT '0' COMMENT '付款状态 0：未付款  1：已付款',
   `deleteStatus` tinyint(1) DEFAULT '0',
   `alipay_trade_no` varchar(255) DEFAULT NULL COMMENT '支付宝付款成功回传编号',
   `weixin_trade_no` varchar(255) DEFAULT NULL COMMENT '微信付款成功回传编号',
+  `printStatus` tinyint(255) DEFAULT '0' COMMENT '打印状态',
+  `ticketStatus` tinyint(1) DEFAULT '0' COMMENT '开票状态',
+  `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of billaccount
 -- ----------------------------
-INSERT INTO `billaccount` VALUES ('1001', '46', '1004', '物管费', '200', '2017-08', null, null, null, null, null, null, null, '0', null, null);
+INSERT INTO `billaccount` VALUES ('1003', '10003', '1012', '1', '1', '2017-07', '2017-11-08', '2017-11-22', null, '0', null, null, '0', '0', null, null, '0', '0', '2017-11-22 17:21:03');
 
 -- ----------------------------
 -- Table structure for housinginfo
@@ -65,12 +68,15 @@ CREATE TABLE `housinginfo` (
   `deleteStatus` tinyint(1) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10004 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of housinginfo
 -- ----------------------------
 INSERT INTO `housinginfo` VALUES ('9', 'ABD44SPAQ5001', '001000100010001', '首创十方界1', '红枫路9号', '2000', '500112', '500100', '500000', '106.537212|29.605355', null, '0571-87654321', 'PENDING_ONLINE', '0', '2017-11-20 15:53:22');
+INSERT INTO `housinginfo` VALUES ('10001', null, '001000100010002', '问过', '', '2000', '未', '而我却', '22', '106.100356|29.695525', null, '235', 'NEW', '1', '2017-11-22 11:27:29');
+INSERT INTO `housinginfo` VALUES ('10002', null, '001000100010003', '尔额34', '', '2000', '34', '34', '34', '97.719676|31.370363', null, '344', 'NEW', '1', '2017-11-22 11:27:50');
+INSERT INTO `housinginfo` VALUES ('10003', null, '001000100010004', '莫须有小区', '红枫路9号', '2000', '500112', '500100', '500000', '106.536969|29.605632', null, '023-74583381', 'NEW', '0', '2017-11-22 15:13:25');
 
 -- ----------------------------
 -- Table structure for menu
@@ -326,12 +332,14 @@ CREATE TABLE `roominfo` (
   `status` tinyint(1) DEFAULT '0' COMMENT 'false没有同步，true同步',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1012 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1014 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of roominfo
 -- ----------------------------
-INSERT INTO `roominfo` VALUES ('1011', '9', 'ABD44SPAQ5001800006020801', '', '6栋', '2单元', '801室', '6栋2单元801', '汪铄东', '', '', '2017-11-09', '1', '1', '2017-11-21 11:23:59');
+INSERT INTO `roominfo` VALUES ('1011', '9', 'ABD44SPAQ5001800006020802', '', '6栋', '2单元', '802室', '6栋2单元802室', '汪铄东', '', '', '2017-11-09', '0', '0', '2017-11-21 11:23:59');
+INSERT INTO `roominfo` VALUES ('1012', '10003', null, '', '6栋', '5单元', '1101', '6栋5单元1101', '', '', '', '', '0', '0', '2017-11-22 15:14:05');
+INSERT INTO `roominfo` VALUES ('1013', '10003', null, '', '1栋', '2单元', '1205', '1栋2单元1205', '', '', '', '', '0', '0', '2017-11-22 15:15:37');
 
 -- ----------------------------
 -- Table structure for serviceinfo

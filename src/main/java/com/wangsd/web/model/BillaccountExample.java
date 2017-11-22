@@ -295,62 +295,52 @@ public class BillaccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andCostTypeEqualTo(String value) {
+        public Criteria andCostTypeEqualTo(Integer value) {
             addCriterion("cost_type =", value, "costType");
             return (Criteria) this;
         }
 
-        public Criteria andCostTypeNotEqualTo(String value) {
+        public Criteria andCostTypeNotEqualTo(Integer value) {
             addCriterion("cost_type <>", value, "costType");
             return (Criteria) this;
         }
 
-        public Criteria andCostTypeGreaterThan(String value) {
+        public Criteria andCostTypeGreaterThan(Integer value) {
             addCriterion("cost_type >", value, "costType");
             return (Criteria) this;
         }
 
-        public Criteria andCostTypeGreaterThanOrEqualTo(String value) {
+        public Criteria andCostTypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("cost_type >=", value, "costType");
             return (Criteria) this;
         }
 
-        public Criteria andCostTypeLessThan(String value) {
+        public Criteria andCostTypeLessThan(Integer value) {
             addCriterion("cost_type <", value, "costType");
             return (Criteria) this;
         }
 
-        public Criteria andCostTypeLessThanOrEqualTo(String value) {
+        public Criteria andCostTypeLessThanOrEqualTo(Integer value) {
             addCriterion("cost_type <=", value, "costType");
             return (Criteria) this;
         }
 
-        public Criteria andCostTypeLike(String value) {
-            addCriterion("cost_type like", value, "costType");
-            return (Criteria) this;
-        }
-
-        public Criteria andCostTypeNotLike(String value) {
-            addCriterion("cost_type not like", value, "costType");
-            return (Criteria) this;
-        }
-
-        public Criteria andCostTypeIn(List<String> values) {
+        public Criteria andCostTypeIn(List<Integer> values) {
             addCriterion("cost_type in", values, "costType");
             return (Criteria) this;
         }
 
-        public Criteria andCostTypeNotIn(List<String> values) {
+        public Criteria andCostTypeNotIn(List<Integer> values) {
             addCriterion("cost_type not in", values, "costType");
             return (Criteria) this;
         }
 
-        public Criteria andCostTypeBetween(String value1, String value2) {
+        public Criteria andCostTypeBetween(Integer value1, Integer value2) {
             addCriterion("cost_type between", value1, value2, "costType");
             return (Criteria) this;
         }
 
-        public Criteria andCostTypeNotBetween(String value1, String value2) {
+        public Criteria andCostTypeNotBetween(Integer value1, Integer value2) {
             addCriterion("cost_type not between", value1, value2, "costType");
             return (Criteria) this;
         }
@@ -705,52 +695,52 @@ public class BillaccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Integer value) {
+        public Criteria andStatusEqualTo(Boolean value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Integer value) {
+        public Criteria andStatusNotEqualTo(Boolean value) {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Integer value) {
+        public Criteria andStatusGreaterThan(Boolean value) {
             addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Boolean value) {
             addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Integer value) {
+        public Criteria andStatusLessThan(Boolean value) {
             addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+        public Criteria andStatusLessThanOrEqualTo(Boolean value) {
             addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Integer> values) {
+        public Criteria andStatusIn(List<Boolean> values) {
             addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Integer> values) {
+        public Criteria andStatusNotIn(List<Boolean> values) {
             addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Integer value1, Integer value2) {
+        public Criteria andStatusBetween(Boolean value1, Boolean value2) {
             addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+        public Criteria andStatusNotBetween(Boolean value1, Boolean value2) {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
@@ -885,52 +875,52 @@ public class BillaccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andPaystatusEqualTo(Integer value) {
+        public Criteria andPaystatusEqualTo(Boolean value) {
             addCriterion("payStatus =", value, "paystatus");
             return (Criteria) this;
         }
 
-        public Criteria andPaystatusNotEqualTo(Integer value) {
+        public Criteria andPaystatusNotEqualTo(Boolean value) {
             addCriterion("payStatus <>", value, "paystatus");
             return (Criteria) this;
         }
 
-        public Criteria andPaystatusGreaterThan(Integer value) {
+        public Criteria andPaystatusGreaterThan(Boolean value) {
             addCriterion("payStatus >", value, "paystatus");
             return (Criteria) this;
         }
 
-        public Criteria andPaystatusGreaterThanOrEqualTo(Integer value) {
+        public Criteria andPaystatusGreaterThanOrEqualTo(Boolean value) {
             addCriterion("payStatus >=", value, "paystatus");
             return (Criteria) this;
         }
 
-        public Criteria andPaystatusLessThan(Integer value) {
+        public Criteria andPaystatusLessThan(Boolean value) {
             addCriterion("payStatus <", value, "paystatus");
             return (Criteria) this;
         }
 
-        public Criteria andPaystatusLessThanOrEqualTo(Integer value) {
+        public Criteria andPaystatusLessThanOrEqualTo(Boolean value) {
             addCriterion("payStatus <=", value, "paystatus");
             return (Criteria) this;
         }
 
-        public Criteria andPaystatusIn(List<Integer> values) {
+        public Criteria andPaystatusIn(List<Boolean> values) {
             addCriterion("payStatus in", values, "paystatus");
             return (Criteria) this;
         }
 
-        public Criteria andPaystatusNotIn(List<Integer> values) {
+        public Criteria andPaystatusNotIn(List<Boolean> values) {
             addCriterion("payStatus not in", values, "paystatus");
             return (Criteria) this;
         }
 
-        public Criteria andPaystatusBetween(Integer value1, Integer value2) {
+        public Criteria andPaystatusBetween(Boolean value1, Boolean value2) {
             addCriterion("payStatus between", value1, value2, "paystatus");
             return (Criteria) this;
         }
 
-        public Criteria andPaystatusNotBetween(Integer value1, Integer value2) {
+        public Criteria andPaystatusNotBetween(Boolean value1, Boolean value2) {
             addCriterion("payStatus not between", value1, value2, "paystatus");
             return (Criteria) this;
         }
@@ -1132,6 +1122,186 @@ public class BillaccountExample {
 
         public Criteria andWeixinTradeNoNotBetween(String value1, String value2) {
             addCriterion("weixin_trade_no not between", value1, value2, "weixinTradeNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusIsNull() {
+            addCriterion("printStatus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusIsNotNull() {
+            addCriterion("printStatus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusEqualTo(Byte value) {
+            addCriterion("printStatus =", value, "printstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusNotEqualTo(Byte value) {
+            addCriterion("printStatus <>", value, "printstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusGreaterThan(Byte value) {
+            addCriterion("printStatus >", value, "printstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusGreaterThanOrEqualTo(Byte value) {
+            addCriterion("printStatus >=", value, "printstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusLessThan(Byte value) {
+            addCriterion("printStatus <", value, "printstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusLessThanOrEqualTo(Byte value) {
+            addCriterion("printStatus <=", value, "printstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusIn(List<Byte> values) {
+            addCriterion("printStatus in", values, "printstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusNotIn(List<Byte> values) {
+            addCriterion("printStatus not in", values, "printstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusBetween(Byte value1, Byte value2) {
+            addCriterion("printStatus between", value1, value2, "printstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrintstatusNotBetween(Byte value1, Byte value2) {
+            addCriterion("printStatus not between", value1, value2, "printstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusIsNull() {
+            addCriterion("ticketStatus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusIsNotNull() {
+            addCriterion("ticketStatus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusEqualTo(Boolean value) {
+            addCriterion("ticketStatus =", value, "ticketstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusNotEqualTo(Boolean value) {
+            addCriterion("ticketStatus <>", value, "ticketstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusGreaterThan(Boolean value) {
+            addCriterion("ticketStatus >", value, "ticketstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("ticketStatus >=", value, "ticketstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusLessThan(Boolean value) {
+            addCriterion("ticketStatus <", value, "ticketstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusLessThanOrEqualTo(Boolean value) {
+            addCriterion("ticketStatus <=", value, "ticketstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusIn(List<Boolean> values) {
+            addCriterion("ticketStatus in", values, "ticketstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusNotIn(List<Boolean> values) {
+            addCriterion("ticketStatus not in", values, "ticketstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusBetween(Boolean value1, Boolean value2) {
+            addCriterion("ticketStatus between", value1, value2, "ticketstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTicketstatusNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("ticketStatus not between", value1, value2, "ticketstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
     }
