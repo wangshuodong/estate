@@ -9,7 +9,7 @@
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属小区：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <select class="form-control" name="parentId" required>
-                    <option></option>
+                    <option value='' disabled selected style='display:none;'>请选择小区</option>
                     <c:forEach items="${parentList}" var="item">
                         <option value="${item.id}" <c:if test="${roominfo.parentId==item.id }">selected</c:if>>${item.name}</option>
                     </c:forEach>

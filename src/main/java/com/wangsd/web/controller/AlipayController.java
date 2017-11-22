@@ -127,6 +127,11 @@ public class AlipayController {
         return jsonResult;
     }
 
+    /**
+     * 批量上传房屋信息
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/allRoominfoUploadRequest")
     @ResponseBody
     public JSONResult allRoominfoUploadRequest(HttpSession session) {
@@ -135,7 +140,9 @@ public class AlipayController {
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         //查询数据
-        List<Housinginfo> list = housinginfoServic.queryAllList(loginUser.getParentCode());
+        HousinginfoCustom housingquery = new HousinginfoCustom();
+        housingquery.setParentCode(loginUser.getParentCode());
+        List<Housinginfo> list = housinginfoServic.queryAllList(housingquery);
         for (Housinginfo housing : list) {
             Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(housing.getParentId());
             RoominfoCustom query = new RoominfoCustom();

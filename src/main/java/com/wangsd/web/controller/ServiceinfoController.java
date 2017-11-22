@@ -52,7 +52,8 @@ public class ServiceinfoController {
     public String openService(Integer id, Model model, HttpSession session) {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         String parentCode = loginUser.getParentCode();
-        List<ParentCustom> parentList = serviceinfoServic.queryParentCustomByCode(parentCode);
+        //查询上级服务商
+        List<ParentCustom> parentList = serviceinfoServic.queryParentServiceByCode(parentCode);
         model.addAttribute("parentList", parentList);
         if (id != null) {
             Serviceinfo serviceinfo = serviceinfoServic.selectServiceinfoById(id);

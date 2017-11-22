@@ -2,6 +2,7 @@ package com.wangsd.web.service.impl;
 
 import com.wangsd.web.dao.RoominfoMapper;
 import com.wangsd.web.model.Roominfo;
+import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.RoominfoCustom;
 import com.wangsd.web.service.RoominfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class RoominfoServiceImpl implements RoominfoService {
     RoominfoMapper roominfoMapper;
 
     @Override
-    public List<RoominfoCustom> queryRoominfoList(Roominfo roominfo) {
+    public List<RoominfoCustom> queryRoominfoList(RoominfoCustom roominfo) {
         return roominfoMapper.queryRoominfoList(roominfo);
     }
 
@@ -60,7 +61,7 @@ public class RoominfoServiceImpl implements RoominfoService {
     }
 
     @Override
-    public List<RoominfoCustom> queryRoominfoDistinct(Roominfo roominfo){
-        return roominfoMapper.queryRoominfoDistinct(roominfo);
+    public List<ParentCustom> queryParentRoomById(Integer housingId) {
+        return roominfoMapper.queryParentRoomById(housingId);
     }
 }

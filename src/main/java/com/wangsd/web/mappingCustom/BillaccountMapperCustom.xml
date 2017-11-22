@@ -3,26 +3,22 @@
 <mapper namespace="com.wangsd.web.dao.BillaccountMapper">
     <select id="queryBillAccountList" parameterType="BillAccountCustom" resultType="BillAccountCustom">
         SELECT
-            b.*, d.`name`, r.address
+            b.*, h.`name` as housingName,
+            r.address as roominfoAddress,r.owner_card as ownerCard, r.owner_name as ownerName, r.owner_phone as ownerPhone
         FROM
             billaccount b
-        JOIN department d ON b.department_id = d.id
+        JOIN housinginfo h ON b.housing_id = h.id
         JOIN roominfo r ON b.roominfo_id = r.id
         <where>
-            d.`code` like CONCAT(#{departmentCode},'%')
-        </where>
-    </select>
-
-    <select id="queryBillAccountListByCode" parameterType="com.wangsd.web.model.Department" resultType="BillAccountCustom">
-        SELECT
-        b.*, d.`name` as deptName, r.address as roominfoaddress,r.owner_name as ownerName,r.owner_card as ownerCard,r.owner_phone as ownerPhone
-        FROM
-        billaccount b
-        JOIN department d ON b.department_id = d.id
-        JOIN roominfo r ON b.roominfo_id = r.id
-        <where>
-            d.deleteStatus = FALSE
-            and d.`code` like CONCAT(#{code},'%')
+            <if test="housingCode != null and housingCode != ''">
+                and h.`code` like CONCAT(#{housingCode},'%')
+            </if>
+            <if test="housingId != null and housingId != ''">
+                and b.housing_id = #{housingId}
+            </if>
+            <if test="roominfoId != null and roominfoId != ''">
+                and b.roominfo_id = #{housingId}
+            </if>
         </where>
     </select>
 </mapper>

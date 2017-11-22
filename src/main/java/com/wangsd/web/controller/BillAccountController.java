@@ -1,10 +1,11 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.web.model.Billaccount;
-import com.wangsd.web.model.Department;
 import com.wangsd.web.modelCustom.BillAccountCustom;
+import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.BillAccountService;
+import com.wangsd.web.service.HousinginfoServic;
 import com.wangsd.web.service.RoominfoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,40 +28,22 @@ public class BillAccountController {
     BillAccountService billAccountService;
     @Autowired
     RoominfoService roominfoService;
+    @Autowired
+    HousinginfoServic housinginfoServic;
 
     /**
      * 根据部门code查询账单信息
-     * @param billAccountCustom
+     * @param query
      * @return
      */
     @RequestMapping("/billAccountList")
-    public String billAccountList(BillAccountCustom billAccountCustom, HttpServletRequest request, Model model) {
-        UserCustom obj = (UserCustom) request.getSession().getAttribute("userInfo");
-        String departmentCode = obj.getParentCode();
-        Department department = new Department();
-        department.setCode(departmentCode);
-        List<BillAccountCustom> list = billAccountService.queryBillAccountListByCode(department);
+    public String billAccountList(BillAccountCustom query, HttpServletRequest request, Model model) {
+        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        String parentCode = loginUser.getParentCode();
+        query.setHousingCode(parentCode);
+        List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
         model.addAttribute("billaccountList", list);
         return "/billaccount/billaccount-list";
-    }
-
-    /**
-     * 跳转新增账单页面
-     * @param
-     * @return
-     */
-    @RequestMapping("/addBillAccount")
-    public String addBillAccount( HttpServletRequest request, Model model) {
-        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
-//        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
-//        model.addAttribute("parentList", parentList);
-//        RoominfoCustom query = new RoominfoCustom();
-//        query.setDepartmentCode(user.getDepartmentCode());
-//        List<RoominfoCustom> roominfoDist = roominfoService.queryRoominfoDistinct(query);
-//        List<RoominfoCustom> roominfoList = roominfoService.queryRoominfoList(query);
-//        model.addAttribute("roominfoDist", roominfoDist);
-//        model.addAttribute("roominfoList", roominfoList);
-        return "/billaccount/billaccount-info";
     }
 
     /**
@@ -68,17 +51,21 @@ public class BillAccountController {
      * @param
      * @return
      */
-    @RequestMapping("/updateBillAccount")
-    public String updateBillAccount(Integer id, HttpServletRequest request, Model model) {
-        UserCustom user = (UserCustom) request.getSession().getAttribute("userInfo");
+    @RequestMapping("/openBillAccount")
+    public String openBillAccount(Integer id, HttpServletRequest request, Model model) {
+        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
+        model.addAttribute("parentList", parentList);
 //        List<Department> parentList = departmentService.queryDepartmentList(user.getDepartmentCode(), 3);
 //        model.addAttribute("parentList", parentList);
 //        RoominfoCustom query = new RoominfoCustom();
 //        query.setDepartmentCode(user.getDepartmentCode());
     //    List<RoominfoCustom> roominfoDist = roominfoService.queryRoominfoDistinct(query);
   //      model.addAttribute("roominfoDist", roominfoDist);
-        Billaccount billaccount = billAccountService.selectBillAccountById(id);
-        model.addAttribute("billaccount", billaccount);
+        if (id != null) {
+            Billaccount billaccount = billAccountService.selectBillAccountById(id);
+            model.addAttribute("billaccount", billaccount);
+        }
         return "/billaccount/billaccount-info";
     }
 

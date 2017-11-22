@@ -7,11 +7,20 @@
 <div class="page-container">
 	<form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/roominfo/roominfoList" method="post">
 		<div class="form-group">
-			<select class="form-control" name="departmentId" style="width:250px">
-				<option value="0">请选择所属小区</option>
+			<select class="form-control" name="parentId" style="width:250px">
+				<option value='' disabled selected style='display:none;'>小区</option>
+				<option></option>
 				<c:forEach items="${parentList}" var="item">
 					<option value="${item.id}" <c:if test="${query.parentId==item.id }">selected</c:if>>${item.name}</option>
 				</c:forEach>
+			</select>
+		</div>
+		<div class="form-group">
+			<select class="form-control" name="status" style="width:250px">
+				<option value='' disabled selected style='display:none;'>状态</option>
+				<option></option>
+				<option value="0" <c:if test="${query.status == false }">selected</c:if>>未同步</option>
+				<option value="1" <c:if test="${query.status == true }">selected</c:if>>已同步</option>
 			</select>
 		</div>
 		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
@@ -45,7 +54,7 @@
 				<tbody>
 				<c:forEach items="${roominfoList}" var="item">
 					<tr class="text-c">
-						<td>${ item.deptName }</td>
+						<td>${ item.housingName }</td>
 						<td>${ item.roomId }</td>
 						<td>${ item.groupName }</td>
 						<td>${ item.building }</td>
@@ -64,7 +73,7 @@
 							<c:if test="${ item.status==false }">
 								<a title="同步支付宝" style="text-decoration:none" onclick="room_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
 							</c:if>
-							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
+							<%--<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>--%>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
 						</td>
 					</tr>

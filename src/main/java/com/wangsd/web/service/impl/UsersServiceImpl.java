@@ -86,9 +86,9 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public List<ParentCustom> queryParentCustomByCode(String code) {
         List<ParentCustom> list = new ArrayList<ParentCustom>();
-        List<ParentCustom> serviceList = serviceinfoMapper.queryParentCustomByCode(code);
-        List<ParentCustom> propertyList = propertyinfoMapper.queryParentCustomByCode(code);
-        List<ParentCustom> housingList = housinginfoMapper.queryParentCustomByCode(code);
+        List<ParentCustom> serviceList = serviceinfoMapper.queryParentServiceByCode(code);
+        List<ParentCustom> propertyList = propertyinfoMapper.queryParentPropertyByCode(code);
+        List<ParentCustom> housingList = housinginfoMapper.queryParentHousingByCode(code);
         list.addAll(serviceList);
         list.addAll(propertyList);
         list.addAll(housingList);

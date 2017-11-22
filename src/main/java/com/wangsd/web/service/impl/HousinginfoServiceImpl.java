@@ -2,13 +2,13 @@ package com.wangsd.web.service.impl;
 
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.web.dao.HousinginfoMapper;
+import com.wangsd.web.dao.PropertyinfoMapper;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.HousinginfoExample;
 import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.service.HousinginfoServic;
-import com.wangsd.web.service.PropertyinfoServic;
 import com.wangsd.web.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,24 +24,31 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     @Autowired
     HousinginfoMapper housinginfoMapper;
     @Autowired
-    PropertyinfoServic propertyinfoServic;
+    PropertyinfoMapper propertyinfoMapper;
     @Autowired
     UsersService usersService;
 
     @Override
-    public List<ParentCustom> queryParentCustomByCode(String code) {
-        return propertyinfoServic.queryParentCustomByCode(code);
+    public List<ParentCustom> queryParentPropertyByCode(String code) {
+        List<ParentCustom> propertyList = propertyinfoMapper.queryParentPropertyByCode(code);
+        return propertyList;
     }
 
     @Override
     public List<ParentCustom> queryParentHousingByCode(String code) {
-        return housinginfoMapper.queryParentCustomByCode(code);
+        return housinginfoMapper.queryParentHousingByCode(code);
     }
 
     @Override
-    public List<Housinginfo> queryAllList(String code) {
+    public List<Housinginfo> queryAllList(HousinginfoCustom housinginfoCustom) {
         HousinginfoExample example = new HousinginfoExample();
-        example.createCriteria().andCodeLike(code + "%");
+        HousinginfoExample.Criteria criteria = example.createCriteria();
+        if (housinginfoCustom.getParentCode() != null) {
+            criteria.andCodeLike(housinginfoCustom.getParentCode() + "%");
+        }
+        if (housinginfoCustom.getParentId() != null) {
+            criteria.andParentIdEqualTo(housinginfoCustom.getParentId());
+        }
         List<Housinginfo> list = housinginfoMapper.selectByExample(example);
         return list;
     }
@@ -118,7 +125,7 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     }
 
     public String getParentCode(Integer parentId) {
-        Propertyinfo parent = propertyinfoServic.selectPropertyinfoById(parentId);
+        Propertyinfo parent = propertyinfoMapper.selectByPrimaryKey(parentId);
         String maxCode = selectMaxByParentCode(parentId);
         if (maxCode == null) {
             return parent.getCode() + "0001";

@@ -2,6 +2,7 @@ package com.wangsd.web.dao;
 
 import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.model.RoominfoExample;
+import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.RoominfoCustom;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,12 +36,13 @@ public interface RoominfoMapper {
      * @param roominfo
      * @return
      */
-    List<RoominfoCustom> queryRoominfoList(Roominfo roominfo);
+    List<RoominfoCustom> queryRoominfoList(RoominfoCustom roominfo);
 
     /**
-     * 查询distinct房屋信息
-     * @param roominfo
+     * 查询小区下面的所有房间
+     * @param housingId
      * @return
      */
-    List<RoominfoCustom> queryRoominfoDistinct(Roominfo roominfo);
+    List<ParentCustom> queryParentRoomById(Integer housingId);
+
 }

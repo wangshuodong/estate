@@ -11,11 +11,11 @@ import java.util.List;
 public interface PropertyinfoServic {
 
     /**
-     * 查询所有上级服务商
+     * 查询所有上级服务商和物业
      * @param code
      * @return
      */
-    public List<ParentCustom> queryParentCustomByCode(String code);
+    public List<ParentCustom> queryParentServiceAndPropertyByCode(String code);
 
     /**
      * 查询所有服务商

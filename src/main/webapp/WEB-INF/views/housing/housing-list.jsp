@@ -8,7 +8,8 @@
 	<form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/housing/housingList" method="post">
 		<div class="form-group">
 			<select class="form-control" name="parentId" id="parentId" style="width:250px">
-				<option value="0">请选择所属物业</option>
+				<option value='' disabled selected style='display:none;'>物业</option>
+				<option></option>
 				<c:forEach items="${parentList}" var="item">
 					<option value="${item.id}" <c:if test="${query.parentId==item.id }">selected</c:if>>${item.name}</option>
 				</c:forEach>

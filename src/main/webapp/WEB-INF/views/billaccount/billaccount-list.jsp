@@ -80,7 +80,7 @@
 		var index = layer.open({
 			type: 2,
 			title: "新增账单",
-			content: "${pageContext.request.contextPath }/rest/billAccount/addBillAccount"
+			content: "${pageContext.request.contextPath }/rest/billAccount/openBillAccount"
 		});
 		layer.full(index);
 	}
@@ -89,7 +89,7 @@
         var index = layer.open({
             type: 2,
             title: "修改账单",
-            content: "${pageContext.request.contextPath }/rest/billAccount/updateBillAccount?id=" + id
+            content: "${pageContext.request.contextPath }/rest/billAccount/openBillAccount?id=" + id
         });
         layer.full(index);
     }

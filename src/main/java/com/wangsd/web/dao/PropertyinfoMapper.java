@@ -35,7 +35,7 @@ public interface PropertyinfoMapper {
      * @param code
      * @return
      */
-    List<ParentCustom> queryParentCustomByCode(String code);
+    List<ParentCustom> queryParentPropertyByCode(String code);
 
     /**
      * 查询parent下面的最大code

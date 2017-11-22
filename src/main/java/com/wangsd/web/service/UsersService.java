@@ -56,7 +56,7 @@ public interface UsersService {
 	public List<UserCustom> queryUserListByCode(UserCustom userCustom);
 
 	/**
-	 * 查询所有的上级公司
+	 * 查询所有的上级服务商、物业、小区
 	 * @param code
 	 * @return
 	 */

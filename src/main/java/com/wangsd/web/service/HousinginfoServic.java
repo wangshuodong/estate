@@ -16,7 +16,7 @@ public interface HousinginfoServic {
      * @param code
      * @return
      */
-    public List<ParentCustom> queryParentCustomByCode(String code);
+    public List<ParentCustom> queryParentPropertyByCode(String code);
 
     /**
      * 查询所有上级小区
@@ -27,10 +27,10 @@ public interface HousinginfoServic {
 
     /**
      * 查询所有小区
-     * @param code
+     * @param housinginfoCustom
      * @return
      */
-    public List<Housinginfo> queryAllList(String code);
+    public List<Housinginfo> queryAllList(HousinginfoCustom housinginfoCustom);
 
     /**
      * 根据主键查询小区
@@ -67,6 +67,12 @@ public interface HousinginfoServic {
      */
     public boolean updateHousing(Housinginfo housinginfo);
 
+    /**
+     * 根据支付宝id修改小区
+     * @param status
+     * @param communityId
+     * @return
+     */
     public boolean updateHousingByCommunityId(String status, String communityId);
 
     /**

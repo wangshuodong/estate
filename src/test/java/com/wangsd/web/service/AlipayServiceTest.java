@@ -87,6 +87,22 @@ public class AlipayServiceTest extends TestSupport {
     }
 
     /**
+     * 删除房屋信息
+     * @throws Exception
+     */
+    @Test
+    public void roominfoDeleteRequest() throws Exception {
+        UserCustom loginUser = new UserCustom();
+        loginUser.setAppId(appid);
+        loginUser.setMerchantPrivateKey(privateKey);
+        loginUser.setAlipayPublicKey(publicKey);
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
+        List<String> list = new ArrayList<>();
+        list.add("1011");
+        alipayService.roominfoDeleteRequest(housing.getCommunityId(), list, housing.getToken(), loginUser);
+    }
+
+    /**
      * 查询小区房屋信息列表
      * @throws Exception
      */

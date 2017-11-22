@@ -1,6 +1,7 @@
 package com.wangsd.web.service;
 
 import com.wangsd.web.model.Roominfo;
+import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.RoominfoCustom;
 
 import java.util.List;
@@ -15,7 +16,14 @@ public interface RoominfoService {
      * @param roominfo
      * @return
      */
-    public List<RoominfoCustom> queryRoominfoList(Roominfo roominfo);
+    public List<RoominfoCustom> queryRoominfoList(RoominfoCustom roominfo);
+
+    /**
+     * 查询小区下面的所有房间
+     * @param housingId
+     * @return
+     */
+    public List<ParentCustom> queryParentRoomById(Integer housingId);
 
     /**
      * 根据id查询房屋信息
@@ -44,7 +52,5 @@ public interface RoominfoService {
      * @return
      */
     public boolean updateRoominfo(Roominfo roominfo);
-
-    public List<RoominfoCustom> queryRoominfoDistinct(Roominfo roominfo);
 
 }

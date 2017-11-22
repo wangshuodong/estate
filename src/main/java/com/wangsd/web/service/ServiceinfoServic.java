@@ -21,7 +21,7 @@ public interface ServiceinfoServic {
      * @param code
      * @return
      */
-    public List<ParentCustom> queryParentCustomByCode(String code);
+    public List<ParentCustom> queryParentServiceByCode(String code);
 
     /**
      * 查询所有服务商

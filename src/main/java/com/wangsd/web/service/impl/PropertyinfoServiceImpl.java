@@ -29,10 +29,10 @@ public class PropertyinfoServiceImpl implements PropertyinfoServic {
     UsersService usersService;
 
     @Override
-    public List<ParentCustom> queryParentCustomByCode(String code) {
+    public List<ParentCustom> queryParentServiceAndPropertyByCode(String code) {
         List<ParentCustom> list = new ArrayList<ParentCustom>();
-        List<ParentCustom> serviceList = serviceinfoServic.queryParentCustomByCode(code);
-        List<ParentCustom> propertyList = propertyinfoMapper.queryParentCustomByCode(code);
+        List<ParentCustom> serviceList = serviceinfoServic.queryParentServiceByCode(code);
+        List<ParentCustom> propertyList = propertyinfoMapper.queryParentPropertyByCode(code);
         list.addAll(serviceList);
         list.addAll(propertyList);
         return list;

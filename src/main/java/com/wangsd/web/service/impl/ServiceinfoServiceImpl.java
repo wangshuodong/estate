@@ -35,8 +35,8 @@ public class ServiceinfoServiceImpl implements ServiceinfoServic {
     }
 
     @Override
-    public List<ParentCustom> queryParentCustomByCode(String code) {
-        return serviceinfoMapper.queryParentCustomByCode(code);
+    public List<ParentCustom> queryParentServiceByCode(String code) {
+        return serviceinfoMapper.queryParentServiceByCode(code);
     }
 
     @Override

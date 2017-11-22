@@ -45,34 +45,13 @@ public class HousinginfoController {
     @RequestMapping(value = "housingList")
     public String housingList(HousinginfoCustom query, Model model, HttpSession session) {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(loginUser.getParentCode());
+        List<ParentCustom> parentList = housinginfoServic.queryParentPropertyByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
-        String parentCode;
-        if (query.getParentId() == null || query.getParentId() == 0) {
-            parentCode = loginUser.getParentCode();
-        } else {
-            Propertyinfo parent = propertyinfoServic.selectPropertyinfoById(query.getParentId());
-            parentCode = parent.getCode();
-        }
-        List<Housinginfo> list = housinginfoServic.queryAllList(parentCode);
+        query.setParentCode(loginUser.getParentCode());
+        List<Housinginfo> list = housinginfoServic.queryAllList(query);
         model.addAttribute("housingList", list);
         model.addAttribute("query", query);
         return "/housing/housing-list";
-    }
-
-    /**
-     * 打开新增小区页面
-     * @param model
-     * @param session
-     * @return
-     */
-    @RequestMapping(value = "addHousing")
-    public String addHousing(Model model, HttpSession session) {
-        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        String parentCode = loginUser.getParentCode();
-        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(parentCode);
-        model.addAttribute("parentList", parentList);
-        return "/housing/housing-info";
     }
 
     /**
@@ -86,7 +65,8 @@ public class HousinginfoController {
     public String openHousing(Integer id, Model model, HttpSession session) {
         UserCustom obj = (UserCustom) session.getAttribute("userInfo");
         String parentCode = obj.getParentCode();
-        List<ParentCustom> parentList = housinginfoServic.queryParentCustomByCode(parentCode);
+        //查询上级物业
+        List<ParentCustom> parentList = housinginfoServic.queryParentPropertyByCode(parentCode);
         model.addAttribute("parentList", parentList);
         if (id != null) {
             Housinginfo housinginfo = housinginfoServic.selectHousinginfoById(id);

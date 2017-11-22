@@ -35,7 +35,7 @@ public interface ServiceinfoMapper {
      * @param code
      * @return
      */
-    List<ParentCustom> queryParentCustomByCode(String code);
+    List<ParentCustom> queryParentServiceByCode(String code);
 
     /**
      * 查询parent下面的最大code

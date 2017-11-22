@@ -4,14 +4,15 @@
     <!-- 查询所有房屋信息 -->
     <select id="queryRoominfoList" parameterType="RoominfoCustom" resultType="RoominfoCustom">
         SELECT
-            r.*, d.`name` as deptName
+            r.*, d.`name` as housingName
         FROM
             roominfo r
         JOIN housinginfo d ON r.parent_id = d.id
         <where>
             and d.deleteStatus = FALSE
-            <if test="departmentCode != null and departmentCode != ''">
-                and d.CODE LIKE CONCAT(#{departmentCode},'%')
+            AND r.deleteStatus = FALSE
+            <if test="housingCode != null and housingCode != ''">
+                and d.CODE LIKE CONCAT(#{housingCode},'%')
             </if>
             <if test="status != null">
                 and r.status = #{status}
@@ -24,14 +25,8 @@
     </select>
 
     <!-- 查询distinct房屋信息 -->
-    <select id="queryRoominfoDistinct" parameterType="RoominfoCustom" resultType="RoominfoCustom">
-        SELECT
-        r.group_name,r.building,r.unit,r.room
-        FROM
-        roominfo r
-        JOIN department d ON r.department_id = d.id
-        WHERE
-        d.deleteStatus = FALSE
-        and d.CODE LIKE CONCAT(#{departmentCode},'%') group by r.group_name,r.building,r.unit,r.room
+    <select id="queryParentRoomById" parameterType="int" resultType="ParentCustom">
+        select id, address as name from roominfo
+        where deleteStatus = false and parent_id = #{housingId}
     </select>
 </mapper>

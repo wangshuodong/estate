@@ -59,7 +59,8 @@ public class PropertyinfoController {
     public String openProperty(Integer id, Model model, HttpSession session) {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         String parentCode = loginUser.getParentCode();
-        List<ParentCustom> parentList = propertyinfoServic.queryParentCustomByCode(parentCode);
+        //查询上级服务商和物业
+        List<ParentCustom> parentList = propertyinfoServic.queryParentServiceAndPropertyByCode(parentCode);
         model.addAttribute("parentList", parentList);
         if (id != null) {
             Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(id);

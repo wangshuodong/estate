@@ -6,23 +6,23 @@ import com.wangsd.web.model.Roominfo;
  * Created by Administrator on 2017/11/13.
  */
 public class RoominfoCustom extends Roominfo {
-    private String deptName;
+    private String housingName;
 
-    private String departmentCode;
+    private String housingCode;
 
-    public String getDeptName() {
-        return deptName;
+    public String getHousingName() {
+        return housingName;
     }
 
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
+    public void setHousingName(String housingName) {
+        this.housingName = housingName;
     }
 
-    public String getDepartmentCode() {
-        return departmentCode;
+    public String getHousingCode() {
+        return housingCode;
     }
 
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
+    public void setHousingCode(String housingCode) {
+        this.housingCode = housingCode;
     }
 }

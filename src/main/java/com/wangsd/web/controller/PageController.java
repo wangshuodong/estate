@@ -52,4 +52,22 @@ public class PageController {
         return "welcome";
     }
 
+    /**
+     * 物业订单支付回调页面
+     * @return
+     */
+    @RequestMapping("/alipay_estate_return")
+    public String alipay_estate_return() {
+        return "welcome";
+    }
+
+    /**
+     * 电子发票回调页面
+     * @return
+     */
+    @RequestMapping("/alipay_invoice_return")
+    public String alipay_invoice_return() {
+        return "welcome";
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
-import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
@@ -50,14 +49,7 @@ public class RoominfoController {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
-        String departmentCode;
-        if (query.getParentId() == null || query.getParentId() == 0) {
-            departmentCode = loginUser.getParentCode();
-        } else {
-            Housinginfo parent = housinginfoServic.selectHousinginfoById(query.getParentId());
-            departmentCode = parent.getCode();
-        }
-        query.setDepartmentCode(departmentCode);
+        query.setHousingCode(loginUser.getParentCode());
         List<RoominfoCustom> list = roominfoService.queryRoominfoList(query);
         model.addAttribute("roominfoList", list);
         model.addAttribute("query", query);
@@ -115,6 +107,12 @@ public class RoominfoController {
         JSONResult obj = new JSONResult();
         obj.setSuccess(bl);
         return obj;
+    }
+
+    @RequestMapping(path = "/queryParentRoomById")
+    @ResponseBody
+    public List<ParentCustom> queryParentRoomById(Integer housingId) {
+        return roominfoService.queryParentRoomById(housingId);
     }
 
 }
