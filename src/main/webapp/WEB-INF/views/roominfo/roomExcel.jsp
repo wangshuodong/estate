@@ -30,20 +30,29 @@
         if(checkData()){
             $('#myform').ajaxSubmit({
                 type: 'post',
-                url: ${pageContext.request.contextPath }'/rest/roominfo/uploadExcel',
-                dataType: 'text',
-                success: resutlMsg,
-                error: errorMsg
+                url: ${pageContext.request.contextPath }'/rest/uploadExcel',
+                dataType: 'json',
+                beforeSubmit: function () {
+                    layer.load();
+                },
+                success: function(data){
+                    layer.closeAll('loading');
+                    console.info(data);
+                    console.info(data.success);
+                    console.info(data.message);
+                    if (data.success) {
+                        layer.alert(data.message);
+                    }else {
+                        layer.alert("aa" + data.message);
+                    }
+                },
+                error: function(XmlHttpRequest, textStatus, errorThrown){
+                    layer.closeAll('loading');
+                    layer.alert('导入excel出错！!');
+                }
             });
         }
     });
-    function resutlMsg(msg){
-        layer.alert(msg);
-        $("#upfile").val("");
-    }
-    function errorMsg(){
-        layer.alert("导入excel出错！");
-    }
 
     //JS校验form表单信息
     function checkData(){

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2017-11-22 17:53:56
+Date: 2017-11-24 00:26:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -332,7 +332,7 @@ CREATE TABLE `roominfo` (
   `status` tinyint(1) DEFAULT '0' COMMENT 'false没有同步，true同步',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1014 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1017 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of roominfo
@@ -340,6 +340,9 @@ CREATE TABLE `roominfo` (
 INSERT INTO `roominfo` VALUES ('1011', '9', 'ABD44SPAQ5001800006020802', '', '6栋', '2单元', '802室', '6栋2单元802室', '汪铄东', '', '', '2017-11-09', '0', '0', '2017-11-21 11:23:59');
 INSERT INTO `roominfo` VALUES ('1012', '10003', null, '', '6栋', '5单元', '1101', '6栋5单元1101', '', '', '', '', '0', '0', '2017-11-22 15:14:05');
 INSERT INTO `roominfo` VALUES ('1013', '10003', null, '', '1栋', '2单元', '1205', '1栋2单元1205', '', '', '', '', '0', '0', '2017-11-22 15:15:37');
+INSERT INTO `roominfo` VALUES ('1014', '10003', null, '', '1栋', '1单元', '1-01', '1栋1单元1-01', '陆袁桥', null, '13877777777', null, '0', '0', '2017-11-24 00:03:59');
+INSERT INTO `roominfo` VALUES ('1015', '10003', null, '', '1栋', '1单元', '1-02', '1栋1单元1-02', '陆袁桥', null, '13877777777', null, '0', '0', '2017-11-24 00:14:14');
+INSERT INTO `roominfo` VALUES ('1016', '10003', null, '', '1栋', '1单元', '1-03', '1栋1单元1-03', '陆袁桥', null, '13877777777', null, '0', '0', '2017-11-24 00:20:20');
 
 -- ----------------------------
 -- Table structure for serviceinfo

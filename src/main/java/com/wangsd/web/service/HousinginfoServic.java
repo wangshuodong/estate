@@ -104,4 +104,11 @@ public interface HousinginfoServic {
      */
     public boolean updatePrintinfo(Printinfo printinfo);
 
+    /**
+     * 根据名称查询小区
+     * @param name
+     * @return
+     */
+    public Housinginfo selectHousingByName(String name);
+
 }

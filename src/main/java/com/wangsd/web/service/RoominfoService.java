@@ -1,5 +1,6 @@
 package com.wangsd.web.service;
 
+import com.wangsd.core.entity.JSONResult;
 import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.RoominfoCustom;
@@ -52,5 +53,14 @@ public interface RoominfoService {
      * @return
      */
     public boolean updateRoominfo(Roominfo roominfo);
+
+    /**
+     * 根据条件查询房间信息
+     * @param roominfo
+     * @return
+     */
+    public Roominfo selectRoominfoByContent(Roominfo roominfo);
+
+    public JSONResult importRoominfo(Integer housingId, List<List<Object>> listob);
 
 }

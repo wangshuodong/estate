@@ -140,24 +140,31 @@
     }
 
     function room_sync(id) {
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath }/rest/alipay/roominfoUploadRequest',
-            dataType: 'json',
-            data:{
-                id : id
-            },
-            success: function(data){
-                if (data.success) {
-                    layer.msg("同步支付宝成功!", {icon: 1});
-                    window.location.reload();
-                }else {
-                    layer.msg("同步支付宝失败!", {icon: 5});
-                }
-            },
-            error:function(data) {
-                layer.msg('error!',{icon:1,time:1000});
-            },
+        layer.confirm('确认要删除吗？',function(index){
+			$.ajax({
+				type: 'POST',
+				url: '${pageContext.request.contextPath }/rest/alipay/roominfoUploadRequest',
+				dataType: 'json',
+				data:{
+					id : id
+				},
+                beforeSubmit: function () {
+                    layer.load();
+                },
+				success: function(data){
+                    layer.closeAll('loading');
+					if (data.success) {
+						layer.msg("同步支付宝成功!", {icon: 1});
+						window.location.reload();
+					}else {
+						layer.msg("同步支付宝失败!", {icon: 5});
+					}
+				},
+				error:function(data) {
+                    layer.closeAll('loading');
+					layer.msg('error!',{icon:1,time:1000});
+				},
+			});
         });
     }
 
@@ -181,11 +188,11 @@
     }
     
     function excel_upload() {
-        layer_show("导入房屋","${pageContext.request.contextPath }/rest/roominfo/openExcel", 800, 300);
+        layer_show("导入房屋","${pageContext.request.contextPath }/rest/openExcel", 800, 500);
     }
 
     function excel_download() {
-        window.location.href="${pageContext.request.contextPath }/rest/roominfo/downloadRoominfo";
+        window.location.href="${pageContext.request.contextPath }/rest/downloadRoominfo";
     }
 </script>
 

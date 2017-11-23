@@ -161,4 +161,15 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
             return false;
         }
     }
+    @Override
+    public Housinginfo selectHousingByName(String name) {
+        HousinginfoExample example = new HousinginfoExample();
+        example.createCriteria().andNameEqualTo(name);
+        List<Housinginfo> list = housinginfoMapper.selectByExample(example);
+        if (list.size() > 0) {
+            return list.get(0);
+        }else {
+            return null;
+        }
+    }
 }
