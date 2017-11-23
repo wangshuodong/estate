@@ -28,6 +28,7 @@
 		<button type="button" class="btn btn-secondary radius size-L" onclick="info_add();">新&nbsp;增</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="room_list_sync();">批量同步</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="excel_upload();">导入房屋</button>
+		<button type="button" class="btn btn-secondary radius size-L" onclick="excel_download();">下载模板</button>
 	</form>
 
 	<div class="panel panel-default mt-20">
@@ -181,6 +182,10 @@
     
     function excel_upload() {
         layer_show("导入房屋","${pageContext.request.contextPath }/rest/roominfo/openExcel", 800, 300);
+    }
+
+    function excel_download() {
+        window.location.href="${pageContext.request.contextPath }/rest/roominfo/downloadRoominfo";
     }
 </script>
 

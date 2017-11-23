@@ -16,7 +16,7 @@
         </div>
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <button type="button" class="btn btn-secondary radius size-L" id="fileUpload">保&nbsp;存</button>
+                <button type="button" class="btn btn-secondary radius size-L" id="fileUpload">上&nbsp;传</button>
                 <%--<button type="submit" class="btn btn-secondary radius size-L" onclick="return checkData()">保&nbsp;存</button>--%>
                 <button type="button" class="btn btn-secondary radius size-L" onclick="layer_close();">取&nbsp;消</button>
             </div>

@@ -48,11 +48,13 @@ public class ExcelUtils {
             }
 
             //遍历当前sheet中的所有行
+            System.out.println(sheet.getFirstRowNum());
+            System.out.println(sheet.getLastRowNum());
             for (int j = sheet.getFirstRowNum(); j < sheet.getLastRowNum(); j++) {
                 row = sheet.getRow(j);
-                if (row == null || row.getFirstCellNum() == j) {
-                    continue;
-                }
+//                if (row == null || row.getFirstCellNum() == j) {
+//                    continue;
+//                }
 
                 //遍历所有的列
                 List<Object> li = new ArrayList<Object>();
