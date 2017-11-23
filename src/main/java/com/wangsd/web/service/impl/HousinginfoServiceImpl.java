@@ -2,10 +2,9 @@ package com.wangsd.web.service.impl;
 
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.web.dao.HousinginfoMapper;
+import com.wangsd.web.dao.PrintinfoMapper;
 import com.wangsd.web.dao.PropertyinfoMapper;
-import com.wangsd.web.model.Housinginfo;
-import com.wangsd.web.model.HousinginfoExample;
-import com.wangsd.web.model.Propertyinfo;
+import com.wangsd.web.model.*;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.service.HousinginfoServic;
@@ -27,6 +26,8 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     PropertyinfoMapper propertyinfoMapper;
     @Autowired
     UsersService usersService;
+    @Autowired
+    PrintinfoMapper printinfoMapper;
 
     @Override
     public List<ParentCustom> queryParentPropertyByCode(String code) {
@@ -131,6 +132,33 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
             return parent.getCode() + "0001";
         }else {
             return  ApplicationUtils.getOrgCode(maxCode);
+        }
+    }
+    @Override
+    public List<Printinfo> selectPrintinfoById(Integer id){
+        PrintinfoExample printinfoExample = new PrintinfoExample();
+        printinfoExample.createCriteria().andDepartmentIdEqualTo(id);
+        List<Printinfo> list = printinfoMapper.selectByExample(printinfoExample);
+        return list;
+    }
+    @Override
+    public boolean insertPrintinfo(Printinfo printinfo){
+        int deptId = printinfo.getDepartmentId();
+        printinfo.setDepartmentId(deptId);
+        int ret = printinfoMapper.insertSelective(printinfo);
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    @Override
+    public boolean updatePrintinfo(Printinfo printinfo){
+       int ret =  printinfoMapper.updateByPrimaryKeySelective(printinfo);
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

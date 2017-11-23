@@ -65,6 +65,8 @@
 							</c:if>
 								<a title="二维码" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">二维码</a>
 								<a title="短信催收" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">短信催收</a>
+								<a title="配置打印机" style="text-decoration:none" onclick="printinfo_edit(${item.id })" href="javascript:;" class="c-success">配置打印机</a>
+
 						</td>
 					</tr>
 				</c:forEach>
@@ -191,6 +193,14 @@
                 layer.msg('error!',{icon:1,time:1000});
             },
         });
+    }
+    function printinfo_edit(id){
+        var index = layer.open({
+            type: 2,
+            title: "配置打印机",
+            content: "${pageContext.request.contextPath }/rest/housing/updatePrintinfo?id=" + id
+        });
+        layer.full(index);
     }
 </script>
 

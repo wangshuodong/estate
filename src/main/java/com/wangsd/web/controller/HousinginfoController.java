@@ -4,6 +4,7 @@ import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Housinginfo;
+import com.wangsd.web.model.Printinfo;
 import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
@@ -127,4 +128,43 @@ public class HousinginfoController {
         obj.setSuccess(delStatus);
         return obj;
     }
+    /**
+     *  配置打印机信息
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "updatePrintinfo")
+    public String updatePrintinfo(Integer id, Model model, HttpSession session) {
+        Printinfo printinfo = new Printinfo();
+        List<Printinfo> list = housinginfoServic.selectPrintinfoById(id);
+        if(list.size() == 1){
+            printinfo = list.get(0);
+            model.addAttribute("printinfo", printinfo);
+        }else if(list.size() == 0){
+            printinfo.setDepartmentId(id);
+            model.addAttribute("printinfo", printinfo);
+        }
+        return "/housing/printinfo-config";
+    }
+    /**
+     * 新增或者修改打印机
+     * @param printinfo
+     * @param model
+     * @return
+     */
+    @RequestMapping(path = "/saveOrUpdatePrintinfo", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResult saveOrUpdatePrintinfo(Printinfo printinfo, Model model) {
+        boolean bl;
+        if (printinfo.getId() == null) {  //新增
+            printinfo.setCreatetime(new Date());
+            bl = housinginfoServic.insertPrintinfo(printinfo);
+        }else { //修改
+            bl = housinginfoServic.updatePrintinfo(printinfo);
+        }
+        JSONResult jsonResult = new JSONResult();
+        jsonResult.setSuccess(bl);
+        return jsonResult;
+    }
+
 }
