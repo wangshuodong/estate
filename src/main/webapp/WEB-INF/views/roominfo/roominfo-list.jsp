@@ -27,8 +27,8 @@
 		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="info_add();">新&nbsp;增</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="room_list_sync();">批量同步</button>
-		<button type="button" class="btn btn-secondary radius size-L" onclick="excel_upload();">导入房屋</button>
-		<button type="button" class="btn btn-secondary radius size-L" onclick="excel_download();">下载模板</button>
+		<button type="button" class="btn btn-warning radius size-L" onclick="excel_upload();">导入房屋</button>
+		<button type="button" class="btn btn-warning radius size-L" onclick="excel_download();">下载模板</button>
 	</form>
 
 	<div class="panel panel-default mt-20">
@@ -72,11 +72,11 @@
 							<c:if test="${ item.status==false }">未同步</c:if>
 							<c:if test="${ item.status==true }">已同步</c:if>
 						</td>
-						<td width="130">
+						<td>
 							<c:if test="${ item.status==false }">
 								<a title="同步支付宝" style="text-decoration:none" onclick="room_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
 							</c:if>
-							<%--<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>--%>
+							<a title="业主入住" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">业主入住</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
 						</td>
 					</tr>
@@ -140,50 +140,50 @@
     }
 
     function room_sync(id) {
-        layer.confirm('确认要删除吗？',function(index){
+		$.ajax({
+			type: 'POST',
+			url: '${pageContext.request.contextPath }/rest/alipay/roominfoUploadRequest',
+			dataType: 'json',
+			data:{
+				id : id
+			},
+			beforeSubmit: function () {
+				layer.load();
+			},
+			success: function(data){
+				layer.closeAll('loading');
+				if (data.success) {
+                    window.location.reload();
+//					layer.msg("同步支付宝成功!", {icon: 1});
+//					$("#stat").html("已同步");
+				}else {
+					layer.msg("同步支付宝失败!", {icon: 5});
+				}
+			},
+			error:function(data) {
+				layer.closeAll('loading');
+				layer.msg('error!',{icon:1,time:1000});
+			},
+		});
+    }
+
+    function room_list_sync() {
+        layer.confirm('确认要同步吗？',function(index){
 			$.ajax({
 				type: 'POST',
-				url: '${pageContext.request.contextPath }/rest/alipay/roominfoUploadRequest',
+				url: '${pageContext.request.contextPath }/rest/alipay/allRoominfoUploadRequest',
 				dataType: 'json',
-				data:{
-					id : id
-				},
-                beforeSubmit: function () {
-                    layer.load();
-                },
 				success: function(data){
-                    layer.closeAll('loading');
 					if (data.success) {
-						layer.msg("同步支付宝成功!", {icon: 1});
 						window.location.reload();
 					}else {
 						layer.msg("同步支付宝失败!", {icon: 5});
 					}
 				},
 				error:function(data) {
-                    layer.closeAll('loading');
 					layer.msg('error!',{icon:1,time:1000});
 				},
 			});
-        });
-    }
-
-    function room_list_sync() {
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath }/rest/alipay/allRoominfoUploadRequest',
-            dataType: 'json',
-            success: function(data){
-                if (data.success) {
-                    layer.msg("同步支付宝成功!", {icon: 1});
-                    window.location.reload();
-                }else {
-                    layer.msg("同步支付宝失败!", {icon: 5});
-                }
-            },
-            error:function(data) {
-                layer.msg('error!',{icon:1,time:1000});
-            },
         });
     }
     

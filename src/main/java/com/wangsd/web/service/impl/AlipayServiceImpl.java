@@ -267,7 +267,7 @@ public class AlipayServiceImpl implements AlipayService {
         JSONArray jsonArray = new JSONArray();
         for (Roominfo room : roominfos) {
             JSONObject room_info_set = new JSONObject();
-            room_info_set.put("out_room_id", room.getId());
+            room_info_set.put("out_room_id", room.getId().toString());
             if (room.getGroupName() != null && !"".equals(room.getGroupName())) {
                 room_info_set.put("group", room.getGroupName());
             }

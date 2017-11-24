@@ -3,9 +3,14 @@
     <div class="navbar navbar-fixed-top">
         <div class="container-fluid cl">
             <span class="logo navbar-logo f-l mr-10 hidden-xs">
-                <img style="margin-left: -30px" src="${pageContext.request.contextPath}/h-ui/common/images/bqcl_logo.png">
+                <img style="margin-left: -15px" src="${pageContext.request.contextPath}/h-ui/common/images/bqcl_logo.png">
                 |&nbsp;&nbsp;&nbsp;&nbsp;在线物业管理系统
             </span>
+            <%-- 杭州logo
+            <span class="logo navbar-logo f-l mr-10 hidden-xs">
+                <img style="margin-left: 0px; height: 40px" src="${pageContext.request.contextPath}/h-ui/common/images/logo.96820e6.png">
+                &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;在线物业管理系统
+            </span>--%>
             <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
             <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">

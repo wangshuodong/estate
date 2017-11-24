@@ -8,7 +8,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属小区：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <select class="form-control" name="parentId" required>
+                <select class="form-control" name="parentId" <c:if test="${roominfo.parentId!=null }">disabled</c:if> required>
                     <option value='' disabled selected style='display:none;'>请选择小区</option>
                     <c:forEach items="${parentList}" var="item">
                         <option value="${item.id}" <c:if test="${roominfo.parentId==item.id }">selected</c:if>>${item.name}</option>
@@ -19,25 +19,25 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">组团：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${roominfo.groupName}" placeholder="组团" name="groupName">
+                <input type="text" class="input-text radius size-L" value="${roominfo.groupName}" placeholder="组团" name="groupName" <c:if test="${roominfo.parentId!=null }">disabled</c:if>>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>楼栋：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${roominfo.building}" placeholder="楼栋" name="building" required>
+                <input type="text" class="input-text radius size-L" value="${roominfo.building}" placeholder="楼栋" name="building" <c:if test="${roominfo.parentId!=null }">disabled</c:if> required>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">单元：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${roominfo.unit}" placeholder="单元" name="unit">
+                <input type="text" class="input-text radius size-L" value="${roominfo.unit}" placeholder="单元" name="unit" <c:if test="${roominfo.parentId!=null }">disabled</c:if>>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>房号：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${roominfo.room}" placeholder="房号" name="room" required>
+                <input type="text" class="input-text radius size-L" value="${roominfo.room}" placeholder="房号" name="room" <c:if test="${roominfo.parentId!=null }">disabled</c:if> required>
             </div>
         </div>
         <div class="row cl">

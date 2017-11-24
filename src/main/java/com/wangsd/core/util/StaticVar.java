@@ -46,4 +46,26 @@ public class StaticVar {
 	 * 下线
 	 */
 	public static final String HOUSING_STATUS_OFFLINE = "OFFLINE";
+
+
+	/**
+	 * 支付方式 现金
+	 */
+	public static final int billaccount_paystatus1 = 1;
+	/**
+	 * 支付方式 支付宝
+	 */
+	public static final int billaccount_paystatus2 = 2;
+	/**
+	 * 支付方式 微信
+	 */
+	public static final int billaccount_paystatus3 = 3;
+	/**
+	 * 支付方式 POS机
+	 */
+	public static final int billaccount_paystatus4 = 4;
+	/**
+	 * 支付方式 其他
+	 */
+	public static final int billaccount_paystatus99 = 99;
 }

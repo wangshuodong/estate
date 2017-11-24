@@ -44,9 +44,12 @@ public class BillAccountController {
     public String billAccountList(BillAccountCustom query, HttpServletRequest request, Model model) {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         String parentCode = loginUser.getParentCode();
+        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
+        model.addAttribute("parentList", parentList);
         query.setHousingCode(parentCode);
         List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
         model.addAttribute("billaccountList", list);
+        model.addAttribute("query", query);
         return "/billaccount/billaccount-list";
     }
 
@@ -60,7 +63,7 @@ public class BillAccountController {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
-        return "/billaccount/billaccount-info";
+        return "/billaccount/billaccount-add";
     }
 
     /**
@@ -78,6 +81,23 @@ public class BillAccountController {
             model.addAttribute("billaccount", billaccount);
         }
         return "/billaccount/billaccount-update";
+    }
+
+    /**
+     * 跳转账单收款
+     * @param
+     * @return
+     */
+    @RequestMapping("/receivBillAccount")
+    public String receivBillAccount(Integer id, HttpServletRequest request, Model model) {
+        BillAccountCustom query = new BillAccountCustom();
+        query.setId(id);
+        List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
+        if (list.size() == 1) {
+            BillAccountCustom billaccount = list.get(0);
+            model.addAttribute("billaccount", billaccount);
+        }
+        return "/billaccount/billaccount-receiv";
     }
 
     @RequestMapping(path = "/saveOrUpdateBillAccount", method = RequestMethod.POST)

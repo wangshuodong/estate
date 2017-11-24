@@ -50,6 +50,7 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
         if (housinginfoCustom.getParentId() != null) {
             criteria.andParentIdEqualTo(housinginfoCustom.getParentId());
         }
+        criteria.andCommunityIdIsNotNull();
         List<Housinginfo> list = housinginfoMapper.selectByExample(example);
         return list;
     }

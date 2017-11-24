@@ -20,10 +20,16 @@
             <if test="roominfoId != null and roominfoId != ''">
                 and b.roominfo_id = #{housingId}
             </if>
-            <if test="roominfoId != null and roominfoId != ''">
-                and b.roominfo_id = #{housingId}
+            <if test="costType != null">
+                and b.cost_type = #{costType}
             </if>
-            <if test="id != null and id != ''">
+            <if test="status != null">
+                and b.status = #{status}
+            </if>
+            <if test="paystatus != null">
+                and b.payStatus = #{paystatus}
+            </if>
+            <if test="id != null">
                 and b.id = #{id}
             </if>
         </where>
