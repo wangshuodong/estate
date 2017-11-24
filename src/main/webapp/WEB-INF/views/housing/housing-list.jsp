@@ -66,6 +66,7 @@
 								<a title="二维码" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">二维码</a>
 								<a title="短信催收" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">短信催收</a>
 								<a title="配置打印机" style="text-decoration:none" onclick="printinfo_edit(${item.id })" href="javascript:;" class="c-success">配置打印机</a>
+								<a title="短信充值" style="text-decoration:none" onclick="sms_deposit(${item.id })" href="javascript:;" class="c-success">短信充值</a>
 
 						</td>
 					</tr>
@@ -199,6 +200,14 @@
             type: 2,
             title: "配置打印机",
             content: "${pageContext.request.contextPath }/rest/housing/updatePrintinfo?id=" + id
+        });
+        layer.full(index);
+    }
+    function sms_deposit(id){
+        var index = layer.open({
+            type: 2,
+            title: "短信充值",
+            content: "${pageContext.request.contextPath }/rest/housing/smsDeposit?id=" + id
         });
         layer.full(index);
     }

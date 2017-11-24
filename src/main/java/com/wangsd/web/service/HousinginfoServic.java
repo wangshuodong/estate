@@ -111,4 +111,5 @@ public interface HousinginfoServic {
      */
     public Housinginfo selectHousingByName(String name);
 
+
 }

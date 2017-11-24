@@ -166,5 +166,43 @@ public class HousinginfoController {
         jsonResult.setSuccess(bl);
         return jsonResult;
     }
+    /**
+     *  跳转短信充值页面
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "smsDeposit")
+    public String smsDeposit(Integer id, Model model, HttpSession session) {
+        Housinginfo housinginfo = housinginfoServic.selectHousinginfoById(id);
+        model.addAttribute("housinginfo", housinginfo);
+        return "/housing/smsdeposit-config";
+    }
 
+    /**
+     * 保存短信充值
+     * @param housinginfo
+     * @param model
+     * @return
+     */
+    @RequestMapping(path = "/saveOrUpdateSmsdeposit", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResult saveOrUpdateSmsdeposit(Housinginfo housinginfo, Model model) {
+        boolean bl;
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(housinginfo.getId());
+        if (housing.getId() != null) {  //累加更新短信条数
+            if(housing.getMessageNum() == null){
+                housing.setMessageNum(housinginfo.getMessageNum());
+                bl = housinginfoServic.updateHousing(housing);
+            }else{
+                int num  = housing.getMessageNum()+housinginfo.getMessageNum();
+                housing.setMessageNum(num);
+                bl = housinginfoServic.updateHousing(housing);
+            }
+        }else {
+            bl = false;
+        }
+        JSONResult jsonResult = new JSONResult();
+        jsonResult.setSuccess(bl);
+        return jsonResult;
+    }
 }
