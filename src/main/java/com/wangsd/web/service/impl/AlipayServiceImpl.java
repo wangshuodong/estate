@@ -16,6 +16,7 @@ import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.RoominfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.AlipayService;
+import com.wangsd.web.service.BillAccountService;
 import com.wangsd.web.service.HousinginfoServic;
 import com.wangsd.web.service.RoominfoService;
 import org.apache.logging.log4j.LogManager;
@@ -37,6 +38,8 @@ public class AlipayServiceImpl implements AlipayService {
     HousinginfoServic housinginfoServic;
     @Autowired
     RoominfoService roominfoService;
+    @Autowired
+    BillAccountService billAccountService;
 
     /**
      * 同步小区到支付宝
@@ -361,7 +364,7 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public List<BillAccountCustom> billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser) {
+    public boolean billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser) {
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
                 StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeBillBatchUploadRequest request = new AlipayEcoCplifeBillBatchUploadRequest();
@@ -393,15 +396,19 @@ public class AlipayServiceImpl implements AlipayService {
             logger.debug("----response----" + response.getBody());
             if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
-                return billList;
+                for (BillAccountCustom billaccount : billList) {
+                    billaccount.setStatus(true);
+                    billAccountService.updateBillaccount(billaccount);
+                }
+                return true;
             } else {
                 logger.info("调用失败");
-                return null;
+                return false;
             }
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        return null;
+        return false;
     }
 
     public void billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser) {

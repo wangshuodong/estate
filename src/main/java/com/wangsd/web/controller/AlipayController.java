@@ -4,13 +4,11 @@ import com.wangsd.core.entity.JSONResult;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.model.Roominfo;
+import com.wangsd.web.modelCustom.BillAccountCustom;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.RoominfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
-import com.wangsd.web.service.AlipayService;
-import com.wangsd.web.service.HousinginfoServic;
-import com.wangsd.web.service.PropertyinfoServic;
-import com.wangsd.web.service.RoominfoService;
+import com.wangsd.web.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -40,6 +38,8 @@ public class AlipayController {
     RoominfoService roominfoService;
     @Autowired
     PropertyinfoServic propertyinfoServic;
+    @Autowired
+    BillAccountService billAccountService;
 
     /**
      * 同步小区到支付宝
@@ -156,6 +156,36 @@ public class AlipayController {
         }
         jsonResult.setSuccess(bl);
         return jsonResult;
+    }
+
+    /**
+     * 批量上传待缴物业费账单
+     * @param id
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/billBatchUploadRequest")
+    @ResponseBody
+    public JSONResult billBatchUploadRequest(Integer id, HttpSession session) {
+        JSONResult jsonResult = new JSONResult();
+        //获取公钥 私钥
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        //查询数据
+        if (id != null) {
+            BillAccountCustom query = new BillAccountCustom();
+            query.setId(id);
+            List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
+            if (list.size() == 1) {
+                BillAccountCustom billaccount = list.get(0);
+                HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(billaccount.getHousingId());
+                List<BillAccountCustom> billList = new ArrayList<>();
+                billList.add(billaccount);
+                alipayService.billBatchUploadRequest(housing.getCommunityId(), billList, housing.getToken(), loginUser);
+            }
+        }else {
+
+        }
+        return null;
     }
 
 }

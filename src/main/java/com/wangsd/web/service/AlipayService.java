@@ -102,7 +102,7 @@ public interface AlipayService {
      * @param loginUser
      * @return
      */
-    public List<BillAccountCustom> billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser);
+    public boolean billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser);
 
     /**
      * 修改已上传的物业费账单数据
