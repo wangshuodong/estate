@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2017-11-24 00:26:07
+Date: 2017-11-24 14:15:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,6 +64,7 @@ CREATE TABLE `housinginfo` (
   `community_locations` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '小区所在的经纬度列表',
   `associated_pois` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '小区对应的高德POI兴趣点列表',
   `hotline` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '服务热线电话',
+  `message_num` int(11) DEFAULT NULL COMMENT '短信条数',
   `status` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT 'NEW 未同步支付宝\r\nPENDING_ONLINE 待上线,\r\nONLINE 上线,\r\nMAINTAIN 维护中,\r\nOFFLINE - 下线',
   `deleteStatus` tinyint(1) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
@@ -73,10 +74,10 @@ CREATE TABLE `housinginfo` (
 -- ----------------------------
 -- Records of housinginfo
 -- ----------------------------
-INSERT INTO `housinginfo` VALUES ('9', 'ABD44SPAQ5001', '001000100010001', '首创十方界1', '红枫路9号', '2000', '500112', '500100', '500000', '106.537212|29.605355', null, '0571-87654321', 'PENDING_ONLINE', '0', '2017-11-20 15:53:22');
-INSERT INTO `housinginfo` VALUES ('10001', null, '001000100010002', '问过', '', '2000', '未', '而我却', '22', '106.100356|29.695525', null, '235', 'NEW', '1', '2017-11-22 11:27:29');
-INSERT INTO `housinginfo` VALUES ('10002', null, '001000100010003', '尔额34', '', '2000', '34', '34', '34', '97.719676|31.370363', null, '344', 'NEW', '1', '2017-11-22 11:27:50');
-INSERT INTO `housinginfo` VALUES ('10003', null, '001000100010004', '莫须有小区', '红枫路9号', '2000', '500112', '500100', '500000', '106.536969|29.605632', null, '023-74583381', 'NEW', '0', '2017-11-22 15:13:25');
+INSERT INTO `housinginfo` VALUES ('9', 'ABD44SPAQ5001', '001000100010001', '首创十方界1', '红枫路9号', '2000', '500112', '500100', '500000', '106.537212|29.605355', null, '0571-87654321', null, 'PENDING_ONLINE', '0', '2017-11-20 15:53:22');
+INSERT INTO `housinginfo` VALUES ('10001', null, '001000100010002', '问过', '', '2000', '未', '而我却', '22', '106.100356|29.695525', null, '235', null, 'NEW', '1', '2017-11-22 11:27:29');
+INSERT INTO `housinginfo` VALUES ('10002', null, '001000100010003', '尔额34', '', '2000', '34', '34', '34', '97.719676|31.370363', null, '344', null, 'NEW', '1', '2017-11-22 11:27:50');
+INSERT INTO `housinginfo` VALUES ('10003', null, '001000100010004', '莫须有小区', '红枫路9号', '2000', '500112', '500100', '500000', '106.536969|29.605632', null, '023-74583381', null, 'NEW', '0', '2017-11-22 15:13:25');
 
 -- ----------------------------
 -- Table structure for menu
@@ -337,7 +338,7 @@ CREATE TABLE `roominfo` (
 -- ----------------------------
 -- Records of roominfo
 -- ----------------------------
-INSERT INTO `roominfo` VALUES ('1011', '9', 'ABD44SPAQ5001800006020802', '', '6栋', '2单元', '802室', '6栋2单元802室', '汪铄东', '', '', '2017-11-09', '0', '0', '2017-11-21 11:23:59');
+INSERT INTO `roominfo` VALUES ('1011', '9', 'ABD44SPAQ5001800006020802', '', '6栋', '2单元', '802室', '6栋2单元802室', '汪铄东', '', '', '2017-11-09', '0', '1', '2017-11-21 11:23:59');
 INSERT INTO `roominfo` VALUES ('1012', '10003', null, '', '6栋', '5单元', '1101', '6栋5单元1101', '', '', '', '', '0', '0', '2017-11-22 15:14:05');
 INSERT INTO `roominfo` VALUES ('1013', '10003', null, '', '1栋', '2单元', '1205', '1栋2单元1205', '', '', '', '', '0', '0', '2017-11-22 15:15:37');
 INSERT INTO `roominfo` VALUES ('1014', '10003', null, '', '1栋', '1单元', '1-01', '1栋1单元1-01', '陆袁桥', null, '13877777777', null, '0', '0', '2017-11-24 00:03:59');

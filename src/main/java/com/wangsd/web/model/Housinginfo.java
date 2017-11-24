@@ -27,6 +27,8 @@ public class Housinginfo {
 
     private String hotline;
 
+    private Integer messageNum;
+
     private String status;
 
     private Boolean deletestatus;
@@ -127,6 +129,14 @@ public class Housinginfo {
 
     public void setHotline(String hotline) {
         this.hotline = hotline == null ? null : hotline.trim();
+    }
+
+    public Integer getMessageNum() {
+        return messageNum;
+    }
+
+    public void setMessageNum(Integer messageNum) {
+        this.messageNum = messageNum;
     }
 
     public String getStatus() {
