@@ -103,14 +103,27 @@ public class BillAccountController {
     @RequestMapping(path = "/saveOrUpdateBillAccount", method = RequestMethod.POST)
     @ResponseBody
     public JSONResult saveOrUpdateBillAccount(Billaccount billaccount) {
-        boolean bl;
+        boolean bl = false;
+        JSONResult obj = new JSONResult();
+        BillAccountCustom bill = new BillAccountCustom();
         if (billaccount.getId() == null) {
-            billaccount.setCreateTime(new Date());
-            bl = billAccountService.insertBillaccount(billaccount);
+            bill.setHousingId(billaccount.getHousingId());
+            bill.setRoominfoId(billaccount.getRoominfoId());
+            bill.setCostType(billaccount.getCostType());
+            bill.setAcctPeriod(billaccount.getAcctPeriod());
+            bill.setBillEntryAmount(billaccount.getBillEntryAmount());
+            List<BillAccountCustom> billCustom = billAccountService.queryBillAccountList(bill);
+            if(billCustom.size() == 0){
+                billaccount.setCreateTime(new Date());
+                bl = billAccountService.insertBillaccount(billaccount);
+            }else{
+                bl = false;
+                obj.setMessage("账单信息已存在！");
+            }
         }else {
             bl = billAccountService.updateBillaccount(billaccount);
         }
-        JSONResult obj = new JSONResult();
+
         obj.setSuccess(bl);
         return obj;
     }

@@ -261,5 +261,9 @@
 			}
 		});
     }
+
+    function excel_upload() {
+        layer_show("导入账单","${pageContext.request.contextPath }/rest/openBillExcel", 800, 500);
+    }
 </script>
 

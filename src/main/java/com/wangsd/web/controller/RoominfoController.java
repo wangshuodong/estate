@@ -112,14 +112,25 @@ public class RoominfoController {
     @ResponseBody
     public JSONResult saveOrUpdateRoominfo(Roominfo roominfo) {
         boolean bl;
+        JSONResult obj = new JSONResult();
         roominfo.setAddress(roominfo.getGroupName() + roominfo.getBuilding() + roominfo.getUnit() + roominfo.getRoom());
         if (roominfo.getId() == null) {
-            roominfo.setCreateTime(new Date());
-            bl = roominfoService.insertRoominfo(roominfo);
+            Roominfo room = new Roominfo();
+            room.setParentId(roominfo.getParentId());
+            room.setBuilding(roominfo.getBuilding());
+            room.setRoom(roominfo.getRoom());
+            Roominfo room1 = roominfoService.selectRoominfoByContent(room);
+            if(room1 == null){
+                roominfo.setCreateTime(new Date());
+                bl = roominfoService.insertRoominfo(roominfo);
+            }else{
+                bl = false;
+                obj.setMessage("房屋信息已存在!");
+            }
+
         } else {
             bl = roominfoService.updateRoominfo(roominfo);
         }
-        JSONResult obj = new JSONResult();
         obj.setSuccess(bl);
         return obj;
     }

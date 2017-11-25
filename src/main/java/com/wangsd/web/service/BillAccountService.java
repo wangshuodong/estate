@@ -1,5 +1,6 @@
 package com.wangsd.web.service;
 
+import com.wangsd.core.entity.JSONResult;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 
@@ -33,4 +34,11 @@ public interface BillAccountService {
      * @return
      */
     public boolean updateBillaccount(Billaccount billaccount);
+
+    /**
+     * 导入账单Excel信息
+     * @param
+     * @return
+     */
+    public JSONResult importBillaccount(Integer housingId, List<List<Object>> listob);
 }

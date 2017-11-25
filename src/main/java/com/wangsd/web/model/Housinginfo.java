@@ -29,7 +29,7 @@ public class Housinginfo {
 
     private Integer messageNum;
 
-    private String status;
+    private Integer status;
 
     private Boolean deletestatus;
 
@@ -139,12 +139,12 @@ public class Housinginfo {
         this.messageNum = messageNum;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Boolean getDeletestatus() {

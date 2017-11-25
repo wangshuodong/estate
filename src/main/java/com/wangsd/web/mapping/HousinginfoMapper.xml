@@ -15,7 +15,7 @@
     <result column="associated_pois" property="associatedPois" jdbcType="VARCHAR" />
     <result column="hotline" property="hotline" jdbcType="VARCHAR" />
     <result column="message_num" property="messageNum" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -123,7 +123,7 @@
       #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
       #{districtCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, 
       #{communityLocations,jdbcType=VARCHAR}, #{associatedPois,jdbcType=VARCHAR}, #{hotline,jdbcType=VARCHAR}, 
-      #{messageNum,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{deletestatus,jdbcType=BIT}, 
+      #{messageNum,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{deletestatus,jdbcType=BIT}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Housinginfo" >
@@ -219,7 +219,7 @@
         #{messageNum,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="deletestatus != null" >
         #{deletestatus,jdbcType=BIT},
@@ -278,7 +278,7 @@
         message_num = #{record.messageNum,jdbcType=INTEGER},
       </if>
       <if test="record.status != null" >
-        status = #{record.status,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.deletestatus != null" >
         deleteStatus = #{record.deletestatus,jdbcType=BIT},
@@ -306,7 +306,7 @@
       associated_pois = #{record.associatedPois,jdbcType=VARCHAR},
       hotline = #{record.hotline,jdbcType=VARCHAR},
       message_num = #{record.messageNum,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
       deleteStatus = #{record.deletestatus,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -353,7 +353,7 @@
         message_num = #{messageNum,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="deletestatus != null" >
         deleteStatus = #{deletestatus,jdbcType=BIT},
@@ -378,7 +378,7 @@
       associated_pois = #{associatedPois,jdbcType=VARCHAR},
       hotline = #{hotline,jdbcType=VARCHAR},
       message_num = #{messageNum,jdbcType=INTEGER},
-      status = #{status,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
       deleteStatus = #{deletestatus,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

@@ -1,6 +1,7 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
+import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.model.Roominfo;
@@ -142,12 +143,15 @@ public class AlipayController {
         //查询数据
         HousinginfoCustom housingquery = new HousinginfoCustom();
         housingquery.setParentCode(loginUser.getParentCode());
+        housingquery.setStatus(StaticVar.HOUSING_STATUS1);
         List<Housinginfo> list = housinginfoServic.queryAllList(housingquery);
         for (Housinginfo housing : list) {
             Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(housing.getParentId());
             RoominfoCustom query = new RoominfoCustom();
             query.setStatus(false);//未同步的
             query.setParentId(housing.getId());
+            query.setCurrPage(0);
+            query.setPageSize(199);
             List<RoominfoCustom> roomList = roominfoService.queryRoominfoList(query);
             if (roomList.size() > 0) {
                 //调用支付宝接口
@@ -168,6 +172,7 @@ public class AlipayController {
     @ResponseBody
     public JSONResult billBatchUploadRequest(Integer id, HttpSession session) {
         JSONResult jsonResult = new JSONResult();
+        boolean bl = false;
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         //查询数据
@@ -180,12 +185,27 @@ public class AlipayController {
                 HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(billaccount.getHousingId());
                 List<BillAccountCustom> billList = new ArrayList<>();
                 billList.add(billaccount);
-                alipayService.billBatchUploadRequest(housing.getCommunityId(), billList, housing.getToken(), loginUser);
+                bl = alipayService.billBatchUploadRequest(housing.getCommunityId(), billList, housing.getToken(), loginUser);
             }
         }else {
-
+            HousinginfoCustom housingquery = new HousinginfoCustom();
+            housingquery.setParentCode(loginUser.getParentCode());
+            housingquery.setStatus(StaticVar.HOUSING_STATUS1);
+            List<Housinginfo> list = housinginfoServic.queryAllList(housingquery);
+            for (Housinginfo housing : list) {
+                Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(housing.getParentId());
+                BillAccountCustom query = new BillAccountCustom();
+                query.setHousingId(housing.getId());
+                query.setCurrPage(0);
+                query.setPageSize(199);
+                List<BillAccountCustom> billList = billAccountService.queryBillAccountList(query);
+                if (billList.size() > 0) {
+                    bl = alipayService.billBatchUploadRequest(housing.getCommunityId(), billList, propertyinfo.getToken(), loginUser);
+                }
+            }
         }
-        return null;
+        jsonResult.setSuccess(bl);
+        return jsonResult;
     }
 
 }

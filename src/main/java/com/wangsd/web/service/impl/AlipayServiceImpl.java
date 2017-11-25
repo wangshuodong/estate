@@ -76,7 +76,7 @@ public class AlipayServiceImpl implements AlipayService {
                 logger.debug("调用成功");
                 //执行成功返回支付宝的小区统一编号和状态
                 housing.setCommunityId(response.getCommunityId());
-                housing.setStatus(response.getStatus());
+                housing.setStatus(StaticVar.HOUSING_STATUS2);
                 return housinginfoServic.updateHousing(housing);
             } else {
                 logger.info("调用失败");
@@ -120,8 +120,7 @@ public class AlipayServiceImpl implements AlipayService {
             if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
                 //执行成功返回支付宝的小区统一编号和状态
-                housing.setStatus(response.getStatus());
-                return housinginfoServic.updateHousing(housing);
+                return true;
             } else {
                 logger.info("调用失败");
             }
@@ -220,7 +219,7 @@ public class AlipayServiceImpl implements AlipayService {
             logger.debug("----response----" + response.getBody());
             if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
-                return housinginfoServic.updateHousingByCommunityId(response.getStatus(), community_id);
+                return housinginfoServic.updateHousingByCommunityId(StaticVar.HOUSING_STATUS3, community_id);
             } else {
                 logger.info("调用失败");
             }
@@ -249,7 +248,7 @@ public class AlipayServiceImpl implements AlipayService {
             logger.debug("----response----" + response.getBody());
             if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
-                return housinginfoServic.updateHousingByCommunityId(response.getStatus(), community_id);
+                return housinginfoServic.updateHousingByCommunityId(StaticVar.HOUSING_STATUS4, community_id);
             } else {
                 logger.info("调用失败");
             }
@@ -287,6 +286,7 @@ public class AlipayServiceImpl implements AlipayService {
         if (token != null) {
             request.putOtherTextParam("app_auth_token", token);
         }
+        System.out.println(bizContent.toJSONString());
         try {
             AlipayEcoCplifeRoominfoUploadResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());

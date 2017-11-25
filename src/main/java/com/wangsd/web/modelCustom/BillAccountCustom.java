@@ -19,6 +19,10 @@ public class BillAccountCustom extends Billaccount {
 
     private String ownerPhone;
 
+    private Integer currPage;
+
+    private Integer pageSize;
+
     public String getHousingName() {
         return housingName;
     }
@@ -65,5 +69,21 @@ public class BillAccountCustom extends Billaccount {
 
     public void setOwnerPhone(String ownerPhone) {
         this.ownerPhone = ownerPhone;
+    }
+
+    public Integer getCurrPage() {
+        return currPage;
+    }
+
+    public void setCurrPage(Integer currPage) {
+        this.currPage = currPage;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

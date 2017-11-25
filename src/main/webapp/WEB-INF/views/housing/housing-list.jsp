@@ -31,6 +31,7 @@
 					<th>支付宝编号</th>
 					<th>小区地址</th>
 					<th>热线电话</th>
+					<th>短信条数</th>
 					<th>创建时间</th>
 					<th>状态</th>
 					<th>操作</th>
@@ -43,30 +44,32 @@
 						<td>${ item.communityId }</td>
 						<td>${ item.address }</td>
 						<td>${ item.hotline }</td>
+						<td>${ item.messageNum }</td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td>
-							<c:if test="${ item.status=='NEW' }">未同步</c:if>
-							<c:if test="${ item.status=='PENDING_ONLINE' }">待上线</c:if>
-							<c:if test="${ item.status=='ONLINE' }">上线</c:if>
-							<c:if test="${ item.status=='MAINTAIN' }">维护中</c:if>
-							<c:if test="${ item.status=='OFFLINE' }">下线</c:if>
+							<c:if test="${ item.status==1 }">未同步</c:if>
+							<c:if test="${ item.status==2 }">已同步</c:if>
+							<c:if test="${ item.status==3 }">已初始化</c:if>
+							<c:if test="${ item.status==4 }">已上线</c:if>
 						</td>
-						<td width="120">
+						<td>
 							<%--<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>--%>
+							<c:if test="${ item.status==1 }">
+								<a title="同步支付宝" style="text-decoration:none" onclick="housing_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a><br>
+
+							</c:if>
+							<c:if test="${ item.status==2 }">
+								<a title="初始化" style="text-decoration:none" onclick="initialize(${item.id })" href="javascript:;" class="c-success">初始化</a><br>
+							</c:if>
+							<c:if test="${ item.status==3}">
+								<a title="申请服务上线" style="text-decoration:none" onclick="basicservice(${item.id })" href="javascript:;" class="c-success">申请服务上线</a><br>
+							</c:if>
+							<c:if test="${ item.status==1 or item.status==4}">
+								<a title="二维码" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">二维码</a><br>
+							</c:if>
+							<a title="配置打印机" style="text-decoration:none" onclick="printinfo_edit(${item.id })" href="javascript:;" class="c-success">配置打印机</a><br>
+							<a title="短信充值" style="text-decoration:none" onclick="sms_deposit(${item.id })" href="javascript:;" class="c-success">短信充值</a><br>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
-							<c:if test="${ item.status=='NEW' }">
-								<a title="同步支付宝" style="text-decoration:none" onclick="housing_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a>
-							</c:if>
-							<c:if test="${ item.status=='PENDING_ONLINE' }">
-								<a title="初始化" style="text-decoration:none" onclick="initialize(${item.id })" href="javascript:;" class="c-success">初始化</a>
-							</c:if>
-							<c:if test="${ item.status=='OFFLINE' }">
-								<a title="申请服务上线" style="text-decoration:none" onclick="basicservice(${item.id })" href="javascript:;" class="c-success">申请服务上线</a>
-							</c:if>
-								<a title="二维码" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">二维码</a>
-								<a title="短信催收" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">短信催收</a>
-								<a title="配置打印机" style="text-decoration:none" onclick="printinfo_edit(${item.id })" href="javascript:;" class="c-success">配置打印机</a>
-								<a title="短信充值" style="text-decoration:none" onclick="sms_deposit(${item.id })" href="javascript:;" class="c-success">短信充值</a>
 
 						</td>
 					</tr>

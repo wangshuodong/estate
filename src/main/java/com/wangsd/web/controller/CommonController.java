@@ -5,6 +5,7 @@ import com.wangsd.core.util.ImportExcelUtil;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.modelCustom.MenuCustom;
 import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.service.BillAccountService;
 import com.wangsd.web.service.HousinginfoServic;
 import com.wangsd.web.service.MenuService;
 import com.wangsd.web.service.RoominfoService;
@@ -34,6 +35,8 @@ public class CommonController {
     HousinginfoServic housinginfoServic;
     @Autowired
     RoominfoService roominfoService;
+    @Autowired
+    BillAccountService billAccountService;
     
     /**
      * 进入首页
@@ -51,14 +54,25 @@ public class CommonController {
     }
 
     /**
-     * 打开导入Excel页面
+     * 打开导入房屋Excel页面
      *
      * @param model
      * @return
      */
-    @RequestMapping(path = "/openExcel")
+    @RequestMapping(path = "/openRoomExcel")
     public String openExcel(Model model) {
         return "/roominfo/roomExcel";
+    }
+
+    /**
+     * 打开导入账单Excel页面
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(path = "/openBillExcel")
+    public String openBillExcel(Model model) {
+        return "/billaccount/billExcel";
     }
 
     /**
@@ -99,6 +113,43 @@ public class CommonController {
         }
     }
 
+    /**
+     * 导入账单Excel
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(path = "/uploadBillExcel")
+    @ResponseBody
+    public JSONResult uploadBillExcel(HttpServletRequest request) throws Exception {
+        JSONResult jsonResult = new JSONResult();
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("upfile");
+        if (file.isEmpty()) {
+            throw new Exception("文件不存在！");
+        }
+        InputStream in = file.getInputStream();
+        List<List<Object>> listob = new ImportExcelUtil().getBankListByExcel(in, file.getOriginalFilename());
+        in.close();
+
+        if (listob.size() > 0) {
+            String housingName = listob.get(0).get(0).toString();
+            Housinginfo housinginfo = housinginfoServic.selectHousingByName(housingName);
+            if (housinginfo != null) {
+                //处理数据
+                return billAccountService.importBillaccount(housinginfo.getId(), listob);
+            } else {
+                jsonResult.setSuccess(false);
+                jsonResult.setMessage("小区不存在");
+                return jsonResult;
+            }
+        } else {
+            jsonResult.setSuccess(false);
+            jsonResult.setMessage("数据为空");
+            return jsonResult;
+        }
+    }
     /**
      * 下载模板
      *

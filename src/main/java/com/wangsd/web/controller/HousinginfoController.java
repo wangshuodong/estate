@@ -85,12 +85,19 @@ public class HousinginfoController {
     @RequestMapping(path = "/saveOrUpdateHousing", method = RequestMethod.POST)
     @ResponseBody
     public JSONResult saveOrUpdateHousing(Housinginfo housinginfo, Model model) {
-        boolean bl;
+        boolean bl = false;
+        JSONResult jsonResult = new JSONResult();
         if (housinginfo.getId() == null) {  //新增
             housinginfo.setDeletestatus(false);
-            housinginfo.setStatus(StaticVar.HOUSING_STATUS_NEW);
+            housinginfo.setStatus(StaticVar.HOUSING_STATUS1);
             housinginfo.setCreateTime(new Date());
-            bl = housinginfoServic.insertHousing(housinginfo);
+            Housinginfo h1 = housinginfoServic.selectHousingByName(housinginfo.getName());
+            if(h1 == null){
+                bl = housinginfoServic.insertHousing(housinginfo);
+            }else {
+                bl = false;
+                jsonResult.setMessage("新增小区已存在");
+            }
         }else { //修改
             Housinginfo oldDept = housinginfoServic.selectHousinginfoById(housinginfo.getId());
             if (oldDept.getParentId() != housinginfo.getParentId()) {
@@ -104,7 +111,6 @@ public class HousinginfoController {
             }
             bl = housinginfoServic.updateHousing(housinginfo);
         }
-        JSONResult jsonResult = new JSONResult();
         jsonResult.setSuccess(bl);
         return jsonResult;
     }
@@ -121,7 +127,7 @@ public class HousinginfoController {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
         //让小区在支付宝平台下线
-        if (housing.getStatus() != StaticVar.HOUSING_STATUS_NEW) {
+        if (housing.getStatus() == StaticVar.HOUSING_STATUS4) {
             alipayService.basicserviceModifyRequest(housing.getCommunityId(), "OFFLINE", housing.getToken(), loginUser);
         }
         boolean delStatus = housinginfoServic.deleteHousingById(id);

@@ -50,7 +50,10 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
         if (housinginfoCustom.getParentId() != null) {
             criteria.andParentIdEqualTo(housinginfoCustom.getParentId());
         }
-        criteria.andCommunityIdIsNotNull();
+        if (housinginfoCustom.getStatus() != null) {
+            criteria.andStatusNotEqualTo(housinginfoCustom.getStatus());
+        }
+        criteria.andDeletestatusEqualTo(false);
         List<Housinginfo> list = housinginfoMapper.selectByExample(example);
         return list;
     }
@@ -100,7 +103,7 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     }
 
     @Override
-    public boolean updateHousingByCommunityId(String status, String communityId) {
+    public boolean updateHousingByCommunityId(Integer status, String communityId) {
         Housinginfo housing = new Housinginfo();
         housing.setStatus(status);
         HousinginfoExample example = new HousinginfoExample();

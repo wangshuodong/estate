@@ -91,15 +91,16 @@
                     layer.load();
                 },
                 success: function(data){
+                    layer.closeAll('loading');
                     if (data.success) {
                         window.parent.location.reload();
                     }else {
-                        layer.msg(data.message);
+                        layer.alert(data.message);
                     }
                 },
                 error: function(XmlHttpRequest, textStatus, errorThrown){
                     layer.closeAll('loading');
-                    layer.msg('error!',{icon:1,time:1000});
+                    layer.alert('error!',{icon:1,time:1000});
                 }
             });
         }

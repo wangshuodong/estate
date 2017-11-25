@@ -18,7 +18,7 @@
                 and b.housing_id = #{housingId}
             </if>
             <if test="roominfoId != null and roominfoId != ''">
-                and b.roominfo_id = #{housingId}
+                and b.roominfo_id = #{roominfoId}
             </if>
             <if test="costType != null">
                 and b.cost_type = #{costType}
@@ -32,6 +32,10 @@
             <if test="id != null">
                 and b.id = #{id}
             </if>
+            <if test="currPage != null and pageSize != null">
+                and limit #{currPage},#{pageSize}
+            </if>
+
         </where>
     </select>
 </mapper>

@@ -10,6 +10,10 @@ public class RoominfoCustom extends Roominfo {
 
     private String housingCode;
 
+    private Integer currPage;
+
+    private Integer pageSize;
+
     public String getHousingName() {
         return housingName;
     }
@@ -24,5 +28,21 @@ public class RoominfoCustom extends Roominfo {
 
     public void setHousingCode(String housingCode) {
         this.housingCode = housingCode;
+    }
+
+    public Integer getCurrPage() {
+        return currPage;
+    }
+
+    public void setCurrPage(Integer currPage) {
+        this.currPage = currPage;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

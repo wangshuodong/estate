@@ -20,6 +20,9 @@
             <if test="parentId != null and parentId != ''">
                 and r.parent_id = #{parentId}
             </if>
+            <if test="currPage != null and pageSize != null">
+                limit #{currPage},#{pageSize}
+            </if>
         </where>
 
     </select>

@@ -111,7 +111,6 @@ public class RoominfoServiceImpl implements RoominfoService {
             roominfo.setBuilding(building);
             roominfo.setUnit(unit);
             roominfo.setRoom(room);
-            roominfo.setGroupName(groupName);
             Roominfo old = selectRoominfoByContent(roominfo);
             if (old != null) {
                 jsonResult.setSuccess(false);

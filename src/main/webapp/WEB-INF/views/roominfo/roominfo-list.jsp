@@ -188,7 +188,7 @@
     }
     
     function excel_upload() {
-        layer_show("导入房屋","${pageContext.request.contextPath }/rest/openExcel", 800, 500);
+        layer_show("导入房屋","${pageContext.request.contextPath }/rest/openRoomExcel", 800, 500);
     }
 
     function excel_download() {

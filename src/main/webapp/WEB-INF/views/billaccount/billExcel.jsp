@@ -5,7 +5,7 @@
 <div class="page-container">
     <form class="form form-horizontal" id="myform" enctype="multipart/form-data">
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属小区：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>房屋信息：</label>
             <div class="formControls col-xs-8 col-sm-9">
 				<span class="btn-upload form-group">
 				    <input class="input-text upload-url radius size-L" type="text" name="uploadfile" id="uploadfile" readonly nullmsg="请添加附件！">
@@ -30,7 +30,7 @@
         if(checkData()){
             $('#myform').ajaxSubmit({
                 type: 'post',
-                url: ${pageContext.request.contextPath }'/rest/uploadExcel',
+                url: ${pageContext.request.contextPath }'/rest/uploadBillExcel',
                 dataType: 'json',
                 beforeSubmit: function () {
                     layer.load();

@@ -27,25 +27,21 @@ public class StaticVar {
 
 
 	/**
-	 * 新建小区
+	 * 未同步
 	 */
-	public static final String HOUSING_STATUS_NEW = "NEW";
+	public static final int HOUSING_STATUS1 = 1;
 	/**
-	 * 待上线
+	 * 已同步
 	 */
-	public static final String HOUSING_STATUS_PENDING_ONLINE = "PENDING_ONLINE";
+	public static final int HOUSING_STATUS2 = 2;
 	/**
-	 * 上线
+	 * 已初始化
 	 */
-	public static final String HOUSING_STATUS_ONLINE = "ONLINE";
+	public static final int HOUSING_STATUS3 = 3;
 	/**
-	 * 维护中
+	 * 已上线
 	 */
-	public static final String HOUSING_STATUS_MAINTAIN = "MAINTAIN";
-	/**
-	 * 下线
-	 */
-	public static final String HOUSING_STATUS_OFFLINE = "OFFLINE";
+	public static final int HOUSING_STATUS4 = 4;
 
 
 	/**

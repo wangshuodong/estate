@@ -74,7 +74,7 @@ public interface HousinginfoServic {
      * @param communityId
      * @return
      */
-    public boolean updateHousingByCommunityId(String status, String communityId);
+    public boolean updateHousingByCommunityId(Integer status, String communityId);
 
     /**
      * 根据id删除小区
