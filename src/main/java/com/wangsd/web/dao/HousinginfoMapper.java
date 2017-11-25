@@ -51,4 +51,11 @@ public interface HousinginfoMapper {
      * @return
      */
     HousinginfoCustom selectHousingCustomById(Integer id);
+
+    /**
+     * 查询所有小区-扩展类
+     * @param query
+     * @return
+     */
+    List<HousinginfoCustom> queryHousingCustomAll(HousinginfoCustom query);
 }

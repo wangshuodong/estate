@@ -16,4 +16,18 @@
         select h.*, p.token from housinginfo h join propertyinfo p on h.parent_id = p.id
         where h.id = #{id}
     </select>
+
+    <!-- 查询所有小区-扩展类 -->
+    <select id="queryHousingCustomAll" parameterType="HousinginfoCustom" resultType="HousinginfoCustom">
+        select *, p.print_name as printName from housinginfo h left join printinfo p on h.id = p.department_id
+        <where>
+            <if test="parentCode != null">
+                and h.`code` LIKE CONCAT(#{parentCode},'%')
+            </if>
+            <if test="parentId != null">
+                and h.parentId #{parentId}
+            </if>
+            and h.deleteStatus = false
+        </where>
+    </select>
 </mapper>

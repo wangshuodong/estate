@@ -2,9 +2,10 @@ package com.wangsd.web.service.impl;
 
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.web.dao.HousinginfoMapper;
-import com.wangsd.web.dao.PrintinfoMapper;
 import com.wangsd.web.dao.PropertyinfoMapper;
-import com.wangsd.web.model.*;
+import com.wangsd.web.model.Housinginfo;
+import com.wangsd.web.model.HousinginfoExample;
+import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.service.HousinginfoServic;
@@ -26,8 +27,6 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     PropertyinfoMapper propertyinfoMapper;
     @Autowired
     UsersService usersService;
-    @Autowired
-    PrintinfoMapper printinfoMapper;
 
     @Override
     public List<ParentCustom> queryParentPropertyByCode(String code) {
@@ -65,7 +64,7 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
 
     @Override
     public HousinginfoCustom selectHousingCustomById(Integer id) {
-        return  housinginfoMapper.selectHousingCustomById(id);
+        return housinginfoMapper.selectHousingCustomById(id);
     }
 
     @Override
@@ -117,7 +116,7 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
     }
 
     @Override
-    public boolean deleteHousingById(Integer id){
+    public boolean deleteHousingById(Integer id) {
         Housinginfo housinginfo = new Housinginfo();
         housinginfo.setId(id);
         housinginfo.setDeletestatus(true);
@@ -134,37 +133,11 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
         String maxCode = selectMaxByParentCode(parentId);
         if (maxCode == null) {
             return parent.getCode() + "0001";
-        }else {
-            return  ApplicationUtils.getOrgCode(maxCode);
-        }
-    }
-    @Override
-    public List<Printinfo> selectPrintinfoById(Integer id){
-        PrintinfoExample printinfoExample = new PrintinfoExample();
-        printinfoExample.createCriteria().andDepartmentIdEqualTo(id);
-        List<Printinfo> list = printinfoMapper.selectByExample(printinfoExample);
-        return list;
-    }
-    @Override
-    public boolean insertPrintinfo(Printinfo printinfo){
-        int deptId = printinfo.getDepartmentId();
-        printinfo.setDepartmentId(deptId);
-        int ret = printinfoMapper.insertSelective(printinfo);
-        if (ret > 0) {
-            return true;
         } else {
-            return false;
+            return ApplicationUtils.getOrgCode(maxCode);
         }
     }
-    @Override
-    public boolean updatePrintinfo(Printinfo printinfo){
-       int ret =  printinfoMapper.updateByPrimaryKeySelective(printinfo);
-        if (ret > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
     @Override
     public Housinginfo selectHousingByName(String name) {
         HousinginfoExample example = new HousinginfoExample();
@@ -172,8 +145,17 @@ public class HousinginfoServiceImpl implements HousinginfoServic {
         List<Housinginfo> list = housinginfoMapper.selectByExample(example);
         if (list.size() > 0) {
             return list.get(0);
-        }else {
+        } else {
             return null;
         }
+    }
+
+    /**
+     * 查询所有小区-扩展类
+     * @param query
+     * @return
+     */
+    public List<HousinginfoCustom> queryHousingCustomAll(HousinginfoCustom query) {
+        return housinginfoMapper.queryHousingCustomAll(query);
     }
 }

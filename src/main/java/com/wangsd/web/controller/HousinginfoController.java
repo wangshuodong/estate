@@ -11,6 +11,7 @@ import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.AlipayService;
 import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.PrintService;
 import com.wangsd.web.service.PropertyinfoServic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,8 @@ public class HousinginfoController {
     PropertyinfoServic propertyinfoServic;
     @Autowired
     AlipayService alipayService;
+    @Autowired
+    PrintService printService;
 
     /**
      *查询所有小区
@@ -49,7 +52,8 @@ public class HousinginfoController {
         List<ParentCustom> parentList = housinginfoServic.queryParentPropertyByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         query.setParentCode(loginUser.getParentCode());
-        List<Housinginfo> list = housinginfoServic.queryAllList(query);
+        //List<Housinginfo> list = housinginfoServic.queryAllList(query);
+        List<HousinginfoCustom> list = housinginfoServic.queryHousingCustomAll(query);
         model.addAttribute("housingList", list);
         model.addAttribute("query", query);
         return "/housing/housing-list";
@@ -141,15 +145,12 @@ public class HousinginfoController {
      */
     @RequestMapping(value = "updatePrintinfo")
     public String updatePrintinfo(Integer id, Model model, HttpSession session) {
-        Printinfo printinfo = new Printinfo();
-        List<Printinfo> list = housinginfoServic.selectPrintinfoById(id);
-        if(list.size() == 1){
-            printinfo = list.get(0);
-            model.addAttribute("printinfo", printinfo);
-        }else if(list.size() == 0){
+        Printinfo printinfo = printService.selectPrintinfoById(id);
+        if(printinfo == null){
+            printinfo = new Printinfo();
             printinfo.setDepartmentId(id);
-            model.addAttribute("printinfo", printinfo);
         }
+        model.addAttribute("printinfo", printinfo);
         return "/housing/printinfo-config";
     }
     /**
@@ -164,9 +165,9 @@ public class HousinginfoController {
         boolean bl;
         if (printinfo.getId() == null) {  //新增
             printinfo.setCreatetime(new Date());
-            bl = housinginfoServic.insertPrintinfo(printinfo);
+            bl = printService.insertPrintinfo(printinfo);
         }else { //修改
-            bl = housinginfoServic.updatePrintinfo(printinfo);
+            bl = printService.updatePrintinfo(printinfo);
         }
         JSONResult jsonResult = new JSONResult();
         jsonResult.setSuccess(bl);

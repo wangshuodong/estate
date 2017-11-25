@@ -1,7 +1,6 @@
 package com.wangsd.web.service;
 
 import com.wangsd.web.model.Housinginfo;
-import com.wangsd.web.model.Printinfo;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 
@@ -84,32 +83,16 @@ public interface HousinginfoServic {
     public boolean deleteHousingById(Integer id);
 
     /**
-     * 根据id查询打印机
-     * @param id
-     * @return
-     */
-    public List<Printinfo> selectPrintinfoById(Integer id);
-
-    /**
-     * 添加打印机
-     * @param printinfo
-     * @return
-     */
-    public boolean insertPrintinfo(Printinfo printinfo);
-
-    /**
-     * 更新打印机
-     * @param printinfo
-     * @return
-     */
-    public boolean updatePrintinfo(Printinfo printinfo);
-
-    /**
      * 根据名称查询小区
      * @param name
      * @return
      */
     public Housinginfo selectHousingByName(String name);
 
-
+    /**
+     * 查询所有小区-扩展类
+     * @param query
+     * @return
+     */
+    public List<HousinginfoCustom> queryHousingCustomAll(HousinginfoCustom query);
 }

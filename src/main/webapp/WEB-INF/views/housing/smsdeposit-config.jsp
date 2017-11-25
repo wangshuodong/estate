@@ -14,7 +14,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>充值条数：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" placeholder="充值条数" name="messageNum" required>
+                <input type="text" class="input-text radius size-L" placeholder="充值条数" name="messageNum" id="messageNum">
             </div>
         </div>
 
@@ -30,6 +30,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
     $("#myform").validate({
+        rules:{
+            messageNum : {
+                required: true,
+                number : true
+            }
+        },
         submitHandler:function(form) {
             $(form).ajaxSubmit({
                 type: 'post',

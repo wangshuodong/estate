@@ -149,6 +149,7 @@ public class BillAccountController {
     public JSONResult receivBillAccount(Billaccount billaccount, HttpSession session) {
         boolean bl = false;
         JSONResult obj = new JSONResult();
+        //删除支付宝账单
         Billaccount oldBill = billAccountService.selectBillAccountById(billaccount.getId());
         if (oldBill.getStatus()) {
             UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
@@ -157,10 +158,13 @@ public class BillAccountController {
             bill_entry_id_list.add(oldBill.getId().toString());
             alipayService.billDeleteRequest(housing.getCommunityId(), bill_entry_id_list, housing.getToken(), loginUser);
         }
+        //更新收款信息
         billaccount.setPaystatus(true);
         billaccount.setPaydate(new Date());
         bl = billAccountService.updateBillaccount(billaccount);
         obj.setSuccess(bl);
+        //打印小票
+
         return obj;
     }
 

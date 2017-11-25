@@ -32,6 +32,7 @@
 					<th>小区地址</th>
 					<th>热线电话</th>
 					<th>短信条数</th>
+					<th>打印机名称</th>
 					<th>创建时间</th>
 					<th>状态</th>
 					<th>操作</th>
@@ -45,6 +46,7 @@
 						<td>${ item.address }</td>
 						<td>${ item.hotline }</td>
 						<td>${ item.messageNum }</td>
+						<td>${ item.printName }</td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td>
 							<c:if test="${ item.status==1 }">未同步</c:if>
@@ -68,7 +70,9 @@
 								<a title="二维码" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">二维码</a><br>
 							</c:if>
 							<a title="配置打印机" style="text-decoration:none" onclick="printinfo_edit(${item.id })" href="javascript:;" class="c-success">配置打印机</a><br>
-							<a title="短信充值" style="text-decoration:none" onclick="sms_deposit(${item.id })" href="javascript:;" class="c-success">短信充值</a><br>
+							<shiro:hasAnyRoles name="super_admin">
+								<a title="短信充值" style="text-decoration:none" onclick="sms_deposit(${item.id })" href="javascript:;" class="c-success">短信充值</a><br>
+							</shiro:hasAnyRoles>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
 
 						</td>

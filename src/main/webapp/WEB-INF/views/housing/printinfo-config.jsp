@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>联系电话：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>打印机电话：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input type="text" class="input-text radius size-L" value="${printinfo.mobilePhone}" placeholder="联系电话" name="mobilePhone" >
             </div>

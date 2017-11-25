@@ -34,7 +34,8 @@
 						<td>${ item.contactPhone }</td>
 						<td width="130">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
-							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a>
+							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a><br>
+							<a title="配置打印机" style="text-decoration:none" onclick="printinfo_edit(${item.id })" href="javascript:;" class="c-success">配置打印机</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -94,6 +95,15 @@
                 },
             });
         });
+    }
+
+    function printinfo_edit(id){
+        var index = layer.open({
+            type: 2,
+            title: "配置打印机",
+            content: "${pageContext.request.contextPath }/rest/housing/updatePrintinfo?id=" + id
+        });
+        layer.full(index);
     }
 </script>
 
