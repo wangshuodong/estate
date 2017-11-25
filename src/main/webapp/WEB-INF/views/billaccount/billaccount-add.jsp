@@ -43,19 +43,19 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>账期：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="layui-input input-text radius size-L" value="${billaccount.acctPeriod}" placeholder="yyyy-MM" name="acctPeriod" id="acctPeriod" required>
+                <input type="text" class="layui-input input-text radius size-L" value="${billaccount.acctPeriod}" placeholder="yyyy年MM" name="acctPeriod" id="acctPeriod" required>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>出账日期：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="layui-input input-text radius size-L" value="${billaccount.releaseDay}" placeholder="yyyy-MM-dd" name="releaseDay" id="releaseDay" required>
+                <input type="text" class="layui-input input-text radius size-L" value="${billaccount.releaseDay}" placeholder="yyyyMMdd" name="releaseDay" id="releaseDay" required>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>缴费截止日期：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="layui-input input-text radius size-L" value="${billaccount.deadline}" placeholder="yyyy-MM-dd" name="deadline" id="deadline" required>
+                <input type="text" class="layui-input input-text radius size-L" value="${billaccount.deadline}" placeholder="yyyyMMdd" name="deadline" id="deadline" required>
             </div>
         </div>
         <div class="row cl">
@@ -81,12 +81,15 @@
         laydate.render({
             elem: '#acctPeriod' //指定元素
             ,type: 'month'
+            ,format: 'yyyy年MM'
         });
         laydate.render({
             elem: '#releaseDay' //指定元素
+            ,format: 'yyyyMMdd'
         });
         laydate.render({
             elem: '#deadline' //指定元素
+            ,format: 'yyyyMMdd'
         });
         roomEdit();
     });

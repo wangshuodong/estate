@@ -3,8 +3,10 @@ package com.wangsd.web.controller;
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.modelCustom.BillAccountCustom;
+import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.service.AlipayService;
 import com.wangsd.web.service.BillAccountService;
 import com.wangsd.web.service.HousinginfoServic;
 import com.wangsd.web.service.RoominfoService;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +38,8 @@ public class BillAccountController {
     RoominfoService roominfoService;
     @Autowired
     HousinginfoServic housinginfoServic;
+    @Autowired
+    AlipayService alipayService;
 
     /**
      * 根据部门code查询账单信息
@@ -100,6 +106,11 @@ public class BillAccountController {
         return "/billaccount/billaccount-receiv";
     }
 
+    /**
+     * 保存账单
+     * @param billaccount
+     * @return
+     */
     @RequestMapping(path = "/saveOrUpdateBillAccount", method = RequestMethod.POST)
     @ResponseBody
     public JSONResult saveOrUpdateBillAccount(Billaccount billaccount) {
@@ -127,5 +138,32 @@ public class BillAccountController {
         obj.setSuccess(bl);
         return obj;
     }
+
+    /**
+     * 账单收款
+     * @param billaccount
+     * @return
+     */
+    @RequestMapping(path = "/receivBillAccount", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResult receivBillAccount(Billaccount billaccount, HttpSession session) {
+        boolean bl = false;
+        JSONResult obj = new JSONResult();
+        Billaccount oldBill = billAccountService.selectBillAccountById(billaccount.getId());
+        if (oldBill.getStatus()) {
+            UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+            HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(oldBill.getHousingId());
+            List<String> bill_entry_id_list = new ArrayList<>();
+            bill_entry_id_list.add(oldBill.getId().toString());
+            alipayService.billDeleteRequest(housing.getCommunityId(), bill_entry_id_list, housing.getToken(), loginUser);
+        }
+        billaccount.setPaystatus(true);
+        billaccount.setPaydate(new Date());
+        bl = billAccountService.updateBillaccount(billaccount);
+        obj.setSuccess(bl);
+        return obj;
+    }
+
+
 
 }

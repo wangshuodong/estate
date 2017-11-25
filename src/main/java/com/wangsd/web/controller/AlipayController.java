@@ -196,6 +196,7 @@ public class AlipayController {
                 Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(housing.getParentId());
                 BillAccountCustom query = new BillAccountCustom();
                 query.setHousingId(housing.getId());
+                query.setStatus(false);
                 query.setCurrPage(0);
                 query.setPageSize(199);
                 List<BillAccountCustom> billList = billAccountService.queryBillAccountList(query);

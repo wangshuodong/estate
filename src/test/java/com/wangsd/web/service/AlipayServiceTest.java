@@ -1,6 +1,7 @@
 package com.wangsd.web.service;
 
 import com.wangsd.core.feature.test.TestSupport;
+import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import org.junit.Test;
@@ -96,9 +97,13 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(10003);
         List<String> list = new ArrayList<>();
-        list.add("1011");
+        list.add("1012");
+        list.add("1013");
+        list.add("1014");
+        list.add("1015");
+        list.add("1016");
         alipayService.roominfoDeleteRequest(housing.getCommunityId(), list, housing.getToken(), loginUser);
     }
 
@@ -112,8 +117,24 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(10003);
         alipayService.roominfoQueryRequest(housing.getCommunityId(), housing.getToken(), loginUser);
+    }
+
+    /**
+     * 物业费账单数据批量查询
+     * @throws Exception
+     */
+    @Test
+    public void billBatchqueryRequest() throws Exception {
+        UserCustom loginUser = new UserCustom();
+        loginUser.setAppId(appid);
+        loginUser.setMerchantPrivateKey(privateKey);
+        loginUser.setAlipayPublicKey(publicKey);
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
+        Billaccount query = new Billaccount();
+        query.setHousingId(10003);
+        alipayService.billBatchqueryRequest(housing.getCommunityId(), query, housing.getToken(), loginUser);
     }
 
     /**

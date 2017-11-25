@@ -51,7 +51,7 @@
 		<div class="form-group mt-20">
 		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="info_add();">新&nbsp;增</button>
-		<button type="button" class="btn btn-secondary radius size-L" onclick="room_list_sync();">批量同步</button>
+		<button type="button" class="btn btn-secondary radius size-L" onclick="bill_list_sync();">批量同步</button>
 		<button type="button" class="btn btn-warning radius size-L" onclick="excel_upload();">导入账单</button>
 		<button type="button" class="btn btn-warning radius size-L" onclick="excel_download();">下载模板</button>
 		</div>
@@ -105,14 +105,20 @@
 						</td>
 						<td>${ item.acctPeriod }</td>
 						<td>${ item.billEntryAmount }</td>
-						<td>${ item.paytype }</td>
+						<td>
+							<c:if test="${ item.paytype == 1 }">现金</c:if>
+							<c:if test="${ item.paytype == 2 }">支付宝</c:if>
+							<c:if test="${ item.paytype == 3 }">微信</c:if>
+							<c:if test="${ item.paytype == 4 }">POS机</c:if>
+							<c:if test="${ item.paytype == 99 }">其他</c:if>
+						</td>
 						<td>
 							<c:if test="${ item.paystatus == false }">未付款</c:if>
 							<c:if test="${ item.paystatus == true }">已付款</c:if>
 						</td>
 						<td>${ item.alipayTradeNo }</td>
 						<td>${ item.weixinTradeNo }</td>
-						<td>${ item.paydate }</td>
+						<td><fmt:formatDate value="${ item.paydate }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd"/></td>
 						<td>
 							<c:if test="${ item.status == false }">未同步</c:if>
@@ -121,7 +127,7 @@
 						<td>
 							<c:if test="${ item.paystatus==false }">
 								<c:if test="${ item.status==false }">
-									<a title="同步支付宝" style="text-decoration:none" onclick="room_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a><br>
+									<a title="同步支付宝" style="text-decoration:none" onclick="bill_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a><br>
 								</c:if>
 								<a title="账单收款" style="text-decoration:none" onclick="bill_receiv(${item.id })" href="javascript:;" class="c-success">账单收款</a><br>
 								<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id });" href="javascript:;" class="c-success">编辑</a>
@@ -265,5 +271,56 @@
     function excel_upload() {
         layer_show("导入账单","${pageContext.request.contextPath }/rest/openBillExcel", 800, 500);
     }
+
+    function excel_download() {
+        window.location.href="${pageContext.request.contextPath }/rest/downloadRoominfo";
+	}
+
+    function bill_sync(id) {
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath }/rest/alipay/billBatchUploadRequest',
+            dataType: 'json',
+            data:{
+                id : id
+            },
+            beforeSubmit: function () {
+                layer.load();
+            },
+            success: function(data){
+                layer.closeAll('loading');
+                if (data.success) {
+                    window.location.reload();
+                }else {
+                    layer.msg("同步支付宝失败!", {icon: 5});
+                }
+            },
+            error:function(data) {
+                layer.closeAll('loading');
+                layer.msg('error!',{icon:1,time:1000});
+            }
+        });
+    }
+
+    function bill_list_sync() {
+        layer.confirm('确认要同步吗？',function(index){
+            $.ajax({
+                type: 'POST',
+                url: '${pageContext.request.contextPath }/rest/alipay/billBatchUploadRequest',
+                dataType: 'json',
+                success: function(data){
+                    if (data.success) {
+                        window.location.reload();
+                    }else {
+                        layer.msg("同步支付宝失败!", {icon: 5});
+                    }
+                },
+                error:function(data) {
+                    layer.msg('error!',{icon:1,time:1000});
+                },
+            });
+        });
+    }
+
 </script>
 

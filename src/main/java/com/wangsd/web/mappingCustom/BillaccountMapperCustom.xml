@@ -33,7 +33,7 @@
                 and b.id = #{id}
             </if>
             <if test="currPage != null and pageSize != null">
-                and limit #{currPage},#{pageSize}
+                limit #{currPage},#{pageSize}
             </if>
 
         </where>

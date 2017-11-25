@@ -1,5 +1,6 @@
 package com.wangsd.web.service;
 
+import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
@@ -113,6 +114,15 @@ public interface AlipayService {
      * @return
      */
     public void billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser);
+
+    /**
+     * 物业费账单数据批量查询
+     * @param community_id
+     * @param billaccount
+     * @param token
+     * @param loginUser
+     */
+    public void billBatchqueryRequest(String community_id, Billaccount billaccount, String token, UserCustom loginUser);
 
     /**
      * 删除已上传的物业账单数据

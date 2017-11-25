@@ -74,12 +74,15 @@
         laydate.render({
             elem: '#acctPeriod' //指定元素
             ,type: 'month'
+            ,format: 'yyyy年MM'
         });
         laydate.render({
             elem: '#releaseDay' //指定元素
+            ,format: 'yyyyMMdd'
         });
         laydate.render({
             elem: '#deadline' //指定元素
+            ,format: 'yyyyMMdd'
         });
         roomEdit();
     });

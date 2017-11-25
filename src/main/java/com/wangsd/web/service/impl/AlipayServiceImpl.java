@@ -9,6 +9,7 @@ import com.alipay.api.domain.CplifeRoomInfoResp;
 import com.alipay.api.request.*;
 import com.alipay.api.response.*;
 import com.wangsd.core.util.StaticVar;
+import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.BillAccountCustom;
@@ -299,8 +300,9 @@ public class AlipayServiceImpl implements AlipayService {
                     roominfo.setId(Integer.parseInt(cprifr.getOutRoomId()));//商户系统小区房屋唯一ID标示.
                     roominfo.setRoomId(cprifr.getRoomId());//支付宝系统房间唯一标示.
                     roominfo.setStatus(true);//同步状态
-                    return roominfoService.updateRoominfo(roominfo);
+                    roominfoService.updateRoominfo(roominfo);
                 }
+                return true;
             } else {
                 logger.info("调用失败");
             }
@@ -376,21 +378,23 @@ public class AlipayServiceImpl implements AlipayService {
             JSONObject room_info_set = new JSONObject();
             room_info_set.put("bill_entry_id", billaccount.getId());
             room_info_set.put("out_room_id", billaccount.getRoominfoId());
-            room_info_set.put("cost_type", billaccount.getCostType());
+            String costType = getCostType(billaccount.getCostType());
+            room_info_set.put("cost_type", costType);
             room_info_set.put("bill_entry_amount", billaccount.getBillEntryAmount());
             room_info_set.put("acct_period", billaccount.getAcctPeriod());
             room_info_set.put("release_day", billaccount.getReleaseDay());
             room_info_set.put("deadline", billaccount.getDeadline());
-            if (billaccount.getOwnerName() != null) {
+            if (billaccount.getOwnerName() != null && !"".equals(billaccount.getOwnerName())) {
                 room_info_set.put("remark_str", billaccount.getOwnerName());
             }
             jsonArray.add(room_info_set);
         }
-        bizContent.put("bill_set ", jsonArray);
+        bizContent.put("bill_set", jsonArray);
         request.setBizContent(bizContent.toString());
         if (token != null) {
             request.putOtherTextParam("app_auth_token", token);
         }
+        logger.debug("----bizContent----" + bizContent.toString());
         try {
             AlipayEcoCplifeBillBatchUploadResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
@@ -422,7 +426,10 @@ public class AlipayServiceImpl implements AlipayService {
         for (BillAccountCustom billaccount : billList) {
             JSONObject room_info_set = new JSONObject();
             room_info_set.put("bill_entry_id", billaccount.getId());
-//            room_info_set.put("cost_type", billaccount.getCostType());
+            if (billaccount.getCostType() != null) {
+                String costType = getCostType(billaccount.getCostType());
+                room_info_set.put("cost_type", costType);
+            }
             room_info_set.put("bill_entry_amount", billaccount.getBillEntryAmount());
             room_info_set.put("acct_period", billaccount.getAcctPeriod());
             room_info_set.put("release_day", billaccount.getReleaseDay());
@@ -432,13 +439,50 @@ public class AlipayServiceImpl implements AlipayService {
             }
             jsonArray.add(room_info_set);
         }
-        bizContent.put("bill_entry_list ", jsonArray);
+        bizContent.put("bill_entry_list", jsonArray);
         request.setBizContent(bizContent.toString());
         if (token != null) {
             request.putOtherTextParam("app_auth_token", token);
         }
         try {
             AlipayEcoCplifeBillModifyResponse response = alipayClient.execute(request);
+            logger.debug("----response----" + response.getBody());
+            if ("10000".equals(response.getCode())) {
+                logger.debug("调用成功");
+            } else {
+                logger.info("调用失败");
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 物业费账单数据批量查询
+     * @param community_id
+     * @param billaccount
+     * @param token
+     * @param loginUser
+     */
+    public void billBatchqueryRequest(String community_id, Billaccount billaccount, String token, UserCustom loginUser) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
+                StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
+        AlipayEcoCplifeBillBatchqueryRequest request = new AlipayEcoCplifeBillBatchqueryRequest();
+        JSONObject bizContent = new JSONObject();
+        bizContent.put("community_id", community_id);
+        if (billaccount.getRoominfoId() != null) {
+            bizContent.put("out_room_id", billaccount.getRoominfoId());
+        }
+        if (billaccount.getCostType() != null) {
+            String costType = getCostType(billaccount.getCostType());
+            bizContent.put("cost_type", costType);
+        }
+        request.setBizContent(bizContent.toString());
+        if (token != null) {
+            request.putOtherTextParam("app_auth_token", token);
+        }
+        try {
+            AlipayEcoCplifeBillBatchqueryResponse response = alipayClient.execute(request);
             logger.debug("----response----" + response.getBody());
             if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
@@ -486,6 +530,37 @@ public class AlipayServiceImpl implements AlipayService {
             e.printStackTrace();
         }
         return retStatus;
+    }
+
+    public String getCostType(int type) {
+        String costType;
+        switch (type) {
+            case StaticVar.billaccount_cost_type1:
+                costType = "物业管理费";
+                break;
+            case StaticVar.billaccount_cost_type2:
+                costType = "水电公摊费";
+                break;
+            case StaticVar.billaccount_cost_type3:
+                costType = "垃圾清运费";
+                break;
+            case StaticVar.billaccount_cost_type4:
+                costType = "公共照明费";
+                break;
+            case StaticVar.billaccount_cost_type5:
+                costType = "水费";
+                break;
+            case StaticVar.billaccount_cost_type6:
+                costType = "电费";
+                break;
+            case StaticVar.billaccount_cost_type7:
+                costType = "蒸汽费";
+                break;
+            default:
+                costType = "其他";
+                break;
+        }
+        return costType;
     }
 
 }
