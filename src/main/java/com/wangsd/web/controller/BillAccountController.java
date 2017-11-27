@@ -13,6 +13,7 @@ import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -121,7 +122,7 @@ public class BillAccountController {
      */
     @RequestMapping(path = "/saveOrUpdateBillAccount", method = RequestMethod.POST)
     @ResponseBody
-    public JSONResult saveOrUpdateBillAccount(Billaccount billaccount) {
+    public JSONResult saveOrUpdateBillAccount(Billaccount billaccount, HttpSession session) {
         boolean bl = false;
         JSONResult obj = new JSONResult();
         BillAccountCustom bill = new BillAccountCustom();
@@ -140,9 +141,45 @@ public class BillAccountController {
                 obj.setMessage("账单信息已存在！");
             }
         } else {
-            bl = billAccountService.updateBillaccount(billaccount);
+            Billaccount oldBill = billAccountService.selectBillAccountById(billaccount.getId());
+            if (oldBill.getStatus()) {
+                UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+                HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(oldBill.getHousingId());
+                List<BillAccountCustom> billList = new ArrayList<>();
+                BillAccountCustom custom = new BillAccountCustom();
+                BeanUtils.copyProperties(oldBill, custom);
+                billList.add(custom);
+                bl = alipayService.billModifyRequest(housing.getCommunityId(), billList, housing.getToken(), loginUser);
+                if (bl) {
+                    bl = billAccountService.updateBillaccount(billaccount);
+                }
+            }else {
+                bl = billAccountService.updateBillaccount(billaccount);
+            }
         }
+        obj.setSuccess(bl);
+        return obj;
+    }
 
+    @RequestMapping("/deleteBillaccount")
+    @ResponseBody
+    public JSONResult deleteBillaccount(Integer id, HttpSession session) {
+        boolean bl;
+        Billaccount oldBill = billAccountService.selectBillAccountById(id);
+        if (oldBill.getStatus()) { //已同步
+            //获取公钥 私钥
+            UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+            HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(oldBill.getHousingId());
+            List<String> roomids = new ArrayList<>();
+            roomids.add(oldBill.getId().toString());
+            bl = alipayService.billDeleteRequest(housing.getCommunityId(), roomids, housing.getToken(), loginUser);
+            if (bl) {
+                bl = billAccountService.deleteBillaccount(id);
+            }
+        }else {
+            bl = billAccountService.deleteBillaccount(id);
+        }
+        JSONResult obj = new JSONResult();
         obj.setSuccess(bl);
         return obj;
     }

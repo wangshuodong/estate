@@ -415,7 +415,7 @@ public class AlipayServiceImpl implements AlipayService {
         return false;
     }
 
-    public void billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser) {
+    public boolean billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser) {
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
                 StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeBillModifyRequest request = new AlipayEcoCplifeBillModifyRequest();
@@ -449,12 +449,15 @@ public class AlipayServiceImpl implements AlipayService {
             logger.debug("----response----" + response.getBody());
             if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
+                return true;
             } else {
                 logger.info("调用失败");
+                return false;
             }
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     /**

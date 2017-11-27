@@ -87,6 +87,7 @@ public class RoominfoController {
     @RequestMapping("/deleteRoominfo")
     @ResponseBody
     public JSONResult deleteRoominfo(Integer id, HttpSession session) {
+        boolean bl;
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         Roominfo roominfo = roominfoService.selectRoominfoById(id);
@@ -94,9 +95,13 @@ public class RoominfoController {
             HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(roominfo.getParentId());
             List<String> roomids = new ArrayList<>();
             roomids.add(roominfo.getId().toString());
-            alipayService.roominfoDeleteRequest(housing.getCommunityId(), roomids, housing.getToken(), loginUser);
+            bl = alipayService.roominfoDeleteRequest(housing.getCommunityId(), roomids, housing.getToken(), loginUser);
+            if (bl) {
+                bl = roominfoService.deleteRoominfo(id);
+            }
+        }else {
+            bl = roominfoService.deleteRoominfo(id);
         }
-        boolean bl = roominfoService.deleteRoominfo(id);
         JSONResult obj = new JSONResult();
         obj.setSuccess(bl);
         return obj;

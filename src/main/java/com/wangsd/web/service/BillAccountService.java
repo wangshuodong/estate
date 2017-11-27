@@ -36,6 +36,13 @@ public interface BillAccountService {
     public boolean updateBillaccount(Billaccount billaccount);
 
     /**
+     * 删除账单
+     * @param id
+     * @return
+     */
+    public boolean deleteBillaccount(Integer id);
+
+    /**
      * 导入账单Excel信息
      * @param
      * @return

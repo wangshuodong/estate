@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2017-11-27 17:54:22
+Date: 2017-11-27 23:26:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,7 +49,7 @@ INSERT INTO `billaccount` VALUES ('1011', '10003', '1020', '1', '100', '2017年1
 INSERT INTO `billaccount` VALUES ('1012', '10003', '1022', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', '2017-11-25 21:55:56');
 INSERT INTO `billaccount` VALUES ('1013', '10003', '1023', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', '2017-11-25 21:55:56');
 INSERT INTO `billaccount` VALUES ('1014', '10003', '1024', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', '2017-11-25 21:55:56');
-INSERT INTO `billaccount` VALUES ('1015', '10003', '1020', '2', '10', '2017年11', '20171120', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', null, null, '0', '0', '2017-11-27 14:16:55');
+INSERT INTO `billaccount` VALUES ('1015', '10003', '1020', '2', '20', '2017年11', '20171120', '20171130', null, '1', '2017-11-27 22:27:18', '1', '0', '0', null, null, '0', '0', '2017-11-27 14:16:55');
 
 -- ----------------------------
 -- Table structure for housinginfo

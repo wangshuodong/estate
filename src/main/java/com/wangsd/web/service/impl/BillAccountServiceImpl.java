@@ -41,6 +41,7 @@ public class BillAccountServiceImpl implements BillAccountService {
      * @param billaccount
      * @return
      */
+    @Override
     public boolean insertBillaccount(Billaccount billaccount) {
         int ret = billaccountMapper.insertSelective(billaccount);
         if (ret > 0) {
@@ -55,7 +56,21 @@ public class BillAccountServiceImpl implements BillAccountService {
      * @param billaccount
      * @return
      */
+    @Override
     public boolean updateBillaccount(Billaccount billaccount) {
+        int ret = billaccountMapper.updateByPrimaryKeySelective(billaccount);
+        if (ret > 0) {
+            return true;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
+    public boolean deleteBillaccount(Integer id) {
+        Billaccount billaccount = new Billaccount();
+        billaccount.setId(id);
+        billaccount.setDeletestatus(true);
         int ret = billaccountMapper.updateByPrimaryKeySelective(billaccount);
         if (ret > 0) {
             return true;

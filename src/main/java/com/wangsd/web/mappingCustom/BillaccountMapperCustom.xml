@@ -39,7 +39,7 @@
         </where>
     </select>
 
-    <select id="getPrintGroupByPayType" resultType="BillAccountCustom" parameterType="housingId">
+    <select id="getPrintGroupByPayType" resultType="BillAccountCustom" parameterType="string">
         SELECT
             sum(b.bill_entry_amount) AS sumAmount,
             count(b.roominfo_id) AS countNum,
@@ -54,7 +54,7 @@
             b.payType;
     </select>
 
-    <select id="getPrintTotal" resultType="BillAccountCustom" parameterType="propertyId">
+    <select id="getPrintTotal" resultType="BillAccountCustom" parameterType="string">
         SELECT
             sum(b.bill_entry_amount) AS sumAmount,
             b.payType
@@ -68,7 +68,7 @@
             b.payType;
     </select>
 
-    <select id="getPrintGroupByCostType" resultType="BillAccountCustom" parameterType="housingId">
+    <select id="getPrintGroupByCostType" resultType="BillAccountCustom" parameterType="string">
         SELECT
         sum(b.bill_entry_amount) AS sumAmount,
         b.cost_type

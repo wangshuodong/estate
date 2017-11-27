@@ -224,7 +224,7 @@
         layer.confirm('确认要删除吗？',function(index){
             $.ajax({
                 type: 'POST',
-                url: '${pageContext.request.contextPath }/rest/user/deleteUser',
+                url: '${pageContext.request.contextPath }/rest/billAccount/deleteBillaccount',
                 dataType: 'json',
                 data:{
                     id : id
@@ -233,10 +233,12 @@
                     if (data.success) {
                         $(obj).parents("tr").remove();
                         layer.msg('已删除!',{icon:1,time:1000});
+                    }else {
+                        layer.alert("删除失败");
                     }
                 },
                 error:function(data) {
-                    console.log(data.msg);
+                    layer.alert('error!',{icon:1,time:1000});
                 },
             });
         });

@@ -113,7 +113,7 @@ public interface AlipayService {
      * @param loginUser
      * @return
      */
-    public void billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser);
+    public boolean billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser);
 
     /**
      * 物业费账单数据批量查询

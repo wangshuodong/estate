@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/h-ui/common/jquery.editable-select.min.css" />
 <div class="page-container">
     <form class="form form-horizontal" id="myform" action="" method="post">
-        <input type="hidden" value="${roominfo.id}" name="id">
+        <input type="hidden" value="${billaccount.id}" name="id">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属小区：</label>
             <div class="formControls col-xs-8 col-sm-9">
@@ -136,7 +136,7 @@
                     if (data.success) {
                         window.parent.location.reload();
                     }else {
-                        layer.alert(data.message);
+                        layer.alert("修改失败");
                     }
                 },
                 error: function(XmlHttpRequest, textStatus, errorThrown){
