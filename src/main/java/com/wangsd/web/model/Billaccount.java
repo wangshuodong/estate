@@ -35,7 +35,7 @@ public class Billaccount {
 
     private String weixinTradeNo;
 
-    private Byte printstatus;
+    private Boolean printstatus;
 
     private Boolean ticketstatus;
 
@@ -169,11 +169,11 @@ public class Billaccount {
         this.weixinTradeNo = weixinTradeNo == null ? null : weixinTradeNo.trim();
     }
 
-    public Byte getPrintstatus() {
+    public Boolean getPrintstatus() {
         return printstatus;
     }
 
-    public void setPrintstatus(Byte printstatus) {
+    public void setPrintstatus(Boolean printstatus) {
         this.printstatus = printstatus;
     }
 

@@ -19,9 +19,9 @@ public class printServiceImpl implements PrintService {
     PrintinfoMapper printinfoMapper;
 
     @Override
-    public Printinfo selectPrintinfoById(Integer id) {
+    public Printinfo selectPrintinfoBydeptId(Integer deptId) {
         PrintinfoExample printinfoExample = new PrintinfoExample();
-        printinfoExample.createCriteria().andDepartmentIdEqualTo(id);
+        printinfoExample.createCriteria().andDepartmentIdEqualTo(deptId);
         List<Printinfo> list = printinfoMapper.selectByExample(printinfoExample);
         if (list.size() > 0) {
             return list.get(0);
@@ -49,5 +49,12 @@ public class printServiceImpl implements PrintService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<Printinfo> selectBystatus(Integer status) {
+        PrintinfoExample example = new PrintinfoExample();
+        example.createCriteria().andStatusEqualTo(status);
+        return printinfoMapper.selectByExample(example);
     }
 }

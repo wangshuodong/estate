@@ -2,17 +2,19 @@ package com.wangsd.web.service;
 
 import com.wangsd.web.model.Printinfo;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/11/25.
  */
 public interface PrintService {
 
     /**
-     * 根据id查询打印机
-     * @param id
+     * 根据关联id查询打印机
+     * @param deptId
      * @return
      */
-    public Printinfo selectPrintinfoById(Integer id);
+    public Printinfo selectPrintinfoBydeptId(Integer deptId);
 
     /**
      * 添加打印机
@@ -27,4 +29,11 @@ public interface PrintService {
      * @return
      */
     public boolean updatePrintinfo(Printinfo printinfo);
+
+    /**
+     * 根据状态查询打印机列表
+     * @param status
+     * @return
+     */
+    public List<Printinfo> selectBystatus(Integer status);
 }

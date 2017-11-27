@@ -36,6 +36,32 @@ public interface BillaccountMapper {
      */
     List<BillAccountCustom> queryBillAccountList(BillAccountCustom billAccountCustom);
 
+    /**
+     * 按支付方式统计小区
+     * @param housingId
+     * @return
+     */
+    List<BillAccountCustom> getPrintGroupByPayType(Integer housingId);
 
+    /**
+     * 统计物业下面的账单信息
+     * @param propertyId
+     * @return
+     */
+    List<BillAccountCustom> getPrintTotal(Integer propertyId);
+
+    /**
+     * 按费用类型统计小区
+     * @param housingId
+     * @return
+     */
+    List<BillAccountCustom> getPrintGroupByCostType(Integer housingId);
+
+    /**
+     * 每个小区的交易户数
+     * @param billAccountCustom
+     * @return
+     */
+    BillAccountCustom getPrintUserCount(BillAccountCustom billAccountCustom);
 
 }

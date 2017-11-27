@@ -113,7 +113,6 @@ public class RoominfoController {
     public JSONResult saveOrUpdateRoominfo(Roominfo roominfo) {
         boolean bl;
         JSONResult obj = new JSONResult();
-        roominfo.setAddress(roominfo.getGroupName() + roominfo.getBuilding() + roominfo.getUnit() + roominfo.getRoom());
         if (roominfo.getId() == null) {
             Roominfo room = new Roominfo();
             room.setParentId(roominfo.getParentId());
@@ -121,6 +120,7 @@ public class RoominfoController {
             room.setRoom(roominfo.getRoom());
             Roominfo room1 = roominfoService.selectRoominfoByContent(room);
             if(room1 == null){
+                roominfo.setAddress(roominfo.getGroupName() + roominfo.getBuilding() + roominfo.getUnit() + roominfo.getRoom());
                 roominfo.setCreateTime(new Date());
                 bl = roominfoService.insertRoominfo(roominfo);
             }else{

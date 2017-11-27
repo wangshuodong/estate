@@ -81,6 +81,7 @@
 					<th>付款时间</th>
 					<th>创建时间</th>
 					<th>同步状态</th>
+					<th>打印状态</th>
 					<th>操作</th>
 				</tr>
 				</thead>
@@ -125,14 +126,23 @@
 							<c:if test="${ item.status == true }">已同步</c:if>
 						</td>
 						<td>
-							<c:if test="${ item.paystatus==false }">
-								<c:if test="${ item.status==false }">
-									<a title="同步支付宝" style="text-decoration:none" onclick="bill_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a><br>
-								</c:if>
-								<a title="账单收款" style="text-decoration:none" onclick="bill_receiv(${item.id })" href="javascript:;" class="c-success">账单收款</a><br>
-								<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id });" href="javascript:;" class="c-success">编辑</a>
-								<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id });" href="javascript:;" class="c-success">删除</a>
-							</c:if>
+							<c:if test="${ item.printstatus == false }">未打印</c:if>
+							<c:if test="${ item.printstatus == true }">已打印</c:if>
+						</td>
+						<td>
+							<c:choose>
+								<c:when test="${ item.paystatus==false }">
+									<c:if test="${ item.status==false }">
+										<a title="同步支付宝" style="text-decoration:none" onclick="bill_sync(${item.id })" href="javascript:;" class="c-success">同步支付宝</a><br>
+									</c:if>
+									<a title="账单收款" style="text-decoration:none" onclick="bill_receiv(${item.id })" href="javascript:;" class="c-success">账单收款</a><br>
+									<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id });" href="javascript:;" class="c-success">编辑</a>
+									<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id });" href="javascript:;" class="c-success">删除</a>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${ item.printstatus == false }"><a title="编辑" style="text-decoration:none" onClick="print(${item.id });" href="javascript:;" class="c-success">打印小票</a></c:if>
+								</c:otherwise>
+							</c:choose>
 						</td>
 					</tr>
 				</c:forEach>
@@ -232,42 +242,6 @@
         });
     }
 
-	/*管理员-停用*/
-    function admin_stop(obj,id){
-        layer.confirm('确认要停用吗？',function(index){
-            //此处请求后台程序，下方是成功后的前台处理……
-            info_active(id, false);
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="admin_start(this,'+id+')" href="javascript:;" title="启用" class="c-success">启用</a>');
-            $(obj).parents("tr").find(".td-status").html('已禁用');
-            $(obj).remove();
-            layer.msg('已停用!',{icon: 5,time:1000});
-        });
-    }
-
-	/*管理员-启用*/
-    function admin_start(obj,id){
-        layer.confirm('确认要启用吗？',function(index){
-            //此处请求后台程序，下方是成功后的前台处理……
-            info_active(id, true);
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="admin_stop(this,'+id+')" href="javascript:;" title="停用" class="c-success">停用</a>');
-            $(obj).parents("tr").find(".td-status").html('已启用');
-            $(obj).remove();
-            layer.msg('已启用!', {icon: 6,time:1000});
-        });
-    }
-
-    function info_active(id, status){
-		$.ajax({
-			type: 'POST',
-			url: '${pageContext.request.contextPath }/rest/user/activeUser',
-			dataType: 'json',
-			data:{
-				id : id,
-                enable: status
-			}
-		});
-    }
-
     function excel_upload() {
         layer_show("导入账单","${pageContext.request.contextPath }/rest/openBillExcel", 800, 500);
     }
@@ -322,5 +296,23 @@
         });
     }
 
+    function print(id){
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath }/rest/billAccount/printAccount',
+            dataType: 'json',
+            data:{
+                id : id
+            },
+            success: function(data){
+                if (data.success) {
+                    window.location.reload();
+                }
+            },
+            error:function(data) {
+                console.log(data.msg);
+            },
+        });
+    }
 </script>
 

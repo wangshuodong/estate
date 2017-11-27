@@ -145,7 +145,7 @@ public class HousinginfoController {
      */
     @RequestMapping(value = "updatePrintinfo")
     public String updatePrintinfo(Integer id, Model model, HttpSession session) {
-        Printinfo printinfo = printService.selectPrintinfoById(id);
+        Printinfo printinfo = printService.selectPrintinfoBydeptId(id);
         if(printinfo == null){
             printinfo = new Printinfo();
             printinfo.setDepartmentId(id);

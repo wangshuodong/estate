@@ -38,4 +38,66 @@
 
         </where>
     </select>
+
+    <select id="getPrintGroupByPayType" resultType="BillAccountCustom" parameterType="housingId">
+        SELECT
+            sum(b.bill_entry_amount) AS sumAmount,
+            count(b.roominfo_id) AS countNum,
+            b.payType
+        FROM
+            billAccount b
+        WHERE
+            b.housing_id = #{housingId}
+        AND date_format(b.payDate, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')
+        AND b.payStatus = true
+        GROUP BY
+            b.payType;
+    </select>
+
+    <select id="getPrintTotal" resultType="BillAccountCustom" parameterType="propertyId">
+        SELECT
+            sum(b.bill_entry_amount) AS sumAmount,
+            b.payType
+        FROM
+            billaccount b join housinginfo h on b.housing_id = h.id
+        WHERE
+            h.parent_id = #{propertyId}
+            AND date_format(b.payDate, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')
+            AND b.payStatus = true
+        GROUP BY
+            b.payType;
+    </select>
+
+    <select id="getPrintGroupByCostType" resultType="BillAccountCustom" parameterType="housingId">
+        SELECT
+        sum(b.bill_entry_amount) AS sumAmount,
+        b.cost_type
+        FROM
+        billAccount b
+        WHERE
+        b.housing_id = #{housingId}
+        AND date_format(b.payDate, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')
+        AND b.payStatus = true
+        GROUP BY
+        b.cost_type;
+    </select>
+
+    <select id="getPrintUserCount" resultType="BillAccountCustom" parameterType="BillAccountCustom">
+        SELECT
+            count(DISTINCT b.housing_id) as userNum,
+            sum(b.bill_entry_amount) as sumAmount
+        FROM
+            billaccount b join housinginfo h on b.housing_id = h.id
+        <where>
+            <if test="housingId != null">
+                AND b.housing_id = #{housingId}
+            </if>
+            <if test="propertyId != null">
+                AND h.parent_id = #{propertyId}
+            </if>
+            AND date_format(b.payDate, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')
+            AND b.payStatus = true
+        </where>
+    </select>
+
 </mapper>

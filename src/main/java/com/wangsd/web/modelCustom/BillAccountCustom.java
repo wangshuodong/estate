@@ -23,6 +23,11 @@ public class BillAccountCustom extends Billaccount {
 
     private Integer pageSize;
 
+    private Double sumAmount;
+    private Integer countNum;
+    private Integer userNum;
+    private Integer propertyId;
+
     public String getHousingName() {
         return housingName;
     }
@@ -85,5 +90,37 @@ public class BillAccountCustom extends Billaccount {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public Double getSumAmount() {
+        return sumAmount;
+    }
+
+    public void setSumAmount(Double sumAmount) {
+        this.sumAmount = sumAmount;
+    }
+
+    public Integer getCountNum() {
+        return countNum;
+    }
+
+    public void setCountNum(Integer countNum) {
+        this.countNum = countNum;
+    }
+
+    public Integer getUserNum() {
+        return userNum;
+    }
+
+    public void setUserNum(Integer userNum) {
+        this.userNum = userNum;
+    }
+
+    public Integer getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(Integer propertyId) {
+        this.propertyId = propertyId;
     }
 }

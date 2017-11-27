@@ -1135,52 +1135,52 @@ public class BillaccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andPrintstatusEqualTo(Byte value) {
+        public Criteria andPrintstatusEqualTo(Boolean value) {
             addCriterion("printStatus =", value, "printstatus");
             return (Criteria) this;
         }
 
-        public Criteria andPrintstatusNotEqualTo(Byte value) {
+        public Criteria andPrintstatusNotEqualTo(Boolean value) {
             addCriterion("printStatus <>", value, "printstatus");
             return (Criteria) this;
         }
 
-        public Criteria andPrintstatusGreaterThan(Byte value) {
+        public Criteria andPrintstatusGreaterThan(Boolean value) {
             addCriterion("printStatus >", value, "printstatus");
             return (Criteria) this;
         }
 
-        public Criteria andPrintstatusGreaterThanOrEqualTo(Byte value) {
+        public Criteria andPrintstatusGreaterThanOrEqualTo(Boolean value) {
             addCriterion("printStatus >=", value, "printstatus");
             return (Criteria) this;
         }
 
-        public Criteria andPrintstatusLessThan(Byte value) {
+        public Criteria andPrintstatusLessThan(Boolean value) {
             addCriterion("printStatus <", value, "printstatus");
             return (Criteria) this;
         }
 
-        public Criteria andPrintstatusLessThanOrEqualTo(Byte value) {
+        public Criteria andPrintstatusLessThanOrEqualTo(Boolean value) {
             addCriterion("printStatus <=", value, "printstatus");
             return (Criteria) this;
         }
 
-        public Criteria andPrintstatusIn(List<Byte> values) {
+        public Criteria andPrintstatusIn(List<Boolean> values) {
             addCriterion("printStatus in", values, "printstatus");
             return (Criteria) this;
         }
 
-        public Criteria andPrintstatusNotIn(List<Byte> values) {
+        public Criteria andPrintstatusNotIn(List<Boolean> values) {
             addCriterion("printStatus not in", values, "printstatus");
             return (Criteria) this;
         }
 
-        public Criteria andPrintstatusBetween(Byte value1, Byte value2) {
+        public Criteria andPrintstatusBetween(Boolean value1, Boolean value2) {
             addCriterion("printStatus between", value1, value2, "printstatus");
             return (Criteria) this;
         }
 
-        public Criteria andPrintstatusNotBetween(Byte value1, Byte value2) {
+        public Criteria andPrintstatusNotBetween(Boolean value1, Boolean value2) {
             addCriterion("printStatus not between", value1, value2, "printstatus");
             return (Criteria) this;
         }

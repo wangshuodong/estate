@@ -1,15 +1,16 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
+import com.wangsd.core.util.ApplicationUtils;
+import com.wangsd.core.util.PrintMessage;
 import com.wangsd.web.model.Billaccount;
+import com.wangsd.web.model.Printinfo;
+import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
-import com.wangsd.web.service.AlipayService;
-import com.wangsd.web.service.BillAccountService;
-import com.wangsd.web.service.HousinginfoServic;
-import com.wangsd.web.service.RoominfoService;
+import com.wangsd.web.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,12 @@ public class BillAccountController {
     HousinginfoServic housinginfoServic;
     @Autowired
     AlipayService alipayService;
+    @Autowired
+    PrintService printService;
 
     /**
      * 根据部门code查询账单信息
+     *
      * @param query
      * @return
      */
@@ -61,6 +65,7 @@ public class BillAccountController {
 
     /**
      * 跳转新增账单
+     *
      * @param
      * @return
      */
@@ -74,6 +79,7 @@ public class BillAccountController {
 
     /**
      * 跳转编辑账单
+     *
      * @param
      * @return
      */
@@ -91,6 +97,7 @@ public class BillAccountController {
 
     /**
      * 跳转账单收款
+     *
      * @param
      * @return
      */
@@ -108,6 +115,7 @@ public class BillAccountController {
 
     /**
      * 保存账单
+     *
      * @param billaccount
      * @return
      */
@@ -124,14 +132,14 @@ public class BillAccountController {
             bill.setAcctPeriod(billaccount.getAcctPeriod());
             bill.setBillEntryAmount(billaccount.getBillEntryAmount());
             List<BillAccountCustom> billCustom = billAccountService.queryBillAccountList(bill);
-            if(billCustom.size() == 0){
+            if (billCustom.size() == 0) {
                 billaccount.setCreateTime(new Date());
                 bl = billAccountService.insertBillaccount(billaccount);
-            }else{
+            } else {
                 bl = false;
                 obj.setMessage("账单信息已存在！");
             }
-        }else {
+        } else {
             bl = billAccountService.updateBillaccount(billaccount);
         }
 
@@ -141,6 +149,7 @@ public class BillAccountController {
 
     /**
      * 账单收款
+     *
      * @param billaccount
      * @return
      */
@@ -148,7 +157,7 @@ public class BillAccountController {
     @ResponseBody
     public JSONResult receivBillAccount(Billaccount billaccount, HttpSession session) {
         boolean bl = false;
-        JSONResult obj = new JSONResult();
+        JSONResult jsonResult = new JSONResult();
         //删除支付宝账单
         Billaccount oldBill = billAccountService.selectBillAccountById(billaccount.getId());
         if (oldBill.getStatus()) {
@@ -162,12 +171,56 @@ public class BillAccountController {
         billaccount.setPaystatus(true);
         billaccount.setPaydate(new Date());
         bl = billAccountService.updateBillaccount(billaccount);
-        obj.setSuccess(bl);
-        //打印小票
 
-        return obj;
+        //打印小票
+        printAccount(oldBill);
+        jsonResult.setSuccess(bl);
+        return jsonResult;
     }
 
-
+    /**
+     * 小票打印
+     * @param oldBill
+     * @return
+     */
+    @RequestMapping(path = "/printAccount")
+    @ResponseBody
+    public JSONResult printAccount(Billaccount oldBill) {
+        boolean bl = false;
+        JSONResult jsonResult = new JSONResult();
+        //打印小票
+        Printinfo printinfo = printService.selectPrintinfoBydeptId(oldBill.getHousingId());
+        if (printinfo != null) {
+            HousinginfoCustom housinginfo = housinginfoServic.selectHousingCustomById(oldBill.getHousingId());
+            Roominfo roominfo = roominfoService.selectRoominfoById(oldBill.getRoominfoId());
+            PrintMessage print = new PrintMessage(printinfo.getMachineCode(), printinfo.getMsign());
+            String payType = ApplicationUtils.getPayType(oldBill.getPaytype());
+            StringBuffer sb = new StringBuffer("");
+            sb.append("<center>支付宝智慧小区</center>\r");
+            sb.append("小区名称：" + housinginfo.getName() + "\r");
+            sb.append(roominfo.getAddress() + "\r");
+            sb.append("业主姓名：" + roominfo.getOwnerName() + "\r");
+            sb.append("付款时间：" + oldBill.getPaydate() + "\r");
+            sb.append("订单编号：" + oldBill.getId() + "\r");
+//            if (oldBill.getAlipayTradeNo() != null) {
+//                sb.append("支付宝订单号：" + oldBill.getAlipayTradeNo() + "\r");
+//            }
+            sb.append("支付方式：" + payType + "\r");
+            sb.append("缴费金额：" + oldBill.getBillEntryAmount() + "\r");
+            sb.append("缴费明细：\r");
+            sb.append("<table><tr><td>类别</td><td>账期</td><td>金额</td></tr><tr><td>" + payType + "</td><td>" + oldBill.getAcctPeriod() + "</td><td>" + oldBill.getBillEntryAmount() + "</td></tr></table>\r");
+            sb.append("收款单位：" + housinginfo.getPrintName() + "\r");
+            sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com</center>\r");
+            sb.append("----------------------\r");
+            sb.append("<center>交易小票</center>\r");
+            boolean printStatus = print.sendContent(sb.toString());
+            if (printStatus) {
+                oldBill.setPrintstatus(printStatus);
+                bl = billAccountService.updateBillaccount(oldBill);
+            }
+        }
+        jsonResult.setSuccess(bl);
+        return jsonResult;
+    }
 
 }
