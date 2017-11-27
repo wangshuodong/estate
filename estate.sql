@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2017-11-24 14:15:40
+Date: 2017-11-27 17:54:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,16 +36,20 @@ CREATE TABLE `billaccount` (
   `deleteStatus` tinyint(1) DEFAULT '0',
   `alipay_trade_no` varchar(255) DEFAULT NULL COMMENT '支付宝付款成功回传编号',
   `weixin_trade_no` varchar(255) DEFAULT NULL COMMENT '微信付款成功回传编号',
-  `printStatus` tinyint(255) DEFAULT '0' COMMENT '打印状态',
+  `printStatus` tinyint(1) DEFAULT '0' COMMENT '打印状态',
   `ticketStatus` tinyint(1) DEFAULT '0' COMMENT '开票状态',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1016 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of billaccount
 -- ----------------------------
-INSERT INTO `billaccount` VALUES ('1003', '10003', '1012', '1', '1', '2017-07', '2017-11-08', '2017-11-22', null, '0', null, null, '0', '0', null, null, '0', '0', '2017-11-22 17:21:03');
+INSERT INTO `billaccount` VALUES ('1011', '10003', '1020', '1', '100', '2017年11', '20171124', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', null, null, '0', '0', '2017-11-25 21:50:33');
+INSERT INTO `billaccount` VALUES ('1012', '10003', '1022', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', '2017-11-25 21:55:56');
+INSERT INTO `billaccount` VALUES ('1013', '10003', '1023', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', '2017-11-25 21:55:56');
+INSERT INTO `billaccount` VALUES ('1014', '10003', '1024', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', '2017-11-25 21:55:56');
+INSERT INTO `billaccount` VALUES ('1015', '10003', '1020', '2', '10', '2017年11', '20171120', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', null, null, '0', '0', '2017-11-27 14:16:55');
 
 -- ----------------------------
 -- Table structure for housinginfo
@@ -65,19 +69,21 @@ CREATE TABLE `housinginfo` (
   `associated_pois` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '小区对应的高德POI兴趣点列表',
   `hotline` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '服务热线电话',
   `message_num` int(11) DEFAULT NULL COMMENT '短信条数',
-  `status` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT 'NEW 未同步支付宝\r\nPENDING_ONLINE 待上线,\r\nONLINE 上线,\r\nMAINTAIN 维护中,\r\nOFFLINE - 下线',
+  `status` int(11) DEFAULT NULL COMMENT '1未同步2已同步3已初始化\r\n4已上线',
   `deleteStatus` tinyint(1) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10004 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10006 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of housinginfo
 -- ----------------------------
-INSERT INTO `housinginfo` VALUES ('9', 'ABD44SPAQ5001', '001000100010001', '首创十方界1', '红枫路9号', '2000', '500112', '500100', '500000', '106.537212|29.605355', null, '0571-87654321', null, 'PENDING_ONLINE', '0', '2017-11-20 15:53:22');
-INSERT INTO `housinginfo` VALUES ('10001', null, '001000100010002', '问过', '', '2000', '未', '而我却', '22', '106.100356|29.695525', null, '235', null, 'NEW', '1', '2017-11-22 11:27:29');
-INSERT INTO `housinginfo` VALUES ('10002', null, '001000100010003', '尔额34', '', '2000', '34', '34', '34', '97.719676|31.370363', null, '344', null, 'NEW', '1', '2017-11-22 11:27:50');
-INSERT INTO `housinginfo` VALUES ('10003', null, '001000100010004', '莫须有小区', '红枫路9号', '2000', '500112', '500100', '500000', '106.536969|29.605632', null, '023-74583381', null, 'NEW', '0', '2017-11-22 15:13:25');
+INSERT INTO `housinginfo` VALUES ('9', 'ABD44SPAQ5001', '001000100010005', '首创十方界1', '红枫路9号', '2000', '500112', '500100', '500000', '106.537212|29.605355', null, '0571-87654321', '10', '2', '0', '2017-11-20 15:53:22');
+INSERT INTO `housinginfo` VALUES ('10001', null, '001000100010002', '问过', '', '2000', '未', '而我却', '22', '106.100356|29.695525', null, '235', null, '1', '1', '2017-11-22 11:27:29');
+INSERT INTO `housinginfo` VALUES ('10002', null, '001000100010003', '尔额34', '', '2000', '34', '34', '34', '97.719676|31.370363', null, '344', null, '1', '1', '2017-11-22 11:27:50');
+INSERT INTO `housinginfo` VALUES ('10003', 'AUROC82WN5001', '001000100010010', '莫须有小区', '红枫路9号', '2000', '500112', '500100', '500000', '106.536969|29.605632', null, '023-74583381', '50', '2', '0', '2017-11-22 15:13:25');
+INSERT INTO `housinginfo` VALUES ('10004', null, '001000100010007', 'qqqq', 'wehwe', '2000', 'weh', '温哥华', 'sdg', '105.529067|30.219042', null, '23236', null, '1', '1', '2017-11-25 15:21:06');
+INSERT INTO `housinginfo` VALUES ('10005', null, '001000100010008', '123', '', '2000', 'weh', '温哥华', 'sdg', '105.529067|30.219042', null, '23236', null, '1', '1', '2017-11-25 15:26:54');
 
 -- ----------------------------
 -- Table structure for menu
@@ -92,7 +98,7 @@ CREATE TABLE `menu` (
   `sort` int(11) DEFAULT NULL COMMENT '排序',
   `enable` tinyint(4) DEFAULT NULL COMMENT '是否启用',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=604 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=602 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
@@ -148,12 +154,14 @@ CREATE TABLE `printinfo` (
   `status` int(2) DEFAULT NULL,
   `createtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of printinfo
 -- ----------------------------
-INSERT INTO `printinfo` VALUES ('1', '133', '4004540276', 'cfji72jqwtf8', null, '江南水乡碧水铭苑印机', '0', '2017-10-13 22:13:46');
+INSERT INTO `printinfo` VALUES ('6', '2000', '4004540276', 'cfji72jqwtf8', '', '物业1打印机', null, '2017-11-25 23:30:29');
+INSERT INTO `printinfo` VALUES ('3', '10003', '4004540276', 'cfji72jqwtf8', '111', '莫须有小区打印机', null, '2017-11-25 23:01:28');
+INSERT INTO `printinfo` VALUES ('4', '9', '4004540276', 'cfji72jqwtf8', '222', '首创十方界1打印机', null, '2017-11-25 23:01:42');
 
 -- ----------------------------
 -- Table structure for propertyinfo
@@ -181,7 +189,7 @@ CREATE TABLE `propertyinfo` (
 -- ----------------------------
 -- Records of propertyinfo
 -- ----------------------------
-INSERT INTO `propertyinfo` VALUES ('2000', '00100010001', '1级物业', '', '', '', '8', '', '', '201708BB85188ec4dcbc4be69df6ef6b5fa2fX42', '', '', '', '', '2017-11-19 23:01:25');
+INSERT INTO `propertyinfo` VALUES ('2000', '00100010001', '1级物业', '张三', '17784495626', '重庆市九龙坡', '8', '', '', '201708BB85188ec4dcbc4be69df6ef6b5fa2fX42', '', '', '', '', '2017-11-19 23:01:25');
 
 -- ----------------------------
 -- Table structure for role
@@ -333,17 +341,15 @@ CREATE TABLE `roominfo` (
   `status` tinyint(1) DEFAULT '0' COMMENT 'false没有同步，true同步',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1017 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1025 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of roominfo
 -- ----------------------------
-INSERT INTO `roominfo` VALUES ('1011', '9', 'ABD44SPAQ5001800006020802', '', '6栋', '2单元', '802室', '6栋2单元802室', '汪铄东', '', '', '2017-11-09', '0', '1', '2017-11-21 11:23:59');
-INSERT INTO `roominfo` VALUES ('1012', '10003', null, '', '6栋', '5单元', '1101', '6栋5单元1101', '', '', '', '', '0', '0', '2017-11-22 15:14:05');
-INSERT INTO `roominfo` VALUES ('1013', '10003', null, '', '1栋', '2单元', '1205', '1栋2单元1205', '', '', '', '', '0', '0', '2017-11-22 15:15:37');
-INSERT INTO `roominfo` VALUES ('1014', '10003', null, '', '1栋', '1单元', '1-01', '1栋1单元1-01', '陆袁桥', null, '13877777777', null, '0', '0', '2017-11-24 00:03:59');
-INSERT INTO `roominfo` VALUES ('1015', '10003', null, '', '1栋', '1单元', '1-02', '1栋1单元1-02', '陆袁桥', null, '13877777777', null, '0', '0', '2017-11-24 00:14:14');
-INSERT INTO `roominfo` VALUES ('1016', '10003', null, '', '1栋', '1单元', '1-03', '1栋1单元1-03', '陆袁桥', null, '13877777777', null, '0', '0', '2017-11-24 00:20:20');
+INSERT INTO `roominfo` VALUES ('1020', '10003', 'AUROC82WN5001800002100502', '', '2栋', '10单元', '502', '2栋10单元502', '李东', '', '177844966330', '', '0', '1', '2017-11-25 21:40:04');
+INSERT INTO `roominfo` VALUES ('1022', '10003', 'AUROC82WN5001800001010011', '', '1栋', '1单元', '1-01', '1栋1单元1-01', '张三', null, '13877777771', null, '0', '1', '2017-11-25 21:55:34');
+INSERT INTO `roominfo` VALUES ('1023', '10003', 'AUROC82WN5001800001010012', '', '1栋', '1单元', '1-02', '1栋1单元1-02', '李四', null, '13877777772', null, '0', '1', '2017-11-25 21:55:34');
+INSERT INTO `roominfo` VALUES ('1024', '10003', 'AUROC82WN5001800001010013', '', '1栋', '1单元', '1-03', '1栋1单元1-03', '王五', null, '13877777773', null, '0', '1', '2017-11-25 21:55:34');
 
 -- ----------------------------
 -- Table structure for serviceinfo
@@ -390,11 +396,12 @@ CREATE TABLE `users` (
   `type` int(11) DEFAULT NULL COMMENT '1代表服务商，2代表物业，3代表小区',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES ('1', '管理员', 'admin', '123456', '1', '001', '99', '17784495260', 'wangsd@163.com', '1', null, '2017-11-19 22:08:54');
 INSERT INTO `users` VALUES ('13', '', '服务商', '111111', '8', '0010001', '1', '', '', '1', '1', '2017-11-20 17:10:07');
-INSERT INTO `users` VALUES ('14', '', 'wewh', '111111', '9', '0010002', '1', '', '', '1', '1', '2017-11-21 16:40:45');
+INSERT INTO `users` VALUES ('14', '', 'wewh', '111111', '9', '001000100010005', '1', '', '', '1', '1', '2017-11-21 16:40:45');
+INSERT INTO `users` VALUES ('15', '莫须有小区', '莫须有小区', '111111', '10003', '001000100010010', '3', '', '', '1', '3', '2017-11-25 22:19:00');
