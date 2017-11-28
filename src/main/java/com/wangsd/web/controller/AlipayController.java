@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -207,6 +208,16 @@ public class AlipayController {
         }
         jsonResult.setSuccess(bl);
         return jsonResult;
+    }
+
+    @RequestMapping(value = "qrcode")
+    public String qrcode(Integer id, Model model, HttpSession session) {
+        //获取公钥 私钥
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
+        String codeImage = alipayService.communityDetailsQueryRequest(housing.getCommunityId(), housing.getToken(), loginUser);
+        model.addAttribute("codeImage", codeImage);
+        return "/housing/housing-qrcode";
     }
 
 }

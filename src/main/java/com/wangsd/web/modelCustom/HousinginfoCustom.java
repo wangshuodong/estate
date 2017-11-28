@@ -7,6 +7,7 @@ import com.wangsd.web.model.Housinginfo;
  */
 public class HousinginfoCustom extends Housinginfo {
     private String parentCode;
+    private String parentName;
     private String token;
     private String printName;
 
@@ -32,5 +33,13 @@ public class HousinginfoCustom extends Housinginfo {
 
     public void setPrintName(String printName) {
         this.printName = printName;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 }

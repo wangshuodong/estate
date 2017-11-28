@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.wangsd.web.task;
 
@@ -21,22 +21,22 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @Copyright: 本内容仅限于重庆爱赢科技有限公司内部使用，禁止转发. 
- * @Author: lixingbiao 2017年10月10日 下午3:25:30 
+ * @Copyright: 本内容仅限于重庆爱赢科技有限公司内部使用，禁止转发.
+ * @Author: lixingbiao 2017年10月10日 下午3:25:30
  * @Version: $Id$
  * @Desc: <p></p>
  */
 @Component
 public class PrintTask {
     private static Log log = LogFactory.getLog(PrintTask.class);
-    
+
     @Autowired
     private BillaccountMapper billaccountMapper;
     @Autowired
     private PrintService printService;
     @Autowired
     private HousinginfoServic housinginfoServic;
-    
+
     //每天晚上11点50执行
     @Scheduled(cron = "0 50 23 * * ?")
     public void printxiaoqu() {
@@ -57,40 +57,40 @@ public class PrintTask {
             query.setHousingId(housing.getId());
             BillAccountCustom userCustom = billaccountMapper.getPrintUserCount(query);
             StringBuffer sb = new StringBuffer("");
-            sb.append("<center>支付宝智慧小区</center>\r");
-            sb.append("小区名称："+housing.getName()+"\r");
-            sb.append("汇总时间："+date+"\r");
+            sb.append("<center>支付宝智慧小区</center>\n");
+            sb.append("小区名称：" + housing.getName() + "\n");
+            sb.append("汇总时间：" + date + "\n");
             double totalAmount = 0;
             for (BillAccountCustom billAccount : list1) {
                 totalAmount += billAccount.getSumAmount();
             }
-            sb.append("交易总额："+totalAmount+"\r");
-            sb.append("户数："+userCustom.getUserNum()+"\r");
-            sb.append("缴费明细：\r");
+            sb.append("交易总额：" + totalAmount + "\n");
+            sb.append("户数：" + userCustom.getUserNum() + "\n");
+            sb.append("缴费明细：\n");
             sb.append("<table><tr><td>交易笔数</td><td>支付方式</td><td>金额</td></tr>");
             for (BillAccountCustom billAccount : list1) {
                 String payType = ApplicationUtils.getPayType(billAccount.getPaytype());
-                sb.append("<tr><td>"+billAccount.getCountNum()+"</td><td>"+payType+"</td><td>"+billAccount.getSumAmount()+"</td></tr>");
+                sb.append("<tr><td>" + billAccount.getCountNum() + "</td><td>" + payType + "</td><td>" + billAccount.getSumAmount() + "</td></tr>");
             }
             sb.append("</table>");
-            sb.append("----------------------\r");
+            sb.append("----------------------\n");
             sb.append("<table><tr><td>费用类型</td><td>金额</td></tr>");
             for (BillAccountCustom billAccount : list2) {
                 String costType = ApplicationUtils.getCostType(billAccount.getCostType());
-                sb.append("<td>"+costType+"</td><td>"+billAccount.getSumAmount()+"</td></tr>");
+                sb.append("<td>" + costType + "</td><td>" + billAccount.getSumAmount() + "</td></tr>");
             }
             sb.append("</table>");
-            sb.append("收款单位："+housing.getPrintName()+"\r");
-            sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com\r");
-            sb.append("----------------------\r");
-            sb.append("<center>交易小票</center>\r");
+            sb.append("收款单位：" + housing.getParentName() + "\n");
+            sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com\n");
+            sb.append("----------------------\n");
+            sb.append("<center>交易小票</center>\n");
             printMessage.sendContent(sb.toString());
         }
     }
 
     //每天晚上12点执行
     @Scheduled(cron = "0 55 23 * * ?")
-    public void printwuye(){
+    public void printwuye() {
         log.info("-----------wangshuodong:执行物业汇总打印------------");
         String date = DateUtils.getCurDate();
         //查询配置了打印机的物业
@@ -109,40 +109,40 @@ public class PrintTask {
             List<BillAccountCustom> list1 = billaccountMapper.getPrintTotal(info.getDepartmentId());
             if (userCustom != null && userCustom.getCountNum() > 0) {
                 StringBuffer sb = new StringBuffer("");
-                sb.append("<center>支付宝智慧小区</center>\r");
-                sb.append("汇总时间："+date+"\r");
-                sb.append("----------------------\r");
-                sb.append("小区数量："+housList.size()+"\r");
-                sb.append("交易户数："+userCustom.getCountNum()+"\r");
-                sb.append("总额："+userCustom.getSumAmount()+"\r");
+                sb.append("<center>支付宝智慧小区</center>\n");
+                sb.append("汇总时间：" + date + "\n");
+                sb.append("----------------------\n");
+                sb.append("小区数量：" + housList.size() + "\n");
+                sb.append("交易户数：" + userCustom.getCountNum() + "\n");
+                sb.append("总额：" + userCustom.getSumAmount() + "\n");
                 for (BillAccountCustom bill : list1) {
                     String payType = ApplicationUtils.getPayType(bill.getPaytype());
-                    sb.append(payType + "："+bill.getSumAmount()+"\r");
+                    sb.append(payType + "：" + bill.getSumAmount() + "\n");
                 }
-                sb.append("----------------------\r");
+                sb.append("----------------------\n");
                 String propertyName = "";
                 for (HousinginfoCustom housing : housList) {
-                    propertyName = housing.getPrintName();
-                    sb.append("小区名称："+housing.getName()+"\r");
+                    propertyName = housing.getParentName();
+                    sb.append("小区名称：" + housing.getName() + "\n");
                     //查询小区下面所有交易户数
                     BillAccountCustom query1 = new BillAccountCustom();
                     query1.setHousingId(housing.getId());
                     BillAccountCustom userCustom2 = billaccountMapper.getPrintUserCount(query1);
-                    sb.append("交易户数："+userCustom2.getCountNum()+"\r");
+                    sb.append("交易户数：" + userCustom2.getCountNum() + "\n");
                     //按支付方式统计小区
                     List<BillAccountCustom> list2 = billaccountMapper.getPrintGroupByPayType(housing.getId());
                     double totalAmount = 0;
                     for (BillAccountCustom billAccount : list2) {
                         totalAmount += billAccount.getSumAmount();
                     }
-                    sb.append("总额："+totalAmount+"\r");
-                    sb.append("----------------------\r");
+                    sb.append("总额：" + totalAmount + "\n");
+                    sb.append("----------------------\n");
                 }
 
-                sb.append("收款单位："+propertyName+"\r");
-                sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com</center>\r");
-                sb.append("----------------------\r");
-                sb.append("<center>交易小票</center>\r");
+                sb.append("收款单位：" + propertyName + "\n");
+                sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com</center>\n");
+                sb.append("----------------------\n");
+                sb.append("<center>交易小票</center>\n");
                 printMessage.sendContent(sb.toString());
             }
         }

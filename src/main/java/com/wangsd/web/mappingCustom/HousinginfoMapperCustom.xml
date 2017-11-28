@@ -13,7 +13,7 @@
 
     <!-- 根据id查询小区和物业信息 -->
     <select id="selectHousingCustomById" resultType="HousinginfoCustom">
-        select h.*, p.token from housinginfo h join propertyinfo p on h.parent_id = p.id
+        select h.*, p.token, p.name as parentName from housinginfo h join propertyinfo p on h.parent_id = p.id
         where h.id = #{id}
     </select>
 

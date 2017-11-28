@@ -156,7 +156,17 @@ public class AlipayServiceImpl implements AlipayService {
             if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
                 //执行成功返回支付宝推广二维码图片链接
-                return response.getQrCodeImage();
+                String codeImage = response.getQrCodeImage();
+                if (codeImage == null) {
+                    JSONObject jsonObject = JSONObject.parseObject(response.getBody());
+                    JSONObject room_info_set = (JSONObject) jsonObject.get("alipay_eco_cplife_community_details_query_response");
+                    JSONArray array = (JSONArray)room_info_set.get("community_services");
+                    if (array.size() > 0) {
+                            JSONObject object = array.getJSONObject(0);
+                            codeImage = object.get("qr_code_image").toString();
+                    }
+                }
+                return codeImage;
             } else {
                 logger.info("调用失败");
             }

@@ -2,6 +2,7 @@ package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
+import com.wangsd.core.util.DateUtils;
 import com.wangsd.core.util.PrintMessage;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Printinfo;
@@ -210,21 +211,22 @@ public class BillAccountController {
         bl = billAccountService.updateBillaccount(billaccount);
 
         //打印小票
-        printAccount(oldBill);
+        printAccount(billaccount.getId());
         jsonResult.setSuccess(bl);
         return jsonResult;
     }
 
     /**
      * 小票打印
-     * @param oldBill
+     * @param id
      * @return
      */
     @RequestMapping(path = "/printAccount")
     @ResponseBody
-    public JSONResult printAccount(Billaccount oldBill) {
+    public JSONResult printAccount(Integer id) {
         boolean bl = false;
         JSONResult jsonResult = new JSONResult();
+        Billaccount oldBill = billAccountService.selectBillAccountById(id);
         //打印小票
         Printinfo printinfo = printService.selectPrintinfoBydeptId(oldBill.getHousingId());
         if (printinfo != null) {
@@ -233,23 +235,23 @@ public class BillAccountController {
             PrintMessage print = new PrintMessage(printinfo.getMachineCode(), printinfo.getMsign());
             String payType = ApplicationUtils.getPayType(oldBill.getPaytype());
             StringBuffer sb = new StringBuffer("");
-            sb.append("<center>支付宝智慧小区</center>\r");
-            sb.append("小区名称：" + housinginfo.getName() + "\r");
-            sb.append(roominfo.getAddress() + "\r");
-            sb.append("业主姓名：" + roominfo.getOwnerName() + "\r");
-            sb.append("付款时间：" + oldBill.getPaydate() + "\r");
-            sb.append("订单编号：" + oldBill.getId() + "\r");
-//            if (oldBill.getAlipayTradeNo() != null) {
-//                sb.append("支付宝订单号：" + oldBill.getAlipayTradeNo() + "\r");
-//            }
-            sb.append("支付方式：" + payType + "\r");
-            sb.append("缴费金额：" + oldBill.getBillEntryAmount() + "\r");
-            sb.append("缴费明细：\r");
-            sb.append("<table><tr><td>类别</td><td>账期</td><td>金额</td></tr><tr><td>" + payType + "</td><td>" + oldBill.getAcctPeriod() + "</td><td>" + oldBill.getBillEntryAmount() + "</td></tr></table>\r");
-            sb.append("收款单位：" + housinginfo.getPrintName() + "\r");
-            sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com</center>\r");
-            sb.append("----------------------\r");
-            sb.append("<center>交易小票</center>\r");
+            sb.append("<center>支付宝智慧小区</center>\n");
+            sb.append("小区名称：" + housinginfo.getName() + "\n");
+            sb.append(roominfo.getAddress() + "\n");
+            sb.append("业主姓名：" + roominfo.getOwnerName() + "\n");
+            sb.append("付款时间：" + DateUtils.formatDatetime(oldBill.getPaydate()) + "\n");
+            sb.append("订单编号：" + oldBill.getId() + "\n");
+            if (oldBill.getAlipayTradeNo() != null) {
+                sb.append("支付宝订单号：" + oldBill.getAlipayTradeNo() + "\n");
+            }
+            sb.append("支付方式：" + payType + "\n");
+            sb.append("缴费金额：" + oldBill.getBillEntryAmount() + "\n");
+            sb.append("缴费明细：\n");
+            sb.append("<table><tr><td>类别</td><td>账期</td><td>金额</td></tr><tr><td>" + payType + "</td><td>" + oldBill.getAcctPeriod() + "</td><td>" + oldBill.getBillEntryAmount() + "</td></tr></table>\n");
+            sb.append("收款单位：" + housinginfo.getParentName() + "\n");
+            sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com</center>\n");
+            sb.append("----------------------\n");
+            sb.append("<center>交易小票</center>\n");
             boolean printStatus = print.sendContent(sb.toString());
             if (printStatus) {
                 oldBill.setPrintstatus(printStatus);
