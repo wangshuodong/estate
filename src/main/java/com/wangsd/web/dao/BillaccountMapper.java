@@ -63,5 +63,11 @@ public interface BillaccountMapper {
      * @return
      */
     BillAccountCustom getPrintUserCount(BillAccountCustom billAccountCustom);
+    /**
+     * 账单缴纳情况
+     * @param
+     * @return
+     */
 
+    List<BillAccountCustom> queryAllGroupByPayType(String code);
 }

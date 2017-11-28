@@ -131,5 +131,8 @@ public class BillAccountServiceImpl implements BillAccountService {
         jsonResult.setSuccess(true);
         return jsonResult;
     }
-
+    @Override
+    public List<BillAccountCustom> queryAllGroupByPayType(String code){
+        return billaccountMapper.queryAllGroupByPayType(code);
+    }
 }
