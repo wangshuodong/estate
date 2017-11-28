@@ -57,7 +57,7 @@ function Hui_admin_tab(obj){
 		topWindow = $(window.parent.document),
 		show_navLi = topWindow.find("#min_title_list li"),
 		iframe_box = topWindow.find("#iframe_box");
-	//console.log(topWindow);
+	console.log(topWindow);
 	if(!href||href==""){
 		alert("暂未上线。。。");
 		return false;
@@ -96,7 +96,7 @@ function min_titleList(){
 
 /*创建iframe*/
 function creatIframe(href,titleName){
-	var topWindow=$(window.parent.document),
+	var topWindow=$(window.parent.parent.document),
 		show_nav=topWindow.find('#min_title_list'),
 		iframe_box=topWindow.find('#iframe_box'),
 		iframeBox=iframe_box.find('.show_iframe'),
