@@ -1,6 +1,5 @@
 package com.wangsd.web.controller;
 
-import com.google.gson.Gson;
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.DateUtils;
@@ -8,10 +7,7 @@ import com.wangsd.core.util.PrintMessage;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Printinfo;
 import com.wangsd.web.model.Roominfo;
-import com.wangsd.web.modelCustom.BillAccountCustom;
-import com.wangsd.web.modelCustom.HousinginfoCustom;
-import com.wangsd.web.modelCustom.ParentCustom;
-import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.modelCustom.*;
 import com.wangsd.web.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,10 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 账单管理Controller
@@ -158,7 +151,7 @@ public class BillAccountController {
                 if (bl) {
                     bl = billAccountService.updateBillaccount(billaccount);
                 }
-            }else {
+            } else {
                 bl = billAccountService.updateBillaccount(billaccount);
             }
         }
@@ -181,7 +174,7 @@ public class BillAccountController {
             if (bl) {
                 bl = billAccountService.deleteBillaccount(id);
             }
-        }else {
+        } else {
             bl = billAccountService.deleteBillaccount(id);
         }
         JSONResult obj = new JSONResult();
@@ -222,6 +215,7 @@ public class BillAccountController {
 
     /**
      * 小票打印
+     *
      * @param id
      * @return
      */
@@ -265,6 +259,7 @@ public class BillAccountController {
         jsonResult.setSuccess(bl);
         return jsonResult;
     }
+
     /**
      * 查询账单缴纳金额情况
      *
@@ -272,15 +267,24 @@ public class BillAccountController {
      * @return
      */
     @RequestMapping("/getAllGroupByPayType")
-    public void getAllGroupByPayType(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @ResponseBody
+    public JSONResult getAllGroupByPayType(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         String code = loginUser.getParentCode();
         List<BillAccountCustom> parentList = billAccountService.queryAllGroupByPayType(code);
-        Gson gson = new Gson();
-        String result = gson.toJson(parentList);//转成json数据
-        PrintWriter out = response.getWriter();
-        out.write(result);
-        out.flush();
-        out.close();
+        List<SeriesData> list = new ArrayList<>();
+        for (BillAccountCustom bill : parentList) {
+            SeriesData seriesData = new SeriesData();
+            if (bill.getPaystatus()) {
+                seriesData.setName("已缴:" + bill.getSumAmount());
+            } else {
+                seriesData.setName("未缴:" + bill.getSumAmount());
+            }
+            seriesData.setSumAmount(bill.getSumAmount());
+            list.add(seriesData);
+        }
+        JSONResult jsonResult = new JSONResult();
+        jsonResult.setData(list);
+        return jsonResult;
     }
 }
