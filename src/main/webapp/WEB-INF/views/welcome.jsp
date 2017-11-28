@@ -61,6 +61,7 @@
 		</tr>
 		</tbody>
 	</table>
+
 	<table class="table table-border table-bordered table-bg mt-20">
 		<thead>
 		<tr>
@@ -162,4 +163,71 @@
 		</tr>
 		</tbody>
 	</table>
+	<body>
+	<div id = "container" style = "min-width: 400px;height: 400px"></div>
+	</body>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/hcharts/Highcharts/5.0.6/js/highcharts-zh_CN.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/hcharts/Highcharts/5.0.6/js/highcharts.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/hcharts/Highcharts/5.0.6/js/modules/exporting.js"></script>
+	<script type="text/javascript">
+        $(function () {
+            var chart;
+            $(document).ready(function() {
+                chart = new Highcharts.Chart({
+                    chart: {
+                        renderTo: 'container',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: '账单金额占比'
+                },
+                tooltip: {
+                    headerFormat: '{series.name}<br>',
+                    pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function() {
+                                //Highcharts.numberFormat(this.percentage,2)格式化数字，保留2位精度
+                                return '<b>'+ this.point.name +'</b>: '+Highcharts.numberFormat(this.percentage,2) +' %';
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: '账单金额占比',
+                }]
+            });
+        });
+            //异步请求数据
+            $.ajax({
+                type:"GET",
+                url:'${pageContext.request.contextPath }/rest/billAccount/getAllGroupByPayType',//提供数据的Servlet
+                success:function(data){
+                    //定义一个数组
+					alert(data);
+                    browsers = [],
+                        //迭代，把异步获取的数据放到数组中
+                        $.each($.parseJSON(data),function(i,d){
+                            browsers.push([d.sumAmount,d.paystatus]);
+                        });
+                    //设置数据
+					alert(browsers);
+                    chart.series[0].setData(browsers);
+                },
+                error:function(e){
+                    alert(e);
+                }
+            });
+        });
+	</script>
 </div>

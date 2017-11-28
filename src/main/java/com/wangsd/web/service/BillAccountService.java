@@ -48,4 +48,11 @@ public interface BillAccountService {
      * @return
      */
     public JSONResult importBillaccount(Integer housingId, List<List<Object>> listob);
+
+    /**
+     * 根据code查询账单缴纳情况
+     * @param
+     * @return
+     */
+    public List<BillAccountCustom> queryAllGroupByPayType(String code);
 }

@@ -1,5 +1,6 @@
 package com.wangsd.web.controller;
 
+import com.google.gson.Gson;
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.DateUtils;
@@ -23,7 +24,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -261,5 +265,22 @@ public class BillAccountController {
         jsonResult.setSuccess(bl);
         return jsonResult;
     }
-
+    /**
+     * 查询账单缴纳金额情况
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping("/getAllGroupByPayType")
+    public void getAllGroupByPayType(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        String code = loginUser.getParentCode();
+        List<BillAccountCustom> parentList = billAccountService.queryAllGroupByPayType(code);
+        Gson gson = new Gson();
+        String result = gson.toJson(parentList);//转成json数据
+        PrintWriter out = response.getWriter();
+        out.write(result);
+        out.flush();
+        out.close();
+    }
 }
