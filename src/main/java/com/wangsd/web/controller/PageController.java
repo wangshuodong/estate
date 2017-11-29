@@ -87,6 +87,16 @@ public class PageController {
     }
 
     /**
+     * 电子发票
+     * @return
+     */
+    @RequestMapping("/invoice")
+    public String invoice() {
+        return "invoice";
+    }
+
+
+    /**
      * 物业订单支付回调页面
      *
      * @return
@@ -196,6 +206,16 @@ public class PageController {
      */
     @RequestMapping("/alipay_invoice_return")
     public String alipay_invoice_return() {
+        return "welcome";
+    }
+
+    /**
+     * 开票地址
+     *
+     * @return
+     */
+    @RequestMapping("/alipay_openticket")
+    public String alipay_openticket() {
         return "welcome";
     }
 

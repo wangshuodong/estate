@@ -133,4 +133,10 @@ public interface AlipayService {
      * @return
      */
     public boolean billDeleteRequest(String community_id, List<String> bill_entry_id_list, String token, UserCustom loginUser);
+
+
+    public void invoiceTitleListGetRequest(String user_id);
+
+
+    public void InvoiceUserTradeQueryRequest(String einv_trade_id);
 }

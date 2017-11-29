@@ -576,4 +576,9 @@ public class AlipayServiceImpl implements AlipayService {
         return costType;
     }
 
+    @Override
+    public void invoiceTitleListGetRequest(String user_id) {
+        AlipayEbppInvoiceUserTradeQueryRequest request = new AlipayEbppInvoiceUserTradeQueryRequest();
+    }
+
 }
