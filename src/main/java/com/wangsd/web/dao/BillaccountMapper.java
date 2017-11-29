@@ -64,10 +64,26 @@ public interface BillaccountMapper {
      */
     BillAccountCustom getPrintUserCount(BillAccountCustom billAccountCustom);
     /**
-     * 账单缴纳情况
+     * 账单缴纳金额
      * @param
      * @return
      */
 
-    List<BillAccountCustom> queryAllGroupByPayType(BillAccountCustom billAccountCustom);
+    List<BillAccountCustom> queryAmountGroupByPayType(BillAccountCustom billAccountCustom);
+
+    /**
+     * 账单缴纳笔数
+     * @param
+     * @return
+     */
+
+    List<BillAccountCustom> queryCountGroupByPayType(BillAccountCustom billAccountCustom);
+
+    /**
+     * 根据状态查询账单情况
+     * @param
+     * @return
+     */
+    BillAccountCustom selectAllGroupByStatus(BillAccountCustom billAccountCustom);
+
 }

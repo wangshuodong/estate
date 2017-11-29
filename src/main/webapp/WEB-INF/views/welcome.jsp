@@ -4,12 +4,12 @@
     <form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/billAccount/getAllGroupByStatus"
           method="post">
         <div class="form-group">
-            <select class="form-control" name="parentId" style="width:250px">
+            <select class="form-control" name="housingId" style="width:250px">
                 <option value='' disabled selected style='display:none;'>小区</option>
                 <option></option>
                 <c:forEach items="${housingList}" var="item">
                     <option value="${item.id}"
-                            <c:if test="${query.parentId==item.id }">selected</c:if>>${item.name}</option>
+                            <c:if test="${query.housingId==item.id }">selected</c:if>>${item.name}</option>
                 </c:forEach>
             </select>
         </div>
@@ -24,17 +24,19 @@
                 <th>未收款金额</th>
                 <th>已收账单数</th>
                 <th>未收账单数</th>
-                <th>未同步数</th>
                 <th>已同步数</th>
+                <th>未同步数</th>
             </tr>
-            <tr class="text-c" style="height: 150px">
-                <td>10001</td>
-                <td>10001</td>
-                <td>10001</td>
-                <td>10001</td>
-                <td>10001</td>
-                <td>10001</td>
-            </tr>
+            <tbody>
+                <tr class="text-c">
+                    <td>${ billAccount.fkAmount }</td>
+                    <td>${ billAccount.unfkAmount }</td>
+                    <td>${ billAccount.fkCount }</td>
+                    <td>${ billAccount.unfkCount }</td>
+                    <td>${ billAccount.tbCount }</td>
+                    <td>${ billAccount.untbCount }</td>
+                </tr>
+            </tbody>
         </table>
     </div>
     <div class="panel mt-20">
@@ -99,9 +101,8 @@
         var arr = [];
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath }/rest/billAccount/getAllGroupByPayType',
+            url: '${pageContext.request.contextPath }/rest/billAccount/getAllGroupByStatus',
             success: function (data) {
-                console.info(data);
                 $(data.data).each(function (index, item) {
                     arr.push([item.name, item.sumAmount]);
                 });

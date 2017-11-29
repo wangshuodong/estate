@@ -265,19 +265,20 @@ public class BillAccountController {
     /**
      * 查询小区账单缴纳情况
      *
-     * @param
+     * @param query
      * @return
      */
     @RequestMapping("/getAllGroupByStatus")
-    @ResponseBody
     public String getAllGroupByStatus(BillAccountCustom query,HttpServletRequest request, Model model) throws IOException {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         String code = loginUser.getParentCode();
         List<ParentCustom> housingList = housinginfoServic.queryParentHousingByCode(code); //获取小区列表
         model.addAttribute("housingList",housingList);
         query.setHousingCode(code);
-        List<BillAccountCustom> payAmountList = billAccountService.queryAllGroupByPayType(query); //获取小区账单金额
-        List<SeriesData> list = new ArrayList<>();
+        BillAccountCustom billAccount = billAccountService.selectAllGroupByStatus(query); //获取小区账单状态情况
+        model.addAttribute("billAccount",billAccount);
+        List<BillAccountCustom> payAmountList = billAccountService.queryAmountGroupByPayType(query); //获取小区账单金额
+        List<SeriesData> amountList = new ArrayList<>();
         for (BillAccountCustom bill : payAmountList) {
             SeriesData seriesData = new SeriesData();
             if (bill.getPaystatus()) {
@@ -286,9 +287,23 @@ public class BillAccountController {
                 seriesData.setName("未缴:" + bill.getSumAmount());
             }
             seriesData.setSumAmount(bill.getSumAmount());
-            list.add(seriesData);
+            amountList.add(seriesData);
         }
-        model.addAttribute("payAmountList", JSON.toJSONString(list));
+        model.addAttribute("payAmountList", JSON.toJSONString(amountList));
+        List<BillAccountCustom> payCountList = billAccountService.queryCountGroupByPayType(query); //获取小区账单笔数
+        List<SeriesData> countList = new ArrayList<>();
+        for (BillAccountCustom bill : payCountList) {
+            SeriesData seriesData = new SeriesData();
+            if (bill.getPaystatus()) {
+                seriesData.setName("已缴:" + bill.getCountNum());
+            } else {
+                seriesData.setName("未缴:" + bill.getCountNum());
+            }
+            seriesData.setSumNum(bill.getCountNum());
+            countList.add(seriesData);
+        }
+        model.addAttribute("payCountList", JSON.toJSONString(countList));
+        model.addAttribute("query", query);
         return "/welcome";
     }
 }

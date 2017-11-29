@@ -100,7 +100,7 @@
         </where>
     </select>
 
-    <select id="queryAllGroupByPayType" parameterType="BillAccountCustom" resultType="BillAccountCustom">
+    <select id="queryAmountGroupByPayType" parameterType="BillAccountCustom" resultType="BillAccountCustom">
     SELECT
         payStatus ,
         sum(b.bill_entry_amount) AS sumAmount
@@ -118,5 +118,43 @@
     </where>
         GROUP BY
         b.payStatus;
+    </select>
+
+    <select id="queryCountGroupByPayType" parameterType="BillAccountCustom" resultType="BillAccountCustom">
+        SELECT
+        payStatus ,
+        count(b.id) AS countNum
+        FROM
+        billaccount b
+        JOIN housinginfo h ON b.housing_id = h.id
+        <where>
+            and b.deleteStatus = false and h.deleteStatus = false
+            <if test="housingId != null">
+                AND b.housing_id = #{housingId}
+            </if>
+            <if test="housingCode != null and housingCode != ''">
+                and h.`code` like CONCAT(#{housingCode},'%')
+            </if>
+        </where>
+        GROUP BY
+        b.payStatus;
+    </select>
+
+    <select id="selectAllGroupByStatus" parameterType="BillAccountCustom" resultType="BillAccountCustom">
+        SELECT  SUM(CASE WHEN b.payStatus = 0 THEN 1 ELSE 0 END) AS unfkCount,SUM(CASE WHEN b.payStatus = 1 THEN 1 ELSE 0 END) AS fkCount,
+        SUM(CASE WHEN b.payStatus = 0 THEN b.bill_entry_amount ELSE 0 END) AS unfkAmount,SUM(CASE WHEN b.payStatus = 1 THEN b.bill_entry_amount ELSE 0 END) AS fkAmount,
+        SUM(CASE WHEN b.STATUS = 0 THEN 1 ELSE 0 END) AS untbCount,SUM(CASE WHEN b.STATUS = 1 THEN 1 ELSE 0 END) AS tbCount
+        FROM
+        billaccount b
+        JOIN housinginfo h ON b.housing_id = h.id
+        <where>
+            and b.deleteStatus = false and h.deleteStatus = false
+            <if test="housingId != null">
+                AND b.housing_id = #{housingId}
+            </if>
+            <if test="housingCode != null and housingCode != ''">
+                and h.`code` like CONCAT(#{housingCode},'%')
+            </if>
+        </where>
     </select>
 </mapper>

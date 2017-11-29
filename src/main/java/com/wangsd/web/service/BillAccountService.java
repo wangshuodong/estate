@@ -50,9 +50,25 @@ public interface BillAccountService {
     public JSONResult importBillaccount(Integer housingId, List<List<Object>> listob);
 
     /**
-     * 根据code查询账单缴纳情况
+     * 根据code查询账单缴纳金额
      * @param
      * @return
      */
-    public List<BillAccountCustom> queryAllGroupByPayType(BillAccountCustom billAccountCustom);
+    public List<BillAccountCustom> queryAmountGroupByPayType(BillAccountCustom billAccountCustom);
+
+    /**
+     * 根据code查询账单缴纳笔数
+     * @param
+     * @return
+     */
+    public List<BillAccountCustom> queryCountGroupByPayType(BillAccountCustom billAccountCustom);
+
+    /**
+     * 根据状态查询账单情况
+     * @param
+     * @return
+     */
+    public BillAccountCustom selectAllGroupByStatus(BillAccountCustom billAccountCustom);
+
+
 }

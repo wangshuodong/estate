@@ -28,6 +28,16 @@ public class BillAccountCustom extends Billaccount {
     private Integer userNum;
     private Integer propertyId;
 
+    private Double fkAmount;
+    private Double unfkAmount;
+    private Integer fkCount;
+    private Integer unfkCount;
+    private Integer tbCount;
+    private Integer untbCount;
+
+
+
+
     public String getHousingName() {
         return housingName;
     }
@@ -122,5 +132,53 @@ public class BillAccountCustom extends Billaccount {
 
     public void setPropertyId(Integer propertyId) {
         this.propertyId = propertyId;
+    }
+
+    public Double getUnfkAmount() {
+        return unfkAmount;
+    }
+
+    public void setUnfkAmount(Double unfkAmount) {
+        this.unfkAmount = unfkAmount;
+    }
+
+    public Double getFkAmount() {
+        return fkAmount;
+    }
+
+    public void setFkAmount(Double fkAmount) {
+        this.fkAmount = fkAmount;
+    }
+
+    public Integer getFkCount() {
+        return fkCount;
+    }
+
+    public void setFkCount(Integer fkCount) {
+        this.fkCount = fkCount;
+    }
+
+    public Integer getUnfkCount() {
+        return unfkCount;
+    }
+
+    public void setUnfkCount(Integer unfkCount) {
+        this.unfkCount = unfkCount;
+    }
+
+    public Integer getTbCount() {
+        return tbCount;
+    }
+
+    public void setTbCount(Integer tbCount) {
+        this.tbCount = tbCount;
+    }
+
+    public Integer getUntbCount() {
+        return untbCount;
+    }
+
+    public void setUntbCount(Integer untbCount) {
+        this.untbCount = untbCount;
     }
 }

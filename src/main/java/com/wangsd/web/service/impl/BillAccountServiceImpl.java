@@ -132,7 +132,15 @@ public class BillAccountServiceImpl implements BillAccountService {
         return jsonResult;
     }
     @Override
-    public List<BillAccountCustom> queryAllGroupByPayType(BillAccountCustom billAccountCustom){
-        return billaccountMapper.queryAllGroupByPayType(billAccountCustom);
+    public List<BillAccountCustom> queryAmountGroupByPayType(BillAccountCustom billAccountCustom){
+        return billaccountMapper.queryAmountGroupByPayType(billAccountCustom);
+    }
+    @Override
+    public List<BillAccountCustom> queryCountGroupByPayType(BillAccountCustom billAccountCustom){
+        return billaccountMapper.queryCountGroupByPayType(billAccountCustom);
+    }
+    @Override
+    public BillAccountCustom selectAllGroupByStatus(BillAccountCustom billAccountCustom){
+        return billaccountMapper.selectAllGroupByStatus(billAccountCustom);
     }
 }
