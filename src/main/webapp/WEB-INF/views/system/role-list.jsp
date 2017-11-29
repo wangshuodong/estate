@@ -8,18 +8,6 @@
 </nav>
 <div class="page-container">
 	<form class="codeView docs-example">
-		<input type="text" placeholder="物业名称" class="input-text radius size-L" style="width:250px">
-		<input type="text" placeholder="物业公司" class="input-text radius size-L" style="width:250px">
-		<div class="form-group">
-			<select class="form-control shift-info" id="selects1" style="width:250px">
-				<option value="0">全部栏目</option>
-				<option value="1">新闻资讯</option>
-				<option value="11">├行业动态</option>
-				<option value="12">├行业资讯</option>
-				<option value="13">├行业新闻</option>
-			</select>
-		</div>
-		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="addRole();">新&nbsp;增</button>
 	</form>
 
