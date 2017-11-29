@@ -69,5 +69,5 @@ public interface BillaccountMapper {
      * @return
      */
 
-    List<BillAccountCustom> queryAllGroupByPayType(String code);
+    List<BillAccountCustom> queryAllGroupByPayType(BillAccountCustom billAccountCustom);
 }

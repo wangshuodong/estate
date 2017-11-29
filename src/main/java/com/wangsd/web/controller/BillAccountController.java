@@ -1,5 +1,6 @@
 package com.wangsd.web.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.DateUtils;
@@ -20,10 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 账单管理Controller
@@ -261,19 +263,22 @@ public class BillAccountController {
     }
 
     /**
-     * 查询账单缴纳金额情况
+     * 查询小区账单缴纳情况
      *
      * @param
      * @return
      */
-    @RequestMapping("/getAllGroupByPayType")
+    @RequestMapping("/getAllGroupByStatus")
     @ResponseBody
-    public JSONResult getAllGroupByPayType(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String getAllGroupByStatus(BillAccountCustom query,HttpServletRequest request, Model model) throws IOException {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         String code = loginUser.getParentCode();
-        List<BillAccountCustom> parentList = billAccountService.queryAllGroupByPayType(code);
+        List<ParentCustom> housingList = housinginfoServic.queryParentHousingByCode(code); //获取小区列表
+        model.addAttribute("housingList",housingList);
+        query.setHousingCode(code);
+        List<BillAccountCustom> payAmountList = billAccountService.queryAllGroupByPayType(query); //获取小区账单金额
         List<SeriesData> list = new ArrayList<>();
-        for (BillAccountCustom bill : parentList) {
+        for (BillAccountCustom bill : payAmountList) {
             SeriesData seriesData = new SeriesData();
             if (bill.getPaystatus()) {
                 seriesData.setName("已缴:" + bill.getSumAmount());
@@ -283,8 +288,7 @@ public class BillAccountController {
             seriesData.setSumAmount(bill.getSumAmount());
             list.add(seriesData);
         }
-        JSONResult jsonResult = new JSONResult();
-        jsonResult.setData(list);
-        return jsonResult;
+        model.addAttribute("payAmountList", JSON.toJSONString(list));
+        return "/welcome";
     }
 }

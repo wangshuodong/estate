@@ -54,5 +54,5 @@ public interface BillAccountService {
      * @param
      * @return
      */
-    public List<BillAccountCustom> queryAllGroupByPayType(String code);
+    public List<BillAccountCustom> queryAllGroupByPayType(BillAccountCustom billAccountCustom);
 }

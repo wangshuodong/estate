@@ -1,24 +1,16 @@
 ﻿<%@ include file="/share/_meta.jsp" %>
 <%@ include file="/share/_footer.jsp" %>
 <div class="page-container">
-    <form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/roominfo/roominfoList"
+    <form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/billAccount/getAllGroupByStatus"
           method="post">
         <div class="form-group">
             <select class="form-control" name="parentId" style="width:250px">
                 <option value='' disabled selected style='display:none;'>小区</option>
                 <option></option>
-                <c:forEach items="${parentList}" var="item">
+                <c:forEach items="${housingList}" var="item">
                     <option value="${item.id}"
                             <c:if test="${query.parentId==item.id }">selected</c:if>>${item.name}</option>
                 </c:forEach>
-            </select>
-        </div>
-        <div class="form-group">
-            <select class="form-control" name="status" style="width:250px">
-                <option value='' disabled selected style='display:none;'>状态</option>
-                <option></option>
-                <option value="0" <c:if test="${query.status == false }">selected</c:if>>未同步</option>
-                <option value="1" <c:if test="${query.status == true }">selected</c:if>>已同步</option>
             </select>
         </div>
 

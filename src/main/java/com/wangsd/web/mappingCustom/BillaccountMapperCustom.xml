@@ -100,7 +100,7 @@
         </where>
     </select>
 
-    <select id="queryAllGroupByPayType" parameterType="string" resultType="BillAccountCustom">
+    <select id="queryAllGroupByPayType" parameterType="BillAccountCustom" resultType="BillAccountCustom">
     SELECT
         payStatus ,
         sum(b.bill_entry_amount) AS sumAmount
@@ -109,7 +109,12 @@
     JOIN housinginfo h ON b.housing_id = h.id
     <where>
     and b.deleteStatus = false and h.deleteStatus = false
-        and h.`code` like CONCAT(#{code},'%')
+        <if test="housingId != null">
+            AND b.housing_id = #{housingId}
+        </if>
+        <if test="housingCode != null and housingCode != ''">
+        and h.`code` like CONCAT(#{housingCode},'%')
+        </if>
     </where>
         GROUP BY
         b.payStatus;
