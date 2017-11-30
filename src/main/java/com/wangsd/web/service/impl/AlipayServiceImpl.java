@@ -578,6 +578,10 @@ public class AlipayServiceImpl implements AlipayService {
 
     @Override
     public void invoiceTitleListGetRequest(String user_id) {
+
+    }
+
+    public void InvoiceUserTradeQueryRequest(String einv_trade_id) {
         AlipayEbppInvoiceUserTradeQueryRequest request = new AlipayEbppInvoiceUserTradeQueryRequest();
     }
 
