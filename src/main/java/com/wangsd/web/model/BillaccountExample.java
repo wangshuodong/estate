@@ -1245,6 +1245,146 @@ public class BillaccountExample {
             return (Criteria) this;
         }
 
+        public Criteria andRemarkIsNull() {
+            addCriterion("remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkIsNotNull() {
+            addCriterion("remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkEqualTo(String value) {
+            addCriterion("remark =", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotEqualTo(String value) {
+            addCriterion("remark <>", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkGreaterThan(String value) {
+            addCriterion("remark >", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("remark >=", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLessThan(String value) {
+            addCriterion("remark <", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLessThanOrEqualTo(String value) {
+            addCriterion("remark <=", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLike(String value) {
+            addCriterion("remark like", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotLike(String value) {
+            addCriterion("remark not like", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkIn(List<String> values) {
+            addCriterion("remark in", values, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotIn(List<String> values) {
+            addCriterion("remark not in", values, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkBetween(String value1, String value2) {
+            addCriterion("remark between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotBetween(String value1, String value2) {
+            addCriterion("remark not between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdIsNull() {
+            addCriterion("buyer_user_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdIsNotNull() {
+            addCriterion("buyer_user_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdEqualTo(String value) {
+            addCriterion("buyer_user_id =", value, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdNotEqualTo(String value) {
+            addCriterion("buyer_user_id <>", value, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdGreaterThan(String value) {
+            addCriterion("buyer_user_id >", value, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdGreaterThanOrEqualTo(String value) {
+            addCriterion("buyer_user_id >=", value, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdLessThan(String value) {
+            addCriterion("buyer_user_id <", value, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdLessThanOrEqualTo(String value) {
+            addCriterion("buyer_user_id <=", value, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdLike(String value) {
+            addCriterion("buyer_user_id like", value, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdNotLike(String value) {
+            addCriterion("buyer_user_id not like", value, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdIn(List<String> values) {
+            addCriterion("buyer_user_id in", values, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdNotIn(List<String> values) {
+            addCriterion("buyer_user_id not in", values, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdBetween(String value1, String value2) {
+            addCriterion("buyer_user_id between", value1, value2, "buyerUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerUserIdNotBetween(String value1, String value2) {
+            addCriterion("buyer_user_id not between", value1, value2, "buyerUserId");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

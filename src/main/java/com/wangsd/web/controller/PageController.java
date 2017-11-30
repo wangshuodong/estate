@@ -131,6 +131,8 @@ public class PageController {
 
                 String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"), "UTF-8");
                 String gmt_payment = new String(request.getParameter("gmt_payment").getBytes("ISO-8859-1"), "UTF-8");
+                //买家支付宝账号对应的支付宝唯一用户号。以2088开头的纯16位数字
+                String buyer_user_id = new String(request.getParameter("buyer_user_id").getBytes("ISO-8859-1"), "UTF-8");
 
                 if (trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")) {
                     Billaccount billaccount = billAccountService.selectBillAccountById(Integer.parseInt(out_trade_no));
@@ -205,7 +207,8 @@ public class PageController {
      * @return
      */
     @RequestMapping("/alipay_openticket")
-    public String alipay_openticket() {
+    public String alipay_openticket(HttpServletRequest request, HttpServletResponse response) {
+        String tradeNo = request.getParameter("tradeNo");
         return "invoice";
     }
 
