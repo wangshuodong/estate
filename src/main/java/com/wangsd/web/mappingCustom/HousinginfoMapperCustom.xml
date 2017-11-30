@@ -25,7 +25,7 @@
                 and h.`code` LIKE CONCAT(#{parentCode},'%')
             </if>
             <if test="parentId != null">
-                and h.parentId #{parentId}
+                and h.parent_id = #{parentId}
             </if>
             and h.deleteStatus = false
         </where>
