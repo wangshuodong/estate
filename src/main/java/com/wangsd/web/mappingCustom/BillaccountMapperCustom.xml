@@ -11,8 +11,8 @@
         JOIN roominfo r ON b.roominfo_id = r.id
         <where>
             and b.deleteStatus = false and h.deleteStatus = false and r.deleteStatus = false
-            <if test="code != null and code != ''">
-                and h.`code` like CONCAT(#{code},'%')
+            <if test="housingCode != null and housingCode != ''">
+                and h.`code` like CONCAT(#{housingCode},'%')
             </if>
             <if test="housingId != null and housingId != ''">
                 and b.housing_id = #{housingId}
