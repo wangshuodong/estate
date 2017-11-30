@@ -8,6 +8,7 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.CplifeRoomInfoResp;
 import com.alipay.api.request.*;
 import com.alipay.api.response.*;
+import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Housinginfo;
@@ -51,7 +52,8 @@ public class AlipayServiceImpl implements AlipayService {
      * @return
      */
     @Override
-    public boolean communityCreateRequest(HousinginfoCustom housing, String token, UserCustom loginUser) {
+    public JSONResult communityCreateRequest(HousinginfoCustom housing, String token, UserCustom loginUser) {
+        JSONResult jsonResult = new JSONResult();
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
                 StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeCommunityCreateRequest request = new AlipayEcoCplifeCommunityCreateRequest();
@@ -78,15 +80,21 @@ public class AlipayServiceImpl implements AlipayService {
                 //执行成功返回支付宝的小区统一编号和状态
                 housing.setCommunityId(response.getCommunityId());
                 housing.setStatus(StaticVar.HOUSING_STATUS2);
-                return housinginfoServic.updateHousing(housing);
+                housinginfoServic.updateHousing(housing);
+                jsonResult.setMessage("同步成功");
+                jsonResult.setSuccess(true);
             } else {
+                jsonResult.setMessage(response.getSubMsg());
+                jsonResult.setSuccess(false);
                 logger.info("调用失败");
             }
         } catch (AlipayApiException e) {
+            jsonResult.setSuccess(false);
+            logger.info("系统异常");
             logger.info(e.getMessage());
             e.printStackTrace();
         }
-        return false;
+        return jsonResult;
     }
 
     /**

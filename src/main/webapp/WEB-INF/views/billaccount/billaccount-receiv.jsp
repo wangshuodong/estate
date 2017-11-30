@@ -36,7 +36,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>账期：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="layui-input input-text radius size-L" value="${billaccount.acctPeriod}" placeholder="yyyy-MM" name="acctPeriod" id="acctPeriod" disabled required>
+                <input type="text" class="layui-input input-text radius size-L" value="${billaccount.acctPeriod}" placeholder="yyyy-MM" name="acctPeriod" disabled required>
             </div>
         </div>
         <div class="row cl">
@@ -90,11 +90,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/common/jquery.editable-select.min.js"></script>
 <script type="text/javascript">
     $(function(){
-        laydate.render({
-            elem: '#acctPeriod' //指定元素
-            ,type: 'month'
-            ,format: 'yyyy年MM'
-        });
+//        laydate.render({
+//            elem: '#acctPeriod' //指定元素
+//            ,type: 'month'
+//            ,format: 'yyyy年MM'
+//        });
         laydate.render({
             elem: '#releaseDay' //指定元素
             ,format: 'yyyyMMdd'

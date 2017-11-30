@@ -30,7 +30,7 @@
         if(checkData()){
             $('#myform').ajaxSubmit({
                 type: 'post',
-                url: ${pageContext.request.contextPath }'/rest/uploadBillExcel',
+                url: "${pageContext.request.contextPath }/rest/uploadBillExcel",
                 dataType: 'json',
                 beforeSubmit: function () {
                     layer.load();

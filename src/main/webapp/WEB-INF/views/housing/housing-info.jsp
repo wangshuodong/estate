@@ -26,11 +26,11 @@
 </style>
 <div class="page-container">
     <form class="form form-horizontal" id="myform" action="" method="post">
-        <input type="hidden" value="${department.id}" name="id">
+        <input type="hidden" value="${housinginfo.id}" name="id">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>小区名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.name}" placeholder="小区名称" name="name" required>
+                <input type="text" class="input-text radius size-L" value="${housinginfo.name}" placeholder="小区名称" name="name" required>
             </div>
         </div>
         <div class="row cl">
@@ -39,7 +39,7 @@
                 <select class="form-control" name="parentId" id="parentId" required>
                     <option value='' disabled selected style='display:none;'>请选择物业</option>
                     <c:forEach items="${parentList}" var="item">
-                        <option value="${item.id}" <c:if test="${item.id == department.parentId}">selected</c:if>>${item.name}</option>
+                        <option value="${item.id}" <c:if test="${item.id == housinginfo.parentId}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -47,37 +47,37 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">小区地址：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.address}" placeholder="小区地址" name="address">
+                <input type="text" class="input-text radius size-L" value="${housinginfo.address}" placeholder="小区地址" name="address">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>省份编码：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.provinceCode}" placeholder="省份编码" name="provinceCode" required>
+                <input type="text" class="input-text radius size-L" value="${housinginfo.provinceCode}" placeholder="省份编码" name="provinceCode" required>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>地级市编码：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.cityCode}" placeholder="地级市编码" name="cityCode" required>
+                <input type="text" class="input-text radius size-L" value="${housinginfo.cityCode}" placeholder="地级市编码" name="cityCode" required>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>区县编码：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.districtCode}" placeholder="区县编码" name="districtCode" required>
+                <input type="text" class="input-text radius size-L" value="${housinginfo.districtCode}" placeholder="区县编码" name="districtCode" required>
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>服务热线电话：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${department.hotline}" placeholder="服务热线电话" name="hotline" required>
+                <input type="text" class="input-text radius size-L" value="${housinginfo.hotline}" placeholder="服务热线电话" name="hotline" required>
             </div>
         </div>
         <div class="row cl" style="height: 450px;">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经纬度：</label>
             <div class="formControls col-xs-8 col-sm-9" style="height: 400px;">
-                <input type="text" class="input-text radius size-L" value="${department.communityLocations}" placeholder="经纬度" name="communityLocations" id="poi" required>
+                <input type="text" class="input-text radius size-L" value="${housinginfo.communityLocations}" placeholder="经纬度" name="communityLocations" id="poi" required>
                 <div id="mapContainer" class="bk-gray" style="margin-left:15px;margin-top:45px;"></div>
                 <div id="tip">
                     <input type="text" id="keyword" name="keyword" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'/>

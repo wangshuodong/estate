@@ -59,7 +59,6 @@
                             <c:if test="${ item.status==4 }">已上线</c:if>
                         </td>
                         <td>
-                                <%--<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>--%>
                             <c:if test="${ item.status==1 }">
                                 <a title="同步支付宝" style="text-decoration:none" onclick="housing_sync(${item.id })"
                                    href="javascript:;" class="c-success">同步支付宝</a><br>
@@ -83,6 +82,7 @@
                                 <a title="短信充值" style="text-decoration:none" onclick="sms_deposit(${item.id })"
                                    href="javascript:;" class="c-success">短信充值</a><br>
                             </shiro:hasAnyRoles>
+                            <a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
                             <a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })"
                                href="javascript:;" class="c-success">删除</a>
 

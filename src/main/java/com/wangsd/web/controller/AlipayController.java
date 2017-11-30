@@ -53,14 +53,11 @@ public class AlipayController {
     @RequestMapping(value = "/communityCreateRequest")
     @ResponseBody
     public JSONResult communityCreateRequest(Integer id, HttpSession session) {
-        JSONResult jsonResult = new JSONResult();
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         //调用支付宝接口
         HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
-        boolean bl = alipayService.communityCreateRequest(housing, housing.getToken(), loginUser);
-        jsonResult.setSuccess(bl);
-        return jsonResult;
+        return alipayService.communityCreateRequest(housing, housing.getToken(), loginUser);
     }
 
     /**

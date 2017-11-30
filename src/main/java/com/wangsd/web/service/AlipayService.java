@@ -1,5 +1,6 @@
 package com.wangsd.web.service;
 
+import com.wangsd.core.entity.JSONResult;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.modelCustom.BillAccountCustom;
@@ -20,7 +21,7 @@ public interface AlipayService {
      * @param loginUser
      * @return
      */
-    public boolean communityCreateRequest(HousinginfoCustom housing, String token, UserCustom loginUser);
+    public JSONResult communityCreateRequest(HousinginfoCustom housing, String token, UserCustom loginUser);
 
     /**
      * 变更物业小区信息
