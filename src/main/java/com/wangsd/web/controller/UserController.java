@@ -248,5 +248,39 @@ public class UserController {
         obj.setSuccess(bl);
         return obj;
     }
+    /**
+     * 打开修改密码页面
+     *
+     * @param
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/changePassword")
+    public String changePassword(HttpSession session, Model model) {
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        return "/user/changePassword";
+    }
+    /**
+     * 保存修改密码
+     *
+     * @param
+     * @param session
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/savePassword")
+    @ResponseBody
+    public JSONResult savePassword(String password,HttpSession session) {
+        UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+        Users user = new Users();
+        user.setId(loginUser.getId());
+        user.setPassword(password);
+        boolean bl = usersService.updateUser(user);
+        JSONResult obj = new JSONResult();
+        obj.setSuccess(bl);
+        return obj;
+    }
+
 
 }
