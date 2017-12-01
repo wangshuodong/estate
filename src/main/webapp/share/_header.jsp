@@ -17,7 +17,7 @@
                     <li class="dropDown dropDown_hover">
                         <a href="#" class="dropDown_A">${sessionScope.userInfo.username} <i class="Hui-iconfont">&#xe6d5;</i></a>
                         <ul class="dropDown-menu menu radius box-shadow">
-                            <li><a data-title="基本信息" data-href="${pageContext.request.contextPath}/rest/employee/baseInfo" onclick="Hui_admin_tab(this)" href="javascript:;">基本信息</a></li>
+                            <%--<li><a data-title="基本信息" data-href="${pageContext.request.contextPath}/rest/employee/baseInfo" onclick="Hui_admin_tab(this)" href="javascript:;">基本信息</a></li>--%>
                             <li><a data-href="${pageContext.request.contextPath}/rest/user/changePassword" data-title="密码修改" onclick="Hui_admin_tab(this)">密码修改</a></li>
                             <li><a href="${pageContext.request.contextPath}/rest/user/logout.do">退出</a></li>
                         </ul>

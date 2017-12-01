@@ -115,8 +115,8 @@ public class RoominfoServiceImpl implements RoominfoService {
             if (old != null) {
                 jsonResult.setSuccess(false);
                 int a = i+1;
-                jsonResult.setMessage("第" + a + "行，房屋信息已存在");
-                return jsonResult;
+                jsonResult.setMessage(jsonResult.getMessage() + "。第" + a + "行，房屋信息已存在");
+                continue;
             } else {
                 roominfo.setParentId(housingId);
                 roominfo.setOwnerName(ownerName);

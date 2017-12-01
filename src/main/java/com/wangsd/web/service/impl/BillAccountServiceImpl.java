@@ -92,6 +92,9 @@ public class BillAccountServiceImpl implements BillAccountService {
 //            String ownerName = lo.get(5).toString();
 //            String ownerPhone = lo.get(6).toString();
             String billEntryAmount = lo.get(7).toString();
+            if (billEntryAmount == null || "".equals(billEntryAmount)) {
+                continue;
+            }
             String acctPeriod = lo.get(8).toString();
             String releaseDay = lo.get(9).toString();
             String deadline = lo.get(10).toString();
@@ -112,8 +115,8 @@ public class BillAccountServiceImpl implements BillAccountService {
                 List<BillAccountCustom> bi = queryBillAccountList(billaccount);
                 if(bi.size() > 0) {
                     jsonResult.setSuccess(false);
-                    jsonResult.setMessage("第" + a + "行，账单信息已存在");
-                    return jsonResult;
+                    jsonResult.setMessage(jsonResult.getMessage() + "。第" + a + "行，账单信息已存在");
+                    continue;
                 }else {
                     billaccount.setReleaseDay(releaseDay);
                     billaccount.setDeadline(deadline);
@@ -122,8 +125,8 @@ public class BillAccountServiceImpl implements BillAccountService {
                 }
             } else {
                 jsonResult.setSuccess(false);
-                jsonResult.setMessage("第" + a + "行，房间不存在");
-                return jsonResult;
+                jsonResult.setMessage(jsonResult.getMessage() + "。第" + a + "行，房间不存在");
+                continue;
             }
 
         }

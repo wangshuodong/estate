@@ -76,7 +76,7 @@ public interface AlipayService {
      * @param loginUser
      * @return
      */
-    public boolean roominfoUploadRequest(String community_id, List<RoominfoCustom> roominfos, String token, UserCustom loginUser);
+    public JSONResult roominfoUploadRequest(String community_id, List<RoominfoCustom> roominfos, String token, UserCustom loginUser);
 
     /**
      * 删除物业小区房屋信息
@@ -104,7 +104,7 @@ public interface AlipayService {
      * @param loginUser
      * @return
      */
-    public boolean billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser);
+    public JSONResult billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser);
 
     /**
      * 修改已上传的物业费账单数据

@@ -162,7 +162,7 @@
                     window.location.reload();
                     layer.msg(data.message, {icon: 1});
                 } else {
-                    layer.msg(data.message, {icon: 5});
+                    layer.alert(data.message, {icon: 5});
                 }
             },
             error: function (data) {

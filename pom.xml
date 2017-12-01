@@ -52,7 +52,7 @@
     </properties>
 
     <build>
-        <finalName>estate</finalName>
+        <finalName>ROOT</finalName>
         <plugins>
             <!-- Mybatis generator代码生成插件 配置 -->
             <plugin>

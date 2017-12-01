@@ -7,9 +7,6 @@
 </head>
 <body>
 <div class="page-container">
-    <div class="text-c">
-        <img src="${pageContext.request.contextPath}/h-ui/common/images/alipay.png">
-    </div>
 <form class="form form-horizontal" id="myform">
     <div class="row cl">
         <label class="form-label col-xs-3 col-sm-2">发票金额：</label>

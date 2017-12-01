@@ -278,7 +278,8 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public boolean roominfoUploadRequest(String community_id, List<RoominfoCustom> roominfos, String token, UserCustom loginUser) {
+    public JSONResult roominfoUploadRequest(String community_id, List<RoominfoCustom> roominfos, String token, UserCustom loginUser) {
+        JSONResult jsonResult = new JSONResult();
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
                 StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeRoominfoUploadRequest request = new AlipayEcoCplifeRoominfoUploadRequest();
@@ -320,15 +321,20 @@ public class AlipayServiceImpl implements AlipayService {
                     roominfo.setStatus(true);//同步状态
                     roominfoService.updateRoominfo(roominfo);
                 }
-                return true;
+                jsonResult.setMessage("同步成功");
+                jsonResult.setSuccess(true);
             } else {
+                jsonResult.setMessage(response.getSubMsg());
+                jsonResult.setSuccess(false);
                 logger.info("调用失败");
             }
         } catch (AlipayApiException e) {
+            jsonResult.setMessage("系统异常");
+            jsonResult.setSuccess(false);
             logger.info(e.getMessage());
             e.printStackTrace();
         }
-        return false;
+        return jsonResult;
     }
 
     @Override
@@ -384,7 +390,8 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public boolean billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser) {
+    public JSONResult billBatchUploadRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser) {
+        JSONResult jsonResult = new JSONResult();
         AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, loginUser.getAppId(), loginUser.getMerchantPrivateKey(),
                 StaticVar.format, StaticVar.charset, loginUser.getAlipayPublicKey(), StaticVar.sign_type);
         AlipayEcoCplifeBillBatchUploadRequest request = new AlipayEcoCplifeBillBatchUploadRequest();
@@ -421,15 +428,19 @@ public class AlipayServiceImpl implements AlipayService {
                     billaccount.setStatus(true);
                     billAccountService.updateBillaccount(billaccount);
                 }
-                return true;
+                jsonResult.setMessage("同步成功");
+                jsonResult.setSuccess(true);
             } else {
+                jsonResult.setMessage(response.getSubMsg());
+                jsonResult.setSuccess(false);
                 logger.info("调用失败");
-                return false;
             }
         } catch (AlipayApiException e) {
+            jsonResult.setMessage("系统异常");
+            jsonResult.setSuccess(false);
             e.printStackTrace();
         }
-        return false;
+        return jsonResult;
     }
 
     public boolean billModifyRequest(String community_id, List<BillAccountCustom> billList, String token, UserCustom loginUser) {

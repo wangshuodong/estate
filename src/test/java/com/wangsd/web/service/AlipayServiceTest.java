@@ -1,6 +1,11 @@
 package com.wangsd.web.service;
 
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.request.AlipayTradePrecreateRequest;
+import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.wangsd.core.feature.test.TestSupport;
+import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
@@ -131,9 +136,8 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(9);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(10009);
         Billaccount query = new Billaccount();
-        query.setHousingId(10003);
         alipayService.billBatchqueryRequest(housing.getCommunityId(), query, housing.getToken(), loginUser);
     }
 
@@ -147,11 +151,25 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        String community_id = "ASAYZA2P45001";
+        String community_id = "AF2FBBVGM3301";
         String token = "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42";
         List<String> idList = new ArrayList<String>();
         idList.add("201711170000001");
         alipayService.billDeleteRequest(community_id, idList, token, loginUser);
+    }
+
+    @Test
+    public void mytest() throws Exception {
+        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipaydev.com/gateway.do", appid, privateKey, StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type); //获得初始化的AlipayClient
+        AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();//创建API对应的request类
+        request.setBizContent("{" +
+                "    \"out_trade_no\":\"20170320010101002\"," +
+                "    \"total_amount\":\"88.88\"," +
+                "    \"subject\":\"Iphone6 16G\"," +
+                "    \"store_id\":\"NJ_001\"," +
+                "    \"timeout_express\":\"90m\"}");//设置业务参数
+        AlipayTradePrecreateResponse response = alipayClient.execute(request);
+        System.out.print(response.getBody());
     }
 
 }

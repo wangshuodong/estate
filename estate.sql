@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2017-12-01 15:34:33
+Date: 2017-12-01 17:48:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,7 +42,7 @@ CREATE TABLE `billaccount` (
   `remark` varchar(255) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1151 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1152 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of billaccount
@@ -52,6 +52,7 @@ INSERT INTO `billaccount` VALUES ('1012', '10003', '1022', '1', '138', '2017年0
 INSERT INTO `billaccount` VALUES ('1013', '10003', '1023', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
 INSERT INTO `billaccount` VALUES ('1014', '10003', '1024', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
 INSERT INTO `billaccount` VALUES ('1015', '10003', '1020', '2', '10', '2017年11', '20171120', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', null, null, '0', '0', null, null, '2017-11-27 14:16:55');
+INSERT INTO `billaccount` VALUES ('1151', '10003', '1398', '1', '138', '2017年07', '20171123', '20171212', null, '0', null, null, '0', '0', null, null, '0', '0', null, null, '2017-12-01 16:48:57');
 
 -- ----------------------------
 -- Table structure for costtype
@@ -61,11 +62,12 @@ CREATE TABLE `costtype` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of costtype
 -- ----------------------------
+INSERT INTO `costtype` VALUES ('1', '物业管理费1');
 
 -- ----------------------------
 -- Table structure for housinginfo
@@ -143,7 +145,7 @@ INSERT INTO `menu` VALUES ('301', '开发中', null, null, '3', '99', '1');
 INSERT INTO `menu` VALUES ('401', '开发中', null, null, '4', '99', '1');
 INSERT INTO `menu` VALUES ('501', '开发中', null, null, '5', '99', '1');
 INSERT INTO `menu` VALUES ('601', '角色管理', '/rest/role/roleList', null, '6', '99', '1');
-INSERT INTO `menu` VALUES ('602', '费用类型', null, null, '6', '99', '1');
+INSERT INTO `menu` VALUES ('602', '费用类型', '/rest/costtype/costtypeList', null, '6', '99', '1');
 
 -- ----------------------------
 -- Table structure for permission
@@ -327,6 +329,7 @@ INSERT INTO `role_menu` VALUES ('99', '301');
 INSERT INTO `role_menu` VALUES ('99', '401');
 INSERT INTO `role_menu` VALUES ('99', '501');
 INSERT INTO `role_menu` VALUES ('99', '601');
+INSERT INTO `role_menu` VALUES ('99', '602');
 
 -- ----------------------------
 -- Table structure for role_permission

@@ -254,7 +254,7 @@
                 if (data.success) {
                     window.location.reload();
                 }else {
-                    layer.msg("同步支付宝失败!", {icon: 5});
+                    layer.alert(data.message, {icon: 5});
                 }
             },
             error:function(data) {
@@ -274,7 +274,7 @@
                     if (data.success) {
                         window.location.reload();
                     }else {
-                        layer.msg("同步支付宝失败!", {icon: 5});
+                        layer.alert(data.message, {icon: 5});
                     }
                 },
                 error:function(data) {

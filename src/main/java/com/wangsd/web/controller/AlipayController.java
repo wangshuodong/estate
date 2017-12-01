@@ -110,7 +110,6 @@ public class AlipayController {
     @RequestMapping(value = "/roominfoUploadRequest")
     @ResponseBody
     public JSONResult roominfoUploadRequest(Integer id, HttpSession session) {
-        JSONResult jsonResult = new JSONResult();
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         //查询数据
@@ -121,9 +120,7 @@ public class AlipayController {
         roomList.add(roominfoCustom);
         HousinginfoCustom housing = housinginfoService.selectHousingCustomById(roominfo.getParentId());
         //调用支付宝接口
-        boolean bl = alipayService.roominfoUploadRequest(housing.getCommunityId(), roomList, housing.getToken(), loginUser);
-        jsonResult.setSuccess(bl);
-        return jsonResult;
+        return alipayService.roominfoUploadRequest(housing.getCommunityId(), roomList, housing.getToken(), loginUser);
     }
 
     /**
@@ -135,7 +132,6 @@ public class AlipayController {
     @ResponseBody
     public JSONResult allRoominfoUploadRequest(HttpSession session) {
         JSONResult jsonResult = new JSONResult();
-        boolean bl = false;
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         //查询数据
@@ -153,10 +149,9 @@ public class AlipayController {
             List<RoominfoCustom> roomList = roominfoService.queryRoominfoList(query);
             if (roomList.size() > 0) {
                 //调用支付宝接口
-                bl = alipayService.roominfoUploadRequest(housing.getCommunityId(), roomList, propertyinfo.getToken(), loginUser);
+                jsonResult = alipayService.roominfoUploadRequest(housing.getCommunityId(), roomList, propertyinfo.getToken(), loginUser);
             }
         }
-        jsonResult.setSuccess(bl);
         return jsonResult;
     }
 
@@ -170,7 +165,6 @@ public class AlipayController {
     @ResponseBody
     public JSONResult billBatchUploadRequest(Integer id, HttpSession session) {
         JSONResult jsonResult = new JSONResult();
-        boolean bl = false;
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         //查询数据
@@ -183,7 +177,7 @@ public class AlipayController {
                 HousinginfoCustom housing = housinginfoService.selectHousingCustomById(billaccount.getHousingId());
                 List<BillAccountCustom> billList = new ArrayList<>();
                 billList.add(billaccount);
-                bl = alipayService.billBatchUploadRequest(housing.getCommunityId(), billList, housing.getToken(), loginUser);
+                jsonResult = alipayService.billBatchUploadRequest(housing.getCommunityId(), billList, housing.getToken(), loginUser);
             }
         }else {
             HousinginfoCustom housingquery = new HousinginfoCustom();
@@ -199,11 +193,10 @@ public class AlipayController {
                 query.setPageSize(199);
                 List<BillAccountCustom> billList = billAccountService.queryBillAccountList(query);
                 if (billList.size() > 0) {
-                    bl = alipayService.billBatchUploadRequest(housing.getCommunityId(), billList, propertyinfo.getToken(), loginUser);
+                    jsonResult = alipayService.billBatchUploadRequest(housing.getCommunityId(), billList, propertyinfo.getToken(), loginUser);
                 }
             }
         }
-        jsonResult.setSuccess(bl);
         return jsonResult;
     }
 
