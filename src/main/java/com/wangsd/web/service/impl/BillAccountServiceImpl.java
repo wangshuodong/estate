@@ -80,7 +80,7 @@ public class BillAccountServiceImpl implements BillAccountService {
     }
 
     @Override
-    public JSONResult importBillaccount(Integer housingId, List<List<Object>> listob) {
+    public JSONResult importBillaccount(Integer housingId, List<List<Object>> listob, Integer costType) {
         JSONResult jsonResult = new JSONResult();
         BillAccountCustom billaccount = new BillAccountCustom();
         for (int i = 0; i < listob.size(); i++) {
@@ -95,7 +95,7 @@ public class BillAccountServiceImpl implements BillAccountService {
             String acctPeriod = lo.get(8).toString();
             String releaseDay = lo.get(9).toString();
             String deadline = lo.get(10).toString();
-            String costType = lo.get(11).toString();
+            //String costType = lo.get(11).toString();
             Roominfo roominfo = new Roominfo();
             roominfo.setGroupName(groupName);
             roominfo.setBuilding(building);
@@ -108,7 +108,7 @@ public class BillAccountServiceImpl implements BillAccountService {
                 billaccount.setRoominfoId(old.getId());
                 billaccount.setBillEntryAmount(Double.valueOf(billEntryAmount));
                 billaccount.setAcctPeriod(acctPeriod);
-                billaccount.setCostType(Integer.valueOf(costType));
+                billaccount.setCostType(costType);
                 List<BillAccountCustom> bi = queryBillAccountList(billaccount);
                 if(bi.size() > 0) {
                     jsonResult.setSuccess(false);

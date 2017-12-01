@@ -6,6 +6,7 @@ import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.DateUtils;
 import com.wangsd.core.util.PrintMessage;
 import com.wangsd.web.model.Billaccount;
+import com.wangsd.web.model.Costtype;
 import com.wangsd.web.model.Printinfo;
 import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.*;
@@ -44,6 +45,8 @@ public class BillAccountController {
     AlipayService alipayService;
     @Autowired
     PrintService printService;
+    @Autowired
+    CosttypeService costtypeService;
 
     /**
      * 根据部门code查询账单信息
@@ -58,6 +61,8 @@ public class BillAccountController {
         List<ParentCustom> parentList = housinginfoService.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         query.setHousingCode(parentCode);
+        List<Costtype> costList = costtypeService.queryAllList();
+        model.addAttribute("costList", costList);
         List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
         model.addAttribute("billaccountList", list);
         model.addAttribute("query", query);
@@ -75,6 +80,8 @@ public class BillAccountController {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         List<ParentCustom> parentList = housinginfoService.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
+        List<Costtype> costList = costtypeService.queryAllList();
+        model.addAttribute("costList", costList);
         return "/billaccount/billaccount-add";
     }
 
@@ -86,6 +93,8 @@ public class BillAccountController {
      */
     @RequestMapping("/updateBillAccount")
     public String updateBillAccount(Integer id, HttpServletRequest request, Model model) {
+        List<Costtype> costList = costtypeService.queryAllList();
+        model.addAttribute("costList", costList);
         BillAccountCustom query = new BillAccountCustom();
         query.setId(id);
         List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
@@ -104,6 +113,8 @@ public class BillAccountController {
      */
     @RequestMapping("/receivBillAccount")
     public String receivBillAccount(Integer id, HttpServletRequest request, Model model) {
+        List<Costtype> costList = costtypeService.queryAllList();
+        model.addAttribute("costList", costList);
         BillAccountCustom query = new BillAccountCustom();
         query.setId(id);
         List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);

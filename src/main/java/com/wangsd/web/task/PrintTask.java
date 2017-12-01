@@ -76,8 +76,8 @@ public class PrintTask {
             sb.append("----------------------\n");
             sb.append("<table><tr><td>费用类型</td><td>金额</td></tr>");
             for (BillAccountCustom billAccount : list2) {
-                String costType = ApplicationUtils.getCostType(billAccount.getCostType());
-                sb.append("<td>" + costType + "</td><td>" + billAccount.getSumAmount() + "</td></tr>");
+                //String costType = ApplicationUtils.getCostType(billAccount.getCostType());
+                sb.append("<td>" + billAccount.getCostTypeName() + "</td><td>" + billAccount.getSumAmount() + "</td></tr>");
             }
             sb.append("</table>");
             sb.append("收款单位：" + housing.getParentName() + "\n");

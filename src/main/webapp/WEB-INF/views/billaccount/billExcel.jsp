@@ -5,13 +5,24 @@
 <div class="page-container">
     <form class="form form-horizontal" id="myform" enctype="multipart/form-data">
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>房屋信息：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>账单信息：</label>
             <div class="formControls col-xs-8 col-sm-9">
 				<span class="btn-upload form-group">
 				    <input class="input-text upload-url radius size-L" type="text" name="uploadfile" id="uploadfile" readonly nullmsg="请添加附件！">
 				    <a href="#" class="btn btn-secondary radius upload-btn size-L"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
 				    <input type="file" multiple name="upfile" id="upfile" class="input-file" required>
 				</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>费用类型：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <select class="form-control shift-info" name="costType" id="costType" required>
+                    <option value='' disabled selected style='display:none;'>请选择费用类型</option>
+                    <c:forEach items="${costList}" var="item">
+                        <option value="${item.id}" <c:if test="${billaccount.costType==item.id }">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
         <div class="row cl">
@@ -61,6 +72,11 @@
         }
         if(".xls" != suffix && ".xlsx" != suffix ){
             layer.alert("选择Excel格式的文件导入！");
+            return false;
+        }
+        var costType = $("#costType").val();
+        if (costType == null) {
+            layer.alert("选择费用类型！");
             return false;
         }
         return true;

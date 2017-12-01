@@ -47,7 +47,7 @@ public interface BillAccountService {
      * @param
      * @return
      */
-    public JSONResult importBillaccount(Integer housingId, List<List<Object>> listob);
+    public JSONResult importBillaccount(Integer housingId, List<List<Object>> listob, Integer costType);
 
     /**
      * 根据code查询账单缴纳金额

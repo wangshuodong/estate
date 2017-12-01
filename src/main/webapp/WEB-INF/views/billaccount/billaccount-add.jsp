@@ -29,14 +29,9 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <select class="form-control shift-info" name="costType" required>
                     <option value='' disabled selected style='display:none;'>请选择费用类型</option>
-                    <option value="1">物业管理费</option>
-                    <option value="2">水电公摊费</option>
-                    <option value="3">垃圾清运费</option>
-                    <option value="4">公共照明费</option>
-                    <option value="5">水费</option>
-                    <option value="6">电费</option>
-                    <option value="7">蒸汽费</option>
-                    <option value="99">其他</option>
+                    <c:forEach items="${costList}" var="item">
+                        <option value="${item.id}" <c:if test="${billaccount.costType==item.id }">selected</c:if>>${item.name}</option>
+                    </c:forEach>
                 </select>
             </div>
         </div>

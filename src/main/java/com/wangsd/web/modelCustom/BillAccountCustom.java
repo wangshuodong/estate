@@ -7,6 +7,8 @@ import com.wangsd.web.model.Billaccount;
  */
 public class BillAccountCustom extends Billaccount {
 
+    private String costTypeName;
+
     private String housingName;
 
     private String housingCode;
@@ -180,5 +182,13 @@ public class BillAccountCustom extends Billaccount {
 
     public void setUntbCount(Integer untbCount) {
         this.untbCount = untbCount;
+    }
+
+    public String getCostTypeName() {
+        return costTypeName;
+    }
+
+    public void setCostTypeName(String costTypeName) {
+        this.costTypeName = costTypeName;
     }
 }

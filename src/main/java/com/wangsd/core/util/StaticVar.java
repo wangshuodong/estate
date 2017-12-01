@@ -66,36 +66,36 @@ public class StaticVar {
 	public static final int billaccount_paystatus99 = 99;
 
 
-	/**
-	 * 物业管理费
-	 */
-	public static final int billaccount_cost_type1 = 1;
-	/**
-	 * 水电公摊费
-	 */
-	public static final int billaccount_cost_type2 = 2;
-	/**
-	 * 垃圾清运费
-	 */
-	public static final int billaccount_cost_type3 = 3;
-	/**
-	 * 公共照明费
-	 */
-	public static final int billaccount_cost_type4 = 4;
-	/**
-	 * 水费
-	 */
-	public static final int billaccount_cost_type5 = 5;
-	/**
-	 * 电费
-	 */
-	public static final int billaccount_cost_type6 = 6;
-	/**
-	 * 蒸汽费
-	 */
-	public static final int billaccount_cost_type7 = 7;
-	/**
-	 * 其他
-	 */
-	public static final int billaccount_cost_type99 = 99;
+//	/**
+//	 * 物业管理费
+//	 */
+//	public static final int billaccount_cost_type1 = 1;
+//	/**
+//	 * 水电公摊费
+//	 */
+//	public static final int billaccount_cost_type2 = 2;
+//	/**
+//	 * 垃圾清运费
+//	 */
+//	public static final int billaccount_cost_type3 = 3;
+//	/**
+//	 * 公共照明费
+//	 */
+//	public static final int billaccount_cost_type4 = 4;
+//	/**
+//	 * 水费
+//	 */
+//	public static final int billaccount_cost_type5 = 5;
+//	/**
+//	 * 电费
+//	 */
+//	public static final int billaccount_cost_type6 = 6;
+//	/**
+//	 * 蒸汽费
+//	 */
+//	public static final int billaccount_cost_type7 = 7;
+//	/**
+//	 * 其他
+//	 */
+//	public static final int billaccount_cost_type99 = 99;
 }

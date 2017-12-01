@@ -56,27 +56,27 @@ public class ApplicationUtils {
      * @param cost_type
      * @return
      */
-    public static String getCostType(Integer cost_type) {
-        String costType;
-        if (cost_type == StaticVar.billaccount_cost_type1) {
-            costType = "物业管理费";
-        } else if (cost_type == StaticVar.billaccount_cost_type2) {
-            costType = "水电公摊费";
-        } else if (cost_type == StaticVar.billaccount_cost_type3) {
-            costType = "垃圾清运费";
-        } else if (cost_type == StaticVar.billaccount_cost_type4) {
-            costType = "公共照明费";
-        } else if (cost_type == StaticVar.billaccount_cost_type5) {
-            costType = "水费";
-        } else if (cost_type == StaticVar.billaccount_cost_type6) {
-            costType = "电费";
-        } else if (cost_type == StaticVar.billaccount_cost_type7) {
-            costType = "蒸汽费";
-        } else {
-            costType = "其他";
-        }
-        return costType;
-    }
+//    public static String getCostType(Integer cost_type) {
+//        String costType;
+//        if (cost_type == StaticVar.billaccount_cost_type1) {
+//            costType = "物业管理费";
+//        } else if (cost_type == StaticVar.billaccount_cost_type2) {
+//            costType = "水电公摊费";
+//        } else if (cost_type == StaticVar.billaccount_cost_type3) {
+//            costType = "垃圾清运费";
+//        } else if (cost_type == StaticVar.billaccount_cost_type4) {
+//            costType = "公共照明费";
+//        } else if (cost_type == StaticVar.billaccount_cost_type5) {
+//            costType = "水费";
+//        } else if (cost_type == StaticVar.billaccount_cost_type6) {
+//            costType = "电费";
+//        } else if (cost_type == StaticVar.billaccount_cost_type7) {
+//            costType = "蒸汽费";
+//        } else {
+//            costType = "其他";
+//        }
+//        return costType;
+//    }
 
     public static void main(String[] args) {
 

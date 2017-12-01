@@ -396,8 +396,7 @@ public class AlipayServiceImpl implements AlipayService {
             JSONObject room_info_set = new JSONObject();
             room_info_set.put("bill_entry_id", billaccount.getId());
             room_info_set.put("out_room_id", billaccount.getRoominfoId());
-            String costType = getCostType(billaccount.getCostType());
-            room_info_set.put("cost_type", costType);
+            room_info_set.put("cost_type", billaccount.getCostTypeName());
             room_info_set.put("bill_entry_amount", billaccount.getBillEntryAmount());
             room_info_set.put("acct_period", billaccount.getAcctPeriod());
             room_info_set.put("release_day", billaccount.getReleaseDay());
@@ -445,8 +444,7 @@ public class AlipayServiceImpl implements AlipayService {
             JSONObject room_info_set = new JSONObject();
             room_info_set.put("bill_entry_id", billaccount.getId());
             if (billaccount.getCostType() != null) {
-                String costType = getCostType(billaccount.getCostType());
-                room_info_set.put("cost_type", costType);
+                room_info_set.put("cost_type", billaccount.getCostTypeName());
             }
             room_info_set.put("bill_entry_amount", billaccount.getBillEntryAmount());
             room_info_set.put("acct_period", billaccount.getAcctPeriod());
@@ -493,10 +491,6 @@ public class AlipayServiceImpl implements AlipayService {
         bizContent.put("community_id", community_id);
         if (billaccount.getRoominfoId() != null) {
             bizContent.put("out_room_id", billaccount.getRoominfoId());
-        }
-        if (billaccount.getCostType() != null) {
-            String costType = getCostType(billaccount.getCostType());
-            bizContent.put("cost_type", costType);
         }
         request.setBizContent(bizContent.toString());
         if (token != null) {
@@ -551,37 +545,6 @@ public class AlipayServiceImpl implements AlipayService {
             e.printStackTrace();
         }
         return retStatus;
-    }
-
-    public String getCostType(int type) {
-        String costType;
-        switch (type) {
-            case StaticVar.billaccount_cost_type1:
-                costType = "物业管理费";
-                break;
-            case StaticVar.billaccount_cost_type2:
-                costType = "水电公摊费";
-                break;
-            case StaticVar.billaccount_cost_type3:
-                costType = "垃圾清运费";
-                break;
-            case StaticVar.billaccount_cost_type4:
-                costType = "公共照明费";
-                break;
-            case StaticVar.billaccount_cost_type5:
-                costType = "水费";
-                break;
-            case StaticVar.billaccount_cost_type6:
-                costType = "电费";
-                break;
-            case StaticVar.billaccount_cost_type7:
-                costType = "蒸汽费";
-                break;
-            default:
-                costType = "其他";
-                break;
-        }
-        return costType;
     }
 
     @Override

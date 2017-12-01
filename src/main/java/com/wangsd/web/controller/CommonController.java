@@ -2,13 +2,11 @@ package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ImportExcelUtil;
+import com.wangsd.web.model.Costtype;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.modelCustom.MenuCustom;
 import com.wangsd.web.modelCustom.UserCustom;
-import com.wangsd.web.service.BillAccountService;
-import com.wangsd.web.service.HousinginfoService;
-import com.wangsd.web.service.MenuService;
-import com.wangsd.web.service.RoominfoService;
+import com.wangsd.web.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +35,8 @@ public class CommonController {
     RoominfoService roominfoService;
     @Autowired
     BillAccountService billAccountService;
+    @Autowired
+    CosttypeService costtypeService;
     
     /**
      * 进入首页
@@ -72,6 +72,8 @@ public class CommonController {
      */
     @RequestMapping(path = "/openBillExcel")
     public String openBillExcel(Model model) {
+        List<Costtype> costList = costtypeService.queryAllList();
+        model.addAttribute("costList", costList);
         return "/billaccount/billExcel";
     }
 
@@ -124,6 +126,7 @@ public class CommonController {
     @ResponseBody
     public JSONResult uploadBillExcel(HttpServletRequest request) throws Exception {
         JSONResult jsonResult = new JSONResult();
+        String costType = request.getParameter("costType");
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("upfile");
         if (file.isEmpty()) {
@@ -138,7 +141,7 @@ public class CommonController {
             Housinginfo housinginfo = housinginfoService.selectHousingByName(housingName);
             if (housinginfo != null) {
                 //处理数据
-                return billAccountService.importBillaccount(housinginfo.getId(), listob);
+                return billAccountService.importBillaccount(housinginfo.getId(), listob, Integer.parseInt(costType));
             } else {
                 jsonResult.setSuccess(false);
                 jsonResult.setMessage("小区不存在");

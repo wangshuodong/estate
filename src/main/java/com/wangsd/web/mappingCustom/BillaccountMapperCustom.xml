@@ -4,11 +4,13 @@
     <select id="queryBillAccountList" parameterType="BillAccountCustom" resultType="BillAccountCustom">
         SELECT
             b.*, h.`name` as housingName,
-            r.address as roominfoAddress,r.owner_card as ownerCard, r.owner_name as ownerName, r.owner_phone as ownerPhone
+            r.address as roominfoAddress,r.owner_card as ownerCard, r.owner_name as ownerName, r.owner_phone as ownerPhone,
+            cc.name as costTypeName
         FROM
             billaccount b
         JOIN housinginfo h ON b.housing_id = h.id
         JOIN roominfo r ON b.roominfo_id = r.id
+        JOIN costtype cc ON b.cost_type = cc.id
         <where>
             and b.deleteStatus = false and h.deleteStatus = false and r.deleteStatus = false
             <if test="housingCode != null and housingCode != ''">

@@ -19,14 +19,9 @@
 		<div class="form-group">
 			<select class="form-control shift-info" style="width:250px" name="costType">
 				<option value=''>所有费用类型</option>
-				<option value="1">物业管理费</option>
-				<option value="2">水电公摊费</option>
-				<option value="3">垃圾清运费</option>
-				<option value="4">公共照明费</option>
-				<option value="5">水费</option>
-				<option value="6">电费</option>
-				<option value="7">蒸汽费</option>
-				<option value="99">其他</option>
+				<c:forEach items="${costList}" var="item">
+					<option value="${item.id}" <c:if test="${query.costType==item.id }">selected</c:if>>${item.name}</option>
+				</c:forEach>
 			</select>
 		</div>
 		<div class="form-group">
@@ -94,16 +89,7 @@
 						<td>${ item.ownerName }</td>
 						<%--<td>${ item.ownerPhone }</td>--%>
 						<%--<td>${ item.ownerCard }</td>--%>
-						<td>
-							<c:if test="${ item.costType == 1 }">物业管理费</c:if>
-							<c:if test="${ item.costType == 2 }">水电公摊费</c:if>
-							<c:if test="${ item.costType == 3 }">垃圾清运费</c:if>
-							<c:if test="${ item.costType == 4 }">公共照明费</c:if>
-							<c:if test="${ item.costType == 5 }">水费</c:if>
-							<c:if test="${ item.costType == 6 }">电费</c:if>
-							<c:if test="${ item.costType == 7 }">蒸汽费</c:if>
-							<c:if test="${ item.costType == 99 }">其他</c:if>
-						</td>
+						<td>${ item.costTypeName }</td>
 						<td>${ item.acctPeriod }</td>
 						<td>${ item.billEntryAmount }</td>
 						<td>
