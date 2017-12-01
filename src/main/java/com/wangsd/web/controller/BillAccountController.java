@@ -39,7 +39,7 @@ public class BillAccountController {
     @Autowired
     RoominfoService roominfoService;
     @Autowired
-    HousinginfoServic housinginfoServic;
+    HousinginfoService housinginfoService;
     @Autowired
     AlipayService alipayService;
     @Autowired
@@ -55,7 +55,7 @@ public class BillAccountController {
     public String billAccountList(BillAccountCustom query, HttpServletRequest request, Model model) {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         String parentCode = loginUser.getParentCode();
-        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
+        List<ParentCustom> parentList = housinginfoService.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         query.setHousingCode(parentCode);
         List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
@@ -73,7 +73,7 @@ public class BillAccountController {
     @RequestMapping("/addBillAccount")
     public String addBillAccount(HttpServletRequest request, Model model) {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
+        List<ParentCustom> parentList = housinginfoService.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         return "/billaccount/billaccount-add";
     }
@@ -144,7 +144,7 @@ public class BillAccountController {
             Billaccount oldBill = billAccountService.selectBillAccountById(billaccount.getId());
             if (oldBill.getStatus()) {
                 UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-                HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(oldBill.getHousingId());
+                HousinginfoCustom housing = housinginfoService.selectHousingCustomById(oldBill.getHousingId());
                 List<BillAccountCustom> billList = new ArrayList<>();
                 BillAccountCustom custom = new BillAccountCustom();
                 BeanUtils.copyProperties(oldBill, custom);
@@ -169,7 +169,7 @@ public class BillAccountController {
         if (oldBill.getStatus()) { //已同步
             //获取公钥 私钥
             UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-            HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(oldBill.getHousingId());
+            HousinginfoCustom housing = housinginfoService.selectHousingCustomById(oldBill.getHousingId());
             List<String> roomids = new ArrayList<>();
             roomids.add(oldBill.getId().toString());
             bl = alipayService.billDeleteRequest(housing.getCommunityId(), roomids, housing.getToken(), loginUser);
@@ -199,7 +199,7 @@ public class BillAccountController {
         Billaccount oldBill = billAccountService.selectBillAccountById(billaccount.getId());
         if (oldBill.getStatus()) {
             UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-            HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(oldBill.getHousingId());
+            HousinginfoCustom housing = housinginfoService.selectHousingCustomById(oldBill.getHousingId());
             List<String> bill_entry_id_list = new ArrayList<>();
             bill_entry_id_list.add(oldBill.getId().toString());
             alipayService.billDeleteRequest(housing.getCommunityId(), bill_entry_id_list, housing.getToken(), loginUser);
@@ -230,7 +230,7 @@ public class BillAccountController {
         //打印小票
         Printinfo printinfo = printService.selectPrintinfoBydeptId(oldBill.getHousingId());
         if (printinfo != null) {
-            HousinginfoCustom housinginfo = housinginfoServic.selectHousingCustomById(oldBill.getHousingId());
+            HousinginfoCustom housinginfo = housinginfoService.selectHousingCustomById(oldBill.getHousingId());
             Roominfo roominfo = roominfoService.selectRoominfoById(oldBill.getRoominfoId());
             PrintMessage print = new PrintMessage(printinfo.getMachineCode(), printinfo.getMsign());
             String payType = ApplicationUtils.getPayType(oldBill.getPaytype());
@@ -272,7 +272,7 @@ public class BillAccountController {
     public String getAllGroupByStatus(BillAccountCustom query,HttpServletRequest request, Model model) throws IOException {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         String code = loginUser.getParentCode();
-        List<ParentCustom> housingList = housinginfoServic.queryParentHousingByCode(code); //获取小区列表
+        List<ParentCustom> housingList = housinginfoService.queryParentHousingByCode(code); //获取小区列表
         model.addAttribute("housingList",housingList);
         query.setHousingCode(code);
         BillAccountCustom billAccount = billAccountService.selectAllGroupByStatus(query); //获取小区账单状态情况

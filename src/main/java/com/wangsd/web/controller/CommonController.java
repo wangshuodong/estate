@@ -6,7 +6,7 @@ import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.modelCustom.MenuCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.BillAccountService;
-import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.HousinginfoService;
 import com.wangsd.web.service.MenuService;
 import com.wangsd.web.service.RoominfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class CommonController {
     @Autowired
     MenuService menuService;
     @Autowired
-    HousinginfoServic housinginfoServic;
+    HousinginfoService housinginfoService;
     @Autowired
     RoominfoService roominfoService;
     @Autowired
@@ -97,7 +97,7 @@ public class CommonController {
 
         if (listob.size() > 0) {
             String housingName = listob.get(0).get(0).toString();
-            Housinginfo housinginfo = housinginfoServic.selectHousingByName(housingName);
+            Housinginfo housinginfo = housinginfoService.selectHousingByName(housingName);
             if (housinginfo != null) {
                 //处理数据
                 return roominfoService.importRoominfo(housinginfo.getId(), listob);
@@ -135,7 +135,7 @@ public class CommonController {
 
         if (listob.size() > 0) {
             String housingName = listob.get(0).get(0).toString();
-            Housinginfo housinginfo = housinginfoServic.selectHousingByName(housingName);
+            Housinginfo housinginfo = housinginfoService.selectHousingByName(housingName);
             if (housinginfo != null) {
                 //处理数据
                 return billAccountService.importBillaccount(housinginfo.getId(), listob);

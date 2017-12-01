@@ -4,8 +4,8 @@ import com.wangsd.core.entity.JSONResult;
 import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
-import com.wangsd.web.service.PropertyinfoServic;
-import com.wangsd.web.service.ServiceinfoServic;
+import com.wangsd.web.service.PropertyinfoService;
+import com.wangsd.web.service.ServiceinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +25,9 @@ import java.util.List;
 public class PropertyinfoController {
 
     @Autowired
-    PropertyinfoServic propertyinfoServic;
+    PropertyinfoService propertyinfoService;
     @Autowired
-    ServiceinfoServic serviceinfoServic;
+    ServiceinfoService serviceinfoService;
 
     /**
      * 查询所有物业
@@ -40,7 +40,7 @@ public class PropertyinfoController {
     public String propertyList(Model model, HttpSession session) {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         String parentCode = loginUser.getParentCode();
-        List<Propertyinfo> list = propertyinfoServic.queryAllList(parentCode);
+        List<Propertyinfo> list = propertyinfoService.queryAllList(parentCode);
         model.addAttribute("propertyList", list);
         return "/property/property-list";
     }
@@ -60,10 +60,10 @@ public class PropertyinfoController {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         String parentCode = loginUser.getParentCode();
         //查询上级服务商和物业
-        List<ParentCustom> parentList = propertyinfoServic.queryParentServiceAndPropertyByCode(parentCode);
+        List<ParentCustom> parentList = propertyinfoService.queryParentServiceAndPropertyByCode(parentCode);
         model.addAttribute("parentList", parentList);
         if (id != null) {
-            Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(id);
+            Propertyinfo propertyinfo = propertyinfoService.selectPropertyinfoById(id);
             model.addAttribute("propertyinfo", propertyinfo);
         }
         return "/property/property-info";
@@ -82,9 +82,9 @@ public class PropertyinfoController {
         boolean bl;
         if (propertyinfo.getId() == null) {  //新增
             propertyinfo.setCreateTime(new Date());
-            bl = propertyinfoServic.insertProperty(propertyinfo);
+            bl = propertyinfoService.insertProperty(propertyinfo);
         } else { //修改
-            bl = propertyinfoServic.updateProperty(propertyinfo);
+            bl = propertyinfoService.updateProperty(propertyinfo);
         }
         JSONResult jsonResult = new JSONResult();
         jsonResult.setSuccess(bl);
@@ -101,7 +101,7 @@ public class PropertyinfoController {
     @ResponseBody
     public JSONResult deleteProperty(Integer id) {
         JSONResult obj = new JSONResult();
-        boolean delStatus = propertyinfoServic.deletePropertyById(id);
+        boolean delStatus = propertyinfoService.deletePropertyById(id);
         obj.setSuccess(delStatus);
         return obj;
     }

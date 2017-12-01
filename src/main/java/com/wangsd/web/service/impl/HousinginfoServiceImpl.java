@@ -8,7 +8,7 @@ import com.wangsd.web.model.HousinginfoExample;
 import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
-import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.HousinginfoService;
 import com.wangsd.web.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Administrator on 2017/11/19.
  */
 @Service
-public class HousinginfoServiceImpl implements HousinginfoServic {
+public class HousinginfoServiceImpl implements HousinginfoService {
 
     @Autowired
     HousinginfoMapper housinginfoMapper;

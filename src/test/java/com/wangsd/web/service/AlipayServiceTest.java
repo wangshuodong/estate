@@ -25,7 +25,7 @@ public class AlipayServiceTest extends TestSupport {
     @Autowired
     AlipayService alipayService;
     @Autowired
-    HousinginfoServic housinginfoServic;
+    HousinginfoService housinginfoService;
 
     /**
      * 同步小区到支付宝
@@ -37,7 +37,7 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(9);
         alipayService.communityCreateRequest(housing, "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42", loginUser);
 
     }
@@ -74,7 +74,7 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(9);
         alipayService.communityDetailsQueryRequest(housing.getCommunityId(), housing.getToken(), loginUser);
     }
 
@@ -97,7 +97,7 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(10003);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(10003);
         List<String> list = new ArrayList<>();
         list.add("1012");
         list.add("1013");
@@ -117,7 +117,7 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(10003);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(10003);
         alipayService.roominfoQueryRequest(housing.getCommunityId(), housing.getToken(), loginUser);
     }
 
@@ -131,7 +131,7 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(9);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(9);
         Billaccount query = new Billaccount();
         query.setHousingId(10003);
         alipayService.billBatchqueryRequest(housing.getCommunityId(), query, housing.getToken(), loginUser);

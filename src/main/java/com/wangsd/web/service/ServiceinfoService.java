@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/11/19.
  */
-public interface ServiceinfoServic {
+public interface ServiceinfoService {
     /**
      * 根据code查询服务商
      * @param code

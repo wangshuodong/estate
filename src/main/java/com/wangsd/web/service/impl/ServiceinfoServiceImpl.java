@@ -5,7 +5,7 @@ import com.wangsd.web.dao.ServiceinfoMapper;
 import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.model.ServiceinfoExample;
 import com.wangsd.web.modelCustom.ParentCustom;
-import com.wangsd.web.service.ServiceinfoServic;
+import com.wangsd.web.service.ServiceinfoService;
 import com.wangsd.web.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Administrator on 2017/11/19.
  */
 @Service
-public class ServiceinfoServiceImpl implements ServiceinfoServic {
+public class ServiceinfoServiceImpl implements ServiceinfoService {
 
     @Autowired
     ServiceinfoMapper serviceinfoMapper;

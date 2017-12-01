@@ -7,7 +7,7 @@ import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.RoominfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.AlipayService;
-import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.HousinginfoService;
 import com.wangsd.web.service.RoominfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +32,7 @@ public class RoominfoController {
     @Autowired
     RoominfoService roominfoService;
     @Autowired
-    HousinginfoServic housinginfoServic;
+    HousinginfoService housinginfoService;
     @Autowired
     AlipayService alipayService;
 
@@ -48,7 +48,7 @@ public class RoominfoController {
     @RequestMapping("/roominfoList")
     public String roominfoList(RoominfoCustom query, HttpServletRequest request, Model model) {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
+        List<ParentCustom> parentList = housinginfoService.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         query.setHousingCode(loginUser.getParentCode());
         List<RoominfoCustom> list = roominfoService.queryRoominfoList(query);
@@ -68,7 +68,7 @@ public class RoominfoController {
     @RequestMapping("/openRoominfo")
     public String openRoominfo(Integer id, HttpServletRequest request, Model model) {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentHousingByCode(loginUser.getParentCode());
+        List<ParentCustom> parentList = housinginfoService.queryParentHousingByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         if (id != null) {
             Roominfo roominfo = roominfoService.selectRoominfoById(id);
@@ -92,7 +92,7 @@ public class RoominfoController {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         Roominfo roominfo = roominfoService.selectRoominfoById(id);
         if (roominfo.getStatus()) { //已同步
-            HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(roominfo.getParentId());
+            HousinginfoCustom housing = housinginfoService.selectHousingCustomById(roominfo.getParentId());
             List<String> roomids = new ArrayList<>();
             roomids.add(roominfo.getId().toString());
             bl = alipayService.roominfoDeleteRequest(housing.getCommunityId(), roomids, housing.getToken(), loginUser);

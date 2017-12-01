@@ -11,7 +11,7 @@ import com.wangsd.web.model.Roominfo;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.BillAccountService;
-import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.HousinginfoService;
 import com.wangsd.web.service.PrintService;
 import com.wangsd.web.service.RoominfoService;
 import org.apache.logging.log4j.LogManager;
@@ -38,7 +38,7 @@ public class PageController {
     @Autowired
     BillAccountService billAccountService;
     @Autowired
-    HousinginfoServic housinginfoServic;
+    HousinginfoService housinginfoService;
     @Autowired
     PrintService printService;
     @Autowired
@@ -144,7 +144,7 @@ public class PageController {
                         //打印小票
                         Printinfo printinfo = printService.selectPrintinfoBydeptId(billaccount.getHousingId());
                         if (printinfo != null) {
-                            HousinginfoCustom housinginfo = housinginfoServic.selectHousingCustomById(billaccount.getHousingId());
+                            HousinginfoCustom housinginfo = housinginfoService.selectHousingCustomById(billaccount.getHousingId());
                             Roominfo roominfo = roominfoService.selectRoominfoById(billaccount.getRoominfoId());
                             PrintMessage print = new PrintMessage(printinfo.getMachineCode(), printinfo.getMsign());
                             String payType = ApplicationUtils.getPayType(billaccount.getPaytype());

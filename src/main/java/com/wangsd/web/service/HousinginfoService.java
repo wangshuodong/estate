@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/11/19.
  */
-public interface HousinginfoServic {
+public interface HousinginfoService {
 
     /**
      * 查询所有上级物业

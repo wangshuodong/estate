@@ -6,8 +6,8 @@ import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.model.PropertyinfoExample;
 import com.wangsd.web.model.Serviceinfo;
 import com.wangsd.web.modelCustom.ParentCustom;
-import com.wangsd.web.service.PropertyinfoServic;
-import com.wangsd.web.service.ServiceinfoServic;
+import com.wangsd.web.service.PropertyinfoService;
+import com.wangsd.web.service.ServiceinfoService;
 import com.wangsd.web.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,19 +19,19 @@ import java.util.List;
  * Created by Administrator on 2017/11/19.
  */
 @Service
-public class PropertyinfoServiceImpl implements PropertyinfoServic {
+public class PropertyinfoServiceImpl implements PropertyinfoService {
 
     @Autowired
     PropertyinfoMapper propertyinfoMapper;
     @Autowired
-    ServiceinfoServic serviceinfoServic;
+    ServiceinfoService serviceinfoService;
     @Autowired
     UsersService usersService;
 
     @Override
     public List<ParentCustom> queryParentServiceAndPropertyByCode(String code) {
         List<ParentCustom> list = new ArrayList<ParentCustom>();
-        List<ParentCustom> serviceList = serviceinfoServic.queryParentServiceByCode(code);
+        List<ParentCustom> serviceList = serviceinfoService.queryParentServiceByCode(code);
         List<ParentCustom> propertyList = propertyinfoMapper.queryParentPropertyByCode(code);
         list.addAll(serviceList);
         list.addAll(propertyList);
@@ -101,7 +101,7 @@ public class PropertyinfoServiceImpl implements PropertyinfoServic {
         Propertyinfo propertyParent = selectPropertyinfoById(parentId);
         //propertyParent==null,说明选的上级是服务商
         if (propertyParent == null) {
-            Serviceinfo serviceParent = serviceinfoServic.selectServiceinfoById(parentId);
+            Serviceinfo serviceParent = serviceinfoService.selectServiceinfoById(parentId);
             code = serviceParent.getCode();
         } else {
             code = propertyParent.getCode();

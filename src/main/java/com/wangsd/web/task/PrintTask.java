@@ -10,7 +10,7 @@ import com.wangsd.web.dao.BillaccountMapper;
 import com.wangsd.web.model.Printinfo;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
-import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.HousinginfoService;
 import com.wangsd.web.service.PrintService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +35,7 @@ public class PrintTask {
     @Autowired
     private PrintService printService;
     @Autowired
-    private HousinginfoServic housinginfoServic;
+    private HousinginfoService housinginfoService;
 
     //每天晚上11点50执行
     @Scheduled(cron = "0 50 23 * * ?")
@@ -47,7 +47,7 @@ public class PrintTask {
         for (Printinfo info : list) {
             PrintMessage printMessage = new PrintMessage(info.getMachineCode(), info.getMsign());
             //查询小区信息
-            HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(info.getDepartmentId());
+            HousinginfoCustom housing = housinginfoService.selectHousingCustomById(info.getDepartmentId());
             //按支付方式统计小区
             List<BillAccountCustom> list1 = billaccountMapper.getPrintGroupByPayType(housing.getId());
             //按费用类型统计小区
@@ -100,7 +100,7 @@ public class PrintTask {
             //根据物业id查询小区列表
             HousinginfoCustom housQuery = new HousinginfoCustom();
             housQuery.setParentId(info.getDepartmentId());
-            List<HousinginfoCustom> housList = housinginfoServic.queryHousingCustomAll(housQuery);
+            List<HousinginfoCustom> housList = housinginfoService.queryHousingCustomAll(housQuery);
             //查询物业下面所有交易户数
             BillAccountCustom query = new BillAccountCustom();
             query.setPropertyId(info.getDepartmentId());

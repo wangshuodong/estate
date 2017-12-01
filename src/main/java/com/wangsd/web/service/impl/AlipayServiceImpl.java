@@ -19,7 +19,7 @@ import com.wangsd.web.modelCustom.RoominfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.AlipayService;
 import com.wangsd.web.service.BillAccountService;
-import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.HousinginfoService;
 import com.wangsd.web.service.RoominfoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +37,7 @@ public class AlipayServiceImpl implements AlipayService {
     private static final Logger logger = LogManager.getLogger(AlipayServiceImpl.class.getName());
 
     @Autowired
-    HousinginfoServic housinginfoServic;
+    HousinginfoService housinginfoService;
     @Autowired
     RoominfoService roominfoService;
     @Autowired
@@ -80,7 +80,7 @@ public class AlipayServiceImpl implements AlipayService {
                 //执行成功返回支付宝的小区统一编号和状态
                 housing.setCommunityId(response.getCommunityId());
                 housing.setStatus(StaticVar.HOUSING_STATUS2);
-                housinginfoServic.updateHousing(housing);
+                housinginfoService.updateHousing(housing);
                 jsonResult.setMessage("同步成功");
                 jsonResult.setSuccess(true);
             } else {
@@ -238,7 +238,7 @@ public class AlipayServiceImpl implements AlipayService {
             logger.debug("----response----" + response.getBody());
             if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
-                return housinginfoServic.updateHousingByCommunityId(StaticVar.HOUSING_STATUS3, community_id);
+                return housinginfoService.updateHousingByCommunityId(StaticVar.HOUSING_STATUS3, community_id);
             } else {
                 logger.info("调用失败");
             }
@@ -267,7 +267,7 @@ public class AlipayServiceImpl implements AlipayService {
             logger.debug("----response----" + response.getBody());
             if ("10000".equals(response.getCode())) {
                 logger.debug("调用成功");
-                return housinginfoServic.updateHousingByCommunityId(StaticVar.HOUSING_STATUS4, community_id);
+                return housinginfoService.updateHousingByCommunityId(StaticVar.HOUSING_STATUS4, community_id);
             } else {
                 logger.info("调用失败");
             }

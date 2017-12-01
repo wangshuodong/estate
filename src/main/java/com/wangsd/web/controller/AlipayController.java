@@ -33,13 +33,13 @@ public class AlipayController {
     private static final Logger logger = LogManager.getLogger(AlipayController.class.getName());
 
     @Autowired
-    HousinginfoServic housinginfoServic;
+    HousinginfoService housinginfoService;
     @Autowired
     AlipayService alipayService;
     @Autowired
     RoominfoService roominfoService;
     @Autowired
-    PropertyinfoServic propertyinfoServic;
+    PropertyinfoService propertyinfoService;
     @Autowired
     BillAccountService billAccountService;
 
@@ -56,7 +56,7 @@ public class AlipayController {
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         //调用支付宝接口
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(id);
         return alipayService.communityCreateRequest(housing, housing.getToken(), loginUser);
     }
 
@@ -74,7 +74,7 @@ public class AlipayController {
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         //调用支付宝接口
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(id);
         boolean bl = alipayService.basicserviceInitializeRequest(housing.getCommunityId(), housing.getToken(), loginUser);
         jsonResult.setSuccess(bl);
         return jsonResult;
@@ -94,7 +94,7 @@ public class AlipayController {
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         //调用支付宝接口
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(id);
         boolean bl = alipayService.basicserviceModifyRequest(housing.getCommunityId(), "ONLINE", housing.getToken(), loginUser);
         jsonResult.setSuccess(bl);
         return jsonResult;
@@ -119,7 +119,7 @@ public class AlipayController {
         RoominfoCustom roominfoCustom = new RoominfoCustom();
         BeanUtils.copyProperties(roominfo, roominfoCustom);
         roomList.add(roominfoCustom);
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(roominfo.getParentId());
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(roominfo.getParentId());
         //调用支付宝接口
         boolean bl = alipayService.roominfoUploadRequest(housing.getCommunityId(), roomList, housing.getToken(), loginUser);
         jsonResult.setSuccess(bl);
@@ -142,9 +142,9 @@ public class AlipayController {
         HousinginfoCustom housingquery = new HousinginfoCustom();
         housingquery.setParentCode(loginUser.getParentCode());
         housingquery.setStatus(StaticVar.HOUSING_STATUS1);
-        List<Housinginfo> list = housinginfoServic.queryAllList(housingquery);
+        List<Housinginfo> list = housinginfoService.queryAllList(housingquery);
         for (Housinginfo housing : list) {
-            Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(housing.getParentId());
+            Propertyinfo propertyinfo = propertyinfoService.selectPropertyinfoById(housing.getParentId());
             RoominfoCustom query = new RoominfoCustom();
             query.setStatus(false);//未同步的
             query.setParentId(housing.getId());
@@ -180,7 +180,7 @@ public class AlipayController {
             List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
             if (list.size() == 1) {
                 BillAccountCustom billaccount = list.get(0);
-                HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(billaccount.getHousingId());
+                HousinginfoCustom housing = housinginfoService.selectHousingCustomById(billaccount.getHousingId());
                 List<BillAccountCustom> billList = new ArrayList<>();
                 billList.add(billaccount);
                 bl = alipayService.billBatchUploadRequest(housing.getCommunityId(), billList, housing.getToken(), loginUser);
@@ -189,9 +189,9 @@ public class AlipayController {
             HousinginfoCustom housingquery = new HousinginfoCustom();
             housingquery.setParentCode(loginUser.getParentCode());
             housingquery.setStatus(StaticVar.HOUSING_STATUS1);
-            List<Housinginfo> list = housinginfoServic.queryAllList(housingquery);
+            List<Housinginfo> list = housinginfoService.queryAllList(housingquery);
             for (Housinginfo housing : list) {
-                Propertyinfo propertyinfo = propertyinfoServic.selectPropertyinfoById(housing.getParentId());
+                Propertyinfo propertyinfo = propertyinfoService.selectPropertyinfoById(housing.getParentId());
                 BillAccountCustom query = new BillAccountCustom();
                 query.setHousingId(housing.getId());
                 query.setStatus(false);
@@ -211,7 +211,7 @@ public class AlipayController {
     public String qrcode(Integer id, Model model, HttpSession session) {
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(id);
         String codeImage = alipayService.communityDetailsQueryRequest(housing.getCommunityId(), housing.getToken(), loginUser);
         model.addAttribute("codeImage", codeImage);
         return "/housing/housing-qrcode";

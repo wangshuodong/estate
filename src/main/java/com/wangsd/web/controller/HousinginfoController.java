@@ -10,9 +10,9 @@ import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.AlipayService;
-import com.wangsd.web.service.HousinginfoServic;
+import com.wangsd.web.service.HousinginfoService;
 import com.wangsd.web.service.PrintService;
-import com.wangsd.web.service.PropertyinfoServic;
+import com.wangsd.web.service.PropertyinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,9 +32,9 @@ import java.util.List;
 public class HousinginfoController {
 
     @Autowired
-    HousinginfoServic housinginfoServic;
+    HousinginfoService housinginfoService;
     @Autowired
-    PropertyinfoServic propertyinfoServic;
+    PropertyinfoService propertyinfoService;
     @Autowired
     AlipayService alipayService;
     @Autowired
@@ -49,11 +49,11 @@ public class HousinginfoController {
     @RequestMapping(value = "housingList")
     public String housingList(HousinginfoCustom query, Model model, HttpSession session) {
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        List<ParentCustom> parentList = housinginfoServic.queryParentPropertyByCode(loginUser.getParentCode());
+        List<ParentCustom> parentList = housinginfoService.queryParentPropertyByCode(loginUser.getParentCode());
         model.addAttribute("parentList", parentList);
         query.setParentCode(loginUser.getParentCode());
-        //List<Housinginfo> list = housinginfoServic.queryAllList(query);
-        List<HousinginfoCustom> list = housinginfoServic.queryHousingCustomAll(query);
+        //List<Housinginfo> list = housinginfoService.queryAllList(query);
+        List<HousinginfoCustom> list = housinginfoService.queryHousingCustomAll(query);
         model.addAttribute("housingList", list);
         model.addAttribute("query", query);
         return "/housing/housing-list";
@@ -71,10 +71,10 @@ public class HousinginfoController {
         UserCustom obj = (UserCustom) session.getAttribute("userInfo");
         String parentCode = obj.getParentCode();
         //查询上级物业
-        List<ParentCustom> parentList = housinginfoServic.queryParentPropertyByCode(parentCode);
+        List<ParentCustom> parentList = housinginfoService.queryParentPropertyByCode(parentCode);
         model.addAttribute("parentList", parentList);
         if (id != null) {
-            Housinginfo housinginfo = housinginfoServic.selectHousinginfoById(id);
+            Housinginfo housinginfo = housinginfoService.selectHousinginfoById(id);
             model.addAttribute("housinginfo", housinginfo);
         }
         return "/housing/housing-info";
@@ -95,25 +95,25 @@ public class HousinginfoController {
             housinginfo.setDeletestatus(false);
             housinginfo.setStatus(StaticVar.HOUSING_STATUS1);
             housinginfo.setCreateTime(new Date());
-            Housinginfo h1 = housinginfoServic.selectHousingByName(housinginfo.getName());
+            Housinginfo h1 = housinginfoService.selectHousingByName(housinginfo.getName());
             if(h1 == null){
-                bl = housinginfoServic.insertHousing(housinginfo);
+                bl = housinginfoService.insertHousing(housinginfo);
             }else {
                 bl = false;
                 jsonResult.setMessage("新增小区已存在");
             }
         }else { //修改
-            Housinginfo oldDept = housinginfoServic.selectHousinginfoById(housinginfo.getId());
+            Housinginfo oldDept = housinginfoService.selectHousinginfoById(housinginfo.getId());
             if (oldDept.getParentId() != housinginfo.getParentId()) {
-                Propertyinfo parent = propertyinfoServic.selectPropertyinfoById(housinginfo.getParentId());
-                String maxCode = housinginfoServic.selectMaxByParentCode(housinginfo.getParentId());
+                Propertyinfo parent = propertyinfoService.selectPropertyinfoById(housinginfo.getParentId());
+                String maxCode = housinginfoService.selectMaxByParentCode(housinginfo.getParentId());
                 if (maxCode == null) {
                     housinginfo.setCode(parent.getCode() + "0001");
                 }else {
                     housinginfo.setCode(ApplicationUtils.getOrgCode(maxCode));
                 }
             }
-            bl = housinginfoServic.updateHousing(housinginfo);
+            bl = housinginfoService.updateHousing(housinginfo);
         }
         jsonResult.setSuccess(bl);
         return jsonResult;
@@ -129,12 +129,12 @@ public class HousinginfoController {
     public JSONResult deleteHousing(Integer id, HttpSession session) {
         JSONResult obj = new JSONResult();
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(id);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(id);
         //让小区在支付宝平台下线
         if (housing.getStatus() == StaticVar.HOUSING_STATUS4) {
             alipayService.basicserviceModifyRequest(housing.getCommunityId(), "OFFLINE", housing.getToken(), loginUser);
         }
-        boolean delStatus = housinginfoServic.deleteHousingById(id);
+        boolean delStatus = housinginfoService.deleteHousingById(id);
         obj.setSuccess(delStatus);
         return obj;
     }
@@ -180,7 +180,7 @@ public class HousinginfoController {
      */
     @RequestMapping(value = "smsDeposit")
     public String smsDeposit(Integer id, Model model, HttpSession session) {
-        Housinginfo housinginfo = housinginfoServic.selectHousinginfoById(id);
+        Housinginfo housinginfo = housinginfoService.selectHousinginfoById(id);
         model.addAttribute("housinginfo", housinginfo);
         return "/housing/smsdeposit-config";
     }
@@ -195,15 +195,15 @@ public class HousinginfoController {
     @ResponseBody
     public JSONResult saveOrUpdateSmsdeposit(Housinginfo housinginfo, Model model) {
         boolean bl;
-        HousinginfoCustom housing = housinginfoServic.selectHousingCustomById(housinginfo.getId());
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(housinginfo.getId());
         if (housing.getId() != null) {  //累加更新短信条数
             if(housing.getMessageNum() == null){
                 housing.setMessageNum(housinginfo.getMessageNum());
-                bl = housinginfoServic.updateHousing(housing);
+                bl = housinginfoService.updateHousing(housing);
             }else{
                 int num  = housing.getMessageNum()+housinginfo.getMessageNum();
                 housing.setMessageNum(num);
-                bl = housinginfoServic.updateHousing(housing);
+                bl = housinginfoService.updateHousing(housing);
             }
         }else {
             bl = false;

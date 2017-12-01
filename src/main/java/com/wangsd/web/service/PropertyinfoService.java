@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/11/19.
  */
-public interface PropertyinfoServic {
+public interface PropertyinfoService {
 
     /**
      * 查询所有上级服务商和物业

@@ -38,11 +38,11 @@ public class UserController {
     @Autowired
     private UsersService usersService;
     @Autowired
-    ServiceinfoServic serviceinfoServic;
+    ServiceinfoService serviceinfoService;
     @Autowired
-    PropertyinfoServic propertyinfoServic;
+    PropertyinfoService propertyinfoService;
     @Autowired
-    HousinginfoServic housinginfoServic;
+    HousinginfoService housinginfoService;
     @Autowired
     RoleService roleService;
 
@@ -79,7 +79,7 @@ public class UserController {
             if (deptCode.length() >= 7) {
                 //得到登录人属于哪个服务商的code
                 deptCode = deptCode.substring(0, 7);
-                Serviceinfo serviceinfo = serviceinfoServic.selectServiceinfoByCode(deptCode);
+                Serviceinfo serviceinfo = serviceinfoService.selectServiceinfoByCode(deptCode);
                 userCustom.setAppId(serviceinfo.getAppId());
                 userCustom.setAlipayPublicKey(serviceinfo.getAlipayPublicKey());
                 userCustom.setMerchantPrivateKey(serviceinfo.getMerchantPrivateKey());
@@ -171,15 +171,15 @@ public class UserController {
             user.setPassword("111111");
             user.setEnable(true);
             if (user.getRoleId() == StaticVar.USERS_TYPE1) { //服务商
-                Serviceinfo info = serviceinfoServic.selectServiceinfoById(user.getParentId());
+                Serviceinfo info = serviceinfoService.selectServiceinfoById(user.getParentId());
                 user.setType(StaticVar.USERS_TYPE1);
                 user.setParentCode(info.getCode());
             }else if (user.getRoleId() == StaticVar.USERS_TYPE2) { //物业
-                Propertyinfo info = propertyinfoServic.selectPropertyinfoById(user.getParentId());
+                Propertyinfo info = propertyinfoService.selectPropertyinfoById(user.getParentId());
                 user.setType(StaticVar.USERS_TYPE2);
                 user.setParentCode(info.getCode());
             }else if (user.getRoleId() == StaticVar.USERS_TYPE3) {
-                Housinginfo info = housinginfoServic.selectHousinginfoById(user.getParentId());
+                Housinginfo info = housinginfoService.selectHousinginfoById(user.getParentId());
                 user.setType(StaticVar.USERS_TYPE3);
                 user.setParentCode(info.getCode());
             }

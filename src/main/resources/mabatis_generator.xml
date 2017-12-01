@@ -56,7 +56,8 @@
         <table tableName="propertyinfo"/>
         <table tableName="roominfo"/>
         <table tableName="housinginfo"/>
-        -->
         <table tableName="billaccount"/>
+        -->
+        <table tableName="costType"/>
     </context>
 </generatorConfiguration>
