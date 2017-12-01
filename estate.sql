@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50624
-Source Host           : 127.0.0.1:3306
+Source Server         : localhost_3306
+Source Server Version : 50709
+Source Host           : localhost:3306
 Source Database       : estate
 
 Target Server Type    : MYSQL
-Target Server Version : 50624
+Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2017-11-30 23:36:58
+Date: 2017-12-01 14:40:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,18 +39,33 @@ CREATE TABLE `billaccount` (
   `printStatus` tinyint(1) DEFAULT '0' COMMENT '打印状态',
   `ticketStatus` tinyint(1) DEFAULT '0' COMMENT '开票状态',
   `buyer_user_id` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1016 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1151 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of billaccount
 -- ----------------------------
-INSERT INTO `billaccount` VALUES ('1011', '10003', '1020', '1', '100', '2017年11', '20171124', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', null, null, '1', '0', null, '2017-11-25 21:50:33');
-INSERT INTO `billaccount` VALUES ('1012', '10003', '1022', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, '2017-11-25 21:55:56');
-INSERT INTO `billaccount` VALUES ('1013', '10003', '1023', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, '2017-11-25 21:55:56');
-INSERT INTO `billaccount` VALUES ('1014', '10003', '1024', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, '2017-11-25 21:55:56');
-INSERT INTO `billaccount` VALUES ('1015', '10003', '1020', '2', '10', '2017年11', '20171120', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', null, null, '0', '0', null, '2017-11-27 14:16:55');
+INSERT INTO `billaccount` VALUES ('1011', '10003', '1020', '1', '100', '2017年11', '20171124', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', null, null, '1', '0', null, null, '2017-11-25 21:50:33');
+INSERT INTO `billaccount` VALUES ('1012', '10003', '1022', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
+INSERT INTO `billaccount` VALUES ('1013', '10003', '1023', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
+INSERT INTO `billaccount` VALUES ('1014', '10003', '1024', '1', '138', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
+INSERT INTO `billaccount` VALUES ('1015', '10003', '1020', '2', '10', '2017年11', '20171120', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', null, null, '0', '0', null, null, '2017-11-27 14:16:55');
+
+-- ----------------------------
+-- Table structure for costtype
+-- ----------------------------
+DROP TABLE IF EXISTS `costtype`;
+CREATE TABLE `costtype` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of costtype
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for housinginfo
@@ -104,7 +119,7 @@ CREATE TABLE `menu` (
   `sort` int(11) DEFAULT NULL COMMENT '排序',
   `enable` tinyint(4) DEFAULT NULL COMMENT '是否启用',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=602 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=603 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
@@ -128,6 +143,7 @@ INSERT INTO `menu` VALUES ('301', '开发中', null, null, '3', '99', '1');
 INSERT INTO `menu` VALUES ('401', '开发中', null, null, '4', '99', '1');
 INSERT INTO `menu` VALUES ('501', '开发中', null, null, '5', '99', '1');
 INSERT INTO `menu` VALUES ('601', '角色管理', '/rest/role/roleList', null, '6', '99', '1');
+INSERT INTO `menu` VALUES ('602', '费用类型', null, null, '6', '99', '1');
 
 -- ----------------------------
 -- Table structure for permission
