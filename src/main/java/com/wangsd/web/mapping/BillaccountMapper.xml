@@ -19,9 +19,9 @@
     <result column="alipay_trade_no" property="alipayTradeNo" jdbcType="VARCHAR" />
     <result column="weixin_trade_no" property="weixinTradeNo" jdbcType="VARCHAR" />
     <result column="printStatus" property="printstatus" jdbcType="BIT" />
-    <result column="ticketStatus" property="ticketstatus" jdbcType="BIT" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="ticketStatus" property="ticketstatus" jdbcType="INTEGER" />
     <result column="buyer_user_id" property="buyerUserId" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -85,7 +85,7 @@
   <sql id="Base_Column_List" >
     id, housing_id, roominfo_id, cost_type, bill_entry_amount, acct_period, release_day, 
     deadline, relate_id, status, payDate, payType, payStatus, deleteStatus, alipay_trade_no, 
-    weixin_trade_no, printStatus, ticketStatus, remark, buyer_user_id, create_time
+    weixin_trade_no, printStatus, ticketStatus, buyer_user_id, remark, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.BillaccountExample" >
     select
@@ -124,15 +124,15 @@
       status, payDate, payType, 
       payStatus, deleteStatus, alipay_trade_no, 
       weixin_trade_no, printStatus, ticketStatus, 
-      remark, buyer_user_id, create_time
+      buyer_user_id, remark, create_time
       )
     values (#{id,jdbcType=INTEGER}, #{housingId,jdbcType=INTEGER}, #{roominfoId,jdbcType=INTEGER}, 
       #{costType,jdbcType=INTEGER}, #{billEntryAmount,jdbcType=DOUBLE}, #{acctPeriod,jdbcType=VARCHAR}, 
       #{releaseDay,jdbcType=VARCHAR}, #{deadline,jdbcType=VARCHAR}, #{relateId,jdbcType=VARCHAR}, 
       #{status,jdbcType=BIT}, #{paydate,jdbcType=TIMESTAMP}, #{paytype,jdbcType=INTEGER}, 
       #{paystatus,jdbcType=BIT}, #{deletestatus,jdbcType=BIT}, #{alipayTradeNo,jdbcType=VARCHAR}, 
-      #{weixinTradeNo,jdbcType=VARCHAR}, #{printstatus,jdbcType=BIT}, #{ticketstatus,jdbcType=BIT}, 
-      #{remark,jdbcType=VARCHAR}, #{buyerUserId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{weixinTradeNo,jdbcType=VARCHAR}, #{printstatus,jdbcType=BIT}, #{ticketstatus,jdbcType=INTEGER}, 
+      #{buyerUserId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Billaccount" >
@@ -192,11 +192,11 @@
       <if test="ticketstatus != null" >
         ticketStatus,
       </if>
-      <if test="remark != null" >
-        remark,
-      </if>
       <if test="buyerUserId != null" >
         buyer_user_id,
+      </if>
+      <if test="remark != null" >
+        remark,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -255,13 +255,13 @@
         #{printstatus,jdbcType=BIT},
       </if>
       <if test="ticketstatus != null" >
-        #{ticketstatus,jdbcType=BIT},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
+        #{ticketstatus,jdbcType=INTEGER},
       </if>
       <if test="buyerUserId != null" >
         #{buyerUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -329,13 +329,13 @@
         printStatus = #{record.printstatus,jdbcType=BIT},
       </if>
       <if test="record.ticketstatus != null" >
-        ticketStatus = #{record.ticketstatus,jdbcType=BIT},
-      </if>
-      <if test="record.remark != null" >
-        remark = #{record.remark,jdbcType=VARCHAR},
+        ticketStatus = #{record.ticketstatus,jdbcType=INTEGER},
       </if>
       <if test="record.buyerUserId != null" >
         buyer_user_id = #{record.buyerUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -364,9 +364,9 @@
       alipay_trade_no = #{record.alipayTradeNo,jdbcType=VARCHAR},
       weixin_trade_no = #{record.weixinTradeNo,jdbcType=VARCHAR},
       printStatus = #{record.printstatus,jdbcType=BIT},
-      ticketStatus = #{record.ticketstatus,jdbcType=BIT},
-      remark = #{record.remark,jdbcType=VARCHAR},
+      ticketStatus = #{record.ticketstatus,jdbcType=INTEGER},
       buyer_user_id = #{record.buyerUserId,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -424,13 +424,13 @@
         printStatus = #{printstatus,jdbcType=BIT},
       </if>
       <if test="ticketstatus != null" >
-        ticketStatus = #{ticketstatus,jdbcType=BIT},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
+        ticketStatus = #{ticketstatus,jdbcType=INTEGER},
       </if>
       <if test="buyerUserId != null" >
         buyer_user_id = #{buyerUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -456,9 +456,9 @@
       alipay_trade_no = #{alipayTradeNo,jdbcType=VARCHAR},
       weixin_trade_no = #{weixinTradeNo,jdbcType=VARCHAR},
       printStatus = #{printstatus,jdbcType=BIT},
-      ticketStatus = #{ticketstatus,jdbcType=BIT},
-      remark = #{remark,jdbcType=VARCHAR},
+      ticketStatus = #{ticketstatus,jdbcType=INTEGER},
       buyer_user_id = #{buyerUserId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

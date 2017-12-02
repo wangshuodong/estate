@@ -2,6 +2,7 @@ package com.wangsd.web.service;
 
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.web.model.Billaccount;
+import com.wangsd.web.model.Ticket;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 
 import java.util.List;
@@ -20,6 +21,13 @@ public interface BillAccountService {
      * @return
      */
     public Billaccount selectBillAccountById(Integer id);
+
+    /**
+     * 根据支付宝订单编号查询账单
+     * @param tradeNo
+     * @return
+     */
+    public Billaccount selectBillAccountByTradeNo(String tradeNo);
 
     /**
      * 新增账单信息
@@ -70,5 +78,24 @@ public interface BillAccountService {
      */
     public BillAccountCustom selectAllGroupByStatus(BillAccountCustom billAccountCustom);
 
+    /**
+     * 新增电子发票信息
+     * @param ticket
+     * @return
+     */
+    public boolean insertTicket(Ticket ticket);
 
+    /**
+     * 根据主键查询电子发票
+     * @return
+     */
+    public Ticket selectTicketById(Integer id);
+
+    /**
+     * 根据开票状态查询账单
+     * @param code
+     * @param ticketstatus
+     * @return
+     */
+    //public List<BillAccountCustom> queryInvoiceListTicketstatus(String code, Integer ticketstatus);
 }

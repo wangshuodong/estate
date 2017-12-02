@@ -1,9 +1,13 @@
 package com.wangsd.web.service.impl;
 
 import com.wangsd.core.entity.JSONResult;
+import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.dao.BillaccountMapper;
+import com.wangsd.web.dao.TicketMapper;
 import com.wangsd.web.model.Billaccount;
+import com.wangsd.web.model.BillaccountExample;
 import com.wangsd.web.model.Roominfo;
+import com.wangsd.web.model.Ticket;
 import com.wangsd.web.modelCustom.BillAccountCustom;
 import com.wangsd.web.service.BillAccountService;
 import com.wangsd.web.service.RoominfoService;
@@ -22,6 +26,8 @@ public class BillAccountServiceImpl implements BillAccountService {
     @Autowired
     BillaccountMapper billaccountMapper;
     @Autowired
+    TicketMapper ticketMapper;
+    @Autowired
     RoominfoService roominfoService;
 
 
@@ -34,6 +40,18 @@ public class BillAccountServiceImpl implements BillAccountService {
     @Override
     public Billaccount selectBillAccountById(Integer id) {
         return billaccountMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Billaccount selectBillAccountByTradeNo(String tradeNo) {
+        BillaccountExample example = new BillaccountExample();
+        example.createCriteria().andAlipayTradeNoEqualTo(tradeNo);
+        List<Billaccount> list = billaccountMapper.selectByExample(example);
+        if (list.size() > 0) {
+            return list.get(0);
+        }else {
+            return null;
+        }
     }
 
     /**
@@ -145,5 +163,33 @@ public class BillAccountServiceImpl implements BillAccountService {
     @Override
     public BillAccountCustom selectAllGroupByStatus(BillAccountCustom billAccountCustom){
         return billaccountMapper.selectAllGroupByStatus(billAccountCustom);
+    }
+
+    /**
+     * 新增电子发票信息
+     * @param ticket
+     * @return
+     */
+    @Override
+    public boolean insertTicket(Ticket ticket) {
+        Billaccount billaccount = new Billaccount();
+        billaccount.setId(ticket.getBillaccountId());
+        billaccount.setTicketstatus(StaticVar.BILLACCOUNT_TICKETSTATUS1);
+        this.updateBillaccount(billaccount);
+        int ret = ticketMapper.insertSelective(ticket);
+        if (ret > 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    /**
+     * 根据主键查询电子发票
+     * @return
+     */
+    @Override
+    public Ticket selectTicketById(Integer id) {
+        return ticketMapper.selectByPrimaryKey(id);
     }
 }

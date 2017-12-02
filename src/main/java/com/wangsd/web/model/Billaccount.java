@@ -37,11 +37,11 @@ public class Billaccount {
 
     private Boolean printstatus;
 
-    private Boolean ticketstatus;
-
-    private String remark;
+    private Integer ticketstatus;
 
     private String buyerUserId;
+
+    private String remark;
 
     private Date createTime;
 
@@ -181,20 +181,12 @@ public class Billaccount {
         this.printstatus = printstatus;
     }
 
-    public Boolean getTicketstatus() {
+    public Integer getTicketstatus() {
         return ticketstatus;
     }
 
-    public void setTicketstatus(Boolean ticketstatus) {
+    public void setTicketstatus(Integer ticketstatus) {
         this.ticketstatus = ticketstatus;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
     }
 
     public String getBuyerUserId() {
@@ -203,6 +195,14 @@ public class Billaccount {
 
     public void setBuyerUserId(String buyerUserId) {
         this.buyerUserId = buyerUserId == null ? null : buyerUserId.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 
     public Date getCreateTime() {

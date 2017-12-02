@@ -37,46 +37,19 @@ public class ApplicationUtils {
      */
     public static String getPayType(Integer pay_type) {
         String payType;
-        if (pay_type == StaticVar.billaccount_paystatus1) {
+        if (pay_type == StaticVar.BILLACCOUNT_PAYSTATUS1) {
             payType = "现金";
-        } else if (pay_type == StaticVar.billaccount_paystatus2) {
+        } else if (pay_type == StaticVar.BILLACCOUNT_PAYSTATUS2) {
             payType = "支付宝";
-        } else if (pay_type == StaticVar.billaccount_paystatus3) {
+        } else if (pay_type == StaticVar.BILLACCOUNT_PAYSTATUS3) {
             payType = "微信";
-        } else if (pay_type == StaticVar.billaccount_paystatus4) {
+        } else if (pay_type == StaticVar.BILLACCOUNT_PAYSTATUS4) {
             payType = "POS机";
         } else {
             payType = "其他";
         }
         return payType;
     }
-
-    /**
-     * 获取费用类型
-     * @param cost_type
-     * @return
-     */
-//    public static String getCostType(Integer cost_type) {
-//        String costType;
-//        if (cost_type == StaticVar.billaccount_cost_type1) {
-//            costType = "物业管理费";
-//        } else if (cost_type == StaticVar.billaccount_cost_type2) {
-//            costType = "水电公摊费";
-//        } else if (cost_type == StaticVar.billaccount_cost_type3) {
-//            costType = "垃圾清运费";
-//        } else if (cost_type == StaticVar.billaccount_cost_type4) {
-//            costType = "公共照明费";
-//        } else if (cost_type == StaticVar.billaccount_cost_type5) {
-//            costType = "水费";
-//        } else if (cost_type == StaticVar.billaccount_cost_type6) {
-//            costType = "电费";
-//        } else if (cost_type == StaticVar.billaccount_cost_type7) {
-//            costType = "蒸汽费";
-//        } else {
-//            costType = "其他";
-//        }
-//        return costType;
-//    }
 
     public static void main(String[] args) {
 

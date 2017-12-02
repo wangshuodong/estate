@@ -8,16 +8,15 @@ import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Printinfo;
 import com.wangsd.web.model.Roominfo;
+import com.wangsd.web.model.Ticket;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
 import com.wangsd.web.modelCustom.UserCustom;
-import com.wangsd.web.service.BillAccountService;
-import com.wangsd.web.service.HousinginfoService;
-import com.wangsd.web.service.PrintService;
-import com.wangsd.web.service.RoominfoService;
+import com.wangsd.web.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +42,10 @@ public class PageController {
     PrintService printService;
     @Autowired
     RoominfoService roominfoService;
+    @Autowired
+    ServiceinfoService serviceinfoService;
+    @Autowired
+    AlipayService alipayService;
 
     /**
      * 登录页
@@ -207,9 +210,30 @@ public class PageController {
      * @return
      */
     @RequestMapping("/alipay_openticket")
-    public String alipay_openticket(HttpServletRequest request, HttpServletResponse response) {
-        String tradeNo = request.getParameter("tradeNo");
-        return "invoice";
+    public String alipay_openticket(HttpServletRequest request, HttpServletResponse response, Model model) {
+        String retUrl = "";
+        //String tradeNo = request.getParameter("tradeNo");
+        String tradeNo = "2017120121001004150200389768";
+        Billaccount billaccount = billAccountService.selectBillAccountByTradeNo(tradeNo);
+//        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(billaccount.getHousingId());
+//        String deptCode = housing.getCode().substring(0, 7);
+//        Serviceinfo serviceinfo = serviceinfoService.selectServiceinfoByCode(deptCode);
+        //alipayService.invoiceTitleListGetRequest("2088102172245446", serviceinfo.getAppId(), serviceinfo.getMerchantPrivateKey(), serviceinfo.getAlipayPublicKey(), null);
+//        alipayService.invoiceTitleListGetRequest("2088102172245446", StaticVar.appid, StaticVar.privateKey, StaticVar.publicKey, null);
+        if (billaccount.getTicketstatus() == StaticVar.BILLACCOUNT_TICKETSTATUS0) {
+            model.addAttribute("bill", billaccount);
+            retUrl ="invoice";
+        }else if (billaccount.getTicketstatus() == StaticVar.BILLACCOUNT_TICKETSTATUS1) {
+            retUrl ="invoice_load";
+        }else if (billaccount.getTicketstatus() == StaticVar.BILLACCOUNT_TICKETSTATUS2) {
+            retUrl ="invoice_success";
+        }
+        return retUrl;
     }
 
+    @RequestMapping("/invoiceAdd")
+    public String invoiceAdd(Ticket ticket) {
+        billAccountService.insertTicket(ticket);
+        return "invoice_load";
+    }
 }

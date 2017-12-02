@@ -7,24 +7,25 @@ import com.wangsd.web.model.Billaccount;
  */
 public class BillAccountCustom extends Billaccount {
 
-    private String costTypeName;
+    private String costTypeName; //费用类型
 
-    private String housingName;
+    private String housingName; //小区名称
 
-    private String housingCode;
+    private String housingCode; //小区code
 
-    private String roominfoAddress;
+    private String roominfoAddress; //房间详细名称
 
-    private String ownerName;
+    private String ownerName; //业主姓名
 
-    private String ownerCard;
+    private String ownerCard; //业主身份证
 
-    private String ownerPhone;
+    private String ownerPhone; //业主电话
 
     private Integer currPage;
 
     private Integer pageSize;
 
+    /* 统计信息 */
     private Double sumAmount;
     private Integer countNum;
     private Integer userNum;
@@ -36,6 +37,7 @@ public class BillAccountCustom extends Billaccount {
     private Integer unfkCount;
     private Integer tbCount;
     private Integer untbCount;
+    /* 统计信息 */
 
 
 

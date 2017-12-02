@@ -14,28 +14,15 @@
 
 	<!-- 登录系统后查询用户的菜单 -->
     <select id="queryMenuByRoleId" parameterType="string" resultMap="menuCustomReturn">
-			SELECT
-				parent.*, son.id AS sonId,
-				son.name AS sonName,
-				son.icon_cls AS sonIconCls,
-				son.url AS sonUrl,
-				son.parent_id AS sonParentId
-			FROM
-				(
-					SELECT
-						m.*
-					FROM
-						menu m,
-						role_menu r
-					WHERE
-						m.id = r.menu_id
-					AND r.role_id = #{roleId}
-					AND m.`enable` = TRUE
-					AND m.parent_id IS NULL
-					ORDER BY
-						m.sort
-				) parent
-			LEFT JOIN (
+		SELECT
+			parent.*, son.id AS sonId,
+			son. NAME AS sonName,
+			son.icon_cls AS sonIconCls,
+			son.url AS sonUrl,
+			son.parent_id AS sonParentId,
+			son.sort
+		FROM
+			(
 				SELECT
 					m.*
 				FROM
@@ -45,10 +32,20 @@
 					m.id = r.menu_id
 				AND r.role_id = #{roleId}
 				AND m.`enable` = TRUE
-				AND m.parent_id IS NOT NULL
-				ORDER BY
-					m.sort
-			) son ON son.parent_id = parent.id
+				AND m.parent_id IS NULL
+			) parent
+		LEFT JOIN (
+			SELECT
+				m.*
+			FROM
+				menu m,
+				role_menu r
+			WHERE
+				m.id = r.menu_id
+			AND r.role_id = #{roleId}
+			AND m.`enable` = TRUE
+			AND m.parent_id IS NOT NULL
+		) son ON son.parent_id = parent.id ORDER BY son.sort
     </select>
 
 	<!-- 根据角色id查询所有菜单 -->

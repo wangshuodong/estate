@@ -135,9 +135,20 @@ public interface AlipayService {
      */
     public boolean billDeleteRequest(String community_id, List<String> bill_entry_id_list, String token, UserCustom loginUser);
 
+    /**
+     * 获取指定用户所有的有效抬头列表
+     * @param user_id
+     */
+    public void invoiceTitleListGetRequest(String user_id, String appid, String privateKey, String publicKey, String token);
 
-    public void invoiceTitleListGetRequest(String user_id);
-
-
+    /**
+     * 查询用户的开票要素信息
+     * @param einv_trade_id
+     */
     public void InvoiceUserTradeQueryRequest(String einv_trade_id);
+
+    /**
+     * 申请开票
+     */
+    public void invoiceApplyRequest();
 }

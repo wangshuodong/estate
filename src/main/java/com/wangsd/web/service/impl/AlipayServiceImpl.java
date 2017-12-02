@@ -559,12 +559,34 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public void invoiceTitleListGetRequest(String user_id) {
-
+    public void invoiceTitleListGetRequest(String user_id, String appid, String privateKey, String publicKey, String token) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, appid, privateKey,
+                StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type);
+        AlipayEbppInvoiceTitleListGetRequest request = new AlipayEbppInvoiceTitleListGetRequest();
+        JSONObject bizContent = new JSONObject();
+        bizContent.put("user_id", user_id);
+        if (token != null) {
+            request.putOtherTextParam("app_auth_token", token);
+        }
+        try {
+            AlipayEbppInvoiceTitleListGetResponse response = alipayClient.execute(request, "authusrB8cb0f2bc71ad40d0af96374441056X44");
+            logger.debug("----response----" + response.getBody());
+            if ("10000".equals(response.getCode())) {
+                logger.debug("调用成功");
+            } else {
+                logger.info("调用失败");
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
     }
 
     public void InvoiceUserTradeQueryRequest(String einv_trade_id) {
         AlipayEbppInvoiceUserTradeQueryRequest request = new AlipayEbppInvoiceUserTradeQueryRequest();
+    }
+
+    public void invoiceApplyRequest() {
+
     }
 
 }

@@ -31,6 +31,9 @@
             <if test="paystatus != null">
                 and b.payStatus = #{paystatus}
             </if>
+            <if test="ticketstatus != null">
+                and b.ticketStatus = #{ticketstatus}
+            </if>
             <if test="id != null">
                 and b.id = #{id}
             </if>
