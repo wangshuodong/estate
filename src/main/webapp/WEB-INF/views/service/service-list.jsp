@@ -18,8 +18,8 @@
 			<table class="table table-border table-bordered table-bg table-hover table-sort table-striped">
 				<thead>
 				<tr class="text-c">
+					<th>ID</th>
 					<th>服务商名称</th>
-					<th>上级服务商</th>
 					<th>区域</th>
 					<th>联系人</th>
 					<th>联系地址</th>
@@ -30,8 +30,8 @@
 				<tbody>
 				<c:forEach items="${serviceList}" var="item">
 					<tr class="text-c">
+						<td>${ item.id }</td>
 						<td>${ item.name }</td>
-						<td></td>
 						<td>${ item.region }</td>
 						<td>${ item.contactPeople }</td>
 						<td>${ item.contactAddress }</td>

@@ -7,6 +7,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.CplifeRoomInfoResp;
 import com.alipay.api.domain.InvoiceApplyOpenModel;
+import com.alipay.api.domain.InvoiceItemApplyOpenModel;
 import com.alipay.api.domain.InvoiceTitleApplyOpenModel;
 import com.alipay.api.request.*;
 import com.alipay.api.response.*;
@@ -28,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -230,7 +232,7 @@ public class AlipayServiceImpl implements AlipayService {
         JSONObject bizContent = new JSONObject();
         bizContent.put("community_id", community_id);
         bizContent.put("service_type", "PROPERTY_PAY_BILL_MODE");
-        bizContent.put("external_invoke_address", "https://www.alipayjf.com/rest/page/alipay_estate_return");
+        bizContent.put("external_invoke_address", loginUser.getReturnUrl());
         request.setBizContent(bizContent.toString());
         if (token != null) {
             request.putOtherTextParam("app_auth_token", token);
@@ -259,7 +261,7 @@ public class AlipayServiceImpl implements AlipayService {
         bizContent.put("community_id", community_id);
         bizContent.put("service_type", "PROPERTY_PAY_BILL_MODE");
         bizContent.put("status", status);
-        bizContent.put("external_invoke_address", "https://www.alipayjf.com/rest/page/alipay_estate_return");
+        bizContent.put("external_invoke_address", loginUser.getReturnUrl());
         request.setBizContent(bizContent.toString());
         if (token != null) {
             request.putOtherTextParam("app_auth_token", token);
@@ -402,6 +404,10 @@ public class AlipayServiceImpl implements AlipayService {
         bizContent.put("community_id", community_id);
         JSONArray jsonArray = new JSONArray();
         for (BillAccountCustom billaccount : billList) {
+            //金额等于0的不同步
+            if (billaccount.getBillEntryAmount() <= 0) {
+                continue;
+            }
             JSONObject room_info_set = new JSONObject();
             room_info_set.put("bill_entry_id", billaccount.getId());
             room_info_set.put("out_room_id", billaccount.getRoominfoId());
@@ -597,17 +603,37 @@ public class AlipayServiceImpl implements AlipayService {
         bizContent.put("user_id", "2088102172245446");
         bizContent.put("m_short_name", "KFC");//商户一级简称
         bizContent.put("sub_m_short_name", "KFC-HZ-2011");//商户一级简称
+
         InvoiceApplyOpenModel invoice_apply_model = new InvoiceApplyOpenModel();
         invoice_apply_model.setOutApplyId(String.valueOf(System.currentTimeMillis()));//开票申请唯一id
         invoice_apply_model.setOutTradeNo("1011"); //账单id
         invoice_apply_model.setInvoiceKind("PLAIN");//发票类型，增值税普通发票
+
         InvoiceTitleApplyOpenModel titleModel = new InvoiceTitleApplyOpenModel();
         titleModel.setTitleName("某某公司");
         invoice_apply_model.setInvoiceTitle(titleModel);
 
-        //invoice_apply_model.setInvoiceContent();
-        bizContent.put("invoice_apply_model", invoice_apply_model);
+        //发票内容
+        List<InvoiceItemApplyOpenModel> contentList = new ArrayList<>();
+        InvoiceItemApplyOpenModel content = new InvoiceItemApplyOpenModel();
+        content.setItemName("电脑");//发票项目名称（或商品名称）
+        content.setItemNo("000001");//商品编号
+        content.setItemUnitPrice("100.00");//单价，格式：100.00
+        content.setItemSpec("G39");//商品型号
+        content.setItemQuantity(1L);//数量
+        content.setItemTaxRate("0.03");//税率
+        content.setItemUnit("1");//单位
+        contentList.add(content);
+        invoice_apply_model.setInvoiceContent(contentList);
 
+        invoice_apply_model.setInvoiceAmount("100.00");//发票金额（加税合计）
+        invoice_apply_model.setExTaxAmount("10.00");//不含税金额
+        invoice_apply_model.setSumTaxAmount("6.00");//合计税额
+        invoice_apply_model.setPayeeRegisterNo("9133010060913454XP");//销售方纳税人识别号
+        invoice_apply_model.setPayeeRegisterName("百胜集团有限公司");// 销售方名称，对应于销售方纳
+        invoice_apply_model.setTaxToken("2391ajiejiqfopj193109");//商户在税控服务开通后，税控厂商会向商户分配秘钥并提供token的生成方法，商户或ISV利用该方法生成tok
+
+        bizContent.put("invoice_apply_model", invoice_apply_model);
         if (token != null) {
             request.putOtherTextParam("app_auth_token", token);
         }

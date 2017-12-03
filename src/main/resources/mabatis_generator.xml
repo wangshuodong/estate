@@ -50,7 +50,6 @@
         </table>
         
         <table tableName="printinfo"/>
-        <table tableName="serviceinfo"/>
         <table tableName="users"/>
         <table tableName="housinginfo"/>
         <table tableName="propertyinfo"/>
@@ -58,7 +57,8 @@
         <table tableName="housinginfo"/>
         <table tableName="costType"/>
         <table tableName="billaccount"/>
-        -->
         <table tableName="ticket"/>
+        -->
+        <table tableName="serviceinfo"/>
     </context>
 </generatorConfiguration>

@@ -855,6 +855,76 @@ public class ServiceinfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andReturnUrlIsNull() {
+            addCriterion("return_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlIsNotNull() {
+            addCriterion("return_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlEqualTo(String value) {
+            addCriterion("return_url =", value, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlNotEqualTo(String value) {
+            addCriterion("return_url <>", value, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlGreaterThan(String value) {
+            addCriterion("return_url >", value, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("return_url >=", value, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlLessThan(String value) {
+            addCriterion("return_url <", value, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlLessThanOrEqualTo(String value) {
+            addCriterion("return_url <=", value, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlLike(String value) {
+            addCriterion("return_url like", value, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlNotLike(String value) {
+            addCriterion("return_url not like", value, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlIn(List<String> values) {
+            addCriterion("return_url in", values, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlNotIn(List<String> values) {
+            addCriterion("return_url not in", values, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlBetween(String value1, String value2) {
+            addCriterion("return_url between", value1, value2, "returnUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnUrlNotBetween(String value1, String value2) {
+            addCriterion("return_url not between", value1, value2, "returnUrl");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

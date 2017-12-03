@@ -83,6 +83,7 @@ public class UserController {
                 userCustom.setAppId(serviceinfo.getAppId());
                 userCustom.setAlipayPublicKey(serviceinfo.getAlipayPublicKey());
                 userCustom.setMerchantPrivateKey(serviceinfo.getMerchantPrivateKey());
+                userCustom.setReturnUrl(serviceinfo.getReturnUrl());
             }
             request.getSession().setAttribute("userInfo", userCustom);
         } catch (AuthenticationException e) {

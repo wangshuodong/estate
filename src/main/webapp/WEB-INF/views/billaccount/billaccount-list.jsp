@@ -38,6 +38,7 @@
 				<option value="1" <c:if test="${query.status == true }">selected</c:if>>已同步</option>
 			</select>
 		</div>
+		<br>
 		<%--<div class="form-group" id="roomdoc">--%>
 			<%--<select class="form-control shift-info" style="width:250px" name="roominfoId" id="roominfoId">--%>
 				<%--<option value=''>所有房间</option>--%>
@@ -60,6 +61,7 @@
 			<table class="table table-border table-bordered table-bg table-hover table-sort table-striped">
 				<thead>
 				<tr class="text-c">
+					<th width="25"><input type="checkbox" name="" value=""></th>
 					<th>小区名称</th>
 					<th>完整门牌</th>
 					<th>账单编号</th>
@@ -83,6 +85,7 @@
 				<tbody>
 				<c:forEach items="${billaccountList}" var="item">
 					<tr class="text-c">
+						<td><input type="checkbox" name="" value=""></td>
 						<td>${ item.housingName }</td>
 						<td>${ item.roominfoAddress }</td>
 						<td>${ item.id }</td>

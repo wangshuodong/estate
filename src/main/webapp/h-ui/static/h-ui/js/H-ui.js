@@ -4938,6 +4938,10 @@ function displaynavbar(obj){
 } (window.jQuery);
 
 $(function() {
+	/*全选*/
+    $("table thead th input:checkbox").on("click",function() {
+        $(this).closest("table").find("tr > td:first-child input:checkbox").prop("checked", $("table thead th input:checkbox").prop("checked"));
+    });
 	/*上传*/
 	$(document).on("change", ".input-file",function() {
 		var uploadVal = $(this).val();

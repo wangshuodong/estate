@@ -160,6 +160,7 @@ public class BillAccountController {
             bill.setCostType(billaccount.getCostType());
             bill.setAcctPeriod(billaccount.getAcctPeriod());
             bill.setBillEntryAmount(billaccount.getBillEntryAmount());
+            bill.setAcctPeriod(billaccount.getAcctPeriod());
             List<BillAccountCustom> billCustom = billAccountService.queryBillAccountList(bill);
             if (billCustom.size() == 0) {
                 billaccount.setCreateTime(new Date());

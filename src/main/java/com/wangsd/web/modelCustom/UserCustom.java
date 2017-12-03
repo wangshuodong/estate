@@ -15,6 +15,8 @@ public class UserCustom extends Users {
 
     private String alipayPublicKey;
 
+    private String returnUrl;
+
     public String getRoleName() {
         return roleName;
     }
@@ -45,5 +47,13 @@ public class UserCustom extends Users {
 
     public void setAlipayPublicKey(String alipayPublicKey) {
         this.alipayPublicKey = alipayPublicKey;
+    }
+
+    public String getReturnUrl() {
+        return returnUrl;
+    }
+
+    public void setReturnUrl(String returnUrl) {
+        this.returnUrl = returnUrl;
     }
 }

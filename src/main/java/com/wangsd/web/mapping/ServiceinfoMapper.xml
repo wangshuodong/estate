@@ -13,6 +13,7 @@
     <result column="app_id" property="appId" jdbcType="VARCHAR" />
     <result column="merchant_private_key" property="merchantPrivateKey" jdbcType="VARCHAR" />
     <result column="alipay_public_key" property="alipayPublicKey" jdbcType="VARCHAR" />
+    <result column="return_url" property="returnUrl" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, code, name, region, contact_people, contact_phone, contact_address, parent_id, 
-    app_id, merchant_private_key, alipay_public_key, create_time
+    app_id, merchant_private_key, alipay_public_key, return_url, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.ServiceinfoExample" >
     select
@@ -111,13 +112,13 @@
     insert into serviceinfo (id, code, name, 
       region, contact_people, contact_phone, 
       contact_address, parent_id, app_id, 
-      merchant_private_key, alipay_public_key, create_time
-      )
+      merchant_private_key, alipay_public_key, return_url, 
+      create_time)
     values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{region,jdbcType=VARCHAR}, #{contactPeople,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
       #{contactAddress,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR}, 
-      #{merchantPrivateKey,jdbcType=VARCHAR}, #{alipayPublicKey,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+      #{merchantPrivateKey,jdbcType=VARCHAR}, #{alipayPublicKey,jdbcType=VARCHAR}, #{returnUrl,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Serviceinfo" >
     insert into serviceinfo
@@ -154,6 +155,9 @@
       </if>
       <if test="alipayPublicKey != null" >
         alipay_public_key,
+      </if>
+      <if test="returnUrl != null" >
+        return_url,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -192,6 +196,9 @@
       </if>
       <if test="alipayPublicKey != null" >
         #{alipayPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="returnUrl != null" >
+        #{returnUrl,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -240,6 +247,9 @@
       <if test="record.alipayPublicKey != null" >
         alipay_public_key = #{record.alipayPublicKey,jdbcType=VARCHAR},
       </if>
+      <if test="record.returnUrl != null" >
+        return_url = #{record.returnUrl,jdbcType=VARCHAR},
+      </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -261,6 +271,7 @@
       app_id = #{record.appId,jdbcType=VARCHAR},
       merchant_private_key = #{record.merchantPrivateKey,jdbcType=VARCHAR},
       alipay_public_key = #{record.alipayPublicKey,jdbcType=VARCHAR},
+      return_url = #{record.returnUrl,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -299,6 +310,9 @@
       <if test="alipayPublicKey != null" >
         alipay_public_key = #{alipayPublicKey,jdbcType=VARCHAR},
       </if>
+      <if test="returnUrl != null" >
+        return_url = #{returnUrl,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -317,6 +331,7 @@
       app_id = #{appId,jdbcType=VARCHAR},
       merchant_private_key = #{merchantPrivateKey,jdbcType=VARCHAR},
       alipay_public_key = #{alipayPublicKey,jdbcType=VARCHAR},
+      return_url = #{returnUrl,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

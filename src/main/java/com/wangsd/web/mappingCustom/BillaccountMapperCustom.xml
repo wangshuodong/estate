@@ -25,6 +25,9 @@
             <if test="costType != null">
                 and b.cost_type = #{costType}
             </if>
+            <if test="acctPeriod != null">
+                and b.acct_period = #{acctPeriod}
+            </if>
             <if test="status != null">
                 and b.status = #{status}
             </if>
@@ -40,8 +43,8 @@
             <if test="currPage != null and pageSize != null">
                 limit #{currPage},#{pageSize}
             </if>
-
         </where>
+        ORDER BY b.id desc
     </select>
 
     <select id="getPrintGroupByPayType" resultType="BillAccountCustom" parameterType="string">

@@ -24,6 +24,12 @@
                 <textarea class="textarea radius" placeholder="支付宝公钥" name="alipayPublicKey" required>${serviceinfo.alipayPublicKey}</textarea>
             </div>
         </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>支付宝回调地址：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text radius size-L" value="${serviceinfo.returnUrl}" placeholder="支付宝回调地址" name="returnUrl" required>
+            </div>
+        </div>
 
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">

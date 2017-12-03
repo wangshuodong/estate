@@ -25,6 +25,8 @@ public class Serviceinfo {
 
     private String alipayPublicKey;
 
+    private String returnUrl;
+
     private Date createTime;
 
     public Integer getId() {
@@ -113,6 +115,14 @@ public class Serviceinfo {
 
     public void setAlipayPublicKey(String alipayPublicKey) {
         this.alipayPublicKey = alipayPublicKey == null ? null : alipayPublicKey.trim();
+    }
+
+    public String getReturnUrl() {
+        return returnUrl;
+    }
+
+    public void setReturnUrl(String returnUrl) {
+        this.returnUrl = returnUrl == null ? null : returnUrl.trim();
     }
 
     public Date getCreateTime() {

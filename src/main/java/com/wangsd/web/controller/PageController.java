@@ -5,12 +5,8 @@ import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.DateUtils;
 import com.wangsd.core.util.PrintMessage;
 import com.wangsd.core.util.StaticVar;
-import com.wangsd.web.model.Billaccount;
-import com.wangsd.web.model.Printinfo;
-import com.wangsd.web.model.Roominfo;
-import com.wangsd.web.model.Ticket;
+import com.wangsd.web.model.*;
 import com.wangsd.web.modelCustom.HousinginfoCustom;
-import com.wangsd.web.modelCustom.UserCustom;
 import com.wangsd.web.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -97,7 +93,9 @@ public class PageController {
     @RequestMapping("/alipay_estate_return")
     public void alipay_estate_return(HttpServletRequest request, HttpServletResponse response) {
         logger.info("--------------wangshuodong:调用支付宝回调接口-----------------------");
-        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        logger.info("-----id-----=" + id);
+        Serviceinfo serviceinfo = serviceinfoService.selectServiceinfoById(id);
         boolean isprint = false;
         String bizContent = "";
         //获取支付宝POST过来反馈信息
@@ -116,7 +114,7 @@ public class PageController {
             params.put(name, valueStr);
         }
         try {
-            boolean checkResult = AlipaySignature.rsaCheckV2(params, loginUser.getAlipayPublicKey(), StaticVar.charset, StaticVar.sign_type); //调用SDK验证签名
+            boolean checkResult = AlipaySignature.rsaCheckV2(params, serviceinfo.getAlipayPublicKey(), StaticVar.charset, StaticVar.sign_type); //调用SDK验证签名
             /* 实际验证过程建议商户务必添加以下校验：
             1、需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号，
             2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额），
@@ -186,7 +184,7 @@ public class PageController {
                 logger.info("--------------wangshuodong:物业缴费异步通知验签失败-----------------------");
             }
 
-            String result = AlipaySignature.encryptAndSign(bizContent, loginUser.getAlipayPublicKey(), loginUser.getMerchantPrivateKey(), StaticVar.charset, false, true, StaticVar.sign_type);
+            String result = AlipaySignature.encryptAndSign(bizContent, serviceinfo.getAlipayPublicKey(), serviceinfo.getMerchantPrivateKey(), StaticVar.charset, false, true, StaticVar.sign_type);
             response.getOutputStream().print(result);
         } catch (Exception e) {
             logger.info(e);

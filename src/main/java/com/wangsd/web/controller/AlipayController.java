@@ -170,7 +170,7 @@ public class AlipayController {
         //获取公钥 私钥
         UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
         //查询数据
-        if (id != null) {
+        if (id != null) { //单条同步
             BillAccountCustom query = new BillAccountCustom();
             query.setId(id);
             List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
@@ -181,7 +181,7 @@ public class AlipayController {
                 billList.add(billaccount);
                 jsonResult = alipayService.billBatchUploadRequest(housing.getCommunityId(), billList, housing.getToken(), loginUser);
             }
-        }else {
+        }else { //批量同步
             HousinginfoCustom housingquery = new HousinginfoCustom();
             housingquery.setParentCode(loginUser.getParentCode());
             housingquery.setStatus(StaticVar.HOUSING_STATUS1);
