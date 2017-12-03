@@ -145,6 +145,7 @@
     $('.table-sort').dataTable({
         ordering: false,
         lengthChange: false,
+        iDisplayLength: 20,
         language: {
             search: "关键字    ",
         }

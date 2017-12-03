@@ -98,7 +98,7 @@
     function approve(id, stat) {
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath }/rest/alipay/billBatchUploadRequest',
+            url: '${pageContext.request.contextPath }/rest/alipay/invoiceApplyRequest',
             dataType: 'json',
             data:{
                 id : id,

@@ -6,6 +6,8 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.CplifeRoomInfoResp;
+import com.alipay.api.domain.InvoiceApplyOpenModel;
+import com.alipay.api.domain.InvoiceTitleApplyOpenModel;
 import com.alipay.api.request.*;
 import com.alipay.api.response.*;
 import com.wangsd.core.entity.JSONResult;
@@ -581,11 +583,45 @@ public class AlipayServiceImpl implements AlipayService {
         }
     }
 
-    public void InvoiceUserTradeQueryRequest(String einv_trade_id) {
+    public void invoiceUserTradeQueryRequest(String einv_trade_id) {
         AlipayEbppInvoiceUserTradeQueryRequest request = new AlipayEbppInvoiceUserTradeQueryRequest();
     }
 
-    public void invoiceApplyRequest() {
+    public void invoiceApplyRequest(String appid, String privateKey, String publicKey, String token) {
+        AlipayClient alipayClient = new DefaultAlipayClient(StaticVar.serverUrl, appid, privateKey,
+                StaticVar.format, StaticVar.charset, publicKey, StaticVar.sign_type);
+        AlipayEbppInvoiceApplyRequest request = new AlipayEbppInvoiceApplyRequest();
+        JSONObject bizContent = new JSONObject();
+        bizContent.put("action", "BLUE");
+        bizContent.put("apply_from", "PAYER");
+        bizContent.put("user_id", "2088102172245446");
+        bizContent.put("m_short_name", "KFC");//商户一级简称
+        bizContent.put("sub_m_short_name", "KFC-HZ-2011");//商户一级简称
+        InvoiceApplyOpenModel invoice_apply_model = new InvoiceApplyOpenModel();
+        invoice_apply_model.setOutApplyId(String.valueOf(System.currentTimeMillis()));//开票申请唯一id
+        invoice_apply_model.setOutTradeNo("1011"); //账单id
+        invoice_apply_model.setInvoiceKind("PLAIN");//发票类型，增值税普通发票
+        InvoiceTitleApplyOpenModel titleModel = new InvoiceTitleApplyOpenModel();
+        titleModel.setTitleName("某某公司");
+        invoice_apply_model.setInvoiceTitle(titleModel);
+
+        //invoice_apply_model.setInvoiceContent();
+        bizContent.put("invoice_apply_model", invoice_apply_model);
+
+        if (token != null) {
+            request.putOtherTextParam("app_auth_token", token);
+        }
+        try {
+            AlipayEbppInvoiceApplyResponse response = alipayClient.execute(request, "authusrB8cb0f2bc71ad40d0af96374441056X44");
+            logger.debug("----response----" + response.getBody());
+            if ("10000".equals(response.getCode())) {
+                logger.debug("调用成功");
+            } else {
+                logger.info("调用失败");
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
 
     }
 

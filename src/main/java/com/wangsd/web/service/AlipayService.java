@@ -145,10 +145,10 @@ public interface AlipayService {
      * 查询用户的开票要素信息
      * @param einv_trade_id
      */
-    public void InvoiceUserTradeQueryRequest(String einv_trade_id);
+    public void invoiceUserTradeQueryRequest(String einv_trade_id);
 
     /**
      * 申请开票
      */
-    public void invoiceApplyRequest();
+    public void invoiceApplyRequest(String appid, String privateKey, String publicKey, String token);
 }

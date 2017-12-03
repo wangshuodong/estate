@@ -2,6 +2,7 @@ package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.StaticVar;
+import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Housinginfo;
 import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.model.Roominfo;
@@ -19,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -200,6 +202,13 @@ public class AlipayController {
         return jsonResult;
     }
 
+    /**
+     * 二维码
+     * @param id
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "qrcode")
     public String qrcode(Integer id, Model model, HttpSession session) {
         //获取公钥 私钥
@@ -210,4 +219,13 @@ public class AlipayController {
         return "/housing/housing-qrcode";
     }
 
+    @RequestMapping(value = "invoiceApplyRequest")
+    @ResponseBody
+    public JSONResult invoiceApplyRequest (Billaccount billaccount, HttpServletRequest request) {
+        billAccountService.updateBillaccount(billaccount);
+        if (billaccount.getTicketstatus() == StaticVar.BILLACCOUNT_TICKETSTATUS2) {
+
+        }
+        return null;
+    }
 }
