@@ -93,9 +93,12 @@ public class PageController {
     @RequestMapping("/alipay_estate_return")
     public void alipay_estate_return(HttpServletRequest request, HttpServletResponse response) {
         logger.info("--------------wangshuodong:调用支付宝回调接口-----------------------");
+        String appid = request.getParameter("app_id");
+        logger.info("-----appid-----=" + appid);
         Integer id = Integer.parseInt(request.getParameter("id"));
         logger.info("-----id-----=" + id);
         Serviceinfo serviceinfo = serviceinfoService.selectServiceinfoById(id);
+        logger.info("-----AlipayPublicKey-----=" + serviceinfo.getAlipayPublicKey());
         boolean isprint = false;
         String bizContent = "";
         //获取支付宝POST过来反馈信息
@@ -108,6 +111,10 @@ public class PageController {
             for (int i = 0; i < values.length; i++) {
                 valueStr = (i == values.length - 1) ? valueStr + values[i]
                         : valueStr + values[i] + ",";
+            }
+            System.out.println(name + "=" + valueStr);
+            if ("id".equals(name)) {
+                continue;
             }
             //乱码解决，这段代码在出现乱码时使用
             //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
@@ -141,6 +148,7 @@ public class PageController {
                         //保存支付宝返回数据
                         billaccount.setPaydate(DateUtils.paseDatetime(gmt_payment));
                         billaccount.setAlipayTradeNo(trade_no);
+                        billaccount.setPaytype(StaticVar.BILLACCOUNT_PAYSTATUS2);
                         billAccountService.updateBillaccount(billaccount);
                         //打印小票
                         Printinfo printinfo = printService.selectPrintinfoBydeptId(billaccount.getHousingId());
@@ -167,6 +175,7 @@ public class PageController {
                             sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com</center>\n");
                             sb.append("----------------------\n");
                             sb.append("<center>交易小票</center>\n");
+                            print.sendContent(sb.toString());
                             boolean printStatus = print.sendContent(sb.toString());
                             if (printStatus) {
                                 billaccount.setPrintstatus(printStatus);
@@ -209,9 +218,11 @@ public class PageController {
      */
     @RequestMapping("/alipay_openticket")
     public String alipay_openticket(HttpServletRequest request, HttpServletResponse response, Model model) {
+        logger.info("--------------wangshuodong:诺诺回调接口-----------------------");
         String retUrl = "";
-        //String tradeNo = request.getParameter("tradeNo");
-        String tradeNo = "2017120121001004150200389768";
+        String tradeNo = request.getParameter("code");
+        logger.info(tradeNo);
+        tradeNo = "2017120121001004150200389768";
         Billaccount billaccount = billAccountService.selectBillAccountByTradeNo(tradeNo);
 //        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(billaccount.getHousingId());
 //        String deptCode = housing.getCode().substring(0, 7);

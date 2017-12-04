@@ -20,6 +20,7 @@
 				<tr class="text-c">
 					<th>ID</th>
 					<th>费用类型</th>
+					<th>税率</th>
 					<th>操作</th>
 				</tr>
 				</thead>
@@ -28,6 +29,7 @@
 					<tr class="text-c">
 						<td>${ item.id }</td>
 						<td>${ item.name }</td>
+						<td>${ item.taxrate }</td>
 						<td width="130">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a><br>

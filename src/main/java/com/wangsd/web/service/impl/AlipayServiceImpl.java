@@ -601,8 +601,8 @@ public class AlipayServiceImpl implements AlipayService {
         bizContent.put("action", "BLUE");
         bizContent.put("apply_from", "PAYER");
         bizContent.put("user_id", "2088102172245446");
-        bizContent.put("m_short_name", "KFC");//商户一级简称
-        bizContent.put("sub_m_short_name", "KFC-HZ-2011");//商户一级简称
+        bizContent.put("m_short_name", "2088102172245446");//商户一级简称
+        bizContent.put("sub_m_short_name", "2088102172245446");//商户二级简称
 
         InvoiceApplyOpenModel invoice_apply_model = new InvoiceApplyOpenModel();
         invoice_apply_model.setOutApplyId(String.valueOf(System.currentTimeMillis()));//开票申请唯一id
@@ -610,13 +610,13 @@ public class AlipayServiceImpl implements AlipayService {
         invoice_apply_model.setInvoiceKind("PLAIN");//发票类型，增值税普通发票
 
         InvoiceTitleApplyOpenModel titleModel = new InvoiceTitleApplyOpenModel();
-        titleModel.setTitleName("某某公司");
+        titleModel.setTitleName("杭州西开发物业管理发展有限公司");
         invoice_apply_model.setInvoiceTitle(titleModel);
 
         //发票内容
         List<InvoiceItemApplyOpenModel> contentList = new ArrayList<>();
         InvoiceItemApplyOpenModel content = new InvoiceItemApplyOpenModel();
-        content.setItemName("电脑");//发票项目名称（或商品名称）
+        content.setItemName("物业管理费");//发票项目名称（或商品名称）
         content.setItemNo("000001");//商品编号
         content.setItemUnitPrice("100.00");//单价，格式：100.00
         content.setItemSpec("G39");//商品型号

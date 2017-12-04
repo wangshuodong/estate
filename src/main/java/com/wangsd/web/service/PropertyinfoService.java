@@ -18,14 +18,14 @@ public interface PropertyinfoService {
     public List<ParentCustom> queryParentServiceAndPropertyByCode(String code);
 
     /**
-     * 查询所有服务商
+     * 查询所有物业
      * @param code
      * @return
      */
     public List<Propertyinfo> queryAllList(String code);
 
     /**
-     * 根据主键查询服务商
+     * 根据主键查询物业
      * @param id
      * @return
      */
@@ -46,14 +46,14 @@ public interface PropertyinfoService {
     public boolean insertProperty(Propertyinfo serviceinfo);
 
     /**
-     * 修改服务商
+     * 修改物业
      * @param serviceinfo
      * @return
      */
     public boolean updateProperty(Propertyinfo serviceinfo);
 
     /**
-     * 根据id删除服务商
+     * 根据id删除物业
      * @param id
      * @return
      */

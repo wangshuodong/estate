@@ -5,6 +5,8 @@ public class Costtype {
 
     private String name;
 
+    private Double taxrate;
+
     public Integer getId() {
         return id;
     }
@@ -19,5 +21,13 @@ public class Costtype {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Double getTaxrate() {
+        return taxrate;
+    }
+
+    public void setTaxrate(Double taxrate) {
+        this.taxrate = taxrate;
     }
 }

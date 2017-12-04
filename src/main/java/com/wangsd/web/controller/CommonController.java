@@ -2,10 +2,11 @@ package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ImportExcelUtil;
+import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Costtype;
 import com.wangsd.web.model.Housinginfo;
-import com.wangsd.web.modelCustom.MenuCustom;
-import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.model.Roominfo;
+import com.wangsd.web.modelCustom.*;
 import com.wangsd.web.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +39,8 @@ public class CommonController {
     BillAccountService billAccountService;
     @Autowired
     CosttypeService costtypeService;
+    @Autowired
+    PropertyinfoService propertyinfoService;
     
     /**
      * 进入首页
@@ -191,6 +195,30 @@ public class CommonController {
                 out.close();
             }
         }
+    }
+
+    @RequestMapping(path = "/nuonuoInvoice")
+    @ResponseBody
+    public JSONResult nuonuoInvoice(Integer id, HttpServletRequest request) throws Exception {
+        JSONResult jsonResult = new JSONResult();
+        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        Billaccount billaccount = billAccountService.selectBillAccountById(id);
+        Roominfo roominfo = roominfoService.selectRoominfoById(billaccount.getId());
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(billaccount.getHousingId());
+        Costtype costtype = costtypeService.selectCosttypeById(billaccount.getCostType());
+        //发票明细
+        List<InvoiceTitleDetail> detailList = new ArrayList<>();
+        InvoiceTitleDetail detail = new InvoiceTitleDetail();
+        detail.setGoodsName(costtype.getName());
+        detail.setTaxRate(costtype.getTaxrate().toString());
+        detailList.add(detail);
+        //发票主体
+        InvoiceTitle invoiceTitle = new InvoiceTitle();
+        invoiceTitle.setBuyerPhone(roominfo.getOwnerPhone());
+        invoiceTitle.setOrderNo(billaccount.getId().toString());
+        invoiceTitle.setClerk(loginUser.getName());
+
+        return jsonResult;
     }
 
 }

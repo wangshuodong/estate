@@ -70,14 +70,22 @@ public class BillAccountController {
         return "/billaccount/billaccount-list";
     }
 
+    /**
+     * 电子发票
+     * @param ticketstatus
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/invoiceList")
     public String invoiceList(Integer ticketstatus, HttpServletRequest request, Model model) {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         String parentCode = loginUser.getParentCode();
         BillAccountCustom query = new BillAccountCustom();
         query.setHousingCode(parentCode);
+        query.setPaystatus(true);
         if (ticketstatus == null) {
-            query.setTicketstatus(StaticVar.BILLACCOUNT_TICKETSTATUS1);
+            query.setTicketstatus(StaticVar.BILLACCOUNT_TICKETSTATUS0);
         } else {
             query.setTicketstatus(ticketstatus);
         }

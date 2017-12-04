@@ -233,6 +233,66 @@ public class CosttypeExample {
             addCriterion("name not between", value1, value2, "name");
             return (Criteria) this;
         }
+
+        public Criteria andTaxrateIsNull() {
+            addCriterion("taxRate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateIsNotNull() {
+            addCriterion("taxRate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateEqualTo(Double value) {
+            addCriterion("taxRate =", value, "taxrate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateNotEqualTo(Double value) {
+            addCriterion("taxRate <>", value, "taxrate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateGreaterThan(Double value) {
+            addCriterion("taxRate >", value, "taxrate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateGreaterThanOrEqualTo(Double value) {
+            addCriterion("taxRate >=", value, "taxrate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateLessThan(Double value) {
+            addCriterion("taxRate <", value, "taxrate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateLessThanOrEqualTo(Double value) {
+            addCriterion("taxRate <=", value, "taxrate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateIn(List<Double> values) {
+            addCriterion("taxRate in", values, "taxrate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateNotIn(List<Double> values) {
+            addCriterion("taxRate not in", values, "taxrate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateBetween(Double value1, Double value2) {
+            addCriterion("taxRate between", value1, value2, "taxrate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaxrateNotBetween(Double value1, Double value2) {
+            addCriterion("taxRate not between", value1, value2, "taxrate");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,8 +1,72 @@
 package com.wangsd.web.modelCustom;
 
+import java.util.List;
+
 /**
  * 发票抬头信息
  */
 public class InvoiceTitle {
-    private String user_id;
+    private String buyerPhone;//购方手机（开票成功会短信提醒购方，不受推送方式影响）
+    private String orderNo;//订单号（每个企业唯一）
+    private String clerk;//开票员
+    private String salerTel;//销方电话
+    private String salerAddress;//销方地址
+    private String salerTaxNum;//销方税号
+    private List<InvoiceTitleDetail> detailList;
+
+    public String getBuyerPhone() {
+        return buyerPhone;
+    }
+
+    public void setBuyerPhone(String buyerPhone) {
+        this.buyerPhone = buyerPhone;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getClerk() {
+        return clerk;
+    }
+
+    public void setClerk(String clerk) {
+        this.clerk = clerk;
+    }
+
+    public String getSalerTel() {
+        return salerTel;
+    }
+
+    public void setSalerTel(String salerTel) {
+        this.salerTel = salerTel;
+    }
+
+    public String getSalerAddress() {
+        return salerAddress;
+    }
+
+    public void setSalerAddress(String salerAddress) {
+        this.salerAddress = salerAddress;
+    }
+
+    public String getSalerTaxNum() {
+        return salerTaxNum;
+    }
+
+    public void setSalerTaxNum(String salerTaxNum) {
+        this.salerTaxNum = salerTaxNum;
+    }
+
+    public List<InvoiceTitleDetail> getDetailList() {
+        return detailList;
+    }
+
+    public void setDetailList(List<InvoiceTitleDetail> detailList) {
+        this.detailList = detailList;
+    }
 }

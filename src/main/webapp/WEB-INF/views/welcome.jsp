@@ -62,7 +62,6 @@
 <script type="text/javascript">
     var payAmountList = ${payAmountList};
     var payCountList = ${payCountList};
-    console.info(payCountList);
 
     var chart1 = null; // 定义全局变量
     var chart2 = null; // 定义全局变量

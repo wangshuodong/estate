@@ -55,10 +55,10 @@
         <table tableName="propertyinfo"/>
         <table tableName="roominfo"/>
         <table tableName="housinginfo"/>
-        <table tableName="costType"/>
         <table tableName="billaccount"/>
         <table tableName="ticket"/>
-        -->
         <table tableName="serviceinfo"/>
+        -->
+        <table tableName="costType"/>
     </context>
 </generatorConfiguration>

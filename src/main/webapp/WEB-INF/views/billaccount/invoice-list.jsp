@@ -67,11 +67,10 @@
 						<td>${ item.alipayTradeNo }</td>
 						<td>${ item.weixinTradeNo }</td>
 						<td><fmt:formatDate value="${ item.paydate }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
-						<td>申请开票</td>
+						<td>未开票</td>
 						<td>
-							<c:if test="${ item.ticketstatus==1 }">
-								<a title="同意" style="text-decoration:none" onclick="approve(${item.id }, 2)" href="javascript:;" class="c-success">同意</a><br>
-								<a title="拒绝" style="text-decoration:none" onclick="approve(${item.id }, 3)" href="javascript:;" class="c-success">拒绝</a><br>
+							<c:if test="${ item.ticketstatus==0 }">
+								<a title="开电子发票" style="text-decoration:none" onclick="approve(${item.id })" href="javascript:;" class="c-success">开电子发票</a><br>
 							</c:if>
 						</td>
 					</tr>
@@ -95,14 +94,13 @@
     });
 
 
-    function approve(id, stat) {
+    function approve(id) {
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath }/rest/alipay/invoiceApplyRequest',
+            url: '${pageContext.request.contextPath }/rest/nuonuoInvoice',
             dataType: 'json',
             data:{
-                id : id,
-				ticketstatus : stat
+                id : id
             },
             beforeSubmit: function () {
                 layer.load();

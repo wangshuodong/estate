@@ -11,6 +11,12 @@
                 <input type="text" class="input-text radius size-L" value="${costtype.name}" placeholder="费用类型" name="name" required>
             </div>
         </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>账单金额：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="layui-input input-text radius size-L" value="${costtype.taxrate}" placeholder="税率" name="taxrate" id="taxrate">
+            </div>
+        </div>
 
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
