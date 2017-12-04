@@ -81,10 +81,14 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(10009);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(9);
         alipayService.communityDetailsQueryRequest(housing.getCommunityId(), housing.getToken(), loginUser);
     }
 
+    /**
+     * 修改小区物业基础服务(申请服务上线)
+     * @throws Exception
+     */
     @Test
     public void basicserviceModifyRequest() throws Exception {
         UserCustom loginUser = new UserCustom();
@@ -92,8 +96,8 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
         //调用支付宝接口
-        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(10009);
-        alipayService.basicserviceModifyRequest(housing.getCommunityId(), "ONLINE", housing.getToken(), loginUser);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(10003);
+        alipayService.basicserviceModifyRequest(housing.getCommunityId(), "OFFLINE", housing.getToken(), loginUser);
     }
 
     /**
@@ -117,11 +121,11 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAlipayPublicKey(publicKey);
         HousinginfoCustom housing = housinginfoService.selectHousingCustomById(10003);
         List<String> list = new ArrayList<>();
-        list.add("1012");
-        list.add("1013");
-        list.add("1014");
-        list.add("1015");
-        list.add("1016");
+        list.add("1020");
+        list.add("1398");
+        list.add("1022");
+        list.add("1023");
+        list.add("1024");
         alipayService.roominfoDeleteRequest(housing.getCommunityId(), list, housing.getToken(), loginUser);
     }
 
@@ -149,7 +153,7 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(10009);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(10003);
         Billaccount query = new Billaccount();
         query.setPaystatus(true);
         alipayService.billBatchqueryRequest(housing.getCommunityId(), query, housing.getToken(), loginUser);
@@ -165,10 +169,10 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        String community_id = "AXJIXECXX3301";
-        String token = "201709BBdb06c71a5bd0432193e9a992ac3f7X20";
+        String community_id = "AUROC82WN5001";
+        String token = "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42";
         List<String> idList = new ArrayList<String>();
-        idList.add("201711020000005");
+        idList.add("1015");
         alipayService.billDeleteRequest(community_id, idList, token, loginUser);
     }
 

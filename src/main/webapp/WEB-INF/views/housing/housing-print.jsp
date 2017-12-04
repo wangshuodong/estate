@@ -6,6 +6,7 @@
     <form class="form form-horizontal" id="myform" action="" method="post">
         <input type="hidden" value="${printinfo.id}" name="id">
         <input type="hidden" value="${printinfo.departmentId}" name="departmentId">
+        <input type="hidden" value="0" name="status">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>打印机终端号：</label>
             <div class="formControls col-xs-8 col-sm-9">

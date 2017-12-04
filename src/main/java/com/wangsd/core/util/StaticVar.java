@@ -87,4 +87,14 @@ public class StaticVar {
 	 */
 	public static final int BILLACCOUNT_TICKETSTATUS2 = 2;
 
+
+	/**
+	 * 小区打印机
+	 */
+	public static final int PRINTINFO_STATUS0 = 0;
+	/**
+	 * 物业打印机
+	 */
+	public static final int PRINTINFO_STATUS1 = 1;
+
 }

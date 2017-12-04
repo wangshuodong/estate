@@ -151,7 +151,7 @@ public class HousinginfoController {
             printinfo.setDepartmentId(id);
         }
         model.addAttribute("printinfo", printinfo);
-        return "/housing/printinfo-config";
+        return "/housing/housing-print";
     }
     /**
      * 新增或者修改打印机

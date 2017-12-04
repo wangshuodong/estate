@@ -1,9 +1,11 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
+import com.wangsd.web.model.Printinfo;
 import com.wangsd.web.model.Propertyinfo;
 import com.wangsd.web.modelCustom.ParentCustom;
 import com.wangsd.web.modelCustom.UserCustom;
+import com.wangsd.web.service.PrintService;
 import com.wangsd.web.service.PropertyinfoService;
 import com.wangsd.web.service.ServiceinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class PropertyinfoController {
     PropertyinfoService propertyinfoService;
     @Autowired
     ServiceinfoService serviceinfoService;
+    @Autowired
+    PrintService printService;
 
     /**
      * 查询所有物业
@@ -105,4 +109,21 @@ public class PropertyinfoController {
         obj.setSuccess(delStatus);
         return obj;
     }
+
+    /**
+     *  配置打印机信息
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "updatePrintinfo")
+    public String updatePrintinfo(Integer id, Model model, HttpSession session) {
+        Printinfo printinfo = printService.selectPrintinfoBydeptId(id);
+        if(printinfo == null){
+            printinfo = new Printinfo();
+            printinfo.setDepartmentId(id);
+        }
+        model.addAttribute("printinfo", printinfo);
+        return "/property/property-print";
+    }
+
 }

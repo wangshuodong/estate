@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 120.78.201.213
-Source Server Version : 50718
-Source Host           : 120.78.201.213:3306
+Source Server         : localhost_3306
+Source Server Version : 50709
+Source Host           : localhost:3306
 Source Database       : estate
 
 Target Server Type    : MYSQL
-Target Server Version : 50718
+Target Server Version : 50709
 File Encoding         : 65001
 
-Date: 2017-12-04 22:58:28
+Date: 2017-12-05 00:23:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -47,11 +47,6 @@ CREATE TABLE `billaccount` (
 -- ----------------------------
 -- Records of billaccount
 -- ----------------------------
-INSERT INTO `billaccount` VALUES ('1011', '10003', '1020', '1', '100.00', '2017年11', '20171124', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', '2017120121001004150200389768', null, '1', '0', null, null, '2017-11-25 21:50:33');
-INSERT INTO `billaccount` VALUES ('1012', '10003', '1022', '1', '138.00', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
-INSERT INTO `billaccount` VALUES ('1013', '10003', '1023', '1', '138.00', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
-INSERT INTO `billaccount` VALUES ('1014', '10003', '1024', '1', '138.00', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
-INSERT INTO `billaccount` VALUES ('1015', '10003', '1020', '2', '10.00', '2017年11', '20171120', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', null, null, '0', '0', null, null, '2017-11-27 14:16:55');
 INSERT INTO `billaccount` VALUES ('1151', '10009', '1026', '1', '1811.00', '20180101-20181231', '20171130', '20191231', null, '0', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-01 17:32:16');
 INSERT INTO `billaccount` VALUES ('1152', '10009', '1027', '1', '1810.00', '20180101-20181231', '20171130', '20181231', null, '1', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-01 17:32:16');
 INSERT INTO `billaccount` VALUES ('1153', '10009', '1028', '1', '1810.00', '20180101-20181231', '20171130', '20181231', null, '1', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-01 17:32:16');
@@ -1563,8 +1558,6 @@ CREATE TABLE `housinginfo` (
 -- ----------------------------
 -- Records of housinginfo
 -- ----------------------------
-INSERT INTO `housinginfo` VALUES ('9', 'ABD44SPAQ5001', '001000100010011', '首创十方界', '红枫路9号', '2000', '500112', '500100', '500000', '106.537212|29.605355', null, '0571-87654321', '10', '2', '0', '2017-11-20 15:53:22');
-INSERT INTO `housinginfo` VALUES ('10003', 'AUROC82WN5001', '001000100010010', '莫须有小区', '红枫路9号', '2000', '500112', '500100', '500000', '106.536969|29.605632', null, '023-74583381', '50', '4', '0', '2017-11-22 15:13:25');
 INSERT INTO `housinginfo` VALUES ('10006', 'AWI1LRMIM3301', '001000200010016', '肖苑', '杭州市江干区杭海路688号', '2001', '330104', '330100', '330000', '120.267471|30.309001', null, '0571-88683117', null, '4', '0', '2017-11-30 21:27:19');
 INSERT INTO `housinginfo` VALUES ('10009', 'AF2FBBVGM3301', '001000200010012', '西溪永乐城', '杭州市余杭区文一西路与水城北路交叉口', '2001', '330110', '330100', '330000', '120.00538|30.273972', null, '0571-88683117', null, '4', '0', '2017-11-30 22:35:00');
 
@@ -1636,18 +1629,16 @@ CREATE TABLE `printinfo` (
   `msign` varchar(255) DEFAULT NULL COMMENT '打印机密钥',
   `mobile_phone` varchar(255) DEFAULT NULL,
   `print_name` varchar(255) DEFAULT NULL,
-  `status` int(2) DEFAULT NULL,
+  `status` int(2) DEFAULT NULL COMMENT '0小区，1物业',
   `createtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of printinfo
 -- ----------------------------
-INSERT INTO `printinfo` VALUES ('6', '2000', '4004540276', 'cfji72jqwtf8', '', '物业1打印机', null, '2017-11-25 23:30:29');
-INSERT INTO `printinfo` VALUES ('3', '10003', '4004540276', 'cfji72jqwtf8', '111', '莫须有小区打印机', null, '2017-11-25 23:01:28');
-INSERT INTO `printinfo` VALUES ('4', '9', '4004540276', 'cfji72jqwtf8', '222', '首创十方界1打印机', null, '2017-11-25 23:01:42');
-INSERT INTO `printinfo` VALUES ('7', '10009', '4004540276', 'cfji72jqwtf8', '18368829800', '永乐城', null, '2017-12-03 17:58:05');
+INSERT INTO `printinfo` VALUES ('8', '2001', '4004540276', 'cfji72jqwtf8', '', '西开发物业打印机', '1', '2017-12-05 00:18:44');
+INSERT INTO `printinfo` VALUES ('7', '10009', '4004540276', 'cfji72jqwtf8', '18368829800', '西溪永乐城小区打印机', '0', '2017-12-03 17:58:05');
 
 -- ----------------------------
 -- Table structure for propertyinfo
@@ -1660,6 +1651,7 @@ CREATE TABLE `propertyinfo` (
   `contact_people` varchar(255) DEFAULT NULL,
   `contact_phone` varchar(255) DEFAULT NULL,
   `contact_address` varchar(255) DEFAULT NULL,
+  `salerTaxNum` varchar(255) DEFAULT NULL COMMENT '税号',
   `parent_id` int(11) DEFAULT NULL COMMENT '上级物业id',
   `alipay_login_id` varchar(255) DEFAULT NULL COMMENT '商户账号',
   `app_id` varchar(255) DEFAULT NULL COMMENT '商户PID',
@@ -1675,8 +1667,7 @@ CREATE TABLE `propertyinfo` (
 -- ----------------------------
 -- Records of propertyinfo
 -- ----------------------------
-INSERT INTO `propertyinfo` VALUES ('2000', '00100010001', '1级物业', '张三', '17784495626', '重庆市九龙坡', '8', '', '', '201708BB85188ec4dcbc4be69df6ef6b5fa2fX42', '', '', '', '', '2017-11-19 23:01:25');
-INSERT INTO `propertyinfo` VALUES ('2001', '00100020001', '杭州西开发物业管理发展有限公司', '熊和砍', '', '', '10', 'xikaifawuyegongsi@163.com', '2088021994219050', '201710BB47735a4ec11f45fd80838366df347X05', '', '', '', '', '2017-11-30 20:47:49');
+INSERT INTO `propertyinfo` VALUES ('2001', '00100020001', '杭州西开发物业管理发展有限公司', '熊和砍', '0571-87022168', '杭州市西湖区学院路159号9楼12楼', '91330106143198931H', '10', 'xikaifawuyegongsi@163.com', '2088021994219050', '201710BB47735a4ec11f45fd80838366df347X05', '', '', '', '', '2017-11-30 20:47:49');
 
 -- ----------------------------
 -- Table structure for role
@@ -1838,10 +1829,6 @@ CREATE TABLE `roominfo` (
 -- ----------------------------
 -- Records of roominfo
 -- ----------------------------
-INSERT INTO `roominfo` VALUES ('1020', '10003', 'AUROC82WN5001800002100502', '', '2栋', '10单元', '502', '2栋10单元502', '李东', '', '177844966330', '', '0', '1', '2017-11-25 21:40:04');
-INSERT INTO `roominfo` VALUES ('1022', '10003', 'AUROC82WN5001800001010011', '', '1栋', '1单元', '1-01', '1栋1单元1-01', '张三', null, '13877777771', null, '0', '1', '2017-11-25 21:55:34');
-INSERT INTO `roominfo` VALUES ('1023', '10003', 'AUROC82WN5001800001010012', '', '1栋', '1单元', '1-02', '1栋1单元1-02', '李四', null, '13877777772', null, '0', '1', '2017-11-25 21:55:34');
-INSERT INTO `roominfo` VALUES ('1024', '10003', 'AUROC82WN5001800001010013', '', '1栋', '1单元', '1-03', '1栋1单元1-03', '王五', null, '13877777773', null, '0', '1', '2017-11-25 21:55:34');
 INSERT INTO `roominfo` VALUES ('1025', '10006', null, '', '1栋', '1单元', '101', '1栋1单元101', '熊合砍', '888888888888888888', '18888888888', '2017-11-30', '1', '0', '2017-11-30 21:38:50');
 INSERT INTO `roominfo` VALUES ('1026', '10009', 'AF2FBBVGM3301800001010201', '', '永乐城1幢', '1单元', '201', '永乐城1幢1单元201', '彭彩芹', '', '13777489995', '', '0', '1', '2017-11-30 22:45:22');
 INSERT INTO `roominfo` VALUES ('1027', '10009', 'AF2FBBVGM3301800001010202', '', '永乐城1幢', '1单元', '202', '永乐城1幢1单元202', '张红霞', null, '13372509610', null, '0', '1', '2017-11-30 22:45:22');
@@ -2215,7 +2202,6 @@ INSERT INTO `roominfo` VALUES ('1394', '10009', 'AF2FBBVGM3301800003022701', '',
 INSERT INTO `roominfo` VALUES ('1395', '10009', 'AF2FBBVGM3301800003022702', '', '永乐城3幢', '2单元', '2702', '永乐城3幢2单元2702', '', null, '', null, '0', '1', '2017-11-30 22:46:14');
 INSERT INTO `roominfo` VALUES ('1396', '10009', 'AF2FBBVGM3301800003022703', '', '永乐城3幢', '2单元', '2703', '永乐城3幢2单元2703', '', null, '', null, '0', '1', '2017-11-30 22:46:14');
 INSERT INTO `roominfo` VALUES ('1397', '10009', 'AF2FBBVGM3301800003022704', '', '永乐城3幢', '2单元', '2704', '永乐城3幢2单元2704', '', null, '', null, '0', '1', '2017-11-30 22:46:14');
-INSERT INTO `roominfo` VALUES ('1398', '10003', null, '', '1栋', '1单元', '1-01室', '1栋1单元1-01室', '张三', null, '13877777771', null, '0', '0', '2017-11-30 23:34:57');
 INSERT INTO `roominfo` VALUES ('1399', '10009', 'AF2FBBVGM3301020001010201', '二期', '永乐城1栋', '1单元', '201', '二期永乐城1栋1单元201', '熊合砍', '', '', '2017-12-04', '1', '0', '2017-12-04 20:11:25');
 
 -- ----------------------------

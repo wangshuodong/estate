@@ -6,6 +6,7 @@ package com.wangsd.web.task;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.DateUtils;
 import com.wangsd.core.util.PrintMessage;
+import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.dao.BillaccountMapper;
 import com.wangsd.web.model.Printinfo;
 import com.wangsd.web.modelCustom.BillAccountCustom;
@@ -43,7 +44,7 @@ public class PrintTask {
         log.info("-----------wangshuodong:执行每个小区汇总打印------------");
         String date = DateUtils.getCurDate();
         //查询配置了打印机的小区
-        List<Printinfo> list = printService.selectBystatus(0);
+        List<Printinfo> list = printService.selectBystatus(StaticVar.PRINTINFO_STATUS0);
         for (Printinfo info : list) {
             PrintMessage printMessage = new PrintMessage(info.getMachineCode(), info.getMsign());
             //查询小区信息
@@ -94,7 +95,7 @@ public class PrintTask {
         log.info("-----------wangshuodong:执行物业汇总打印------------");
         String date = DateUtils.getCurDate();
         //查询配置了打印机的物业
-        List<Printinfo> list = printService.selectBystatus(1);
+        List<Printinfo> list = printService.selectBystatus(StaticVar.PRINTINFO_STATUS1);
         for (Printinfo info : list) {
             PrintMessage printMessage = new PrintMessage(info.getMachineCode(), info.getMsign());
             //根据物业id查询小区列表

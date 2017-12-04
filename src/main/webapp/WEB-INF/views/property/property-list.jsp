@@ -104,7 +104,7 @@
         var index = layer.open({
             type: 2,
             title: "配置打印机",
-            content: "${pageContext.request.contextPath }/rest/housing/updatePrintinfo?id=" + id
+            content: "${pageContext.request.contextPath }/rest/property/updatePrintinfo?id=" + id
         });
         layer.full(index);
     }
