@@ -22,6 +22,7 @@
 					<th>联系人</th>
 					<th>联系地址</th>
 					<th>联系电话</th>
+					<th>税号</th>
 					<th>操作</th>
 				</tr>
 				</thead>
@@ -32,6 +33,7 @@
 						<td>${ item.contactPeople }</td>
 						<td>${ item.contactAddress }</td>
 						<td>${ item.contactPhone }</td>
+						<td>${ item.salertaxnum }</td>
 						<td width="130">
 							<a title="编辑" style="text-decoration:none" onClick="info_edit(${item.id })" href="javascript:;" class="c-success">编辑</a>
 							<a title="删除" style="text-decoration:none" onclick="info_del(this, ${item.id })" href="javascript:;" class="c-success">删除</a><br>

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50709
-Source Host           : localhost:3306
+Source Server         : 120.78.201.213
+Source Server Version : 50718
+Source Host           : 120.78.201.213:3306
 Source Database       : estate
 
 Target Server Type    : MYSQL
-Target Server Version : 50709
+Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-12-03 23:19:06
+Date: 2017-12-04 22:58:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,16 +38,16 @@ CREATE TABLE `billaccount` (
   `weixin_trade_no` varchar(255) DEFAULT NULL COMMENT '微信付款成功回传编号',
   `printStatus` tinyint(1) DEFAULT '0' COMMENT '打印状态',
   `ticketStatus` int(11) DEFAULT '0' COMMENT '开票状态0未开票，1审核中，2同意，3，拒绝，4开票成功，5开票失败',
-  `buyer_user_id` varchar(255) DEFAULT NULL,
+  `buyer_user_id` varchar(255) DEFAULT NULL COMMENT '付款人支付宝id',
   `remark` varchar(255) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2611 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2615 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of billaccount
 -- ----------------------------
-INSERT INTO `billaccount` VALUES ('1011', '10003', '1020', '1', '100.00', '2017年11', '20171124', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', null, null, '1', '0', null, null, '2017-11-25 21:50:33');
+INSERT INTO `billaccount` VALUES ('1011', '10003', '1020', '1', '100.00', '2017年11', '20171124', '20171130', null, '1', '2017-11-27 22:27:18', '1', '1', '0', '2017120121001004150200389768', null, '1', '0', null, null, '2017-11-25 21:50:33');
 INSERT INTO `billaccount` VALUES ('1012', '10003', '1022', '1', '138.00', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
 INSERT INTO `billaccount` VALUES ('1013', '10003', '1023', '1', '138.00', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
 INSERT INTO `billaccount` VALUES ('1014', '10003', '1024', '1', '138.00', '2017年07', '20171123', '20171212', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-11-25 21:55:56');
@@ -1506,12 +1506,16 @@ INSERT INTO `billaccount` VALUES ('2601', '10009', '1026', '1', '0.00', '2015', 
 INSERT INTO `billaccount` VALUES ('2602', '10009', '1026', '1', '0.00', '2014', '20171201', '20171231', null, '0', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-03 18:37:56');
 INSERT INTO `billaccount` VALUES ('2603', '10009', '1026', '1', '0.00', '2013', '20171201', '20171231', null, '0', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-03 18:39:27');
 INSERT INTO `billaccount` VALUES ('2604', '10009', '1026', '1', '0.00', '20125', '20171201', '20171231', null, '0', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-03 18:40:12');
-INSERT INTO `billaccount` VALUES ('2605', '10009', '1026', '1', '0.01', '2012', '20171201', '20171231', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-12-03 18:48:56');
+INSERT INTO `billaccount` VALUES ('2605', '10009', '1026', '1', '0.01', '2012', '20171201', '20171231', null, '1', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-03 18:48:56');
 INSERT INTO `billaccount` VALUES ('2606', '10009', '1027', '1', '0.02', '2011', '20171201', '20171231', null, '1', '2017-12-03 19:35:11', '1', '1', '0', null, null, '1', '0', null, null, '2017-12-03 18:49:28');
-INSERT INTO `billaccount` VALUES ('2607', '10009', '1026', '1', '0.01', '2009', '20171201', '20171231', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-12-03 19:25:41');
-INSERT INTO `billaccount` VALUES ('2608', '10009', '1026', '1', '0.01', '2008', '20171201', '20171231', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-12-03 20:20:42');
-INSERT INTO `billaccount` VALUES ('2609', '10009', '1028', '1', '0.10', '2019', '20171201', '20171231', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-12-03 20:31:19');
-INSERT INTO `billaccount` VALUES ('2610', '10009', '1026', '1', '0.01', '2001', '20171201', '20171231', null, '1', null, null, '0', '0', null, null, '0', '0', null, null, '2017-12-03 20:48:07');
+INSERT INTO `billaccount` VALUES ('2607', '10009', '1026', '1', '0.01', '2009', '20171201', '20171231', null, '1', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-03 19:25:41');
+INSERT INTO `billaccount` VALUES ('2608', '10009', '1026', '1', '0.01', '2008', '20171201', '20171231', null, '1', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-03 20:20:42');
+INSERT INTO `billaccount` VALUES ('2609', '10009', '1028', '1', '0.10', '2019', '20171201', '20171231', null, '1', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-03 20:31:19');
+INSERT INTO `billaccount` VALUES ('2610', '10009', '1026', '1', '0.01', '2001', '20171201', '20171231', null, '1', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-03 20:48:07');
+INSERT INTO `billaccount` VALUES ('2611', '10009', '1026', '1', '0.01', '2017', '20171204', '20171231', null, '1', '2017-12-04 16:46:59', '2', '0', '0', '2017120421001004550510991138', null, '1', '0', null, null, '2017-12-04 16:46:10');
+INSERT INTO `billaccount` VALUES ('2612', '10009', '1026', '1', '0.01', '20170101', '20171204', '20171227', null, '1', '2017-12-04 17:03:26', '2', '0', '0', '2017120421001004550511294923', null, '1', '0', null, null, '2017-12-04 17:02:25');
+INSERT INTO `billaccount` VALUES ('2613', '10009', '1026', '3', '0.01', '20170101-20171211', '20171204', '20171231', null, '1', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-04 19:44:18');
+INSERT INTO `billaccount` VALUES ('2614', '10009', '1026', '4', '0.01', '201709', '20171204', '20171231', null, '1', null, null, '0', '1', null, null, '0', '0', null, null, '2017-12-04 19:44:48');
 
 -- ----------------------------
 -- Table structure for costtype
@@ -1520,16 +1524,17 @@ DROP TABLE IF EXISTS `costtype`;
 CREATE TABLE `costtype` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
+  `taxRate` double(11,2) DEFAULT NULL COMMENT '税率',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of costtype
 -- ----------------------------
-INSERT INTO `costtype` VALUES ('1', '物业管理费');
-INSERT INTO `costtype` VALUES ('2', '能源管理费');
-INSERT INTO `costtype` VALUES ('3', '公共能耗费');
-INSERT INTO `costtype` VALUES ('4', '预存水费');
+INSERT INTO `costtype` VALUES ('1', '物业管理费', '0.06');
+INSERT INTO `costtype` VALUES ('2', '能源管理费', null);
+INSERT INTO `costtype` VALUES ('3', '公共能耗费', null);
+INSERT INTO `costtype` VALUES ('4', '预存水费', '0.03');
 
 -- ----------------------------
 -- Table structure for housinginfo
@@ -1560,7 +1565,7 @@ CREATE TABLE `housinginfo` (
 -- ----------------------------
 INSERT INTO `housinginfo` VALUES ('9', 'ABD44SPAQ5001', '001000100010011', '首创十方界', '红枫路9号', '2000', '500112', '500100', '500000', '106.537212|29.605355', null, '0571-87654321', '10', '2', '0', '2017-11-20 15:53:22');
 INSERT INTO `housinginfo` VALUES ('10003', 'AUROC82WN5001', '001000100010010', '莫须有小区', '红枫路9号', '2000', '500112', '500100', '500000', '106.536969|29.605632', null, '023-74583381', '50', '4', '0', '2017-11-22 15:13:25');
-INSERT INTO `housinginfo` VALUES ('10006', null, '001000200010003', '九堡肖苑', '东西大道与新104国道交汇处', '2001', '330104', '330100', '330000', '120.266761|30.307819', null, '0571-88683117', null, '1', '0', '2017-11-30 21:27:19');
+INSERT INTO `housinginfo` VALUES ('10006', 'AWI1LRMIM3301', '001000200010016', '肖苑', '杭州市江干区杭海路688号', '2001', '330104', '330100', '330000', '120.267471|30.309001', null, '0571-88683117', null, '4', '0', '2017-11-30 21:27:19');
 INSERT INTO `housinginfo` VALUES ('10009', 'AF2FBBVGM3301', '001000200010012', '西溪永乐城', '杭州市余杭区文一西路与水城北路交叉口', '2001', '330110', '330100', '330000', '120.00538|30.273972', null, '0571-88683117', null, '4', '0', '2017-11-30 22:35:00');
 
 -- ----------------------------
@@ -1592,9 +1597,10 @@ INSERT INTO `menu` VALUES ('101', '我的物业', '/rest/property/propertyList',
 INSERT INTO `menu` VALUES ('102', '我的小区', '/rest/housing/housingList', null, '1', '92', '1');
 INSERT INTO `menu` VALUES ('103', '房屋信息', '/rest/roominfo/roominfoList', null, '1', '93', '1');
 INSERT INTO `menu` VALUES ('104', '我的账单', '/rest/billAccount/billAccountList', null, '1', '94', '1');
-INSERT INTO `menu` VALUES ('105', '交易中心', null, null, '1', '95', '1');
-INSERT INTO `menu` VALUES ('106', '业主催收', null, null, '1', '96', '1');
-INSERT INTO `menu` VALUES ('107', '用户管理', '/rest/user/userList', null, '1', '97', '1');
+INSERT INTO `menu` VALUES ('105', '交易中心', null, null, '1', '96', '1');
+INSERT INTO `menu` VALUES ('106', '业主催收', null, null, '1', '97', '1');
+INSERT INTO `menu` VALUES ('107', '用户管理', '/rest/user/userList', null, '1', '98', '1');
+INSERT INTO `menu` VALUES ('108', '电子发票', '/rest/billAccount/invoiceList', null, '1', '95', '1');
 INSERT INTO `menu` VALUES ('201', '开发中', null, null, '2', '99', '1');
 INSERT INTO `menu` VALUES ('301', '开发中', null, null, '3', '99', '1');
 INSERT INTO `menu` VALUES ('401', '开发中', null, null, '4', '99', '1');
@@ -1689,8 +1695,8 @@ CREATE TABLE `role` (
 -- Records of role
 -- ----------------------------
 INSERT INTO `role` VALUES ('1', '服务商管理员', 'service', '服务商管理员', '2017-11-10 16:24:56');
-INSERT INTO `role` VALUES ('2', '物业管理员', 'property', '物业管理员', '2017-11-10 17:21:12');
-INSERT INTO `role` VALUES ('3', '小区管理员', 'housing', '小区管理员', '2017-11-13 12:49:19');
+INSERT INTO `role` VALUES ('2', '物业管理员', null, '物业管理员', '2017-11-10 17:21:12');
+INSERT INTO `role` VALUES ('3', '小区管理员', null, '小区管理员', '2017-11-13 12:49:19');
 INSERT INTO `role` VALUES ('99', '超级管理员', 'super_admin', '超级管理员', '2017-11-07 14:42:12');
 
 -- ----------------------------
@@ -1783,11 +1789,13 @@ INSERT INTO `role_menu` VALUES ('99', '104');
 INSERT INTO `role_menu` VALUES ('99', '105');
 INSERT INTO `role_menu` VALUES ('99', '106');
 INSERT INTO `role_menu` VALUES ('99', '107');
+INSERT INTO `role_menu` VALUES ('99', '108');
 INSERT INTO `role_menu` VALUES ('99', '201');
 INSERT INTO `role_menu` VALUES ('99', '301');
 INSERT INTO `role_menu` VALUES ('99', '401');
 INSERT INTO `role_menu` VALUES ('99', '501');
 INSERT INTO `role_menu` VALUES ('99', '601');
+INSERT INTO `role_menu` VALUES ('99', '602');
 
 -- ----------------------------
 -- Table structure for role_permission
@@ -1825,7 +1833,7 @@ CREATE TABLE `roominfo` (
   `status` tinyint(1) DEFAULT '0' COMMENT 'false没有同步，true同步',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1399 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1400 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of roominfo
@@ -2208,6 +2216,7 @@ INSERT INTO `roominfo` VALUES ('1395', '10009', 'AF2FBBVGM3301800003022702', '',
 INSERT INTO `roominfo` VALUES ('1396', '10009', 'AF2FBBVGM3301800003022703', '', '永乐城3幢', '2单元', '2703', '永乐城3幢2单元2703', '', null, '', null, '0', '1', '2017-11-30 22:46:14');
 INSERT INTO `roominfo` VALUES ('1397', '10009', 'AF2FBBVGM3301800003022704', '', '永乐城3幢', '2单元', '2704', '永乐城3幢2单元2704', '', null, '', null, '0', '1', '2017-11-30 22:46:14');
 INSERT INTO `roominfo` VALUES ('1398', '10003', null, '', '1栋', '1单元', '1-01室', '1栋1单元1-01室', '张三', null, '13877777771', null, '0', '0', '2017-11-30 23:34:57');
+INSERT INTO `roominfo` VALUES ('1399', '10009', 'AF2FBBVGM3301020001010201', '二期', '永乐城1栋', '1单元', '201', '二期永乐城1栋1单元201', '熊合砍', '', '', '2017-12-04', '1', '0', '2017-12-04 20:11:25');
 
 -- ----------------------------
 -- Table structure for serviceinfo
@@ -2225,7 +2234,6 @@ CREATE TABLE `serviceinfo` (
   `app_id` varchar(255) DEFAULT NULL COMMENT '应用ID,您的APPID',
   `merchant_private_key` varchar(2555) DEFAULT NULL COMMENT '商户私钥',
   `alipay_public_key` varchar(2555) DEFAULT NULL COMMENT '支付宝公钥',
-  `return_url` varchar(255) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
@@ -2233,8 +2241,8 @@ CREATE TABLE `serviceinfo` (
 -- ----------------------------
 -- Records of serviceinfo
 -- ----------------------------
-INSERT INTO `serviceinfo` VALUES ('1', '001', '总公司', null, null, null, null, null, null, null, null, null, '2017-11-19 22:09:21');
-INSERT INTO `serviceinfo` VALUES ('10', '0010002', '杭州早早科技有限公司', '杭州', '熊和砍', '', '', '1', '2017071807800670', 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJW2B/Wqka+T7s1HW/rFFKweF7fN+vtqmhkIvtXUoQi3+fiZKZjc1KHGLM8YS9BTUFNDcSvRva23qRlGp4ypbkl+QSx2spc0A2TKllVIBu9yWAvBIEVNBo3s8rRK1VWH8qKtMyYc2Q1rebeeEpFSJAjXGS99JS68GXo1QwDbH9kNAgMBAAECgYAHNHV5mzXbr1DkzDRfAzEVf3VAwUb85op3/fXBMLR3SPNcxXI9CxOonXL2nIK5iejpuOsvYq6wN5CJyN6zZEwMZpEXQ8ELhencbgYgBvBmvyPq5rnUb3MEt/W2B3EmgaCqYTfk0GWa50ybSh94ynBfK+DRy8NHYQg9kYzOfJt2gQJBAMUJ2wVR6PE2iK24jvcX/ajqE7kHRFf0T6bOKA4TRxxDMGNCH189RmXpxoPjrzsofKdh+qgvbLpz3e7cOG18Wp0CQQDCgqeSyxFecmmDvaDkn0Oj4GkgOdz6T23rsCfSVXWaBII0+nBlbWglQc/DwohTmdq8TBe6FnTfbOhDnIMo0DUxAkALXuQ6zF1K/kCo9cuaStIim0+ED/1LrheioqcBGO+zm9UBBWHWFy0m2HTSS6NjIJUA+9CBQCtgHyuhiyfeeZypAkBD4sfLgtYgCXxr/03dHPzFgDgQiEFolzo87PEpBqyRwYsUJGf/7kxP3IU/xHBCBUuDNmd9igLmS6NQnZplLy2xAkEAuIDbFGy34R8rEI5vXcqcMsn0tl5jBHSzbFcN1+3vz8dfudjl0RTqqpDXI1vtgbOph+NG3TVkSYbk0knjDNG15A==', 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB', 'https://www.zaozaopay.com/rest/page/alipay_estate_return?id=10', '2017-11-30 20:16:07');
+INSERT INTO `serviceinfo` VALUES ('1', '001', '总公司', null, null, null, null, null, null, null, null, '2017-11-19 22:09:21');
+INSERT INTO `serviceinfo` VALUES ('10', '0010002', '杭州早早科技有限公司', '杭州', '熊和砍', '', '', '1', '2017071807800670', 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJW2B/Wqka+T7s1HW/rFFKweF7fN+vtqmhkIvtXUoQi3+fiZKZjc1KHGLM8YS9BTUFNDcSvRva23qRlGp4ypbkl+QSx2spc0A2TKllVIBu9yWAvBIEVNBo3s8rRK1VWH8qKtMyYc2Q1rebeeEpFSJAjXGS99JS68GXo1QwDbH9kNAgMBAAECgYAHNHV5mzXbr1DkzDRfAzEVf3VAwUb85op3/fXBMLR3SPNcxXI9CxOonXL2nIK5iejpuOsvYq6wN5CJyN6zZEwMZpEXQ8ELhencbgYgBvBmvyPq5rnUb3MEt/W2B3EmgaCqYTfk0GWa50ybSh94ynBfK+DRy8NHYQg9kYzOfJt2gQJBAMUJ2wVR6PE2iK24jvcX/ajqE7kHRFf0T6bOKA4TRxxDMGNCH189RmXpxoPjrzsofKdh+qgvbLpz3e7cOG18Wp0CQQDCgqeSyxFecmmDvaDkn0Oj4GkgOdz6T23rsCfSVXWaBII0+nBlbWglQc/DwohTmdq8TBe6FnTfbOhDnIMo0DUxAkALXuQ6zF1K/kCo9cuaStIim0+ED/1LrheioqcBGO+zm9UBBWHWFy0m2HTSS6NjIJUA+9CBQCtgHyuhiyfeeZypAkBD4sfLgtYgCXxr/03dHPzFgDgQiEFolzo87PEpBqyRwYsUJGf/7kxP3IU/xHBCBUuDNmd9igLmS6NQnZplLy2xAkEAuIDbFGy34R8rEI5vXcqcMsn0tl5jBHSzbFcN1+3vz8dfudjl0RTqqpDXI1vtgbOph+NG3TVkSYbk0knjDNG15A==', 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB', '2017-11-30 20:16:07');
 
 -- ----------------------------
 -- Table structure for ticket
@@ -2281,5 +2289,5 @@ CREATE TABLE `users` (
 -- ----------------------------
 INSERT INTO `users` VALUES ('1', '管理员', 'admin', '123456', '1', '001', '99', '17784495260', 'wangsd@163.com', '1', null, '2017-11-19 22:08:54');
 INSERT INTO `users` VALUES ('16', '杭州早早科技有限公司', '早早科技', '111111', '10', '0010002', '1', '', '', '1', '1', '2017-11-30 20:43:03');
-INSERT INTO `users` VALUES ('17', '', '九堡肖苑', '111111', '10006', '001000200010003', '3', '', '', '1', '3', '2017-11-30 21:36:47');
+INSERT INTO `users` VALUES ('17', '', '九堡肖苑', '111111', '10006', '001000200010016', '3', '', '', '1', '3', '2017-11-30 21:36:47');
 INSERT INTO `users` VALUES ('18', '西溪永乐城', '西溪永乐城', '111111', '10009', '001000200010012', '3', '', '', '1', '3', '2017-12-03 13:28:26');

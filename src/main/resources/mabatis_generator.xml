@@ -29,36 +29,25 @@
         </javaClientGenerator>
         <!-- 要生成那些表(更改tableName和domainObjectName就可以)-->
         <!--
-        <table tableName="menu" domainObjectName="Menu"/>
-        
-        
-        <table tableName="role_menu" domainObjectName="RoleMenu"/>
-        
-        
-        
-        <table tableName="role" domainObjectName="Role">
+        <table tableName="menu"/>
+        <table tableName="role_menu"/>
+        <table tableName="role">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        <table tableName="permission" domainObjectName="Permission"/>
-        <table tableName="role_permission" domainObjectName="RolePermission"/>
-        
-        
-        <table tableName="users" domainObjectName="Users"/>
-      
-        <table tableName="department" domainObjectName="Department">
-        	<generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+        <table tableName="permission"/>
+        <table tableName="role_permission"/>
+        <table tableName="users"/>
         
         <table tableName="printinfo"/>
         <table tableName="users"/>
         <table tableName="housinginfo"/>
-        <table tableName="propertyinfo"/>
         <table tableName="roominfo"/>
         <table tableName="housinginfo"/>
         <table tableName="billaccount"/>
         <table tableName="ticket"/>
         <table tableName="serviceinfo"/>
-        -->
         <table tableName="costType"/>
+        -->
+        <table tableName="propertyinfo"/>
     </context>
 </generatorConfiguration>

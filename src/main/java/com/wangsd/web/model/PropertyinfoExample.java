@@ -515,6 +515,76 @@ public class PropertyinfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andSalertaxnumIsNull() {
+            addCriterion("salerTaxNum is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumIsNotNull() {
+            addCriterion("salerTaxNum is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumEqualTo(String value) {
+            addCriterion("salerTaxNum =", value, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumNotEqualTo(String value) {
+            addCriterion("salerTaxNum <>", value, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumGreaterThan(String value) {
+            addCriterion("salerTaxNum >", value, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumGreaterThanOrEqualTo(String value) {
+            addCriterion("salerTaxNum >=", value, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumLessThan(String value) {
+            addCriterion("salerTaxNum <", value, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumLessThanOrEqualTo(String value) {
+            addCriterion("salerTaxNum <=", value, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumLike(String value) {
+            addCriterion("salerTaxNum like", value, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumNotLike(String value) {
+            addCriterion("salerTaxNum not like", value, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumIn(List<String> values) {
+            addCriterion("salerTaxNum in", values, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumNotIn(List<String> values) {
+            addCriterion("salerTaxNum not in", values, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumBetween(String value1, String value2) {
+            addCriterion("salerTaxNum between", value1, value2, "salertaxnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalertaxnumNotBetween(String value1, String value2) {
+            addCriterion("salerTaxNum not between", value1, value2, "salertaxnum");
+            return (Criteria) this;
+        }
+
         public Criteria andParentIdIsNull() {
             addCriterion("parent_id is null");
             return (Criteria) this;

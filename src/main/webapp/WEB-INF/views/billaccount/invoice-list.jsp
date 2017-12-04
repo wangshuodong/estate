@@ -6,19 +6,34 @@
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-	<%--<form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/billAccount/invoiceList" method="post">
+	<form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/billAccount/invoiceList" method="post">
+		<input type="text" placeholder="账单编号" class="input-text radius size-L" style="width:250px" name="id">
 		<div class="form-group">
-			<select class="form-control shift-info" style="width:250px" name="ticketstatus">
-				<option value='' disabled selected style='display:none;'>请选择发票状态</option>
-				<option value="1" <c:if test="${query_status == 1 }">selected</c:if>>审核中</option>
-				<option value="2" <c:if test="${query_status == 2 }">selected</c:if>>同意</option>
-				<option value="3" <c:if test="${query_status == 3 }">selected</c:if>>拒绝</option>
-				<option value="3" <c:if test="${query_status == 4 }">selected</c:if>>开票成功</option>
-				<option value="4" <c:if test="${query_status == 5 }">selected</c:if>>开票失败</option>
+			<select class="form-control" style="width:250px" name="housingId" id="housingId">
+				<option value=''>所有小区</option>
+				<c:forEach items="${parentList}" var="item">
+					<option value="${item.id}" <c:if test="${query.housingId==item.id }">selected</c:if>>${item.name}</option>
+				</c:forEach>
 			</select>
 		</div>
-		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
-	</form>--%>
+		<div class="form-group">
+			<select class="form-control shift-info" style="width:250px" name="costType">
+				<option value=''>所有费用类型</option>
+				<c:forEach items="${costList}" var="item">
+					<option value="${item.id}" <c:if test="${query.costType==item.id }">selected</c:if>>${item.name}</option>
+				</c:forEach>
+			</select>
+		</div>
+		<br>
+		<%--<div class="form-group" id="roomdoc">--%>
+		<%--<select class="form-control shift-info" style="width:250px" name="roominfoId" id="roominfoId">--%>
+		<%--<option value=''>所有房间</option>--%>
+		<%--</select>--%>
+		<%--</div>--%>
+		<div class="form-group mt-20">
+			<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
+		</div>
+	</form>
 
 	<div class="panel panel-default mt-20">
 		<div class="panel-header">

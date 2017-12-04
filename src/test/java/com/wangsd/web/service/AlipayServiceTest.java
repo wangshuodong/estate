@@ -165,10 +165,10 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        String community_id = "AF2FBBVGM3301";
-        String token = "201708BB85188ec4dcbc4be69df6ef6b5fa2fX42";
+        String community_id = "AXJIXECXX3301";
+        String token = "201709BBdb06c71a5bd0432193e9a992ac3f7X20";
         List<String> idList = new ArrayList<String>();
-        idList.add("201711170000001");
+        idList.add("201711020000005");
         alipayService.billDeleteRequest(community_id, idList, token, loginUser);
     }
 

@@ -140,7 +140,7 @@ public class ExcelRead {
                         rowList = new ArrayList<String>();
                         totalCells = hssfRow.getLastCellNum();
                         // 读取列，从第一列开始
-                        for (short c = 0; c <= totalCells + 1; c++) {
+                        for (int c = 0; c <= totalCells + 1; c++) {
                             HSSFCell cell = hssfRow.getCell(c);
                             if (cell == null) {
                                 rowList.add(ExcelUtil.EMPTY);

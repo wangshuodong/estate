@@ -1,17 +1,14 @@
 package com.wangsd.core.util;
 
 import org.apache.http.*;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
@@ -45,10 +42,10 @@ public class HttpUtil {
      */
     public static String doGet(String url) {
         try {
-            HttpClient client = new DefaultHttpClient();
+            CloseableHttpClient httpclient = HttpClients.createDefault();
             //发送get请求
             HttpGet request = new HttpGet(url);
-            HttpResponse response = client.execute(request);
+            HttpResponse response = httpclient.execute(request);
             /**请求发送成功，并得到响应**/
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 /**读取服务器返回过来的json字符串数据**/
@@ -72,7 +69,7 @@ public class HttpUtil {
         BufferedReader in = null;
         try {
             // 定义HttpClient    
-            HttpClient client = new DefaultHttpClient();
+            CloseableHttpClient httpclient = HttpClients.createDefault();
             // 实例化HTTP方法    
             HttpPost request = new HttpPost();
             request.setURI(new URI(url));
@@ -85,9 +82,9 @@ public class HttpUtil {
                 nvps.add(new BasicNameValuePair(name, value));
                 //System.out.println(name +"-"+value);
             }
-            request.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+            request.setEntity(new UrlEncodedFormEntity(nvps, "utf-8"));
 
-            HttpResponse response = client.execute(request);
+            HttpResponse response = httpclient.execute(request);
             int code = response.getStatusLine().getStatusCode();
             if (code == 200) {    //请求成功
                 in = new BufferedReader(new InputStreamReader(response.getEntity()

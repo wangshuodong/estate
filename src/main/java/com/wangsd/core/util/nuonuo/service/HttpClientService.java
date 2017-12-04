@@ -10,7 +10,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,7 +54,7 @@ public class HttpClientService {
           String compress = (String)headers.get("compress");
         try {
         	HttpPost httpPost = setConnectionParam(url,headers);
-        	param = java.net.URLEncoder.encode(param,HTTP.UTF_8);
+        	param = java.net.URLEncoder.encode(param,"utf-8");
         	if("GZIP".equals(compress)){
         		param = Compress.compress(param);   //压缩
 			}
@@ -93,7 +92,7 @@ public class HttpClientService {
 		if(response.getStatusLine().getStatusCode()==successCode){
 			try {
 				input = response.getEntity().getContent();
-				str = java.net.URLDecoder.decode(inputStreamToString(input),HTTP.UTF_8);
+				str = java.net.URLDecoder.decode(inputStreamToString(input),"utf-8");
 				Header[] heahers = response.getAllHeaders();
 				System.out.println("返回消息头：");
 				for(Header header : heahers){

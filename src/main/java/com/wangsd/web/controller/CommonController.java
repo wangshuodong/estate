@@ -1,11 +1,11 @@
 package com.wangsd.web.controller;
 
 import com.wangsd.core.entity.JSONResult;
+import com.wangsd.core.util.DateUtils;
 import com.wangsd.core.util.ImportExcelUtil;
-import com.wangsd.web.model.Billaccount;
-import com.wangsd.web.model.Costtype;
-import com.wangsd.web.model.Housinginfo;
-import com.wangsd.web.model.Roominfo;
+import com.wangsd.core.util.NuoNuoUtil;
+import com.wangsd.core.util.StaticVar;
+import com.wangsd.web.model.*;
 import com.wangsd.web.modelCustom.*;
 import com.wangsd.web.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,6 +197,13 @@ public class CommonController {
         }
     }
 
+    /**
+     * 开电子发票
+     * @param id
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(path = "/nuonuoInvoice")
     @ResponseBody
     public JSONResult nuonuoInvoice(Integer id, HttpServletRequest request) throws Exception {
@@ -204,20 +211,37 @@ public class CommonController {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         Billaccount billaccount = billAccountService.selectBillAccountById(id);
         Roominfo roominfo = roominfoService.selectRoominfoById(billaccount.getId());
-        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(billaccount.getHousingId());
+        Housinginfo housing = housinginfoService.selectHousinginfoById(billaccount.getHousingId());
+        Propertyinfo propertyinfo = propertyinfoService.selectPropertyinfoById(housing.getParentId());
         Costtype costtype = costtypeService.selectCosttypeById(billaccount.getCostType());
         //发票明细
         List<InvoiceTitleDetail> detailList = new ArrayList<>();
         InvoiceTitleDetail detail = new InvoiceTitleDetail();
         detail.setGoodsName(costtype.getName());
         detail.setTaxRate(costtype.getTaxrate().toString());
+        detail.setWithTaxFlag("1");
+        detail.setPrice(billaccount.getBillEntryAmount().toString());
         detailList.add(detail);
         //发票主体
         InvoiceTitle invoiceTitle = new InvoiceTitle();
+        invoiceTitle.setBuyerName("个人");
         invoiceTitle.setBuyerPhone(roominfo.getOwnerPhone());
         invoiceTitle.setOrderNo(billaccount.getId().toString());
         invoiceTitle.setClerk(loginUser.getName());
-
+        invoiceTitle.setInvoiceDate(DateUtils.getCurDatetime());
+        invoiceTitle.setSalerTel(propertyinfo.getContactPhone());
+        invoiceTitle.setSalerAddress(propertyinfo.getContactAddress());
+        invoiceTitle.setSalerTaxNum(propertyinfo.getSalertaxnum());
+        invoiceTitle.setInvoiceType("1");
+        invoiceTitle.setPushMode("1");
+        invoiceTitle.setInvoiceDetail(detailList);
+        NuoNuoUtil nuoNuoUtil = new NuoNuoUtil();
+        boolean bl = nuoNuoUtil.send(invoiceTitle);
+        if (bl) {
+            billaccount.setTicketstatus(StaticVar.BILLACCOUNT_TICKETSTATUS1);
+            billAccountService.updateBillaccount(billaccount);
+        }
+        jsonResult.setSuccess(bl);
         return jsonResult;
     }
 

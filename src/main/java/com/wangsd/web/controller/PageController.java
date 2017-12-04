@@ -93,12 +93,8 @@ public class PageController {
     @RequestMapping("/alipay_estate_return")
     public void alipay_estate_return(HttpServletRequest request, HttpServletResponse response) {
         logger.info("--------------wangshuodong:调用支付宝回调接口-----------------------");
-        String appid = request.getParameter("app_id");
-        logger.info("-----appid-----=" + appid);
         Integer id = Integer.parseInt(request.getParameter("id"));
-        logger.info("-----id-----=" + id);
         Serviceinfo serviceinfo = serviceinfoService.selectServiceinfoById(id);
-        logger.info("-----AlipayPublicKey-----=" + serviceinfo.getAlipayPublicKey());
         boolean isprint = false;
         String bizContent = "";
         //获取支付宝POST过来反馈信息
@@ -112,7 +108,6 @@ public class PageController {
                 valueStr = (i == values.length - 1) ? valueStr + values[i]
                         : valueStr + values[i] + ",";
             }
-            System.out.println(name + "=" + valueStr);
             if ("id".equals(name)) {
                 continue;
             }
@@ -138,10 +133,11 @@ public class PageController {
                 String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"), "UTF-8");
 
                 String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"), "UTF-8");
+                logger.info("trade_no======" + trade_no);
                 String gmt_payment = new String(request.getParameter("gmt_payment").getBytes("ISO-8859-1"), "UTF-8");
                 //买家支付宝账号对应的支付宝唯一用户号。以2088开头的纯16位数字
                 String buyer_user_id = new String(request.getParameter("buyer_user_id").getBytes("ISO-8859-1"), "UTF-8");
-
+                logger.info("buyer_user_id======" + buyer_user_id);
                 if (trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")) {
                     Billaccount billaccount = billAccountService.selectBillAccountById(Integer.parseInt(out_trade_no));
                     if (billaccount != null && Double.parseDouble(total_amount) == billaccount.getBillEntryAmount()) {
@@ -149,6 +145,7 @@ public class PageController {
                         billaccount.setPaydate(DateUtils.paseDatetime(gmt_payment));
                         billaccount.setAlipayTradeNo(trade_no);
                         billaccount.setPaytype(StaticVar.BILLACCOUNT_PAYSTATUS2);
+                        billaccount.setBuyerUserId(buyer_user_id);
                         billAccountService.updateBillaccount(billaccount);
                         //打印小票
                         Printinfo printinfo = printService.selectPrintinfoBydeptId(billaccount.getHousingId());
@@ -185,9 +182,6 @@ public class PageController {
                         }
                     }
                     bizContent = "{\"econotify\":\"success\"}";
-                    if (isprint) {
-
-                    }
                 }
             } else {//验证失败
                 logger.info("--------------wangshuodong:物业缴费异步通知验签失败-----------------------");

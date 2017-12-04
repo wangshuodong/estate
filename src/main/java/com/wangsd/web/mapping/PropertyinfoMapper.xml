@@ -8,6 +8,7 @@
     <result column="contact_people" property="contactPeople" jdbcType="VARCHAR" />
     <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
     <result column="contact_address" property="contactAddress" jdbcType="VARCHAR" />
+    <result column="salerTaxNum" property="salertaxnum" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="alipay_login_id" property="alipayLoginId" jdbcType="VARCHAR" />
     <result column="app_id" property="appId" jdbcType="VARCHAR" />
@@ -77,8 +78,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, code, name, contact_people, contact_phone, contact_address, parent_id, alipay_login_id, 
-    app_id, token, alipay_debit_num, weixin_debit_num, weixin_children_num, api, create_time
+    id, code, name, contact_people, contact_phone, contact_address, salerTaxNum, parent_id, 
+    alipay_login_id, app_id, token, alipay_debit_num, weixin_debit_num, weixin_children_num, 
+    api, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wangsd.web.model.PropertyinfoExample" >
     select
@@ -113,16 +115,16 @@
   <insert id="insert" parameterType="com.wangsd.web.model.Propertyinfo" >
     insert into propertyinfo (id, code, name, 
       contact_people, contact_phone, contact_address, 
-      parent_id, alipay_login_id, app_id, 
-      token, alipay_debit_num, weixin_debit_num, 
-      weixin_children_num, api, create_time
-      )
+      salerTaxNum, parent_id, alipay_login_id, 
+      app_id, token, alipay_debit_num, 
+      weixin_debit_num, weixin_children_num, api, 
+      create_time)
     values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{contactPeople,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, #{contactAddress,jdbcType=VARCHAR}, 
-      #{parentId,jdbcType=INTEGER}, #{alipayLoginId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
-      #{token,jdbcType=VARCHAR}, #{alipayDebitNum,jdbcType=VARCHAR}, #{weixinDebitNum,jdbcType=VARCHAR}, 
-      #{weixinChildrenNum,jdbcType=VARCHAR}, #{api,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+      #{salertaxnum,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{alipayLoginId,jdbcType=VARCHAR}, 
+      #{appId,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, #{alipayDebitNum,jdbcType=VARCHAR}, 
+      #{weixinDebitNum,jdbcType=VARCHAR}, #{weixinChildrenNum,jdbcType=VARCHAR}, #{api,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wangsd.web.model.Propertyinfo" >
     insert into propertyinfo
@@ -144,6 +146,9 @@
       </if>
       <if test="contactAddress != null" >
         contact_address,
+      </if>
+      <if test="salertaxnum != null" >
+        salerTaxNum,
       </if>
       <if test="parentId != null" >
         parent_id,
@@ -191,6 +196,9 @@
       </if>
       <if test="contactAddress != null" >
         #{contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="salertaxnum != null" >
+        #{salertaxnum,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
         #{parentId,jdbcType=INTEGER},
@@ -248,6 +256,9 @@
       <if test="record.contactAddress != null" >
         contact_address = #{record.contactAddress,jdbcType=VARCHAR},
       </if>
+      <if test="record.salertaxnum != null" >
+        salerTaxNum = #{record.salertaxnum,jdbcType=VARCHAR},
+      </if>
       <if test="record.parentId != null" >
         parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
@@ -288,6 +299,7 @@
       contact_people = #{record.contactPeople,jdbcType=VARCHAR},
       contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
       contact_address = #{record.contactAddress,jdbcType=VARCHAR},
+      salerTaxNum = #{record.salertaxnum,jdbcType=VARCHAR},
       parent_id = #{record.parentId,jdbcType=INTEGER},
       alipay_login_id = #{record.alipayLoginId,jdbcType=VARCHAR},
       app_id = #{record.appId,jdbcType=VARCHAR},
@@ -318,6 +330,9 @@
       </if>
       <if test="contactAddress != null" >
         contact_address = #{contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="salertaxnum != null" >
+        salerTaxNum = #{salertaxnum,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=INTEGER},
@@ -356,6 +371,7 @@
       contact_people = #{contactPeople,jdbcType=VARCHAR},
       contact_phone = #{contactPhone,jdbcType=VARCHAR},
       contact_address = #{contactAddress,jdbcType=VARCHAR},
+      salerTaxNum = #{salertaxnum,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER},
       alipay_login_id = #{alipayLoginId,jdbcType=VARCHAR},
       app_id = #{appId,jdbcType=VARCHAR},

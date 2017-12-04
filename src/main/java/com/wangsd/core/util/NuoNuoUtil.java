@@ -1,5 +1,6 @@
 package com.wangsd.core.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wangsd.core.util.nuonuo.bean.PrivateData;
 import com.wangsd.core.util.nuonuo.bean.PublicData;
 import com.wangsd.core.util.nuonuo.bean.RequestMode;
@@ -7,8 +8,12 @@ import com.wangsd.core.util.nuonuo.exception.OpensnsException;
 import com.wangsd.core.util.nuonuo.service.OpenApiV1;
 import com.wangsd.core.util.nuonuo.util.SecurityUtil;
 import com.wangsd.core.util.nuonuo.util.ValidataUtil;
+import com.wangsd.web.modelCustom.InvoiceTitle;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangsd on 2017-12-04.
@@ -42,11 +47,34 @@ public class NuoNuoUtil {
         return requestMode;
     }
 
-    public boolean send() {
+    public boolean send(InvoiceTitle invoiceTitle) {
+        Map<String, String> headers = getHeaders();
+        PublicData pdData = getPublicData();
+        PrivateData<Object> pvData = new PrivateData<Object>();
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map_s = new HashMap<String, Object>();
+
+        map_s.put("order", invoiceTitle);
+        list.add(map_s);
+        pvData.setServicedata(list);
+        RequestMode requestMode = getRequestMode(pdData, pvData);
+        OpenApiV1 sdk = new OpenApiV1();
+        String result = "";
+        try {
+            result = sdk.handle(SecurityUtil.url, headers, requestMode);
+            if (!ValidataUtil.isEmpty(result)) {
+                System.out.println("服务端的响应：" + result);
+                JSONObject data = JSONObject.parseObject(result);
+                if ("E0000".equals(data.get("code"))) {
+                    return true;
+                }
+            }
+        } catch (OpensnsException e) {
+            System.out.printf("Request failed 【" + e.getErrorCode() + ":" + e.getMessage() + "】");
+            e.printStackTrace();
+        }
         return false;
     }
-
-
 
     public static void main(String[] args) {
         NuoNuoUtil nuoNuoUtil = new NuoNuoUtil();

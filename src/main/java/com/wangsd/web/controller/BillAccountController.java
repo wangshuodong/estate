@@ -5,7 +5,6 @@ import com.wangsd.core.entity.JSONResult;
 import com.wangsd.core.util.ApplicationUtils;
 import com.wangsd.core.util.DateUtils;
 import com.wangsd.core.util.PrintMessage;
-import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Costtype;
 import com.wangsd.web.model.Printinfo;
@@ -72,25 +71,26 @@ public class BillAccountController {
 
     /**
      * 电子发票
-     * @param ticketstatus
+     * @param query
      * @param request
      * @param model
      * @return
      */
     @RequestMapping("/invoiceList")
-    public String invoiceList(Integer ticketstatus, HttpServletRequest request, Model model) {
+    public String invoiceList(BillAccountCustom query, HttpServletRequest request, Model model) {
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        List<ParentCustom> parentList = housinginfoService.queryParentHousingByCode(loginUser.getParentCode());
+        model.addAttribute("parentList", parentList);
+        List<Costtype> costList = costtypeService.queryAllList();
+        model.addAttribute("costList", costList);
+
         String parentCode = loginUser.getParentCode();
-        BillAccountCustom query = new BillAccountCustom();
         query.setHousingCode(parentCode);
         query.setPaystatus(true);
-        if (ticketstatus == null) {
-            query.setTicketstatus(StaticVar.BILLACCOUNT_TICKETSTATUS0);
-        } else {
-            query.setTicketstatus(ticketstatus);
-        }
+
         List<BillAccountCustom> list = billAccountService.queryBillAccountList(query);
         model.addAttribute("billaccountList", list);
+        model.addAttribute("query", query);
         return "/billaccount/invoice-list";
     }
 

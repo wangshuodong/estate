@@ -15,6 +15,8 @@ public class Propertyinfo {
 
     private String contactAddress;
 
+    private String salertaxnum;
+
     private Integer parentId;
 
     private String alipayLoginId;
@@ -79,6 +81,14 @@ public class Propertyinfo {
 
     public void setContactAddress(String contactAddress) {
         this.contactAddress = contactAddress == null ? null : contactAddress.trim();
+    }
+
+    public String getSalertaxnum() {
+        return salertaxnum;
+    }
+
+    public void setSalertaxnum(String salertaxnum) {
+        this.salertaxnum = salertaxnum == null ? null : salertaxnum.trim();
     }
 
     public Integer getParentId() {

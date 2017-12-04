@@ -79,23 +79,12 @@ public class StaticVar {
 	 */
 	public static final int BILLACCOUNT_TICKETSTATUS0 = 0;
 	/**
-	 * 开票状态 申请中
+	 * 开票状态 已开票
 	 */
 	public static final int BILLACCOUNT_TICKETSTATUS1 = 1;
 	/**
-	 * 开票状态 同意
+	 * 开票状态 退票
 	 */
 	public static final int BILLACCOUNT_TICKETSTATUS2 = 2;
-	/**
-	 * 开票状态 拒绝
-	 */
-	public static final int BILLACCOUNT_TICKETSTATUS3 = 3;
-	/**
-	 * 开票状态 开票成功
-	 */
-	public static final int BILLACCOUNT_TICKETSTATUS4 = 4;
-	/**
-	 * 开票状态 开票失败
-	 */
-	public static final int BILLACCOUNT_TICKETSTATUS5 = 5;
+
 }
