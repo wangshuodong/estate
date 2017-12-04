@@ -511,6 +511,9 @@ public class AlipayServiceImpl implements AlipayService {
         if (billaccount.getRoominfoId() != null) {
             bizContent.put("out_room_id", billaccount.getRoominfoId());
         }
+        if (billaccount.getPaystatus()) {
+            bizContent.put("bill_status", "FINISH_PAYMENT");
+        }
         request.setBizContent(bizContent.toString());
         if (token != null) {
             request.putOtherTextParam("app_auth_token", token);

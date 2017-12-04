@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50709
-Source Host           : localhost:3306
+Source Server         : 120.78.201.213
+Source Server Version : 50718
+Source Host           : 120.78.201.213:3306
 Source Database       : estate
 
 Target Server Type    : MYSQL
-Target Server Version : 50709
+Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-12-05 00:23:46
+Date: 2017-12-05 00:42:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -2220,6 +2220,7 @@ CREATE TABLE `serviceinfo` (
   `app_id` varchar(255) DEFAULT NULL COMMENT '应用ID,您的APPID',
   `merchant_private_key` varchar(2555) DEFAULT NULL COMMENT '商户私钥',
   `alipay_public_key` varchar(2555) DEFAULT NULL COMMENT '支付宝公钥',
+  `return_url` varchar(255) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
@@ -2227,8 +2228,8 @@ CREATE TABLE `serviceinfo` (
 -- ----------------------------
 -- Records of serviceinfo
 -- ----------------------------
-INSERT INTO `serviceinfo` VALUES ('1', '001', '总公司', null, null, null, null, null, null, null, null, '2017-11-19 22:09:21');
-INSERT INTO `serviceinfo` VALUES ('10', '0010002', '杭州早早科技有限公司', '杭州', '熊和砍', '', '', '1', '2017071807800670', 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJW2B/Wqka+T7s1HW/rFFKweF7fN+vtqmhkIvtXUoQi3+fiZKZjc1KHGLM8YS9BTUFNDcSvRva23qRlGp4ypbkl+QSx2spc0A2TKllVIBu9yWAvBIEVNBo3s8rRK1VWH8qKtMyYc2Q1rebeeEpFSJAjXGS99JS68GXo1QwDbH9kNAgMBAAECgYAHNHV5mzXbr1DkzDRfAzEVf3VAwUb85op3/fXBMLR3SPNcxXI9CxOonXL2nIK5iejpuOsvYq6wN5CJyN6zZEwMZpEXQ8ELhencbgYgBvBmvyPq5rnUb3MEt/W2B3EmgaCqYTfk0GWa50ybSh94ynBfK+DRy8NHYQg9kYzOfJt2gQJBAMUJ2wVR6PE2iK24jvcX/ajqE7kHRFf0T6bOKA4TRxxDMGNCH189RmXpxoPjrzsofKdh+qgvbLpz3e7cOG18Wp0CQQDCgqeSyxFecmmDvaDkn0Oj4GkgOdz6T23rsCfSVXWaBII0+nBlbWglQc/DwohTmdq8TBe6FnTfbOhDnIMo0DUxAkALXuQ6zF1K/kCo9cuaStIim0+ED/1LrheioqcBGO+zm9UBBWHWFy0m2HTSS6NjIJUA+9CBQCtgHyuhiyfeeZypAkBD4sfLgtYgCXxr/03dHPzFgDgQiEFolzo87PEpBqyRwYsUJGf/7kxP3IU/xHBCBUuDNmd9igLmS6NQnZplLy2xAkEAuIDbFGy34R8rEI5vXcqcMsn0tl5jBHSzbFcN1+3vz8dfudjl0RTqqpDXI1vtgbOph+NG3TVkSYbk0knjDNG15A==', 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB', '2017-11-30 20:16:07');
+INSERT INTO `serviceinfo` VALUES ('1', '001', '总公司', null, null, null, null, null, null, null, null, null, '2017-11-19 22:09:21');
+INSERT INTO `serviceinfo` VALUES ('10', '0010002', '杭州早早科技有限公司', '杭州', '熊和砍', '', '', '1', '2017071807800670', 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJW2B/Wqka+T7s1HW/rFFKweF7fN+vtqmhkIvtXUoQi3+fiZKZjc1KHGLM8YS9BTUFNDcSvRva23qRlGp4ypbkl+QSx2spc0A2TKllVIBu9yWAvBIEVNBo3s8rRK1VWH8qKtMyYc2Q1rebeeEpFSJAjXGS99JS68GXo1QwDbH9kNAgMBAAECgYAHNHV5mzXbr1DkzDRfAzEVf3VAwUb85op3/fXBMLR3SPNcxXI9CxOonXL2nIK5iejpuOsvYq6wN5CJyN6zZEwMZpEXQ8ELhencbgYgBvBmvyPq5rnUb3MEt/W2B3EmgaCqYTfk0GWa50ybSh94ynBfK+DRy8NHYQg9kYzOfJt2gQJBAMUJ2wVR6PE2iK24jvcX/ajqE7kHRFf0T6bOKA4TRxxDMGNCH189RmXpxoPjrzsofKdh+qgvbLpz3e7cOG18Wp0CQQDCgqeSyxFecmmDvaDkn0Oj4GkgOdz6T23rsCfSVXWaBII0+nBlbWglQc/DwohTmdq8TBe6FnTfbOhDnIMo0DUxAkALXuQ6zF1K/kCo9cuaStIim0+ED/1LrheioqcBGO+zm9UBBWHWFy0m2HTSS6NjIJUA+9CBQCtgHyuhiyfeeZypAkBD4sfLgtYgCXxr/03dHPzFgDgQiEFolzo87PEpBqyRwYsUJGf/7kxP3IU/xHBCBUuDNmd9igLmS6NQnZplLy2xAkEAuIDbFGy34R8rEI5vXcqcMsn0tl5jBHSzbFcN1+3vz8dfudjl0RTqqpDXI1vtgbOph+NG3TVkSYbk0knjDNG15A==', 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB', 'https://www.zaozaopay.com/rest/page/alipay_estate_return?id=10', '2017-11-30 20:16:07');
 
 -- ----------------------------
 -- Table structure for ticket
@@ -2273,7 +2274,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '管理员', 'admin', '123456', '1', '001', '99', '17784495260', 'wangsd@163.com', '1', null, '2017-11-19 22:08:54');
+INSERT INTO `users` VALUES ('11', '管理员', 'admin', '123456', '1', '001', '99', '17784495260', 'wangsd@163.com', '1', null, '2017-11-19 22:08:54');
 INSERT INTO `users` VALUES ('16', '杭州早早科技有限公司', '早早科技', '111111', '10', '0010002', '1', '', '', '1', '1', '2017-11-30 20:43:03');
 INSERT INTO `users` VALUES ('17', '', '九堡肖苑', '111111', '10006', '001000200010016', '3', '', '', '1', '3', '2017-11-30 21:36:47');
 INSERT INTO `users` VALUES ('18', '西溪永乐城', '西溪永乐城', '111111', '10009', '001000200010012', '3', '', '', '1', '3', '2017-12-03 13:28:26');
