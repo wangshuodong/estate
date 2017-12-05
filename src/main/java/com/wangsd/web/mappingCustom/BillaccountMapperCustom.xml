@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangsd.web.dao.BillaccountMapper">
+
+    <select id="queryInvoiceListTicketstatus" parameterType="BillAccountCustom" resultType="BillAccountCustom">
+        SELECT
+        b.*, h.`name` as housingName,
+        r.address as roominfoAddress,r.owner_card as ownerCard, r.owner_name as ownerName, r.owner_phone as ownerPhone,
+        cc.name as costTypeName
+        FROM
+        billaccount b
+        JOIN housinginfo h ON b.housing_id = h.id
+        JOIN roominfo r ON b.roominfo_id = r.id
+        JOIN costtype cc ON b.cost_type = cc.id
+        <where>
+            and b.deleteStatus = false and h.deleteStatus = false and r.deleteStatus = false
+            <if test="housingCode != null and housingCode != ''">
+                and h.`code` like CONCAT(#{housingCode},'%')
+            </if>
+            <if test="housingId != null and housingId != ''">
+                and b.housing_id = #{housingId}
+            </if>
+            <if test="roominfoId != null and roominfoId != ''">
+                and b.roominfo_id = #{roominfoId}
+            </if>
+            <if test="costType != null">
+                and b.cost_type = #{costType}
+            </if>
+            <if test="acctPeriod != null">
+                and b.acct_period = #{acctPeriod}
+            </if>
+            <if test="status != null">
+                and b.status = #{status}
+            </if>
+            <if test="paystatus != null">
+                and b.payStatus = #{paystatus}
+            </if>
+            <if test="ticketstatus != null">
+                and b.ticketStatus = #{ticketstatus}
+            </if>
+            <if test="id != null">
+                and b.id = #{id}
+            </if>
+        </where>
+    </select>
+
     <select id="queryBillAccountList" parameterType="BillAccountCustom" resultType="BillAccountCustom">
         SELECT
             b.*, h.`name` as housingName,

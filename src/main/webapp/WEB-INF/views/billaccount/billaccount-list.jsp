@@ -86,7 +86,7 @@
 				<tbody>
 				<c:forEach items="${billaccountList}" var="item">
 					<tr class="text-c">
-						<td><input type="checkbox" name="" value=""></td>
+						<td><input type="checkbox" name="ids" value="${ item.id }"></td>
 						<td>${ item.housingName }</td>
 						<td>${ item.roominfoAddress }</td>
 						<td>${ item.id }</td>
@@ -186,6 +186,7 @@
         <%--},'json');--%>
     <%--}--%>
     function query() {
+        alert(1);
         $("#myform").action = "${pageContext.request.contextPath }/rest/billAccount/billAccountList";
         $("#myform").submit();
     }
@@ -217,6 +218,29 @@
         layer.full(index);
     }
 
+    function bill_list_del(id) {
+        layer.confirm('确认要删除吗？',function(index){
+			$("#myform").ajaxSubmit({
+				url: "${pageContext.request.contextPath }/rest/billAccount/deleteBillaccount",
+				beforeSubmit: function () {
+					layer.load();
+				},
+				success: function(data){
+					layer.closeAll('loading');
+					if (data.success) {
+						window.location.reload();
+					}else {
+						layer.alert(data.message);
+					}
+				},
+				error: function(XmlHttpRequest, textStatus, errorThrown){
+					layer.closeAll('loading');
+					layer.alert('error!',{icon:1,time:2000});
+				}
+			});
+        });
+    }
+
     function info_del(obj,id){
         layer.confirm('确认要删除吗？',function(index){
             $.ajax({
@@ -224,7 +248,7 @@
                 url: '${pageContext.request.contextPath }/rest/billAccount/deleteBillaccount',
                 dataType: 'json',
                 data:{
-                    id : id
+                    ids : id
                 },
                 success: function(data){
                     if (data.success) {

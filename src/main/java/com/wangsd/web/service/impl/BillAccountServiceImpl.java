@@ -1,6 +1,7 @@
 package com.wangsd.web.service.impl;
 
 import com.wangsd.core.entity.JSONResult;
+import com.wangsd.core.feature.orm.mybatis.Page;
 import com.wangsd.core.util.StaticVar;
 import com.wangsd.web.dao.BillaccountMapper;
 import com.wangsd.web.dao.TicketMapper;
@@ -191,5 +192,10 @@ public class BillAccountServiceImpl implements BillAccountService {
     @Override
     public Ticket selectTicketById(Integer id) {
         return ticketMapper.selectByPrimaryKey(id);
+    }
+
+
+    public List<BillAccountCustom> queryInvoiceListTicketstatus(Page<BillAccountCustom> page, BillAccountCustom query) {
+        return billaccountMapper.queryInvoiceListTicketstatus(page, query);
     }
 }

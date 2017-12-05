@@ -1,5 +1,6 @@
 package com.wangsd.web.dao;
 
+import com.wangsd.core.feature.orm.mybatis.Page;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.BillaccountExample;
 import com.wangsd.web.modelCustom.BillAccountCustom;
@@ -85,5 +86,7 @@ public interface BillaccountMapper {
      * @return
      */
     BillAccountCustom selectAllGroupByStatus(BillAccountCustom billAccountCustom);
+
+    List<BillAccountCustom> queryInvoiceListTicketstatus(Page<BillAccountCustom> page, BillAccountCustom query);
 
 }

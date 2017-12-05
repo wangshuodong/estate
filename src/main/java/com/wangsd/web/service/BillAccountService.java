@@ -1,6 +1,7 @@
 package com.wangsd.web.service;
 
 import com.wangsd.core.entity.JSONResult;
+import com.wangsd.core.feature.orm.mybatis.Page;
 import com.wangsd.web.model.Billaccount;
 import com.wangsd.web.model.Ticket;
 import com.wangsd.web.modelCustom.BillAccountCustom;
@@ -97,5 +98,5 @@ public interface BillAccountService {
      * @param ticketstatus
      * @return
      */
-    //public List<BillAccountCustom> queryInvoiceListTicketstatus(String code, Integer ticketstatus);
+    public List<BillAccountCustom> queryInvoiceListTicketstatus(Page<BillAccountCustom> page, BillAccountCustom query);
 }

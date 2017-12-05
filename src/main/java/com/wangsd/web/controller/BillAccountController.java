@@ -200,25 +200,38 @@ public class BillAccountController {
 
     @RequestMapping("/deleteBillaccount")
     @ResponseBody
-    public JSONResult deleteBillaccount(Integer id, HttpSession session) {
-        boolean bl;
-        Billaccount oldBill = billAccountService.selectBillAccountById(id);
-        if (oldBill.getStatus()) { //已同步
-            //获取公钥 私钥
-            UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
-            HousinginfoCustom housing = housinginfoService.selectHousingCustomById(oldBill.getHousingId());
-            List<String> roomids = new ArrayList<>();
-            roomids.add(oldBill.getId().toString());
-            bl = alipayService.billDeleteRequest(housing.getCommunityId(), roomids, housing.getToken(), loginUser);
-            if (bl) {
-                bl = billAccountService.deleteBillaccount(id);
+    public JSONResult deleteBillaccount(Integer[] ids, HttpSession session) {
+        JSONResult jsonResult = new JSONResult();
+        boolean bl = false;
+        for (Integer id : ids) {
+            Billaccount oldBill = billAccountService.selectBillAccountById(id);
+            if (oldBill.getPaystatus()) {
+                jsonResult.setMessage("已支付不允许删除");
+                jsonResult.setSuccess(false);
+                return jsonResult;
+            }else {
+                if (oldBill.getStatus()) { //已同步
+                    //获取公钥 私钥
+                    UserCustom loginUser = (UserCustom) session.getAttribute("userInfo");
+                    HousinginfoCustom housing = housinginfoService.selectHousingCustomById(oldBill.getHousingId());
+                    List<String> roomids = new ArrayList<>();
+                    roomids.add(oldBill.getId().toString());
+                    bl = alipayService.billDeleteRequest(housing.getCommunityId(), roomids, housing.getToken(), loginUser);
+                    if (bl) {
+                        bl = billAccountService.deleteBillaccount(id);
+                    }
+                } else {
+                    bl = billAccountService.deleteBillaccount(id);
+                }
             }
-        } else {
-            bl = billAccountService.deleteBillaccount(id);
         }
-        JSONResult obj = new JSONResult();
-        obj.setSuccess(bl);
-        return obj;
+        if (bl) {
+            jsonResult.setMessage("删除成功");
+        }else{
+            jsonResult.setMessage("删除失败");
+        }
+        jsonResult.setSuccess(bl);
+        return jsonResult;
     }
 
     /**
