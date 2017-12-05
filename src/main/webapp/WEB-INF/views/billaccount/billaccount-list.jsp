@@ -6,7 +6,8 @@
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-	<form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/billAccount/billAccountList" method="post">
+	<form id="myform" method="post">
+	<div class="codeView docs-example">
 		<input type="text" placeholder="账单编号" class="input-text radius size-L" style="width:250px" name="id">
 		<div class="form-group">
 			<select class="form-control" style="width:250px" name="housingId" id="housingId">
@@ -47,11 +48,12 @@
 		<div class="form-group mt-20">
 		<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="info_add();">新&nbsp;增</button>
+		<button type="button" class="btn btn-secondary radius size-L" onclick="bill_list_del();">批量删除</button>
 		<button type="button" class="btn btn-secondary radius size-L" onclick="bill_list_sync();">批量同步</button>
 		<button type="button" class="btn btn-warning radius size-L" onclick="excel_upload();">导入账单</button>
 		<button type="button" class="btn btn-warning radius size-L" onclick="excel_download();">下载模板</button>
 		</div>
-	</form>
+	</div>
 
 	<div class="panel panel-default mt-20">
 		<div class="panel-header">
@@ -141,6 +143,7 @@
 			<br>
 		</div>
 	</div>
+	</form>
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
@@ -182,6 +185,10 @@
             <%--roomEdit();--%>
         <%--},'json');--%>
     <%--}--%>
+    function query() {
+        $("#myform").action = "${pageContext.request.contextPath }/rest/billAccount/billAccountList";
+        $("#myform").submit();
+    }
 
 	function info_add(){
 		var index = layer.open({

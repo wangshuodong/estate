@@ -81,7 +81,7 @@ public class AlipayServiceTest extends TestSupport {
         loginUser.setAppId(appid);
         loginUser.setMerchantPrivateKey(privateKey);
         loginUser.setAlipayPublicKey(publicKey);
-        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(9);
+        HousinginfoCustom housing = housinginfoService.selectHousingCustomById(10006);
         alipayService.communityDetailsQueryRequest(housing.getCommunityId(), housing.getToken(), loginUser);
     }
 

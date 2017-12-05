@@ -28,7 +28,7 @@
 </head>
 <body>
 <input type="hidden" id="TenantId" name="TenantId" value=""/>
-<div class="header">在线物业管理系统</div>
+<div class="header">智慧社区物业管理系统</div>
 <div class="loginWraper">
     <div id="loginform" class="loginBox">
         <form class="form form-horizontal" action="${pageContext.request.contextPath}/rest/user/login" method="post">
