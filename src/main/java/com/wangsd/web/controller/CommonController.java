@@ -209,12 +209,13 @@ public class CommonController {
     public JSONResult nuonuoInvoice(Integer[] ids, HttpServletRequest request) throws Exception {
         JSONResult jsonResult = new JSONResult();
         boolean bl = false;
-        UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
+        //UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
         InvoiceTitle invoiceTitle = new InvoiceTitle();
+        List<InvoiceTitleDetail> detailList = new ArrayList<>();
         for (Integer id : ids) {
             Billaccount billaccount = billAccountService.selectBillAccountById(id);
             Roominfo roominfo = roominfoService.selectRoominfoById(billaccount.getRoominfoId());
-            if (invoiceTitle.getBuyerPhone() != null && invoiceTitle.getBuyerPhone() != roominfo.getOwnerPhone()) {
+            if (invoiceTitle.getBuyerPhone() != null && !roominfo.getOwnerPhone().equals(invoiceTitle.getBuyerPhone())) {
                 jsonResult.setSuccess(false);
                 jsonResult.setMessage("请选择同一业主的数据");
                 return jsonResult;
@@ -223,26 +224,26 @@ public class CommonController {
             Propertyinfo propertyinfo = propertyinfoService.selectPropertyinfoById(housing.getParentId());
             Costtype costtype = costtypeService.selectCosttypeById(billaccount.getCostType());
             //发票明细
-            List<InvoiceTitleDetail> detailList = new ArrayList<>();
             InvoiceTitleDetail detail = new InvoiceTitleDetail();
-            detail.setGoodsName(costtype.getName());
+            detail.setGoodsName(costtype.getName() + "-" + billaccount.getAcctPeriod());
+            detail.setNum("1");
             detail.setTaxRate(costtype.getTaxrate().toString());
             detail.setWithTaxFlag("1");
             detail.setPrice(billaccount.getBillEntryAmount().toString());
             detailList.add(detail);
             //发票主体
-            invoiceTitle.setBuyerName("个人");
+            invoiceTitle.setBuyerName(roominfo.getOwnerName() + "-" + roominfo.getAddress());
             invoiceTitle.setBuyerPhone(roominfo.getOwnerPhone());
             invoiceTitle.setOrderNo(billaccount.getId().toString());
-            invoiceTitle.setClerk(loginUser.getName());
+            invoiceTitle.setClerk("系统");
             invoiceTitle.setInvoiceDate(DateUtils.getCurDatetime());
             invoiceTitle.setSalerTel(propertyinfo.getContactPhone());
             invoiceTitle.setSalerAddress(propertyinfo.getContactAddress());
             invoiceTitle.setSalerTaxNum(propertyinfo.getSalertaxnum());
             invoiceTitle.setInvoiceType("1");
             invoiceTitle.setPushMode("1");
-            invoiceTitle.setInvoiceDetail(detailList);
         }
+        invoiceTitle.setInvoiceDetail(detailList);
         NuoNuoUtil nuoNuoUtil = new NuoNuoUtil();
         String invoiceSerialNum = nuoNuoUtil.send(invoiceTitle);
         if (invoiceSerialNum != null) {
@@ -253,6 +254,11 @@ public class CommonController {
                 bill.setInvoiceserialnum(invoiceSerialNum);
                 bl = billAccountService.updateBillaccount(bill);
             }
+        }
+        if (bl) {
+            jsonResult.setMessage("开票成功");
+        }else{
+            jsonResult.setMessage("开票失败");
         }
         jsonResult.setSuccess(bl);
         return jsonResult;

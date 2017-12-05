@@ -56,7 +56,7 @@
 					<th>账期</th>
 					<th>金额</th>
 					<th>付款类型</th>
-					<th>支付宝付款编号</th>
+					<th>发票流水号</th>
 					<th>付款时间</th>
 					<th>开票状态</th>
 					<th>操作</th>
@@ -80,11 +80,17 @@
 							<c:if test="${ item.paytype == 2 }">支付宝</c:if>
 							<c:if test="${ item.paytype == 3 }">微信</c:if>
 							<c:if test="${ item.paytype == 4 }">POS机</c:if>
+							<c:if test="${ item.paytype == 5 }">银行转帐</c:if>
+							<c:if test="${ item.paytype == 6 }">抵用券</c:if>
 							<c:if test="${ item.paytype == 99 }">其他</c:if>
 						</td>
-						<td>${ item.alipayTradeNo }</td>
+						<td>${ item.invoiceserialnum }</td>
 						<td><fmt:formatDate value="${ item.paydate }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
-						<td>未开票</td>
+						<td>
+							<c:if test="${ item.ticketstatus == 0 }">未开票</c:if>
+							<c:if test="${ item.ticketstatus == 1}">已开票</c:if>
+							<c:if test="${ item.ticketstatus == 2 }">退票</c:if>
+						</td>
 						<td>
 							<c:if test="${ item.ticketstatus==0 }">
 								<a title="开电子发票" style="text-decoration:none" onclick="approve(${item.id })" href="javascript:;" class="c-success">开电子发票</a><br>

@@ -45,6 +45,10 @@ public class ApplicationUtils {
             payType = "微信";
         } else if (pay_type == StaticVar.BILLACCOUNT_PAYSTATUS4) {
             payType = "POS机";
+        }  else if (pay_type == StaticVar.BILLACCOUNT_PAYSTATUS5) {
+            payType = "银行转帐";
+        }  else if (pay_type == StaticVar.BILLACCOUNT_PAYSTATUS6) {
+            payType = "抵用券";
         } else {
             payType = "其他";
         }

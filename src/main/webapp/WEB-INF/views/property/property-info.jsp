@@ -29,21 +29,21 @@
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">联系电话：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系电话：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${propertyinfo.contactPhone}" placeholder="联系电话" name="contactPhone">
+                <input type="text" class="input-text radius size-L" value="${propertyinfo.contactPhone}" placeholder="联系电话" name="contactPhone" required>
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">联系地址：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系地址：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${propertyinfo.contactAddress}" placeholder="联系地址" name="contactAddress">
+                <input type="text" class="input-text radius size-L" value="${propertyinfo.contactAddress}" placeholder="联系地址" name="contactAddress" required>
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">税号：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>税号：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text radius size-L" value="${propertyinfo.salertaxnum}" placeholder="税号" name="salertaxnum">
+                <input type="text" class="input-text radius size-L" value="${propertyinfo.salertaxnum}" placeholder="税号" name="salertaxnum" required>
             </div>
         </div>
         <div class="row cl">

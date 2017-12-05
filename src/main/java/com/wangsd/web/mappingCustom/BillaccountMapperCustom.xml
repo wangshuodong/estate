@@ -40,11 +40,12 @@
             <if test="id != null">
                 and b.id = #{id}
             </if>
+            ORDER BY b.id desc
             <if test="currPage != null and pageSize != null">
                 limit #{currPage},#{pageSize}
             </if>
         </where>
-        ORDER BY b.id desc
+
     </select>
 
     <select id="getPrintGroupByPayType" resultType="BillAccountCustom" parameterType="string">

@@ -99,6 +99,8 @@
 							<c:if test="${ item.paytype == 2 }">支付宝</c:if>
 							<c:if test="${ item.paytype == 3 }">微信</c:if>
 							<c:if test="${ item.paytype == 4 }">POS机</c:if>
+							<c:if test="${ item.paytype == 5 }">银行转帐</c:if>
+							<c:if test="${ item.paytype == 6 }">抵用券</c:if>
 							<c:if test="${ item.paytype == 99 }">其他</c:if>
 						</td>
 						<td>

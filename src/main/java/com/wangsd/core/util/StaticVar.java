@@ -69,6 +69,14 @@ public class StaticVar {
 	 */
 	public static final int BILLACCOUNT_PAYSTATUS4 = 4;
 	/**
+	 * 支付方式 银行转帐
+	 */
+	public static final int BILLACCOUNT_PAYSTATUS5 = 5;
+	/**
+	 * 支付方式 抵用券
+	 */
+	public static final int BILLACCOUNT_PAYSTATUS6 = 6;
+	/**
 	 * 支付方式 其他
 	 */
 	public static final int BILLACCOUNT_PAYSTATUS99 = 99;

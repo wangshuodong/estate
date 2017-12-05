@@ -64,9 +64,11 @@
                 <select class="form-control shift-info" name="paytype" required>
                     <option value='' disabled selected style='display:none;'>请选择</option>
                     <option value="1">现金</option>
-                    <%--<option value="2">支付宝</option>--%>
+                    <option value="2">支付宝</option>
                     <option value="3">微信</option>
                     <option value="4">POS机</option>
+                    <option value="5">银行转帐</option>
+                    <option value="6">抵用券</option>
                     <option value="99">其他</option>
                 </select>
             </div>
