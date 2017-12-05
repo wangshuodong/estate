@@ -47,7 +47,7 @@ public class NuoNuoUtil {
         return requestMode;
     }
 
-    public boolean send(InvoiceTitle invoiceTitle) {
+    public String send(InvoiceTitle invoiceTitle) {
         Map<String, String> headers = getHeaders();
         PublicData pdData = getPublicData();
         PrivateData<Object> pvData = new PrivateData<Object>();
@@ -65,15 +65,15 @@ public class NuoNuoUtil {
             if (!ValidataUtil.isEmpty(result)) {
                 System.out.println("服务端的响应：" + result);
                 JSONObject data = JSONObject.parseObject(result);
-                if ("E0000".equals(data.get("code"))) {
-                    return true;
+                if ("E0000".equals(data.getString("code"))) {
+                    return data.getJSONObject("result").getString("invoiceSerialNum");
                 }
             }
         } catch (OpensnsException e) {
             System.out.printf("Request failed 【" + e.getErrorCode() + ":" + e.getMessage() + "】");
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     public static void main(String[] args) {

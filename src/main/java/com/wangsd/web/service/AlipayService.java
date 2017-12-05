@@ -135,6 +135,7 @@ public interface AlipayService {
      */
     public boolean billDeleteRequest(String community_id, List<String> bill_entry_id_list, String token, UserCustom loginUser);
 
+
     /**
      * 获取指定用户所有的有效抬头列表
      * @param user_id

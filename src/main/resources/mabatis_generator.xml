@@ -43,11 +43,11 @@
         <table tableName="housinginfo"/>
         <table tableName="roominfo"/>
         <table tableName="housinginfo"/>
-        <table tableName="billaccount"/>
         <table tableName="ticket"/>
         <table tableName="serviceinfo"/>
         <table tableName="costType"/>
-        -->
         <table tableName="propertyinfo"/>
+        -->
+        <table tableName="billaccount"/>
     </context>
 </generatorConfiguration>

@@ -39,6 +39,8 @@ public class Billaccount {
 
     private Integer ticketstatus;
 
+    private String invoiceserialnum;
+
     private String buyerUserId;
 
     private String remark;
@@ -187,6 +189,14 @@ public class Billaccount {
 
     public void setTicketstatus(Integer ticketstatus) {
         this.ticketstatus = ticketstatus;
+    }
+
+    public String getInvoiceserialnum() {
+        return invoiceserialnum;
+    }
+
+    public void setInvoiceserialnum(String invoiceserialnum) {
+        this.invoiceserialnum = invoiceserialnum == null ? null : invoiceserialnum.trim();
     }
 
     public String getBuyerUserId() {

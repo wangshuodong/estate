@@ -145,6 +145,7 @@ public class PageController {
                         billaccount.setPaydate(DateUtils.paseDatetime(gmt_payment));
                         billaccount.setAlipayTradeNo(trade_no);
                         billaccount.setPaytype(StaticVar.BILLACCOUNT_PAYSTATUS2);
+                        billaccount.setPaystatus(true);
                         billaccount.setBuyerUserId(buyer_user_id);
                         billAccountService.updateBillaccount(billaccount);
                         //打印小票

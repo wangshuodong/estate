@@ -1245,6 +1245,76 @@ public class BillaccountExample {
             return (Criteria) this;
         }
 
+        public Criteria andInvoiceserialnumIsNull() {
+            addCriterion("invoiceSerialNum is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumIsNotNull() {
+            addCriterion("invoiceSerialNum is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumEqualTo(String value) {
+            addCriterion("invoiceSerialNum =", value, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumNotEqualTo(String value) {
+            addCriterion("invoiceSerialNum <>", value, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumGreaterThan(String value) {
+            addCriterion("invoiceSerialNum >", value, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumGreaterThanOrEqualTo(String value) {
+            addCriterion("invoiceSerialNum >=", value, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumLessThan(String value) {
+            addCriterion("invoiceSerialNum <", value, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumLessThanOrEqualTo(String value) {
+            addCriterion("invoiceSerialNum <=", value, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumLike(String value) {
+            addCriterion("invoiceSerialNum like", value, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumNotLike(String value) {
+            addCriterion("invoiceSerialNum not like", value, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumIn(List<String> values) {
+            addCriterion("invoiceSerialNum in", values, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumNotIn(List<String> values) {
+            addCriterion("invoiceSerialNum not in", values, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumBetween(String value1, String value2) {
+            addCriterion("invoiceSerialNum between", value1, value2, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvoiceserialnumNotBetween(String value1, String value2) {
+            addCriterion("invoiceSerialNum not between", value1, value2, "invoiceserialnum");
+            return (Criteria) this;
+        }
+
         public Criteria andBuyerUserIdIsNull() {
             addCriterion("buyer_user_id is null");
             return (Criteria) this;

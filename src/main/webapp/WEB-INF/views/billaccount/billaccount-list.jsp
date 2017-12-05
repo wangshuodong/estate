@@ -74,7 +74,6 @@
 					<th>付款类型</th>
 					<th>付款状态</th>
 					<th>支付宝付款编号</th>
-					<th>微信付款编号</th>
 					<th>付款时间</th>
 					<th>创建时间</th>
 					<th>同步状态</th>
@@ -107,7 +106,6 @@
 							<c:if test="${ item.paystatus == true }">已付款</c:if>
 						</td>
 						<td>${ item.alipayTradeNo }</td>
-						<td>${ item.weixinTradeNo }</td>
 						<td><fmt:formatDate value="${ item.paydate }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td><fmt:formatDate value="${ item.createTime }"  pattern="yyyy-MM-dd"/></td>
 						<td>

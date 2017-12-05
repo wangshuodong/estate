@@ -199,47 +199,60 @@ public class CommonController {
 
     /**
      * 开电子发票
-     * @param id
+     * @param ids
      * @param request
      * @return
      * @throws Exception
      */
     @RequestMapping(path = "/nuonuoInvoice")
     @ResponseBody
-    public JSONResult nuonuoInvoice(Integer id, HttpServletRequest request) throws Exception {
+    public JSONResult nuonuoInvoice(Integer[] ids, HttpServletRequest request) throws Exception {
         JSONResult jsonResult = new JSONResult();
+        boolean bl = false;
         UserCustom loginUser = (UserCustom) request.getSession().getAttribute("userInfo");
-        Billaccount billaccount = billAccountService.selectBillAccountById(id);
-        Roominfo roominfo = roominfoService.selectRoominfoById(billaccount.getId());
-        Housinginfo housing = housinginfoService.selectHousinginfoById(billaccount.getHousingId());
-        Propertyinfo propertyinfo = propertyinfoService.selectPropertyinfoById(housing.getParentId());
-        Costtype costtype = costtypeService.selectCosttypeById(billaccount.getCostType());
-        //发票明细
-        List<InvoiceTitleDetail> detailList = new ArrayList<>();
-        InvoiceTitleDetail detail = new InvoiceTitleDetail();
-        detail.setGoodsName(costtype.getName());
-        detail.setTaxRate(costtype.getTaxrate().toString());
-        detail.setWithTaxFlag("1");
-        detail.setPrice(billaccount.getBillEntryAmount().toString());
-        detailList.add(detail);
-        //发票主体
         InvoiceTitle invoiceTitle = new InvoiceTitle();
-        invoiceTitle.setBuyerName("个人");
-        invoiceTitle.setBuyerPhone(roominfo.getOwnerPhone());
-        invoiceTitle.setOrderNo(billaccount.getId().toString());
-        invoiceTitle.setClerk(loginUser.getName());
-        invoiceTitle.setInvoiceDate(DateUtils.getCurDatetime());
-        invoiceTitle.setSalerTel(propertyinfo.getContactPhone());
-        invoiceTitle.setSalerAddress(propertyinfo.getContactAddress());
-        invoiceTitle.setSalerTaxNum(propertyinfo.getSalertaxnum());
-        invoiceTitle.setInvoiceType("1");
-        invoiceTitle.setPushMode("1");
-        invoiceTitle.setInvoiceDetail(detailList);
+        for (Integer id : ids) {
+            Billaccount billaccount = billAccountService.selectBillAccountById(id);
+            Roominfo roominfo = roominfoService.selectRoominfoById(billaccount.getRoominfoId());
+            if (invoiceTitle.getBuyerPhone() != null && invoiceTitle.getBuyerPhone() != roominfo.getOwnerPhone()) {
+                jsonResult.setSuccess(false);
+                jsonResult.setMessage("请选择同一业主的数据");
+                return jsonResult;
+            }
+            Housinginfo housing = housinginfoService.selectHousinginfoById(billaccount.getHousingId());
+            Propertyinfo propertyinfo = propertyinfoService.selectPropertyinfoById(housing.getParentId());
+            Costtype costtype = costtypeService.selectCosttypeById(billaccount.getCostType());
+            //发票明细
+            List<InvoiceTitleDetail> detailList = new ArrayList<>();
+            InvoiceTitleDetail detail = new InvoiceTitleDetail();
+            detail.setGoodsName(costtype.getName());
+            detail.setTaxRate(costtype.getTaxrate().toString());
+            detail.setWithTaxFlag("1");
+            detail.setPrice(billaccount.getBillEntryAmount().toString());
+            detailList.add(detail);
+            //发票主体
+            invoiceTitle.setBuyerName("个人");
+            invoiceTitle.setBuyerPhone(roominfo.getOwnerPhone());
+            invoiceTitle.setOrderNo(billaccount.getId().toString());
+            invoiceTitle.setClerk(loginUser.getName());
+            invoiceTitle.setInvoiceDate(DateUtils.getCurDatetime());
+            invoiceTitle.setSalerTel(propertyinfo.getContactPhone());
+            invoiceTitle.setSalerAddress(propertyinfo.getContactAddress());
+            invoiceTitle.setSalerTaxNum(propertyinfo.getSalertaxnum());
+            invoiceTitle.setInvoiceType("1");
+            invoiceTitle.setPushMode("1");
+            invoiceTitle.setInvoiceDetail(detailList);
+        }
         NuoNuoUtil nuoNuoUtil = new NuoNuoUtil();
-        boolean bl = nuoNuoUtil.send(invoiceTitle);
-        if (bl) {
-            billaccount.setTicketstatus(StaticVar.BILLACCOUNT_TICKETSTATUS1);
-            billAccountService.updateBillaccount(billaccount);
+        String invoiceSerialNum = nuoNuoUtil.send(invoiceTitle);
+        if (invoiceSerialNum != null) {
+            for (Integer id : ids) {
+                Billaccount bill = new Billaccount();
+                bill.setId(id);
+                bill.setTicketstatus(StaticVar.BILLACCOUNT_TICKETSTATUS1);
+                bill.setInvoiceserialnum(invoiceSerialNum);
+                bl = billAccountService.updateBillaccount(bill);
+            }
         }
         jsonResult.setSuccess(bl);
         return jsonResult;

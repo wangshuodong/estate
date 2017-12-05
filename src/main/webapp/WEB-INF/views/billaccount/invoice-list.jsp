@@ -6,7 +6,8 @@
 	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-	<form class="codeView docs-example" action="${pageContext.request.contextPath }/rest/billAccount/invoiceList" method="post">
+	<form id="myform" method="post">
+	<div class="codeView docs-example">
 		<input type="text" placeholder="账单编号" class="input-text radius size-L" style="width:250px" name="id">
 		<div class="form-group">
 			<select class="form-control" style="width:250px" name="housingId" id="housingId">
@@ -31,9 +32,10 @@
 		<%--</select>--%>
 		<%--</div>--%>
 		<div class="form-group mt-20">
-			<button type="submit" class="btn btn-secondary radius size-L">查&nbsp;询</button>
+			<button type="button" class="btn btn-secondary radius size-L" onclick="query();">查&nbsp;询</button>
+			<button type="button" class="btn btn-secondary radius size-L" onclick="approve();">批量开发票</button>
 		</div>
-	</form>
+	</div>
 
 	<div class="panel panel-default mt-20">
 		<div class="panel-header">
@@ -43,18 +45,18 @@
 			<table class="table table-border table-bordered table-bg table-hover table-sort table-striped">
 				<thead>
 				<tr class="text-c">
+					<th>选择</th>
 					<th>小区名称</th>
 					<th>完整门牌</th>
 					<th>账单编号</th>
 					<th>业主名</th>
-					<%--<th>手机号</th>--%>
+					<th>手机号</th>
 					<%--<th>身份证号</th>--%>
 					<th>费用类型</th>
 					<th>账期</th>
 					<th>金额</th>
 					<th>付款类型</th>
 					<th>支付宝付款编号</th>
-					<th>微信付款编号</th>
 					<th>付款时间</th>
 					<th>开票状态</th>
 					<th>操作</th>
@@ -63,11 +65,12 @@
 				<tbody>
 				<c:forEach items="${billaccountList}" var="item">
 					<tr class="text-c">
+						<td><input type="checkbox" name="ids" value="${ item.id }"></td>
 						<td>${ item.housingName }</td>
 						<td>${ item.roominfoAddress }</td>
 						<td>${ item.id }</td>
 						<td>${ item.ownerName }</td>
-						<%--<td>${ item.ownerPhone }</td>--%>
+						<td>${ item.ownerPhone }</td>
 						<%--<td>${ item.ownerCard }</td>--%>
 						<td>${ item.costTypeName }</td>
 						<td>${ item.acctPeriod }</td>
@@ -80,7 +83,6 @@
 							<c:if test="${ item.paytype == 99 }">其他</c:if>
 						</td>
 						<td>${ item.alipayTradeNo }</td>
-						<td>${ item.weixinTradeNo }</td>
 						<td><fmt:formatDate value="${ item.paydate }"  pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td>未开票</td>
 						<td>
@@ -96,6 +98,7 @@
 			<br>
 		</div>
 	</div>
+	</form>
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/h-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
@@ -107,15 +110,16 @@
             search: "关键字    ",
         }
     });
-
+	function query() {
+		$("#myform").action = "${pageContext.request.contextPath }/rest/billAccount/invoiceList";
+        $("#myform").submit();
+    }
 
     function approve(id) {
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath }/rest/nuonuoInvoice',
-            dataType: 'json',
+        $("#myform").ajaxSubmit({
+            url: "${pageContext.request.contextPath }/rest/nuonuoInvoice",
             data:{
-                id : id
+                ids : id
             },
             beforeSubmit: function () {
                 layer.load();
@@ -125,12 +129,12 @@
                 if (data.success) {
                     window.location.reload();
                 }else {
-                    layer.alert(data.message, {icon: 5});
+                    layer.alert(data.message);
                 }
             },
-            error:function(data) {
+            error: function(XmlHttpRequest, textStatus, errorThrown){
                 layer.closeAll('loading');
-                layer.msg('error!',{icon:1,time:1000});
+                layer.alert('error!',{icon:1,time:2000});
             }
         });
     }
