@@ -169,8 +169,9 @@ public class PageController {
                             sb.append("缴费金额：" + billaccount.getBillEntryAmount() + "\n");
                             sb.append("缴费明细：\n");
                             sb.append("<table><tr><td>类别</td><td>账期</td><td>金额</td></tr><tr><td>" + payType + "</td><td>" + billaccount.getAcctPeriod() + "</td><td>" + billaccount.getBillEntryAmount() + "</td></tr></table>\n");
+                            sb.append("----------------------\n");
                             sb.append("收款单位：" + housinginfo.getParentName() + "\n");
-                            sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com</center>\n");
+                            sb.append("<center>技术支持：早早科技/0571-88683117</center>\n");
                             sb.append("----------------------\n");
                             sb.append("<center>交易小票</center>\n");
                             print.sendContent(sb.toString());

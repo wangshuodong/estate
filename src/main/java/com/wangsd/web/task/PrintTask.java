@@ -82,7 +82,7 @@ public class PrintTask {
             }
             sb.append("</table>");
             sb.append("收款单位：" + housing.getParentName() + "\n");
-            sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com\n");
+            sb.append("<center>技术支持：早早科技/0571-88683117\n");
             sb.append("----------------------\n");
             sb.append("<center>交易小票</center>\n");
             printMessage.sendContent(sb.toString());
@@ -141,7 +141,7 @@ public class PrintTask {
                 }
 
                 sb.append("收款单位：" + propertyName + "\n");
-                sb.append("<center>技术支持：早早科技/0571-88683117/www.早早.com</center>\n");
+                sb.append("<center>技术支持：早早科技/0571-88683117</center>\n");
                 sb.append("----------------------\n");
                 sb.append("<center>交易小票</center>\n");
                 printMessage.sendContent(sb.toString());
